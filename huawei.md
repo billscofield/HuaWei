@@ -12,14 +12,17 @@ copy
 delete /unreserved /force /quiet
     1. /unreserved 不可恢复
     1. /force 直接删除(5.11版本,switch),应该是改成/quiet了(5.13版本,router)
+
 dir /all
     1. /all 显示回收站中的文件,被“[ ]”包含
+
 undelete 文件   //恢复已删除、未彻底删除的文件
+
 reset recycle-bin
     每个目录都有一个recycle-bin, 要清除recycle-bin, 就需要进入到这个目录，否则无法清除这个目录的recycle-bin
     即recycle-bin和目录是挂钩的
 
-##  
+##  ???
 1. display current-configuration
 1. display cpu-defend
  
@@ -41,12 +44,26 @@ reset recycle-bin
 1. display anti-attack
  
 1. display arp
+
 1. display bridge mac-address // Bridge MAC
 1. display bpdu mac-address   //BPDU message
 
 ## password
 1. cipher   with cipher text
 1. simple   in plain text
+
+## 用户
+显示本地账户
+    display local-user
+    display local-user username [用户名]
+    显示屏蔽的账户
+        display local-user state block
+    显示开启的账户
+        display local-user state active
+
+block账户
+    aaa
+    local-user [用户名] state block
 
 ## vty
 user-interface maximum-vty 15
@@ -77,25 +94,38 @@ vty 0 允许用户tom登录
 
 ## console
 user-interface console 0 | user-interface current
-authentication-mode password
-set authentication password cipher [密码]
-    * 用户模式下再次quit就可以密码进入了
+**authentication-mode** password
+set authentication password cipher [密码] 
+    * 用户模式下再次quit就可以密码进入了 
+
+显示认证方式
+    display user-interface console 0    
+
+    ```
+    Idx  Type     Tx/Rx      Modem Privi ActualPrivi Auth  Int     
+   + 0    CON 0    9600       -     3     3           P     - 
+    ```
+
 
 ## 时钟(用户视图)
 1. clock timezone [设一个标识，如BeiJing] {add|minus} 8:00
-1. clock datetime 18:00:00 2019-01-01
+1. clock datetime 18:00:00 2019-01-01 
 1. display clock utc
+    只可以写utc 或者 回车，不能写自定义的 timezone
 1. display clock
 
 
 ## user-interface
 1. user-interface current
 1. user-interface console 0
-1. user-interface maximum-vty ? //the default value is 5
+1. user-interface maximum-vty [num]
+
+查看开启了多少个vty
+    display user-interface vty ? 就会提示能输入的选项
 
 1. display user-interface
-  1. +    : Current UI is active.
-  1. F    : Current UI is active and work in async mode.
+  1. **+    : Current UI is active.**
+  1. **F    : Current UI is active and work in async mode.**
   1. Idx  : Absolute index of UIs.
   1. Type : Type and relative index of UIs.
   1. Privi: The privilege of UIs.
@@ -106,16 +136,22 @@ set authentication password cipher [密码]
       1. P: Authenticate use current UI's password.
   1. Int  : The physical location of UIs.
 
+
 ## 保存配置
 save [文件名]   //default:vrpcfg.zip    .zip|.cfg
 autosave interval on
 autosave interval [时长]
+
+autosave time on
 autosave time [时间点]
+
+如何查看呢?
+    display current-configuration
 
 交换机不支持 autosave ? 路由器可以
 
 display startup //下次启动时所使用的启动文件情况
-    * 为什么ensp 下 display startup 没有系统文件呢?
+    * 为什么ensp 下 display startup 没有系统文件呢?(startup system software)
 
 startup saved-configuration [配置文件]
 startup system-software [系统文件]
@@ -123,25 +159,42 @@ startup system-software [系统文件]
 compare configuration   //
 
 ## mac address
-display mac-address
+display bridge mac-address
 
 
 
 
 ## STP
-stp enable
+查看是否开启以及一些配置信息
+    display stp active(router，只有router有这条命令)
+    dis stp brief(switch)
+        如果没有开启，会弹出没有开启的信息
+        如果开启了，会弹出列名称
+
+stp mode 查看
+    display stp active 第一行,默认是mstp(router)
+    display current-configuration (switch + rotuer)
+        关闭了会显示 stp disabled
+
+    switch 查看stp信息
+        display **stp** interface e0/0/2
+            第一部分和 router 的display stp active 一模一样
+
+
+stp enable | stp disable
 stp mode {stp|mstp|rstp}
 
 stp priority [优先级]   //[0,61440] 4096
     stp root primary
+        undo stp root
     stp root secondary
 
 display stp brief
-
+dis stp interface e0/0/2
 
 
 ### problems
-1. 备用端口的颜色也是绿色的，全部是绿色的，没有红色标识? 也不闪烁
+1. 备用端口的颜色也是绿色的，全部是绿色的，没有红色标识? 也不闪烁，接口列表页全是绿色接通状态
 
 
 ## vlan
@@ -316,6 +369,38 @@ ensp 是否支持更换系统（像gns3)
 
 开了8个switches, 2个终端
 Jan 12 2019 00:44:59-08:00 Huawei %%01CPUUSAGE/4/CPU_USAGE_RESUME(l)[0]:CPU utilization recovered to the normal range.
+
+
+
+
+
+## 罗伯特-梅特卡夫
+以太网
+成立3com公司
+
+LLC一般都抓不到了，现在哪还有令牌环，全部都是ethernet,也就是说不存在异种网络了
+
+CMSA/CD 载波监听多路访问with冲突检测
+
+星型网络
+树形网络
+
+
+10
+    10base2
+        采用总线型拓扑，
+        遵循5-4-3规则
+            5个网段，4个中继器，只有3个网段可以链接终端设备
+            每个网段最大长度185m
+            每段最多30个终端
+            两个终端最小距离0.5m
+    10base5
+    10baseT
+    10baseF
+
+
+将 共享介质局域网 改为 交换式局域网
+    实现了由共享方式到独占方式的转变
 
 
 
