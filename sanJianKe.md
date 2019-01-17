@@ -1,11 +1,28 @@
-## Linux 三剑客
-1. awk
-    awk '{print $1}' 文件   打印文件的第一列 只能用单引号
-    awk '{print $NF}' 文件   打印文件的倒数第一列
-    awk '{print $(NF-1)}' 文件   打印文件的倒数第二列
+# Linux 三剑客
+## awk
+    awk '{print}' a.txt 全部输出 同 cat a.txt
+    
+    ---
+
+    awk '{print $1,$2,$3}' a.txt
+        1个逗号就是空格，两个逗号就是错误
+        手动写的空格是无用的，和html类似，html好歹还有一个有用，awk一个都没用
+        ,: 输出分隔符，默认是空格
+        "\t" 
+        外部必须用单引号
+
+    awk '{print $1"\t"$2}' a.txt
+
+    输入分隔符
+        -F " "
+    输出分隔符
+        默认是",",可以换成自己想要的任意的字符
+        awk '{print $1"-"$2}' 
+
+    ---
     
     分隔符，默认空格,格式化输出
-        -F
+        -F  //输入分隔符
             1. -F:
             1. -F"add"
     
@@ -14,12 +31,216 @@
 
         egrep --color "([0-9]{1,3}\.){3}[0-9]" b.txt | awk -F. '{print "Hello-"$1"-"$2"-"$3"-"$4"-keep-smile"}'
 
-1. sed
+        egrep --color "([0-9]{1,3}\.){3}[0-9]"  a.txt | head -2
+
+        egrep --color "([0-9]\.){1,3}[0-9]{1,3}" a.txt | tail -2 | awk -F. '{print $1"-"$2"-"$3"-"$4}'
+
+    ---
+
+    awk '{print $1,$2}'     //不写文件名，则是从标准输入读取
+
+### 内部变量
+
+    NR number of record,行
+        变量，当前行的行号
+        awk '{pritn NR "\t" $1 "\t" $2}' b.txt
+
+    $0 一整行,全部行
+
+    FNR file NR
+        the input record number in the current input file.
+        两个文件显示的时候，每个文件的行号都是独立的，不再是拼接在一起的
+
+    NF number of field,列
+        这一行有几列，也就是最后一列
+        awk '{print NF "\t" $0}' b.txt
+
+        awk '{print $1}' 文件   打印文件的第一列 只能用单引号
+        awk '{print $NF}' 文件   打印文件的倒数第一列,最大数
+        awk '{print $(NF-1)}' 文件   打印文件的倒数第二列
+
+
+    awk 'BEGIN{FS=","}{print NR "\t" $1,$2}' b.txt //定义全局变量FS(输入时的分隔符)为",",BEGIN必须为大写
+        {print $1,$2} 中","为默认输出时的分隔符:空格
+
+    FS  field separator
+        the input field separator,a space by default.
+
+    OFS(output field seperate)
+
+        awk 'BEGIN{OFS=","}{print $1,$2}'    //","代表输出分隔符，分隔符的内容为",",而不是默认的空格
+    
+        写多个变量 ;
+            awk 'BEGIN{FS="," ; OFS=","}{print $1,$2}'    //","代表输出分隔符，分隔符的内容为",",而不是默认的空格
+
+    FILENAME
+        awk '{print NR "\t" $0}' a.txt b.txt    //这两个文件的行 拼接起来
+        awk '{print NR "\t" FILENAME "\t" $0}' a.txt b.txt  
+
+    隐藏某一列的内容
+
+        awk '{$3="XXX";print NR "\t" $0}' a.txt
+    
+        上边的 awk 'BEGIN{OFS=","}{print $1,$2}' b.txt 也可以写成
+               awk '{OFS=",";print $1,$2}' b.txt
+
+        BEGIN中的内容也可以写到主{}中
+        脚本中的每个语句的末尾尽量写上";"
+
+### 自定义变量
+    awk '{a=1;b=2;print a+b}'
+    awk '{a="hello";b="world";print a b}'  //a b 字符串拼接,不能用+,得零; 类似JavaScript，调用Number(),
+        awk '{a="4";b="hello";print a+b}' 的结果为 4
+        awk '{a="4";b="4hello";print a+b}' 的结果为 8
+
+    awk '{a=1;b=2;c=3;print (a b)+3}'   //结果为15
+        支持
+
+        ```
+        +
+        -
+        *
+        /
+        %
+        ```
+
+### 正则
+    awk '/abc/{print $0}' b.txt
+    ! 表示不匹配
+    awk '!/abc/{print $0}' b.txt
+
+    我的建议是条件写在括号中，脚本也是
+        awk '(/^[a-z]{4}$/){print NR,$0}' a.txt
+
+        脚本
+            (/^[a-z]{4}$/){print NR,$0}
+    
+
+
+### 一般用法
+awk [-F | -f | -v ] 'BEGIN {} //{command1;command2} END {}' file
+-F  指定输入分隔符
+-f  调用脚本
+-v  定义变量
+
+pattern空模式
+
+awk '(NR>=3&&NR<=6){print NR,$0}' b.txt
+awk '(NR!=6){print NR,$0}' b.txt
+awk 'NR!=6{print NR,$0}' b.txt
+
+条件
+    awk '{$3<10 ? USER="AAA":USER="BBB";print $1,USER}' /etc/passwd
+    awk '{$3<10 ? USER="AAA":USER="BBB";}{print $1,USER}' /etc/passwd
+
+    awk '{if($1>10){USER="OK"}else{USER="NO"}}{print $1,USER}' a.txt
+        这个地方什么时候用{},什么时候用()  ???
+
+            if语句不是全局的条件，而是主体代码，所以应该放在{}中
+            awk '{if($1==1){USER="OK"}else{USER="NO"}  print NR,USER}' c.txt
+    
+
+    awk '$2==29{print $0}' b.txt            //单元格的内容是数字的话，该单元格内容不用加双引号
+    awk '$1=="xian"{print $0}' b.txt        //单元格的内容是非数字的话，该单元格内容须要加双引号，否则被认为是变量
+
+    awk 'NR==3{print $0}' b.txt             //只输出第三行
+
+    awk 'NF==5{print $0}' b.txt             //这一行的列数==5才打印出来
+
+#### BEGIN 和 END 的用法
+
+用于多行书写,或脚本
+awk 'BEGIN{}'
+awk ...
+awk ...
+...
+awk 'END{}' file
+
+#### 引用变量
+name=xian
+awk '{print "'$name'"}' 同 shell中echo $name
+
+    脚本中如何引用shell变量呢?
+
+#### 格式化输出
+awk '{printf "%s\n,$1}' a.txt
+
+%20s    右对齐，20个字符
+%-20s   左对齐
+    (字段超过20个字符也不会截断的)
+
+
+#### awk脚本
+test.awk
+BEGIN{
+    print "---------"
+    FS=":"
+}
+$3==100 && $NF=="/sbin/nologin"{
+    print NR"\t"$1"\t"$NF
+}
+END{
+    print "---------"
+}
+
+awk -f test.awk a.txt
+
+===>>>
+
+awk -F":" 'BEGIN{print "-----"}($3=100 && $NF=="/sbin/nologin"){print NR"\t"$1"\t"$NF}END{print "----------"}'
+
+
+
+
+
+
+
+
+
+
+## sed (Stream Editor) 行编辑器
     脚本中修改一般用sed,平常用vim
 
-    sed 's/old/new/g' a.txt
+    sed 's/old/new/g' a.txt 
         -i 修改到文件,貌似默认是修改到内存
 
+-n  不输出模式空间内容到屏幕，即不自动打印
+    sed '1p' a.txt
+        第一行打印了两次，
+        每一行都会被sed处理，
+        sed 把第一行放入模式空间???
+    sed -n '1p' a.txt
+
+-i  不再预览，操作硬盘文件
+    -i.bak  对文件进行备份,-i后面的就是备份的文件的文件名后缀
+-e  多点编辑
+
+-r 正则
+    sed -r 's/\<root\>/rooter/gi' a.txt
+        \< 和 \> 正则表达式的边界,类似//
+
+d   delete
+    删除行
+p
+    print
+a
+    增加行,在指定行下一行
+i
+    增加行,在指定行上一行
+c
+    替换指定行
+    sed '2chello' a.txt
+    sed '2c\hello' a.txt
+s   替换
+    sed '2,3s/root/roat/i'
+    sed 's/root/roat/g'
+~   步进
+    sed '1~2p' a.txt //输出1，3，5...
+
+
+模式空间（Pattern space）
+
+保留空间
 
 
 
@@ -44,6 +265,8 @@
 
     -E = egrep //扩展的grep
         ip匹配用例
+        egrep --color "([0-9]\.){1,3}[0-9]{1,3}" a.txt
+        
 
 ## 常用命令
 
