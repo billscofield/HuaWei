@@ -534,7 +534,17 @@ Mirror site(镜像站点)
 
 
 
+## nvidia-docker
+Docker容器的本地实现不支持NVIDIA GPU，这就是为什么我们开发了nvidia-docker插件。
 
+使用Nvidia Docker，可以无缝地配置一个GPU设备可见的容器，并准备好执行基于GPU的应用程序
 
+Nvidia关于nvidia-docker的博客强调了使用便携式GPU容器的两个关键点
+    1. 与驱动程序无关的CUDA镜像
+    1. Docker命令行包装器，在启动时将驱动程序的用户模式组件和GPU（字符设备）装载到容器中。
 
+在安装nvidia-docker之前更新系统的NVIDIA驱动程序。另外，确保Docker安装在系统上。
 
+CUDA（Compute Unified Device Architecture），是显卡厂商NVIDIA推出的运算平台。 CUDA?是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
+
+https://www.sohu.com/a/209301090_609513
