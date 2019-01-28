@@ -41,6 +41,7 @@ function setTitle()
     endif
 endfunc
 ```
+
 ## 脚本中的错误
 1. syntax error 会立刻停止执行
 1. command not found  不会影响下面的命令的执行
@@ -117,9 +118,7 @@ i=100 被当成了字符串
     
     1. declare -x 也可以声明全局变量
 
-    1. env 显示所有全局变量
-
-    加不加双引号的原则：这个命令能否识别它
+    **加不加双引号的原则：这个命令能否识别它**
 
     set 可以显示所有变量，和一些函数
 
@@ -352,6 +351,54 @@ done
         1. 清空hash表
     1. hash -d bb
         1. 清除某一条
+
+
+
+## 算数运算
+x=10
+y=20
+
+$x+$y 输出10+20
+
+
+let $x+$y
+    help let
+    let:专门做数据运算
+        z=x+y
+        z=$x+$y
+    let x++
+
+sum=$[x+y]
+sum=$[$x+$y]
+sum=$((x+y))
+
+var=expr 1 + 2  //expr是命令，参数间要有空格
+var=expr 1 \* 2
+var=$(expr 1 \* 2)
+
+
+##  短路
+false && cmd2;cmd3
+true || cmd2;cmd3
+
+鸡蛋里边挑骨头
+
+### XOR 异或
+0^1 -> 1
+0^0 -> 0
+1^1 -> 0
+1^0 -> 0
+
+declare -i x=10 //声明为数字
+
+
+
+
+
+
+
+
+COLOR=$[RANDOM%7+31]
 
 
 
