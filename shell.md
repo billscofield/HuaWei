@@ -620,10 +620,102 @@ for i in `find ./ -name "*.log"`
 批量传输文件scp
 
 
-```
-FIELS=$*
-for i in 
-    do 
-        scp -r $FILES root@192.168.1.1
+    ```
+    FIELS=$*
+    for i in 
+        do 
+            scp -r $FILES root@192.168.1.1
     done
-```
+    ```
+
+
+## 各种shell
+1. AIX 下的Korn Shell, 即ksh
+1. Solaris 下的 Bourne Shell, 即bsh
+1. FreeBSD 下的C Shell, 即csh
+1. HP-UX 下的POSIX Shell
+1. Linux 下的Bourne Again Shell, 即bash
+
+cat /etc/shells
+
+
+    ```
+    find ./ -name a[b.]*
+        这个为什么报错呢?
+
+    find ./ -name a[b.].*
+
+    find ./ -name "a[b.]*"
+
+
+    当前目录下 有 a.sh ab.sh
+    ----
+
+    a.txt ab.txt c.txt b.txt
+    find ./ -name "[!a]*"
+    find ./ -name "[! a]*"
+        这两个与预期相同
+    find ./ -name "[ ! a ]*"
+
+        这三条命令为什么不一样呢?
+
+
+    
+    ```
+
+
+    标准输出+错误输出 合并到一个文件
+
+| tee 文件      T型管道
+    
+## 文件通配符
+*
+?
+[]
+[字符1,字符2,字符3]
+[开始字符-结束字符]
+[! 字符]
+
+## 输入输出重定向符 与 管道符
+1. <       标准输入重定向
+1. >       标准输出重定向
+1. 2>      标准错误输出重定向
+1. &>      标准输出合并重定向
+1. >>      标准输出追加重定向
+1. |       管道
+1. | tee   T型管道
+    1. 将前一个命令的**标准输出**存入一个文件中，并传递给下一个命令作为标准输入
+        用法:   命令 | tee 文件 | 命令
+
+
+
+## 命令执行控制符
+1. ;    顺序执行
+1. &&   逻辑与
+1. ||   逻辑或
+1. &    后台执行
+
+## 命令替换符号
+1. ""   
+1. ''   阻止shell解析变量
+1. ``   把执行命令的结果存放在变量中
+
+## 元字符
+1. #        注释符号
+1. $        变量的引用符号
+1. 空格     分隔符，用来分隔 命令名、参数、选项
+
+## 转义符
+1. \
+
+
+
+## 环境配置文件
+全局环境变量配置文件：/etc/profile , /etc/bashrc
+用户环境变量配置文件：~/.bash_profile , ~/.bashrc
+读取顺序：
+    1. /etc/profile         //每个用户都会加载
+    1. ~/.bash_profile      //仅当用户登陆时，加载一次；
+
+    1. ~/.bashrc            //当用户登陆时，每次打开新shell时，该文件被读取
+    1. /etc/bashrc          //每个用户，当bash被打开时，该文件被读取
