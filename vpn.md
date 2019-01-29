@@ -21,10 +21,14 @@ GRE¡¢IPSec¡¢SSL/TLS¡¢VPN(WebVPN)¡¢PPTP¡¢L2TP  ÕâÐ©¶¼ÊÇ¿ò¼Ü£¬Ïàµ±ÓÚOSI£¬¶ø²»ÊÇ¾ßÌ
 
 
 ### GRE(Generic Routing Encapsulation)
-    ×î¼òµ¥µÄ£¬±£Ö¤Ë½ÓÐÐÔ£¬Ã»ÓÐ¼ÓÃÜµÄ¹¦ÄÜ
-    1. ½ÓÊÕÔ­Ê¼IPÊý¾Ý°üµ±×÷**³Ë¿ÍÐ­Òé**£¬Ô­Ê¼IPÊý¾Ý°ü°üÍ·µÄIPµØÖ·ÎªË½ÓÐIPµØÖ·
-    1. ½«Ô­Ê¼IPÊý¾Ý°ü·â×°½øGREÐ­Òé£¬GREÐ­Òé³ÆÎª·â×°Ð­Òé£¨Encapsulation Protocol£©£¬·â×°µÄ°üÍ·IPµØÖ·ÎªÐéÄâÖ±Á¬Á´Â·Á½¶ËµÄIPµØÖ·
-    1. ½«Õû¸öGREÊý¾Ý°üµ±×÷Êý¾Ý£¬ÔÚÍâ²ã·â×°¹«ÍøIP°üÍ·£¬Ò²¾ÍÊÇËíµÀµÄÆðÔ´ºÍÖÕµã£¬´Ó¶øÂ·ÓÉµ½ËíµÀÖÕµã
+×î¼òµ¥µÄ£¬±£Ö¤Ë½ÓÐÐÔ£¬Ã»ÓÐ¼ÓÃÜµÄ¹¦ÄÜ
+
+1. ½ÓÊÕÔ­Ê¼IPÊý¾Ý°üµ±×÷**³Ë¿ÍÐ­Òé**£¬Ô­Ê¼IPÊý¾Ý°ü°üÍ·µÄIPµØÖ·ÎªË½ÓÐIPµØÖ·
+1. ½«Ô­Ê¼IPÊý¾Ý°ü·â×°½øGREÐ­Òé£¬GREÐ­Òé³ÆÎª**·â×°Ð­Òé£¨Encapsulation Protocol£©**£¬·â×°µÄ°üÍ·IPµØÖ·ÎªÐéÄâÖ±Á¬Á´Â·Á½¶ËµÄIPµØÖ·
+    1. ÎªÊ²Ã´ÒªÓÐ¸öËíµÀIPµØÖ·ÄØ?
+    1. ËíµÀIPµØÖ·ÓÐÓÐÊ²Ã´×÷ÓÃÄØ?
+    1. ËíµÀµÄIP¿ÉÒÔËæ±ãÓÃ?¹«ÍøµÄÒ²¿ÉÒÔ?
+1. ½«Õû¸öGREÊý¾Ý°üµ±×÷Êý¾Ý£¬ÔÚÍâ²ã·â×°¹«ÍøIP°üÍ·£¬Ò²¾ÍÊÇËíµÀµÄÆðÔ´ºÍÖÕµã£¬´Ó¶øÂ·ÓÉµ½ËíµÀÖÕµã
 
 ### IPSec   : Internet Protocol Security
 

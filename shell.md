@@ -467,10 +467,49 @@ else
 fi
 ```
 
--f  判断文件是否存在    if [ -f FILENAME]
--d  判断目录是否存在    if [ -d DIR]
+-f  判断文件是否存在    if [ -f FILENAME ]
+    
+    ```
+    FILE=/data/a.txt
+    if [ ! -f $FILE ];then
+        echo "">>$FILE
+    else
+        echo "exists"
+    fi 
+    ```
+
+-d  判断目录是否存在    if [ -d DIR ]
+    
+    ```
+    if [ ! -d /data/newyear ];then
+        mkdir -p /data/newyear
+    else
+        echo "the Direction exists"
+    fi
+    ```
 
 -eq 等于，用于：整型比较
+    
+    ```
+    score=$1
+
+    if [ -z $score ];then
+        echo "please input"
+        exit
+    fi
+
+
+    if [[ $score -gt 90 ]];then
+        echo "very good"
+    elif [[ $score -gt 60 ]];then
+        echo "good"
+    else
+        echo "bad"
+    fi
+
+    ```
+    数字比较用 [[]] , 文件、目录用[]??
+
 -ne 不等于
 
 -lt little than
@@ -482,6 +521,10 @@ fi
 -o  or
 -z  空字符串
 
+! 取反, 要有一个空格
+
+1. []
+    要有空格
 
 1. 在bash中，$( )与` `（反引号）都是用来作命令替换的。
     命令替换与变量替换差不多，都是用来重组命令行的，先完成引号里的命令行，然后将其结果替换出来，再重组成新的命令行。
@@ -507,5 +550,80 @@ fi
     ```
 
 
+### MySQL 备份
+
+```
+#!/bin/bash
+# auto backup mysql db
+
+# 备份路径
+BACK_DIR=/data/backup/`date +%F`
+
+# 是否是root用户
+if [ $UID -ne 0 ];then
+    echo "must root"
+fi
+
+# 创建备份路径
+if [ -d $BACK_DIR ];then
+    mkdir -p $BACK_DIR
+fi
+
+# 备份
+MYSQL_DB=discuz
+MYSQL_USER=backup
+MYSQL_PW=1234
+MYSQQL_CMD=/usr/bin/mysqldump
+
+# 备份命令
+$MYSQL_CMD -u$MYSQL_USER -p$MYSQL_PW -d$MYSQL_DB > $BACK_DIR/$MYSQL_DB.sql
+
+if [ $? -eq 0 ];then
+    echo "success"
+else
+    echo -e "failed"
+fi
+```
 
 
+
+## for
+```
+for 变量 in 字符串
+    do
+        语句
+    done
+
+
+for i in `seq 1 10`
+    do 
+        echo $i
+    done
+
+
+j=0
+for ((i=1;i<=100;i++))
+    do
+       j = `expr $i + $j` 
+    done
+
+
+
+
+打包数个文件
+for i in `find ./ -name "*.log"`
+    do
+        tar -zcvf $i.tar.gz $i//还有问题
+    done
+
+
+批量传输文件scp
+
+
+```
+FIELS=$*
+for i in 
+    do 
+        scp -r $FILES root@192.168.1.1
+    done
+```
