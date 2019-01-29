@@ -16,12 +16,12 @@
 (exp) （exp)  \1  \2
 
 :%s/xyz/&er/g
-    & 代表xyz
+    & 代表xyz, 即查找项
 
 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b
 
-\b 应该是和vim的边界时一样的，
-
+\b 应该是和vim关于单词的定义是一样的，
+    
 
 ### .sh文件自动添加注释，文件头
 
@@ -41,6 +41,7 @@ function setTitle()
     endif
 endfunc
 ```
+
 ## 脚本中的错误
 1. syntax error 会立刻停止执行
 1. command not found  不会影响下面的命令的执行
@@ -53,6 +54,13 @@ endfunc
     1. bash -x a.sh
     1. + 一个加号代表外层输出
     1. ++ 两个加号代表再进一层的输出
+
+## bash
+1. -i  interactive
+1. -r  restricted shell
+1. --  any arguments after -- are treated as filenames and arguments. - is equal to --
+
+
 
 ## 变量    
 
@@ -147,6 +155,7 @@ lsblk   硬盘大小
 `date +%F`
 
 echo -e "\e[031;31m内容\e[0m"
+    -e : enable interpretation of backslash escapes
 
 1. bash 嵌套
     1. echo $$  //当前进程的进程编号
@@ -191,9 +200,9 @@ x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$
 
 
 ### 大括号
-{;}
+{;} //最后一个命令是有分号的
 {name="aaa";echo $name;}
-就是再本shell中执行，类似于数学运算中的优先级吧
+就是在本shell中执行，类似于数学运算中的优先级吧
 
 
 ### 位置变量
@@ -225,6 +234,7 @@ echo "参数个数 $#"
 echo "文件名 $0"
 
 **echo "文件名 `basename $0`"**    去掉路径 
+    `basename $0`
 
 
 a.sh one two three four
@@ -242,6 +252,7 @@ echo "copy finished!!!"
 
 增强版本是下边，$* 复制多个文件
 scp $* wang@192.168.1.2:/home/wang/work/
+能不能换成$@呢???
 ```
 
 ```
@@ -249,8 +260,8 @@ $* $@ 的区别
 
 a.sh
 echo "a.sh:all arg are $*"
-./b.sh "$*"  //$* 作为一个整体字符串    ,必须加上双引号才是这样
-# ./b.sh "$@"   //$@ 作为各个独立的字符串
+./b.sh "$*"  //$* 所有参数作为一个整体字符串,必须加上双引号才是一个整体
+# ./b.sh "$@"   //$@ 每个参数作为一个独立的字符串
 
 
 b.sh
@@ -261,7 +272,7 @@ echo "b.sh:1st arg is $1"
 
 ```
 
-set-- 清空所有位置变量
+**set-- 清空所有位置变量**
 
 
 ```
@@ -274,7 +285,7 @@ link -s a.sh link.sh
 ```
 
 whereis pidof
-软连接功能却不一样，$0 不一样
+**$0 不一样可以通过程序造成软连接功能不一样**
 pidof 直接运行 和 运行源文件 结果不一样 //类$1
 
 
@@ -322,7 +333,7 @@ done
     **和是否有语法错误决定的**
 
 
-退出状态码
+**退出状态码**
     exit    
     exit 10
 
@@ -339,6 +350,7 @@ done
         1. 大大提高命令的调用速率。
 
 1. 命令
+    1. help hash
     1.  hash -l             //--long
         1. 查看hash表中的内容
 
@@ -368,9 +380,85 @@ unzip 用法
 
 
 
+# 吴光科
+echo "!!!"  //! 在shell中有什么特殊用处吗?
+
+echo $UID
+    $PWD
+
+$0 也可以这样理解，bash 的第一个参数 即文件本身
+
+
+## if 语句
+
+```
+if ();then
+    COMMAND
+else
+    COMMAND
+fi
 
 
 
+if 
+then
+    COMMAND
+else
+    COMMAND
+fi
+
+
+
+
+if 
+then
+
+elif
+then
+
+else
+
+fi
+```
+
+-f  判断文件是否存在    if [ -f FILENAME]
+-d  判断目录是否存在    if [ -d DIR]
+
+-eq 等于，用于：整型比较
+-ne 不等于
+
+-lt little than
+-le little or equal
+-gt greater than
+-ge greater or equal
+
+-a  and
+-o  or
+-z  空字符串
+
+
+1. 在bash中，$( )与` `（反引号）都是用来作命令替换的。
+    命令替换与变量替换差不多，都是用来重组命令行的，先完成引号里的命令行，然后将其结果替换出来，再重组成新的命令行。
+
+    ```
+    echo today is $(date "+%Y-%m-%d")
+    echo today is `date "+%Y-%m-%d"`
+    ```
+
+    $( )的弊端是，并不是所有的类unix系统都支持这种方式，但反引号是肯定支持的。
+
+    echo Linux `echo Shell $(echo today is $(date "+%Y-%m-%d"))`
+        这种嵌套的情况下，单单使用反引号会出现问题, 多个$()同时使用也不会有问题
+
+
+
+1. 一般情况下，$var与${var}是没有区别的，但是用${ }会比较精确的界定变量名称的范围
+
+    ```
+    A=Linux
+    echo ${A}B  //输出LinuxB
+    echo $AB    //表示变量AB
+    ```
 
 
 

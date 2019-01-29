@@ -45,3 +45,31 @@ Welcome to the home of musl, a new standard library to power a new generation of
 4. Musl-libc C语言标准库Musl-libc项目发布了1.0版。Musl是一个轻量级的C标准库，设计作为GNU C library (glibc)、 uClibc或Android Bionic的替代用于嵌入式操作系统和移动设备。它遵循POSIX 2008规格和 C99 标准，采用MIT许可证授权，使用Musl的Linux发行版和项目包括sabotage，bootstrap-linux，LightCube OS等等。
 
 目前openwrt LEDE默认使用Musl-libc了。。。CC分支还是uclibc
+
+
+
+## quiet splash , nomodeset
+quiet splash rw init=/bin/bash
+
+1. nomodeset 
+    1. means do not load video drivers
+
+1. quiet
+    1. This option tells the kernel to NOT produce any output (a.k.a. Non verbose mode). 
+    1. If you boot without this option, you'll see lots of kernel messages such as drivers/modules activations, filesystem checks and errors.
+    1. quiet的意思是内核启动时候简化提示信息
+
+
+1. splash
+    1. splash的意思是启动的时候使用图形化的进度条代替init的字符输出过程
+
+
+/boot/grub/grub.cfg
+
+
+
+
+
+
+
+
