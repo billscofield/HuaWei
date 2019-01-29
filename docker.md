@@ -12,10 +12,12 @@ docker 镜像(image)也可以自己制作
     
     启动服务，安装镜像完成后 ifconfig, 多了个 docker0 的网卡
 
-    docker container ls | docker container ls -a
+    docker container ls | docker container ls -a    =>  docker ps | docker ps -a
     docker container run --name [实例名1] -it [镜像名]  //一个镜像可以有多个实例，实例的名字
         -i 交互式
         -t 
+
+        虽然docker ps 更快，但觉得 docker container ls 更好呢(docker container -l --help,一级一级的 --help)
 
     
     docker container attach [实例名]
