@@ -16,7 +16,7 @@
 (exp) （exp)  \1  \2
 
 :%s/xyz/&er/g
-    & 代表xyz, 即查找项
+    **& 代表xyz, 即查找项**
 
 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b
 
@@ -49,18 +49,49 @@ endfunc
 
 1. 检查错误
     1. 语法错误    bash -n a.sh
+        1. **-n，不会运行命令,仅检查语法错误**
 
-1. 脚本的执行过程，每一步都会输出（有输出的情况下），
-    1. bash -x a.sh
-    1. + 一个加号代表外层输出
-    1. ++ 两个加号代表再进一层的输出
+        1. bash -v file //打印输出这个脚本的内容, 然后输出结果
+
+        1. **bash -x file** 
+             **runs the script <file> with tracing of each command executed**
+
+            脚本的执行过程，每一步都会输出（有输出的情况下），
+                1. bash -x a.sh
+                1. + 一个加号代表外层输出
+                1. ++ 两个加号代表再进一层的输出
 
 ## bash
 1. -i  interactive
 1. -r  restricted shell
-1. --  any arguments after -- are treated as filenames and arguments. - is equal to --
+1. --  
+     -- **signals the end of options and disables further option processing.** Any arguments after the -- are treated as filenames and arguments. An argument of - is equivalent to --
 
+    ```
+    $ echo "date" | sh -
+    Mon Feb 12 00:00:00 UTC 2018
+    But also does this:
 
+    $ echo "date" | sh
+    Mon Feb 12 00:00:00 UTC 2018
+    And this
+
+    $ echo "date" | sh -s
+    Mon Feb 12 00:00:00 UTC 2018
+    This will make clear what is being executed:
+
+    $ echo "date" | sh -x 
+    + date
+    Mon Feb 12 00:00:00 UTC 2018
+    But this will fail:
+
+    $ echo "date" | sh - -x
+    sh: 0: Can't open -x
+    ```
+
+    That means that the date string is being read as a command from the standard input and that the dash (-) signals the end of options and start the arguments (the same as -- would do).
+
+    https://unix.stackexchange.com/questions/423501/what-does-sh-mean
 
 ## 变量    
 
@@ -68,11 +99,8 @@ endfunc
 
 name="BILL"
 
-带有特殊符号的时候，要叫上双引号，最好是都加上双引号
+带有特殊符号的时候，要叫上双引号， **变量赋值最好都加上双引号**
 
-```
-命令被引用 ``
-```
 
 ### 双引号保留格式
 name=`cat /etc/fstab`
@@ -241,34 +269,30 @@ a.sh one two three four
 
 小例子
 
-```
-a.sh
+    ```
+    a.sh
 
-echo "start to copy..."
-scp $1 wang@192.168.1.2:/home/wang/work/
-echo "copy finished!!!"
+    echo "start to copy..."
+    scp $1 wang@192.168.1.2:/home/wang/work/
+    echo "copy finished!!!"
 
-增强版本是下边，$* 复制多个文件
-scp $* wang@192.168.1.2:/home/wang/work/
-能不能换成$@呢???
-```
+    增强版本是下边，$* 复制多个文件
+    scp $* wang@192.168.1.2:/home/wang/work/
+    能不能换成$@呢???
+    ```
 
-```
-$* $@ 的区别
+    ```
+    $*  $@ 的区别
 
-a.sh
-echo "a.sh:all arg are $*"
-./b.sh "$*"  //$* 所有参数作为一个整体字符串,必须加上双引号才是一个整体
-# ./b.sh "$@"   //$@ 每个参数作为一个独立的字符串
-
-
-b.sh
-echo "b.sh:1st arg is $1"
+    a.sh
+    echo "a.sh:all arg are $*"
+    ./b.sh "$*"  //$* 所有参数作为一个整体字符串,必须加上双引号才是一个整体
+    # ./b.sh "$@"   //$@ 每个参数作为一个独立的字符串
 
 
-
-
-```
+    b.sh
+    echo "b.sh:1st arg is $1"
+    ```
 
 **set-- 清空所有位置变量**
 
@@ -383,8 +407,9 @@ sum=$[x+y]
 sum=$[$x+$y]
 sum=$((x+y))
 
-var=expr 1 + 2  //expr是命令，参数间要有空格
+var=`expr 1 + 2`  //expr是命令，参数间要有空格
 var=expr 1 \* 2
+
 var=$(expr 1 \* 2)
 
 
@@ -508,7 +533,7 @@ fi
     fi
 
     ```
-    数字比较用 [[]] , 文件、目录用[]??
+    数字比较用 [[]]?? 
 
 -ne 不等于
 
@@ -710,6 +735,17 @@ cat /etc/shells
 
 
 
+--- 
+
+## 环境变量
+每个用户登陆系统后，都有自己专属的运行环境（也称为Shell环境），称为环境变量
+BASH
+SHELL
+
+BASH_VERSINFO   
+
+
+
 ## 环境配置文件
 全局环境变量配置文件：/etc/profile , /etc/bashrc
 用户环境变量配置文件：~/.bash_profile , ~/.bashrc
@@ -719,3 +755,172 @@ cat /etc/shells
 
     1. ~/.bashrc            //当用户登陆时，每次打开新shell时，该文件被读取
     1. /etc/bashrc          //每个用户，当bash被打开时，该文件被读取
+
+
+## 测试命令 test
+
+指定条件值:使用命令和字符串
+
+1. 数值比较
+    1. -eq
+    1. -ne
+
+    1. -ge
+    1. -gt
+
+    1. -le
+    1. -lt
+
+1. 字符串比较
+    1. =
+    1. !=
+    1. -z
+    1. -n
+    1. **注意操作符和操作数之间必须有空格**
+
+1. 文件操作
+    1. -b  文件存在，且为块文件
+    1. -c  文件存在，且为字符文件
+
+    1. -d  文件存在，且为目录
+    1. -f  文件存在，且为普通文件
+
+    1. -e  文件存在
+    1. **-s  文件存在，且至少有一个字符**
+
+    1. -r  文件存在，且readonly
+    1. -w  文件存在，且writeable
+    1. -x  文件存在，且executable
+
+    1. 通常会和 ! 连用
+        ! -e    注意有空格
+
+1. 逻辑操作
+    1. &&   短路与
+    1. ||   短路或
+
+
+## 算术运算符
+$[] //有无空格均可
+
+```
+NUM1=1
+NUM2=2
+
+NUM3=$[NUM1+NUM2*2]
+
+
+expr NUM1 + NUM2 \* 2
+expr 的话 ，* / () 都要做转义处理
+```
+
+
+## 内部命令
+1. echo 
+    1. 双引号完全可以省略
+    
+    ```
+    echo it is a good idea
+
+    echo "\"It is a test\""
+
+    ```
+
+    1. -e 开启转义
+    
+    ```
+    echo -e "hello\n"
+    ```
+    
+    1. 单引号 不进行任何转义，原样输出
+
+    1. 总结
+           | 能否引用变量 |  能否引用转移符  |  能否引用文本格式符(如：换行符、制表符)
+
+    单引号 |      否      |       否         |                否
+    双引号 |      能      |       能         |                能
+    无引号 |      能      |       能         |                否  
+
+
+1. printf
+    http://www.runoob.com/linux/linux-shell-printf.html
+
+    **printf  format-string  [arguments...]**
+    
+    不会自动添加任何控制符
+
+    printf "hello\n"
+    为什么没有\n时都看不到输出呢?
+
+
+    printf "%-10s %-8s %-4s\n" 姓名 性别 体重kg
+    printf "%-10s %-8s %-4.2f\n" 郭靖 男 66.1234
+
+    -表示左对齐，没有则表示右对齐
+    format-string 单引号与双引号效果一样; 
+        没有引号也可以输出,最好还是加上引号，如有换行符等，会出现意想不到的结果
+
+        ```
+        printf %10s\n a b c     意想不到的结果
+        printf "%10s\n" a b c   正确的结果
+        ```
+        
+
+    格式只指定了一个参数，但多出的参数仍然会按照该格式输出，**format-string 被重用**
+    printf %10s\n a b c
+
+    1. d: Decimal 十进制整数   -- 对应位置参数必须是十进制整数或字符数字，否则报错！
+    1. s: String 字符串        -- 对应位置参数必须是字符串或者字符型，否则报错！
+    1. c: Char 字符            -- 对应位置参数必须是字符串或者字符型，否则报错！
+    1. f: Float 浮点           -- 对应位置参数必须是数字型，否则报错！
+
+1. read
+    read 命令从标准输入中读取一行,并把输入行的的值指定给 shell 变量
+    
+    ```
+    #!/bin/bash
+    read name
+    echo "$name It is a test"
+    ```
+
+     -p 输入提示文字
+     -n 输入字符长度限制(达到6位，自动结束)
+     -t 输入限时（秒）
+     -s 隐藏输入内容 就是输入密码时的哪种情形
+
+    ```
+    a.sh
+    read -p "请输入一段文字:" -n 6 -t 5 -s password
+    echo -e "\npassword is $password"
+
+
+
+
+    a.sh
+    NAME=''
+    read -p "Please input ur name: " NAME
+    if [ $NAME = "LiuXiaoXian" ];then
+        echo "$NAME, U are so great"
+    else
+        echo "nice to meet you"
+    fi
+    ```
+
+## source 或 "."(dot)
+
+"."表示当前目录
+一个脚本others没有x权限，通过source 或 "." 或 /bin/bash 就可以执行了，这有什么安全的?
+
+### source filename 与 sh filename 及./filename执行脚本的区别
+
+1. 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。./filename是因为当前目录没有在PATH中，所有"."是用来表示当前目录的。
+
+1. sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
+
+1. source filename：这个命令其实只是简单地读取脚本里面的语句依次**在当前shell里面执行，没有建立新的子shell。**那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
+
+
+
+
+扩展阅读
+    https://www.cnblogs.com/liang-io/p/9825363.html
