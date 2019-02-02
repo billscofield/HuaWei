@@ -1,29 +1,29 @@
 # shell
 
 ```
-\< ´ÊÊ×
-\> ´ÊÎ²
-\b ¼È¿ÉÒÔ±íÊ¾´ÊÊ×£¬Ò²¿ÉÒÔ±íÊ¾´ÊÎ²
+\< è¯é¦–
+\> è¯å°¾
+\b æ—¢å¯ä»¥è¡¨ç¤ºè¯é¦–ï¼Œä¹Ÿå¯ä»¥è¡¨ç¤ºè¯å°¾
 ```
 
-Ä¬ÈÏÌ°À·
+é»˜è®¤è´ªå©ª
 
-[^.] ³ýÁË¡°.¡±
+[^.] é™¤äº†â€œ.â€
 
 [:alpha:]
 
-ÕýÏòÆ¥Åä \1 ´ú±íµÄÊÇµÚÒ»¸öµÄÆ¥Åä£¬¶ø²»ÊÇÕâ¸ö±í´ïÊ½
-(exp) £¨exp)  \1  \2
+æ­£å‘åŒ¹é… \1 ä»£è¡¨çš„æ˜¯ç¬¬ä¸€ä¸ªçš„åŒ¹é…ï¼Œè€Œä¸æ˜¯è¿™ä¸ªè¡¨è¾¾å¼
+(exp) ï¼ˆexp)  \1  \2
 
 :%s/xyz/&er/g
-    **& ´ú±íxyz, ¼´²éÕÒÏî**
+    **& ä»£è¡¨xyz, å³æŸ¥æ‰¾é¡¹**
 
 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b
 
-\b Ó¦¸ÃÊÇºÍvim¹ØÓÚµ¥´ÊµÄ¶¨ÒåÊÇÒ»ÑùµÄ£¬
+\b åº”è¯¥æ˜¯å’Œvimå…³äºŽå•è¯çš„å®šä¹‰æ˜¯ä¸€æ ·çš„ï¼Œ
     
 
-### .shÎÄ¼þ×Ô¶¯Ìí¼Ó×¢ÊÍ£¬ÎÄ¼þÍ·
+### .shæ–‡ä»¶è‡ªåŠ¨æ·»åŠ æ³¨é‡Šï¼Œæ–‡ä»¶å¤´
 
 ```
 autocmd BufNewFile *.sh exec ":call setTitle()"
@@ -42,24 +42,24 @@ function setTitle()
 endfunc
 ```
 
-## ½Å±¾ÖÐµÄ´íÎó
-1. syntax error »áÁ¢¿ÌÍ£Ö¹Ö´ÐÐ
-1. command not found  ²»»áÓ°ÏìÏÂÃæµÄÃüÁîµÄÖ´ÐÐ
-    1. ºóÐøµÄ²Ù×÷¿ÉÄÜ¾ÍÊÇ´íÎóµÄ
+## è„šæœ¬ä¸­çš„é”™è¯¯
+1. syntax error ä¼šç«‹åˆ»åœæ­¢æ‰§è¡Œ
+1. command not found  ä¸ä¼šå½±å“ä¸‹é¢çš„å‘½ä»¤çš„æ‰§è¡Œ
+    1. åŽç»­çš„æ“ä½œå¯èƒ½å°±æ˜¯é”™è¯¯çš„
 
-1. ¼ì²é´íÎó
-    1. Óï·¨´íÎó    bash -n a.sh
-        1. **-n£¬²»»áÔËÐÐÃüÁî,½ö¼ì²éÓï·¨´íÎó**
+1. æ£€æŸ¥é”™è¯¯
+    1. è¯­æ³•é”™è¯¯    bash -n a.sh
+        1. **-nï¼Œä¸ä¼šè¿è¡Œå‘½ä»¤,ä»…æ£€æŸ¥è¯­æ³•é”™è¯¯**
 
-        1. bash -v file //´òÓ¡Êä³öÕâ¸ö½Å±¾µÄÄÚÈÝ, È»ºóÊä³ö½á¹û
+        1. bash -v file //æ‰“å°è¾“å‡ºè¿™ä¸ªè„šæœ¬çš„å†…å®¹, ç„¶åŽè¾“å‡ºç»“æžœ
 
         1. **bash -x file** 
              **runs the script <file> with tracing of each command executed**
 
-            ½Å±¾µÄÖ´ÐÐ¹ý³Ì£¬Ã¿Ò»²½¶¼»áÊä³ö£¨ÓÐÊä³öµÄÇé¿öÏÂ£©£¬
+            è„šæœ¬çš„æ‰§è¡Œè¿‡ç¨‹ï¼Œæ¯ä¸€æ­¥éƒ½ä¼šè¾“å‡ºï¼ˆæœ‰è¾“å‡ºçš„æƒ…å†µä¸‹ï¼‰ï¼Œ
                 1. bash -x a.sh
-                1. + Ò»¸ö¼ÓºÅ´ú±íÍâ²ãÊä³ö
-                1. ++ Á½¸ö¼ÓºÅ´ú±íÔÙ½øÒ»²ãµÄÊä³ö
+                1. + ä¸€ä¸ªåŠ å·ä»£è¡¨å¤–å±‚è¾“å‡º
+                1. ++ ä¸¤ä¸ªåŠ å·ä»£è¡¨å†è¿›ä¸€å±‚çš„è¾“å‡º
 
 ## bash
 1. -i  interactive
@@ -93,22 +93,22 @@ endfunc
 
     https://unix.stackexchange.com/questions/423501/what-does-sh-mean
 
-## ±äÁ¿    
+## å˜é‡    
 
-= ×óÓÒ²»ÄÜÓÐ¿Õ¸ñ
+= å·¦å³ä¸èƒ½æœ‰ç©ºæ ¼
 
 name="BILL"
 
-´øÓÐÌØÊâ·ûºÅµÄÊ±ºò£¬Òª½ÐÉÏË«ÒýºÅ£¬ **±äÁ¿¸³Öµ×îºÃ¶¼¼ÓÉÏË«ÒýºÅ**
+å¸¦æœ‰ç‰¹æ®Šç¬¦å·çš„æ—¶å€™ï¼Œè¦å«ä¸ŠåŒå¼•å·ï¼Œ **å˜é‡èµ‹å€¼æœ€å¥½éƒ½åŠ ä¸ŠåŒå¼•å·**
 
 
-### Ë«ÒýºÅ±£Áô¸ñÊ½
+### åŒå¼•å·ä¿ç•™æ ¼å¼
 name=`cat /etc/fstab`
-echo $name  //Ã»ÓÐ»»ÐÐµÄ¸ñÊ½
-echo "$name"    // /etc/fstab ÖÐÊÇÊ²Ã´¸ñÊ½¾Í°´ÕÕÊ²Ã´¸ñÊ½Êä³ö, ±£Áô¸ñÊ½
+echo $name  //æ²¡æœ‰æ¢è¡Œçš„æ ¼å¼
+echo "$name"    // /etc/fstab ä¸­æ˜¯ä»€ä¹ˆæ ¼å¼å°±æŒ‰ç…§ä»€ä¹ˆæ ¼å¼è¾“å‡º, ä¿ç•™æ ¼å¼
 
-### ¹ØÓÚ¸³Öµ
-ÖØÐÂ¸³Öµ  »áÖØÐÂÕÒÒ»¸ö¿Õ¼ä·Å£¬Ô­À´µÄ»¹ÔÚ
+### å…³äºŽèµ‹å€¼
+é‡æ–°èµ‹å€¼  ä¼šé‡æ–°æ‰¾ä¸€ä¸ªç©ºé—´æ”¾ï¼ŒåŽŸæ¥çš„è¿˜åœ¨
 
 name1=1
 name2=2
@@ -117,58 +117,58 @@ name3=3
 name4=$name1
 name1=11
 
-echo $name1 »¹ÊÇ1
+echo $name1 è¿˜æ˜¯1
 
-### ±äÁ¿ÀàÐÍ
-ÈõÀàÐÍ
+### å˜é‡ç±»åž‹
+å¼±ç±»åž‹
 
-i=100 ±»µ±³ÉÁË×Ö·û´®
+i=100 è¢«å½“æˆäº†å­—ç¬¦ä¸²
 
-**²»Ö§³Ö¸¡µãÊý**
+**ä¸æ”¯æŒæµ®ç‚¹æ•°**
 
-±äÁ¿Ãû
-    1. ÍÕ·åÃüÃû·¨
-    1. ×ÖÄ¸¡¢Êý×Ö¡¢ÏÂ»®Ïß
-    ¶¼¿ÉÒÔ,×¢ÒâÒªÍ³Ò»
+å˜é‡å
+    1. é©¼å³°å‘½åæ³•
+    1. å­—æ¯ã€æ•°å­—ã€ä¸‹åˆ’çº¿
+    éƒ½å¯ä»¥,æ³¨æ„è¦ç»Ÿä¸€
 
-#### ±äÁ¿ÖÖÀà
-1. ¾Ö²¿±äÁ¿£¬±ê×¼±äÁ¿£¬ÆÕÍ¨±äÁ¿
-    1. Ö»ÔÚµ±Ç°sessionÖÐÓÐÐ§
-    1. ×Ó½ø³ÌÒ²²»ÄÜÊ¹ÓÃ¸¸½ø³ÌµÄ±äÁ¿
-    1. ²»ÄÜÏòÉÏ´«µÝ£¬Ò²²»ÄÜÏòÏÂ´«µÝ
+#### å˜é‡ç§ç±»
+1. å±€éƒ¨å˜é‡ï¼Œæ ‡å‡†å˜é‡ï¼Œæ™®é€šå˜é‡
+    1. åªåœ¨å½“å‰sessionä¸­æœ‰æ•ˆ
+    1. å­è¿›ç¨‹ä¹Ÿä¸èƒ½ä½¿ç”¨çˆ¶è¿›ç¨‹çš„å˜é‡
+    1. ä¸èƒ½å‘ä¸Šä¼ é€’ï¼Œä¹Ÿä¸èƒ½å‘ä¸‹ä¼ é€’
 
-1. È«¾Ö±äÁ¿
-    1. bash ÊÇºóÌ¨Ö´ÐÐ
-    1. È«¾Ö±äÁ¿¶¨Òå
+1. å…¨å±€å˜é‡
+    1. bash æ˜¯åŽå°æ‰§è¡Œ
+    1. å…¨å±€å˜é‡å®šä¹‰
         export name="Xian"
 
-        »òÕß
+        æˆ–è€…
 
         name="xian"
         export name
 
-        Èç¹ûÖ®Ç°¶¨ÒåÁË¾Ö²¿±äÁ¿a,export a ¿ÉÒÔ½«ÆäÉý¼¶ÎªÈ«¾Ö±äÁ¿
-    1. ¿ÉÒÔÏòÏÂ´«µÝ
-        1. ×Ó½ø³Ì¿ÉÒÔ¸Ä£¬µ«ÊÇ²»ÄÜÏòÉÏ´«µÝ
+        å¦‚æžœä¹‹å‰å®šä¹‰äº†å±€éƒ¨å˜é‡a,export a å¯ä»¥å°†å…¶å‡çº§ä¸ºå…¨å±€å˜é‡
+    1. å¯ä»¥å‘ä¸‹ä¼ é€’
+        1. å­è¿›ç¨‹å¯ä»¥æ”¹ï¼Œä½†æ˜¯ä¸èƒ½å‘ä¸Šä¼ é€’
     
-    1. declare -x Ò²¿ÉÒÔÉùÃ÷È«¾Ö±äÁ¿
+    1. declare -x ä¹Ÿå¯ä»¥å£°æ˜Žå…¨å±€å˜é‡
 
-    **¼Ó²»¼ÓË«ÒýºÅµÄÔ­Ôò£ºÕâ¸öÃüÁîÄÜ·ñÊ¶±ðËü**
+    **åŠ ä¸åŠ åŒå¼•å·çš„åŽŸåˆ™ï¼šè¿™ä¸ªå‘½ä»¤èƒ½å¦è¯†åˆ«å®ƒ**
 
-    set ¿ÉÒÔÏÔÊ¾ËùÓÐ±äÁ¿£¬ºÍÒ»Ð©º¯Êý
+    set å¯ä»¥æ˜¾ç¤ºæ‰€æœ‰å˜é‡ï¼Œå’Œä¸€äº›å‡½æ•°
 
-1. ²éËùÓÐ»·¾³±äÁ¿
+1. æŸ¥æ‰€æœ‰çŽ¯å¢ƒå˜é‡
     1. env
     1. printenv
     1. export
     1. declare -x
 
-1. ±äÁ¿µÄÉ¾³ý
+1. å˜é‡çš„åˆ é™¤
     1. unset name
 
-1. ÏµÍ³ÄÚÖÃ±äÁ¿
+1. ç³»ç»Ÿå†…ç½®å˜é‡
 
-1. ×Ô¶¨Òå±äÁ¿
+1. è‡ªå®šä¹‰å˜é‡
 
 
 ${name}
@@ -177,74 +177,74 @@ $name
 
 lscpu
 /proc/meminfo
-lsblk   Ó²ÅÌ´óÐ¡
+lsblk   ç¡¬ç›˜å¤§å°
 `date +%F`
 
-echo -e "\e[031;31mÄÚÈÝ\e[0m"
+echo -e "\e[031;31må†…å®¹\e[0m"
     -e : enable interpretation of backslash escapes
 
-1. bash Ç¶Ì×
-    1. echo $$  //µ±Ç°½ø³ÌµÄ½ø³Ì±àºÅ
-    1. echo $PPID   //¸¸½ø³ÌµÄ½ø³Ì±àºÅ
-    1. pstree  Ö±¹ÛµÄ¿´½ø³Ì±àºÅ
+1. bash åµŒå¥—
+    1. echo $$  //å½“å‰è¿›ç¨‹çš„è¿›ç¨‹ç¼–å·
+    1. echo $PPID   //çˆ¶è¿›ç¨‹çš„è¿›ç¨‹ç¼–å·
+    1. pstree  ç›´è§‚çš„çœ‹è¿›ç¨‹ç¼–å·
         1. pstree -p
 
 
-SHLVL   µ±Ç°shell Éî¶È£¬µÚÒ»¸öÎª1
+SHLVL   å½“å‰shell æ·±åº¦ï¼Œç¬¬ä¸€ä¸ªä¸º1
 
-`$_`  Ç°Ò»¸öÃüÁîµÄ×îºóÒ»¸ö²ÎÊý
+`$_`  å‰ä¸€ä¸ªå‘½ä»¤çš„æœ€åŽä¸€ä¸ªå‚æ•°
 
-Ö»¶Á±äÁ¿£¨³£Á¿£©
+åªè¯»å˜é‡ï¼ˆå¸¸é‡ï¼‰
 readonly name="bcd"
 declare -r
-    Ò²²»ÄÜunset,ÍË³ö¾ÍÃ»ÓÐÁË£¬½ø³ÌµÄÉùÃ÷ÖÜÆÚ
+    ä¹Ÿä¸èƒ½unset,é€€å‡ºå°±æ²¡æœ‰äº†ï¼Œè¿›ç¨‹çš„å£°æ˜Žå‘¨æœŸ
 
-ÏÔÊ¾ËùÓÐ³£Á¿
+æ˜¾ç¤ºæ‰€æœ‰å¸¸é‡
     1. declare -r 
         UID
-        ¸¸½ø³Ì
+        çˆ¶è¿›ç¨‹
     1. readonly -p
     
-### Ð¡À¨ºÅ
+### å°æ‹¬å·
 umask 026;touch /data/f1    640
 umask 026;touch /data/f2    640
 
-(umask 026;touch /data/f1)  ½ö½öÕâÒ»´Î£¬**Ò»´ÎÐÔ**
-    ()  ¿ªÆôÁË×Óshell ,subshell
+(umask 026;touch /data/f1)  ä»…ä»…è¿™ä¸€æ¬¡ï¼Œ**ä¸€æ¬¡æ€§**
+    ()  å¼€å¯äº†å­shell ,subshell
 
-(cd /data;rm -rf /data/)    ×÷ÒµÍê³Éºó£¬ÓÖ»Øµ½Ö®Ç°µÄshell
+(cd /data;rm -rf /data/)    ä½œä¸šå®ŒæˆåŽï¼Œåˆå›žåˆ°ä¹‹å‰çš„shell
 
 x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$x
 
-**Ð¡À¨ºÅÕâÖÖsubshell ºÍÆÕÍ¨µÄ subshell ²»Í¬**
-    1. ËüµÄ½ø³ÌID ºÍ¸¸½ø³ÌIDÒ»Ñù
-    1. ¸¸½ø³ÌµÄ±äÁ¿»áÏò×Óshell´«µÝ
+**å°æ‹¬å·è¿™ç§subshell å’Œæ™®é€šçš„ subshell ä¸åŒ**
+    1. å®ƒçš„è¿›ç¨‹ID å’Œçˆ¶è¿›ç¨‹IDä¸€æ ·
+    1. çˆ¶è¿›ç¨‹çš„å˜é‡ä¼šå‘å­shellä¼ é€’
     
-    ¹²Í¬µã
-        1. ²»»áÏòÉÏ´«µÝ
+    å…±åŒç‚¹
+        1. ä¸ä¼šå‘ä¸Šä¼ é€’
 
 
 
-### ´óÀ¨ºÅ
-{;} //×îºóÒ»¸öÃüÁîÊÇÓÐ·ÖºÅµÄ
+### å¤§æ‹¬å·
+{;} //æœ€åŽä¸€ä¸ªå‘½ä»¤æ˜¯æœ‰åˆ†å·çš„
 {name="aaa";echo $name;}
-¾ÍÊÇÔÚ±¾shellÖÐÖ´ÐÐ£¬ÀàËÆÓÚÊýÑ§ÔËËãÖÐµÄÓÅÏÈ¼¶°É
+å°±æ˜¯åœ¨æœ¬shellä¸­æ‰§è¡Œï¼Œç±»ä¼¼äºŽæ•°å­¦è¿ç®—ä¸­çš„ä¼˜å…ˆçº§å§
 
 
-### Î»ÖÃ±äÁ¿
+### ä½ç½®å˜é‡
 1. $1 $2 $3 
 
 baskup.sh a b c
-$1 ¾ÍÊÇa
-$2 ¾ÍÊÇb
-$3 ¾ÍÊÇc
+$1 å°±æ˜¯a
+$2 å°±æ˜¯b
+$3 å°±æ˜¯c
 ...
 
-1. $#   ²ÎÊý¸öÊý
-1. $0   ½Å±¾Ãû³Æ£¨ÍêÕûÂ·¾¶Ãû×Ö£© 
-    1. ÈíÁ¬½Ó µÄ»°ÏÔÊ¾ ÈíÁ¬½ÓµÄÃû×Ö
-1. $@   ËùÓÐ²ÎÊý,**Ã¿¸ö²ÎÊýÎª¶ÀÁ¢×Ö·û´®**
-1. `$*` ´«µÝ¸ø½Å±¾µÄËùÓÐ²ÎÊý£¬**È«²¿²ÎÊýºÏÎªÒ»¸ö×Ö·û´®**
+1. $#   å‚æ•°ä¸ªæ•°
+1. $0   è„šæœ¬åç§°ï¼ˆå®Œæ•´è·¯å¾„åå­—ï¼‰ 
+    1. è½¯è¿žæŽ¥ çš„è¯æ˜¾ç¤º è½¯è¿žæŽ¥çš„åå­—
+1. $@   æ‰€æœ‰å‚æ•°,**æ¯ä¸ªå‚æ•°ä¸ºç‹¬ç«‹å­—ç¬¦ä¸²**
+1. `$*` ä¼ é€’ç»™è„šæœ¬çš„æ‰€æœ‰å‚æ•°ï¼Œ**å…¨éƒ¨å‚æ•°åˆä¸ºä¸€ä¸ªå­—ç¬¦ä¸²**
 
 
 
@@ -254,12 +254,12 @@ echo "----------"
 echo 1st is $1
 echo 2st is $2
 echo 3st is $3
-echo 10st is ${10}      ·ñÔò»áÈÏÎªÊÇ$1+0   
-echo "ËùÓÐ²ÎÊý $@"
-echo "²ÎÊý¸öÊý $#"
-echo "ÎÄ¼þÃû $0"
+echo 10st is ${10}      å¦åˆ™ä¼šè®¤ä¸ºæ˜¯$1+0   
+echo "æ‰€æœ‰å‚æ•° $@"
+echo "å‚æ•°ä¸ªæ•° $#"
+echo "æ–‡ä»¶å $0"
 
-**echo "ÎÄ¼þÃû `basename $0`"**    È¥µôÂ·¾¶ 
+**echo "æ–‡ä»¶å `basename $0`"**    åŽ»æŽ‰è·¯å¾„ 
     `basename $0`
 
 
@@ -267,7 +267,7 @@ a.sh one two three four
 
 ```
 
-Ð¡Àý×Ó
+å°ä¾‹å­
 
     ```
     a.sh
@@ -276,25 +276,25 @@ a.sh one two three four
     scp $1 wang@192.168.1.2:/home/wang/work/
     echo "copy finished!!!"
 
-    ÔöÇ¿°æ±¾ÊÇÏÂ±ß£¬$* ¸´ÖÆ¶à¸öÎÄ¼þ
+    å¢žå¼ºç‰ˆæœ¬æ˜¯ä¸‹è¾¹ï¼Œ$* å¤åˆ¶å¤šä¸ªæ–‡ä»¶
     scp $* wang@192.168.1.2:/home/wang/work/
-    ÄÜ²»ÄÜ»»³É$@ÄØ???
+    èƒ½ä¸èƒ½æ¢æˆ$@å‘¢???
     ```
 
     ```
-    $*  $@ µÄÇø±ð
+    $*  $@ çš„åŒºåˆ«
 
     a.sh
     echo "a.sh:all arg are $*"
-    ./b.sh "$*"  //$* ËùÓÐ²ÎÊý×÷ÎªÒ»¸öÕûÌå×Ö·û´®,±ØÐë¼ÓÉÏË«ÒýºÅ²ÅÊÇÒ»¸öÕûÌå
-    # ./b.sh "$@"   //$@ Ã¿¸ö²ÎÊý×÷ÎªÒ»¸ö¶ÀÁ¢µÄ×Ö·û´®
+    ./b.sh "$*"  //$* æ‰€æœ‰å‚æ•°ä½œä¸ºä¸€ä¸ªæ•´ä½“å­—ç¬¦ä¸²,å¿…é¡»åŠ ä¸ŠåŒå¼•å·æ‰æ˜¯ä¸€ä¸ªæ•´ä½“
+    # ./b.sh "$@"   //$@ æ¯ä¸ªå‚æ•°ä½œä¸ºä¸€ä¸ªç‹¬ç«‹çš„å­—ç¬¦ä¸²
 
 
     b.sh
     echo "b.sh:1st arg is $1"
     ```
 
-**set-- Çå¿ÕËùÓÐÎ»ÖÃ±äÁ¿**
+**set-- æ¸…ç©ºæ‰€æœ‰ä½ç½®å˜é‡**
 
 
 ```
@@ -302,17 +302,17 @@ a.sh
 echo $0
 
 link -s a.sh link.sh
-./link.sh   Êä³ölink.sh
+./link.sh   è¾“å‡ºlink.sh
 
 ```
 
 whereis pidof
-**$0 ²»Ò»Ñù¿ÉÒÔÍ¨¹ý³ÌÐòÔì³ÉÈíÁ¬½Ó¹¦ÄÜ²»Ò»Ñù**
-pidof Ö±½ÓÔËÐÐ ºÍ ÔËÐÐÔ´ÎÄ¼þ ½á¹û²»Ò»Ñù //Àà$1
+**$0 ä¸ä¸€æ ·å¯ä»¥é€šè¿‡ç¨‹åºé€ æˆè½¯è¿žæŽ¥åŠŸèƒ½ä¸ä¸€æ ·**
+pidof ç›´æŽ¥è¿è¡Œ å’Œ è¿è¡Œæºæ–‡ä»¶ ç»“æžœä¸ä¸€æ · //ç±»$1
 
 
 
-shift ÃüÁî   °ÑµÚÒ»¸öÒÆ³öÈ¥
+shift å‘½ä»¤   æŠŠç¬¬ä¸€ä¸ªç§»å‡ºåŽ»
 ```
 a.sh
 echo $1
@@ -332,30 +332,30 @@ echo $2
 echo $3
 
 
-Êä³ö123 23  3
+è¾“å‡º123 23  3
 
-shift Ä¬ÈÏÒÆ1Î»
+shift é»˜è®¤ç§»1ä½
 shift 2
 
 
 #!/bin/bash
 while [ $# != 0 ];do
-echo "µÚÒ»¸ö²ÎÊýÎª£º$1,²ÎÊý¸öÊýÎª£º$#"
+echo "ç¬¬ä¸€ä¸ªå‚æ•°ä¸ºï¼š$1,å‚æ•°ä¸ªæ•°ä¸ºï¼š$#"
 shift
 done
 ```
 
-**$? =0 ±íÊ¾Ç°Ò»ÌõÃüÁîÖ´ÐÐ³É¹¦**
-    Ç°Ò»ÌõÃüÁîµÄÖ´ÐÐ½á¹û×´Ì¬
+**$? =0 è¡¨ç¤ºå‰ä¸€æ¡å‘½ä»¤æ‰§è¡ŒæˆåŠŸ**
+    å‰ä¸€æ¡å‘½ä»¤çš„æ‰§è¡Œç»“æžœçŠ¶æ€
 
-    ¶ÔÓÚ½Å±¾¶øÑÔ£¬Ò²ÊÇÇ°Ò»ÌõÃüÁîµÄ½á¹û×´Ì¬
+    å¯¹äºŽè„šæœ¬è€Œè¨€ï¼Œä¹Ÿæ˜¯å‰ä¸€æ¡å‘½ä»¤çš„ç»“æžœçŠ¶æ€
 
-    **Ò»¸ö½Å±¾·µ»ØµÄ½á¹ûÊÇ×îºóÒ»ÌõÃüÁî¾ö¶¨µÄ**
+    **ä¸€ä¸ªè„šæœ¬è¿”å›žçš„ç»“æžœæ˜¯æœ€åŽä¸€æ¡å‘½ä»¤å†³å®šçš„**
 
-    **ºÍÊÇ·ñÓÐÓï·¨´íÎó¾ö¶¨µÄ**
+    **å’Œæ˜¯å¦æœ‰è¯­æ³•é”™è¯¯å†³å®šçš„**
 
 
-**ÍË³ö×´Ì¬Âë**
+**é€€å‡ºçŠ¶æ€ç **
     exit    
     exit 10
 
@@ -364,41 +364,41 @@ done
 
 
 ## hash
-1. ¼ò½é
-    1. linuxÏµÍ³ÏÂ»áÓÐÒ»¸öhash±í£¬µ±Äã¸Õ¿ª»úÊ±Õâ¸öhash±íÎª¿Õ£¬Ã¿µ±ÄãÖ´ÐÐ¹ýÒ»ÌõÃüÁîÊ±£¬hash±í»á¼ÇÂ¼ÏÂÕâÌõÃüÁîµÄÂ·¾¶£¬¾ÍÏàµ±ÓÚ»º´æÒ»Ñù¡£
+1. ç®€ä»‹
+    1. linuxç³»ç»Ÿä¸‹ä¼šæœ‰ä¸€ä¸ªhashè¡¨ï¼Œå½“ä½ åˆšå¼€æœºæ—¶è¿™ä¸ªhashè¡¨ä¸ºç©ºï¼Œæ¯å½“ä½ æ‰§è¡Œè¿‡ä¸€æ¡å‘½ä»¤æ—¶ï¼Œhashè¡¨ä¼šè®°å½•ä¸‹è¿™æ¡å‘½ä»¤çš„è·¯å¾„ï¼Œå°±ç›¸å½“äºŽç¼“å­˜ä¸€æ ·ã€‚
 
-    1. µÚÒ»´ÎÖ´ÐÐÃüÁîshell½âÊÍÆ÷Ä¬ÈÏµÄ»á´ÓPATHÂ·¾¶ÏÂÑ°ÕÒ¸ÃÃüÁîµÄÂ·¾¶£¬µ±ÄãµÚ¶þ´ÎÊ¹ÓÃ¸ÃÃüÁîÊ±£¬shell½âÊÍÆ÷Ê×ÏÈ»á²é¿´hash±í£¬Ã»ÓÐ¸ÃÃüÁî²Å»áÈ¥PATHÂ·¾¶ÏÂÑ°ÕÒ¡£
-    1. hash±íµÄ×÷ÓÃ£º
-        1. ´ó´óÌá¸ßÃüÁîµÄµ÷ÓÃËÙÂÊ¡£
+    1. ç¬¬ä¸€æ¬¡æ‰§è¡Œå‘½ä»¤shellè§£é‡Šå™¨é»˜è®¤çš„ä¼šä»ŽPATHè·¯å¾„ä¸‹å¯»æ‰¾è¯¥å‘½ä»¤çš„è·¯å¾„ï¼Œå½“ä½ ç¬¬äºŒæ¬¡ä½¿ç”¨è¯¥å‘½ä»¤æ—¶ï¼Œshellè§£é‡Šå™¨é¦–å…ˆä¼šæŸ¥çœ‹hashè¡¨ï¼Œæ²¡æœ‰è¯¥å‘½ä»¤æ‰ä¼šåŽ»PATHè·¯å¾„ä¸‹å¯»æ‰¾ã€‚
+    1. hashè¡¨çš„ä½œç”¨ï¼š
+        1. å¤§å¤§æé«˜å‘½ä»¤çš„è°ƒç”¨é€ŸçŽ‡ã€‚
 
-1. ÃüÁî
+1. å‘½ä»¤
     1. help hash
     1.  hash -l             //--long
-        1. ²é¿´hash±íÖÐµÄÄÚÈÝ
+        1. æŸ¥çœ‹hashè¡¨ä¸­çš„å†…å®¹
 
     1. hash -p /bin/ls bb
-        1. °ÑlsÃüÁîÖØÐÂÐ´ÁËÒ»±é£¬¸ÄÃûÎªbb
+        1. æŠŠlså‘½ä»¤é‡æ–°å†™äº†ä¸€éï¼Œæ”¹åä¸ºbb
 
-    1. hash -t ls¡¡¡¡//-t²ÎÊý¿ÉÒÔ²é¿´hash±íÖÐÃüÁîµÄÂ·¾¶
-        1. hash±íÖÐÃ»ÓÐ¼ÇÂ¼Õâ¸öÃüÁîµÄ»°£¬¾ÍÊÇnot found
+    1. hash -t lsã€€ã€€//-tå‚æ•°å¯ä»¥æŸ¥çœ‹hashè¡¨ä¸­å‘½ä»¤çš„è·¯å¾„
+        1. hashè¡¨ä¸­æ²¡æœ‰è®°å½•è¿™ä¸ªå‘½ä»¤çš„è¯ï¼Œå°±æ˜¯not found
 
     1. hash -r
-        1. Çå¿Õhash±í
+        1. æ¸…ç©ºhashè¡¨
     1. hash -d bb
-        1. Çå³ýÄ³Ò»Ìõ
+        1. æ¸…é™¤æŸä¸€æ¡
 
 
 
-## ËãÊýÔËËã
+## ç®—æ•°è¿ç®—
 x=10
 y=20
 
-$x+$y Êä³ö10+20
+$x+$y è¾“å‡º10+20
 
 
 let $x+$y
     help let
-    let:×¨ÃÅ×öÊý¾ÝÔËËã
+    let:ä¸“é—¨åšæ•°æ®è¿ç®—
         z=x+y
         z=$x+$y
     let x++
@@ -407,25 +407,25 @@ sum=$[x+y]
 sum=$[$x+$y]
 sum=$((x+y))
 
-var=`expr 1 + 2`  //exprÊÇÃüÁî£¬²ÎÊý¼äÒªÓÐ¿Õ¸ñ
+var=`expr 1 + 2`  //expræ˜¯å‘½ä»¤ï¼Œå‚æ•°é—´è¦æœ‰ç©ºæ ¼
 var=expr 1 \* 2
 
 var=$(expr 1 \* 2)
 
 
-##  ¶ÌÂ·
+##  çŸ­è·¯
 false && cmd2;cmd3
 true || cmd2;cmd3
 
-¼¦µ°Àï±ßÌô¹ÇÍ·
+é¸¡è›‹é‡Œè¾¹æŒ‘éª¨å¤´
 
-### XOR Òì»ò
+### XOR å¼‚æˆ–
 0^1 -> 1
 0^0 -> 0
 1^1 -> 0
 1^0 -> 0
 
-declare -i x=10 //ÉùÃ÷ÎªÊý×Ö
+declare -i x=10 //å£°æ˜Žä¸ºæ•°å­—
 
 
 
@@ -441,26 +441,26 @@ COLOR=$[RANDOM%7+31]
 
 ## to review
 
-Ô¶³Ì×ÀÃæ  xrdp
+è¿œç¨‹æ¡Œé¢  xrdp
     https://blog.csdn.net/sinolover/article/details/78673625
 
 
 
-unzip ÓÃ·¨
+unzip ç”¨æ³•
     https://blog.csdn.net/qq_35399846/article/details/70168002
 
 
 
-# Îâ¹â¿Æ
-echo "!!!"  //! ÔÚshellÖÐÓÐÊ²Ã´ÌØÊâÓÃ´¦Âð?
+# å´å…‰ç§‘
+echo "!!!"  //! åœ¨shellä¸­æœ‰ä»€ä¹ˆç‰¹æ®Šç”¨å¤„å—?
 
 echo $UID
     $PWD
 
-$0 Ò²¿ÉÒÔÕâÑùÀí½â£¬bash µÄµÚÒ»¸ö²ÎÊý ¼´ÎÄ¼þ±¾Éí
+$0 ä¹Ÿå¯ä»¥è¿™æ ·ç†è§£ï¼Œbash çš„ç¬¬ä¸€ä¸ªå‚æ•° å³æ–‡ä»¶æœ¬èº«
 
 
-## if Óï¾ä
+## if è¯­å¥
 
 ```
 if ();then
@@ -492,7 +492,7 @@ else
 fi
 ```
 
--f  ÅÐ¶ÏÎÄ¼þÊÇ·ñ´æÔÚ    if [ -f FILENAME ]
+-f  åˆ¤æ–­æ–‡ä»¶æ˜¯å¦å­˜åœ¨    if [ -f FILENAME ]
     
     ```
     FILE=/data/a.txt
@@ -503,7 +503,7 @@ fi
     fi 
     ```
 
--d  ÅÐ¶ÏÄ¿Â¼ÊÇ·ñ´æÔÚ    if [ -d DIR ]
+-d  åˆ¤æ–­ç›®å½•æ˜¯å¦å­˜åœ¨    if [ -d DIR ]
     
     ```
     if [ ! -d /data/newyear ];then
@@ -513,7 +513,7 @@ fi
     fi
     ```
 
--eq µÈÓÚ£¬ÓÃÓÚ£ºÕûÐÍ±È½Ï
+-eq ç­‰äºŽï¼Œç”¨äºŽï¼šæ•´åž‹æ¯”è¾ƒ
     
     ```
     score=$1
@@ -533,9 +533,9 @@ fi
     fi
 
     ```
-    Êý×Ö±È½ÏÓÃ [[]]?? 
+    æ•°å­—æ¯”è¾ƒç”¨ [[]]?? 
 
--ne ²»µÈÓÚ
+-ne ä¸ç­‰äºŽ
 
 -lt little than
 -le little or equal
@@ -544,63 +544,63 @@ fi
 
 -a  and
 -o  or
--z  ¿Õ×Ö·û´®
+-z  ç©ºå­—ç¬¦ä¸²
 
-! È¡·´, ÒªÓÐÒ»¸ö¿Õ¸ñ
+! å–å, è¦æœ‰ä¸€ä¸ªç©ºæ ¼
 
 1. []
-    ÒªÓÐ¿Õ¸ñ
+    è¦æœ‰ç©ºæ ¼
 
-1. ÔÚbashÖÐ£¬$( )Óë` `£¨·´ÒýºÅ£©¶¼ÊÇÓÃÀ´×÷ÃüÁîÌæ»»µÄ¡£
-    ÃüÁîÌæ»»Óë±äÁ¿Ìæ»»²î²»¶à£¬¶¼ÊÇÓÃÀ´ÖØ×éÃüÁîÐÐµÄ£¬ÏÈÍê³ÉÒýºÅÀïµÄÃüÁîÐÐ£¬È»ºó½«Æä½á¹ûÌæ»»³öÀ´£¬ÔÙÖØ×é³ÉÐÂµÄÃüÁîÐÐ¡£
+1. åœ¨bashä¸­ï¼Œ$( )ä¸Ž` `ï¼ˆåå¼•å·ï¼‰éƒ½æ˜¯ç”¨æ¥ä½œå‘½ä»¤æ›¿æ¢çš„ã€‚
+    å‘½ä»¤æ›¿æ¢ä¸Žå˜é‡æ›¿æ¢å·®ä¸å¤šï¼Œéƒ½æ˜¯ç”¨æ¥é‡ç»„å‘½ä»¤è¡Œçš„ï¼Œå…ˆå®Œæˆå¼•å·é‡Œçš„å‘½ä»¤è¡Œï¼Œç„¶åŽå°†å…¶ç»“æžœæ›¿æ¢å‡ºæ¥ï¼Œå†é‡ç»„æˆæ–°çš„å‘½ä»¤è¡Œã€‚
 
     ```
     echo today is $(date "+%Y-%m-%d")
     echo today is `date "+%Y-%m-%d"`
     ```
 
-    $( )µÄ±×¶ËÊÇ£¬²¢²»ÊÇËùÓÐµÄÀàunixÏµÍ³¶¼Ö§³ÖÕâÖÖ·½Ê½£¬µ«·´ÒýºÅÊÇ¿Ï¶¨Ö§³ÖµÄ¡£
+    $( )çš„å¼Šç«¯æ˜¯ï¼Œå¹¶ä¸æ˜¯æ‰€æœ‰çš„ç±»unixç³»ç»Ÿéƒ½æ”¯æŒè¿™ç§æ–¹å¼ï¼Œä½†åå¼•å·æ˜¯è‚¯å®šæ”¯æŒçš„ã€‚
 
     echo Linux `echo Shell $(echo today is $(date "+%Y-%m-%d"))`
-        ÕâÖÖÇ¶Ì×µÄÇé¿öÏÂ£¬µ¥µ¥Ê¹ÓÃ·´ÒýºÅ»á³öÏÖÎÊÌâ, ¶à¸ö$()Í¬Ê±Ê¹ÓÃÒ²²»»áÓÐÎÊÌâ
+        è¿™ç§åµŒå¥—çš„æƒ…å†µä¸‹ï¼Œå•å•ä½¿ç”¨åå¼•å·ä¼šå‡ºçŽ°é—®é¢˜, å¤šä¸ª$()åŒæ—¶ä½¿ç”¨ä¹Ÿä¸ä¼šæœ‰é—®é¢˜
 
 
 
-1. Ò»°ãÇé¿öÏÂ£¬$varÓë${var}ÊÇÃ»ÓÐÇø±ðµÄ£¬µ«ÊÇÓÃ${ }»á±È½Ï¾«È·µÄ½ç¶¨±äÁ¿Ãû³ÆµÄ·¶Î§
+1. ä¸€èˆ¬æƒ…å†µä¸‹ï¼Œ$varä¸Ž${var}æ˜¯æ²¡æœ‰åŒºåˆ«çš„ï¼Œä½†æ˜¯ç”¨${ }ä¼šæ¯”è¾ƒç²¾ç¡®çš„ç•Œå®šå˜é‡åç§°çš„èŒƒå›´
 
     ```
     A=Linux
-    echo ${A}B  //Êä³öLinuxB
-    echo $AB    //±íÊ¾±äÁ¿AB
+    echo ${A}B  //è¾“å‡ºLinuxB
+    echo $AB    //è¡¨ç¤ºå˜é‡AB
     ```
 
 
-### MySQL ±¸·Ý
+### MySQL å¤‡ä»½
 
 ```
 #!/bin/bash
 # auto backup mysql db
 
-# ±¸·ÝÂ·¾¶
+# å¤‡ä»½è·¯å¾„
 BACK_DIR=/data/backup/`date +%F`
 
-# ÊÇ·ñÊÇrootÓÃ»§
+# æ˜¯å¦æ˜¯rootç”¨æˆ·
 if [ $UID -ne 0 ];then
     echo "must root"
 fi
 
-# ´´½¨±¸·ÝÂ·¾¶
+# åˆ›å»ºå¤‡ä»½è·¯å¾„
 if [ -d $BACK_DIR ];then
     mkdir -p $BACK_DIR
 fi
 
-# ±¸·Ý
+# å¤‡ä»½
 MYSQL_DB=discuz
 MYSQL_USER=backup
 MYSQL_PW=1234
 MYSQQL_CMD=/usr/bin/mysqldump
 
-# ±¸·ÝÃüÁî
+# å¤‡ä»½å‘½ä»¤
 $MYSQL_CMD -u$MYSQL_USER -p$MYSQL_PW -d$MYSQL_DB > $BACK_DIR/$MYSQL_DB.sql
 
 if [ $? -eq 0 ];then
@@ -614,9 +614,9 @@ fi
 
 ## for
 ```
-for ±äÁ¿ in ×Ö·û´®
+for å˜é‡ in å­—ç¬¦ä¸²
     do
-        Óï¾ä
+        è¯­å¥
     done
 
 
@@ -635,14 +635,14 @@ for ((i=1;i<=100;i++))
 
 
 
-´ò°üÊý¸öÎÄ¼þ
+æ‰“åŒ…æ•°ä¸ªæ–‡ä»¶
 for i in `find ./ -name "*.log"`
     do
-        tar -zcvf $i.tar.gz $i//»¹ÓÐÎÊÌâ
+        tar -zcvf $i.tar.gz $i//è¿˜æœ‰é—®é¢˜
     done
 
 
-ÅúÁ¿´«ÊäÎÄ¼þscp
+æ‰¹é‡ä¼ è¾“æ–‡ä»¶scp
 
 
     ```
@@ -654,91 +654,91 @@ for i in `find ./ -name "*.log"`
     ```
 
 
-## ¸÷ÖÖshell
-1. AIX ÏÂµÄKorn Shell, ¼´ksh
-1. Solaris ÏÂµÄ Bourne Shell, ¼´bsh
-1. FreeBSD ÏÂµÄC Shell, ¼´csh
-1. HP-UX ÏÂµÄPOSIX Shell
-1. Linux ÏÂµÄBourne Again Shell, ¼´bash
+## å„ç§shell
+1. AIX ä¸‹çš„Korn Shell, å³ksh
+1. Solaris ä¸‹çš„ Bourne Shell, å³bsh
+1. FreeBSD ä¸‹çš„C Shell, å³csh
+1. HP-UX ä¸‹çš„POSIX Shell
+1. Linux ä¸‹çš„Bourne Again Shell, å³bash
 
 cat /etc/shells
 
 
     ```
     find ./ -name a[b.]*
-        Õâ¸öÎªÊ²Ã´±¨´íÄØ?
+        è¿™ä¸ªä¸ºä»€ä¹ˆæŠ¥é”™å‘¢?
 
     find ./ -name a[b.].*
 
     find ./ -name "a[b.]*"
 
 
-    µ±Ç°Ä¿Â¼ÏÂ ÓÐ a.sh ab.sh
+    å½“å‰ç›®å½•ä¸‹ æœ‰ a.sh ab.sh
     ----
 
     a.txt ab.txt c.txt b.txt
     find ./ -name "[!a]*"
     find ./ -name "[! a]*"
-        ÕâÁ½¸öÓëÔ¤ÆÚÏàÍ¬
+        è¿™ä¸¤ä¸ªä¸Žé¢„æœŸç›¸åŒ
     find ./ -name "[ ! a ]*"
 
-        ÕâÈýÌõÃüÁîÎªÊ²Ã´²»Ò»ÑùÄØ?
+        è¿™ä¸‰æ¡å‘½ä»¤ä¸ºä»€ä¹ˆä¸ä¸€æ ·å‘¢?
 
 
     
     ```
 
 
-    ±ê×¼Êä³ö+´íÎóÊä³ö ºÏ²¢µ½Ò»¸öÎÄ¼þ
+    æ ‡å‡†è¾“å‡º+é”™è¯¯è¾“å‡º åˆå¹¶åˆ°ä¸€ä¸ªæ–‡ä»¶
 
-| tee ÎÄ¼þ      TÐÍ¹ÜµÀ
+| tee æ–‡ä»¶      Tåž‹ç®¡é“
     
-## ÎÄ¼þÍ¨Åä·û
+## æ–‡ä»¶é€šé…ç¬¦
 *
 ?
 []
-[×Ö·û1,×Ö·û2,×Ö·û3]
-[¿ªÊ¼×Ö·û-½áÊø×Ö·û]
-[! ×Ö·û]
+[å­—ç¬¦1,å­—ç¬¦2,å­—ç¬¦3]
+[å¼€å§‹å­—ç¬¦-ç»“æŸå­—ç¬¦]
+[! å­—ç¬¦]
 
-## ÊäÈëÊä³öÖØ¶¨Ïò·û Óë ¹ÜµÀ·û
-1. <       ±ê×¼ÊäÈëÖØ¶¨Ïò
-1. >       ±ê×¼Êä³öÖØ¶¨Ïò
-1. 2>      ±ê×¼´íÎóÊä³öÖØ¶¨Ïò
-1. &>      ±ê×¼Êä³öºÏ²¢ÖØ¶¨Ïò
-1. >>      ±ê×¼Êä³ö×·¼ÓÖØ¶¨Ïò
-1. |       ¹ÜµÀ
-1. | tee   TÐÍ¹ÜµÀ
-    1. ½«Ç°Ò»¸öÃüÁîµÄ**±ê×¼Êä³ö**´æÈëÒ»¸öÎÄ¼þÖÐ£¬²¢´«µÝ¸øÏÂÒ»¸öÃüÁî×÷Îª±ê×¼ÊäÈë
-        ÓÃ·¨:   ÃüÁî | tee ÎÄ¼þ | ÃüÁî
+## è¾“å…¥è¾“å‡ºé‡å®šå‘ç¬¦ ä¸Ž ç®¡é“ç¬¦
+1. <       æ ‡å‡†è¾“å…¥é‡å®šå‘
+1. >       æ ‡å‡†è¾“å‡ºé‡å®šå‘
+1. 2>      æ ‡å‡†é”™è¯¯è¾“å‡ºé‡å®šå‘
+1. &>      æ ‡å‡†è¾“å‡ºåˆå¹¶é‡å®šå‘
+1. >>      æ ‡å‡†è¾“å‡ºè¿½åŠ é‡å®šå‘
+1. |       ç®¡é“
+1. | tee   Tåž‹ç®¡é“
+    1. å°†å‰ä¸€ä¸ªå‘½ä»¤çš„**æ ‡å‡†è¾“å‡º**å­˜å…¥ä¸€ä¸ªæ–‡ä»¶ä¸­ï¼Œå¹¶ä¼ é€’ç»™ä¸‹ä¸€ä¸ªå‘½ä»¤ä½œä¸ºæ ‡å‡†è¾“å…¥
+        ç”¨æ³•:   å‘½ä»¤ | tee æ–‡ä»¶ | å‘½ä»¤
 
 
 
-## ÃüÁîÖ´ÐÐ¿ØÖÆ·û
-1. ;    Ë³ÐòÖ´ÐÐ
-1. &&   Âß¼­Óë
-1. ||   Âß¼­»ò
-1. &    ºóÌ¨Ö´ÐÐ
+## å‘½ä»¤æ‰§è¡ŒæŽ§åˆ¶ç¬¦
+1. ;    é¡ºåºæ‰§è¡Œ
+1. &&   é€»è¾‘ä¸Ž
+1. ||   é€»è¾‘æˆ–
+1. &    åŽå°æ‰§è¡Œ
 
-## ÃüÁîÌæ»»·ûºÅ
+## å‘½ä»¤æ›¿æ¢ç¬¦å·
 1. ""   
-1. ''   ×èÖ¹shell½âÎö±äÁ¿
-1. ``   °ÑÖ´ÐÐÃüÁîµÄ½á¹û´æ·ÅÔÚ±äÁ¿ÖÐ
+1. ''   é˜»æ­¢shellè§£æžå˜é‡
+1. ``   æŠŠæ‰§è¡Œå‘½ä»¤çš„ç»“æžœå­˜æ”¾åœ¨å˜é‡ä¸­
 
-## Ôª×Ö·û
-1. #        ×¢ÊÍ·ûºÅ
-1. $        ±äÁ¿µÄÒýÓÃ·ûºÅ
-1. ¿Õ¸ñ     ·Ö¸ô·û£¬ÓÃÀ´·Ö¸ô ÃüÁîÃû¡¢²ÎÊý¡¢Ñ¡Ïî
+## å…ƒå­—ç¬¦
+1. #        æ³¨é‡Šç¬¦å·
+1. $        å˜é‡çš„å¼•ç”¨ç¬¦å·
+1. ç©ºæ ¼     åˆ†éš”ç¬¦ï¼Œç”¨æ¥åˆ†éš” å‘½ä»¤åã€å‚æ•°ã€é€‰é¡¹
 
-## ×ªÒå·û
+## è½¬ä¹‰ç¬¦
 1. \
 
 
 
 --- 
 
-## »·¾³±äÁ¿
-Ã¿¸öÓÃ»§µÇÂ½ÏµÍ³ºó£¬¶¼ÓÐ×Ô¼º×¨ÊôµÄÔËÐÐ»·¾³£¨Ò²³ÆÎªShell»·¾³£©£¬³ÆÎª»·¾³±äÁ¿
+## çŽ¯å¢ƒå˜é‡
+æ¯ä¸ªç”¨æˆ·ç™»é™†ç³»ç»ŸåŽï¼Œéƒ½æœ‰è‡ªå·±ä¸“å±žçš„è¿è¡ŒçŽ¯å¢ƒï¼ˆä¹Ÿç§°ä¸ºShellçŽ¯å¢ƒï¼‰ï¼Œç§°ä¸ºçŽ¯å¢ƒå˜é‡
 BASH
 SHELL
 
@@ -746,22 +746,22 @@ BASH_VERSINFO
 
 
 
-## »·¾³ÅäÖÃÎÄ¼þ
-È«¾Ö»·¾³±äÁ¿ÅäÖÃÎÄ¼þ£º/etc/profile , /etc/bashrc
-ÓÃ»§»·¾³±äÁ¿ÅäÖÃÎÄ¼þ£º~/.bash_profile , ~/.bashrc
-¶ÁÈ¡Ë³Ðò£º
-    1. /etc/profile         //Ã¿¸öÓÃ»§¶¼»á¼ÓÔØ
-    1. ~/.bash_profile      //½öµ±ÓÃ»§µÇÂ½Ê±£¬¼ÓÔØÒ»´Î£»
+## çŽ¯å¢ƒé…ç½®æ–‡ä»¶
+å…¨å±€çŽ¯å¢ƒå˜é‡é…ç½®æ–‡ä»¶ï¼š/etc/profile , /etc/bashrc
+ç”¨æˆ·çŽ¯å¢ƒå˜é‡é…ç½®æ–‡ä»¶ï¼š~/.bash_profile , ~/.bashrc
+è¯»å–é¡ºåºï¼š
+    1. /etc/profile         //æ¯ä¸ªç”¨æˆ·éƒ½ä¼šåŠ è½½
+    1. ~/.bash_profile      //ä»…å½“ç”¨æˆ·ç™»é™†æ—¶ï¼ŒåŠ è½½ä¸€æ¬¡ï¼›
 
-    1. ~/.bashrc            //µ±ÓÃ»§µÇÂ½Ê±£¬Ã¿´Î´ò¿ªÐÂshellÊ±£¬¸ÃÎÄ¼þ±»¶ÁÈ¡
-    1. /etc/bashrc          //Ã¿¸öÓÃ»§£¬µ±bash±»´ò¿ªÊ±£¬¸ÃÎÄ¼þ±»¶ÁÈ¡
+    1. ~/.bashrc            //å½“ç”¨æˆ·ç™»é™†æ—¶ï¼Œæ¯æ¬¡æ‰“å¼€æ–°shellæ—¶ï¼Œè¯¥æ–‡ä»¶è¢«è¯»å–
+    1. /etc/bashrc          //æ¯ä¸ªç”¨æˆ·ï¼Œå½“bashè¢«æ‰“å¼€æ—¶ï¼Œè¯¥æ–‡ä»¶è¢«è¯»å–
 
 
-## ²âÊÔÃüÁî test
+## æµ‹è¯•å‘½ä»¤ test
 
-Ö¸¶¨Ìõ¼þÖµ:Ê¹ÓÃÃüÁîºÍ×Ö·û´®
+æŒ‡å®šæ¡ä»¶å€¼:ä½¿ç”¨å‘½ä»¤å’Œå­—ç¬¦ä¸²
 
-1. ÊýÖµ±È½Ï
+1. æ•°å€¼æ¯”è¾ƒ
     1. -eq
     1. -ne
 
@@ -771,37 +771,37 @@ BASH_VERSINFO
     1. -le
     1. -lt
 
-1. ×Ö·û´®±È½Ï
+1. å­—ç¬¦ä¸²æ¯”è¾ƒ
     1. =
     1. !=
     1. -z
     1. -n
-    1. **×¢Òâ²Ù×÷·ûºÍ²Ù×÷ÊýÖ®¼ä±ØÐëÓÐ¿Õ¸ñ**
+    1. **æ³¨æ„æ“ä½œç¬¦å’Œæ“ä½œæ•°ä¹‹é—´å¿…é¡»æœ‰ç©ºæ ¼**
 
-1. ÎÄ¼þ²Ù×÷
-    1. -b  ÎÄ¼þ´æÔÚ£¬ÇÒÎª¿éÎÄ¼þ
-    1. -c  ÎÄ¼þ´æÔÚ£¬ÇÒÎª×Ö·ûÎÄ¼þ
+1. æ–‡ä»¶æ“ä½œ
+    1. -b  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”ä¸ºå—æ–‡ä»¶
+    1. -c  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”ä¸ºå­—ç¬¦æ–‡ä»¶
 
-    1. -d  ÎÄ¼þ´æÔÚ£¬ÇÒÎªÄ¿Â¼
-    1. -f  ÎÄ¼þ´æÔÚ£¬ÇÒÎªÆÕÍ¨ÎÄ¼þ
+    1. -d  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”ä¸ºç›®å½•
+    1. -f  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”ä¸ºæ™®é€šæ–‡ä»¶
 
-    1. -e  ÎÄ¼þ´æÔÚ
-    1. **-s  ÎÄ¼þ´æÔÚ£¬ÇÒÖÁÉÙÓÐÒ»¸ö×Ö·û**
+    1. -e  æ–‡ä»¶å­˜åœ¨
+    1. **-s  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”è‡³å°‘æœ‰ä¸€ä¸ªå­—ç¬¦**
 
-    1. -r  ÎÄ¼þ´æÔÚ£¬ÇÒreadonly
-    1. -w  ÎÄ¼þ´æÔÚ£¬ÇÒwriteable
-    1. -x  ÎÄ¼þ´æÔÚ£¬ÇÒexecutable
+    1. -r  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”readonly
+    1. -w  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”writeable
+    1. -x  æ–‡ä»¶å­˜åœ¨ï¼Œä¸”executable
 
-    1. Í¨³£»áºÍ ! Á¬ÓÃ
-        ! -e    ×¢ÒâÓÐ¿Õ¸ñ
+    1. é€šå¸¸ä¼šå’Œ ! è¿žç”¨
+        ! -e    æ³¨æ„æœ‰ç©ºæ ¼
 
-1. Âß¼­²Ù×÷
-    1. &&   ¶ÌÂ·Óë
-    1. ||   ¶ÌÂ·»ò
+1. é€»è¾‘æ“ä½œ
+    1. &&   çŸ­è·¯ä¸Ž
+    1. ||   çŸ­è·¯æˆ–
 
 
-## ËãÊõÔËËã·û
-$[] //ÓÐÎÞ¿Õ¸ñ¾ù¿É
+## ç®—æœ¯è¿ç®—ç¬¦
+$[] //æœ‰æ— ç©ºæ ¼å‡å¯
 
 ```
 NUM1=1
@@ -811,13 +811,13 @@ NUM3=$[NUM1+NUM2*2]
 
 
 expr NUM1 + NUM2 \* 2
-expr µÄ»° £¬* / () ¶¼Òª×ö×ªÒå´¦Àí
+expr çš„è¯ ï¼Œ* / () éƒ½è¦åšè½¬ä¹‰å¤„ç†
 ```
 
 
-## ÄÚ²¿ÃüÁî
+## å†…éƒ¨å‘½ä»¤
 1. echo 
-    1. Ë«ÒýºÅÍêÈ«¿ÉÒÔÊ¡ÂÔ
+    1. åŒå¼•å·å®Œå…¨å¯ä»¥çœç•¥
     
     ```
     echo it is a good idea
@@ -826,20 +826,20 @@ expr µÄ»° £¬* / () ¶¼Òª×ö×ªÒå´¦Àí
 
     ```
 
-    1. -e ¿ªÆô×ªÒå
+    1. -e å¼€å¯è½¬ä¹‰
     
     ```
     echo -e "hello\n"
     ```
     
-    1. µ¥ÒýºÅ ²»½øÐÐÈÎºÎ×ªÒå£¬Ô­ÑùÊä³ö
+    1. å•å¼•å· ä¸è¿›è¡Œä»»ä½•è½¬ä¹‰ï¼ŒåŽŸæ ·è¾“å‡º
 
-    1. ×Ü½á
-           | ÄÜ·ñÒýÓÃ±äÁ¿ |  ÄÜ·ñÒýÓÃ×ªÒÆ·û  |  ÄÜ·ñÒýÓÃÎÄ±¾¸ñÊ½·û(Èç£º»»ÐÐ·û¡¢ÖÆ±í·û)
+    1. æ€»ç»“
+           | èƒ½å¦å¼•ç”¨å˜é‡ |  èƒ½å¦å¼•ç”¨è½¬ç§»ç¬¦  |  èƒ½å¦å¼•ç”¨æ–‡æœ¬æ ¼å¼ç¬¦(å¦‚ï¼šæ¢è¡Œç¬¦ã€åˆ¶è¡¨ç¬¦)
 
-    µ¥ÒýºÅ |      ·ñ      |       ·ñ         |                ·ñ
-    Ë«ÒýºÅ |      ÄÜ      |       ÄÜ         |                ÄÜ
-    ÎÞÒýºÅ |      ÄÜ      |       ÄÜ         |                ·ñ  
+    å•å¼•å· |      å¦      |       å¦         |                å¦
+    åŒå¼•å· |      èƒ½      |       èƒ½         |                èƒ½
+    æ— å¼•å· |      èƒ½      |       èƒ½         |                å¦  
 
 
 1. printf
@@ -847,35 +847,35 @@ expr µÄ»° £¬* / () ¶¼Òª×ö×ªÒå´¦Àí
 
     **printf  format-string  [arguments...]**
     
-    ²»»á×Ô¶¯Ìí¼ÓÈÎºÎ¿ØÖÆ·û
+    ä¸ä¼šè‡ªåŠ¨æ·»åŠ ä»»ä½•æŽ§åˆ¶ç¬¦
 
     printf "hello\n"
-    ÎªÊ²Ã´Ã»ÓÐ\nÊ±¶¼¿´²»µ½Êä³öÄØ?
+    ä¸ºä»€ä¹ˆæ²¡æœ‰\næ—¶éƒ½çœ‹ä¸åˆ°è¾“å‡ºå‘¢?
 
 
-    printf "%-10s %-8s %-4s\n" ÐÕÃû ÐÔ±ð ÌåÖØkg
-    printf "%-10s %-8s %-4.2f\n" ¹ù¾¸ ÄÐ 66.1234
+    printf "%-10s %-8s %-4s\n" å§“å æ€§åˆ« ä½“é‡kg
+    printf "%-10s %-8s %-4.2f\n" éƒ­é– ç”· 66.1234
 
-    -±íÊ¾×ó¶ÔÆë£¬Ã»ÓÐÔò±íÊ¾ÓÒ¶ÔÆë
-    format-string µ¥ÒýºÅÓëË«ÒýºÅÐ§¹ûÒ»Ñù; 
-        Ã»ÓÐÒýºÅÒ²¿ÉÒÔÊä³ö,×îºÃ»¹ÊÇ¼ÓÉÏÒýºÅ£¬ÈçÓÐ»»ÐÐ·ûµÈ£¬»á³öÏÖÒâÏë²»µ½µÄ½á¹û
+    -è¡¨ç¤ºå·¦å¯¹é½ï¼Œæ²¡æœ‰åˆ™è¡¨ç¤ºå³å¯¹é½
+    format-string å•å¼•å·ä¸ŽåŒå¼•å·æ•ˆæžœä¸€æ ·; 
+        æ²¡æœ‰å¼•å·ä¹Ÿå¯ä»¥è¾“å‡º,æœ€å¥½è¿˜æ˜¯åŠ ä¸Šå¼•å·ï¼Œå¦‚æœ‰æ¢è¡Œç¬¦ç­‰ï¼Œä¼šå‡ºçŽ°æ„æƒ³ä¸åˆ°çš„ç»“æžœ
 
         ```
-        printf %10s\n a b c     ÒâÏë²»µ½µÄ½á¹û
-        printf "%10s\n" a b c   ÕýÈ·µÄ½á¹û
+        printf %10s\n a b c     æ„æƒ³ä¸åˆ°çš„ç»“æžœ
+        printf "%10s\n" a b c   æ­£ç¡®çš„ç»“æžœ
         ```
         
 
-    ¸ñÊ½Ö»Ö¸¶¨ÁËÒ»¸ö²ÎÊý£¬µ«¶à³öµÄ²ÎÊýÈÔÈ»»á°´ÕÕ¸Ã¸ñÊ½Êä³ö£¬**format-string ±»ÖØÓÃ**
+    æ ¼å¼åªæŒ‡å®šäº†ä¸€ä¸ªå‚æ•°ï¼Œä½†å¤šå‡ºçš„å‚æ•°ä»ç„¶ä¼šæŒ‰ç…§è¯¥æ ¼å¼è¾“å‡ºï¼Œ**format-string è¢«é‡ç”¨**
     printf %10s\n a b c
 
-    1. d: Decimal Ê®½øÖÆÕûÊý   -- ¶ÔÓ¦Î»ÖÃ²ÎÊý±ØÐëÊÇÊ®½øÖÆÕûÊý»ò×Ö·ûÊý×Ö£¬·ñÔò±¨´í£¡
-    1. s: String ×Ö·û´®        -- ¶ÔÓ¦Î»ÖÃ²ÎÊý±ØÐëÊÇ×Ö·û´®»òÕß×Ö·ûÐÍ£¬·ñÔò±¨´í£¡
-    1. c: Char ×Ö·û            -- ¶ÔÓ¦Î»ÖÃ²ÎÊý±ØÐëÊÇ×Ö·û´®»òÕß×Ö·ûÐÍ£¬·ñÔò±¨´í£¡
-    1. f: Float ¸¡µã           -- ¶ÔÓ¦Î»ÖÃ²ÎÊý±ØÐëÊÇÊý×ÖÐÍ£¬·ñÔò±¨´í£¡
+    1. d: Decimal åè¿›åˆ¶æ•´æ•°   -- å¯¹åº”ä½ç½®å‚æ•°å¿…é¡»æ˜¯åè¿›åˆ¶æ•´æ•°æˆ–å­—ç¬¦æ•°å­—ï¼Œå¦åˆ™æŠ¥é”™ï¼
+    1. s: String å­—ç¬¦ä¸²        -- å¯¹åº”ä½ç½®å‚æ•°å¿…é¡»æ˜¯å­—ç¬¦ä¸²æˆ–è€…å­—ç¬¦åž‹ï¼Œå¦åˆ™æŠ¥é”™ï¼
+    1. c: Char å­—ç¬¦            -- å¯¹åº”ä½ç½®å‚æ•°å¿…é¡»æ˜¯å­—ç¬¦ä¸²æˆ–è€…å­—ç¬¦åž‹ï¼Œå¦åˆ™æŠ¥é”™ï¼
+    1. f: Float æµ®ç‚¹           -- å¯¹åº”ä½ç½®å‚æ•°å¿…é¡»æ˜¯æ•°å­—åž‹ï¼Œå¦åˆ™æŠ¥é”™ï¼
 
 1. read
-    read ÃüÁî´Ó±ê×¼ÊäÈëÖÐ¶ÁÈ¡Ò»ÐÐ,²¢°ÑÊäÈëÐÐµÄµÄÖµÖ¸¶¨¸ø shell ±äÁ¿
+    read å‘½ä»¤ä»Žæ ‡å‡†è¾“å…¥ä¸­è¯»å–ä¸€è¡Œ,å¹¶æŠŠè¾“å…¥è¡Œçš„çš„å€¼æŒ‡å®šç»™ shell å˜é‡
     
     ```
     #!/bin/bash
@@ -883,14 +883,14 @@ expr µÄ»° £¬* / () ¶¼Òª×ö×ªÒå´¦Àí
     echo "$name It is a test"
     ```
 
-     -p ÊäÈëÌáÊ¾ÎÄ×Ö
-     -n ÊäÈë×Ö·û³¤¶ÈÏÞÖÆ(´ïµ½6Î»£¬×Ô¶¯½áÊø)
-     -t ÊäÈëÏÞÊ±£¨Ãë£©
-     -s Òþ²ØÊäÈëÄÚÈÝ ¾ÍÊÇÊäÈëÃÜÂëÊ±µÄÄÄÖÖÇéÐÎ
+     -p è¾“å…¥æç¤ºæ–‡å­—
+     -n è¾“å…¥å­—ç¬¦é•¿åº¦é™åˆ¶(è¾¾åˆ°6ä½ï¼Œè‡ªåŠ¨ç»“æŸ)
+     -t è¾“å…¥é™æ—¶ï¼ˆç§’ï¼‰
+     -s éšè—è¾“å…¥å†…å®¹ å°±æ˜¯è¾“å…¥å¯†ç æ—¶çš„å“ªç§æƒ…å½¢
 
     ```
     a.sh
-    read -p "ÇëÊäÈëÒ»¶ÎÎÄ×Ö:" -n 6 -t 5 -s password
+    read -p "è¯·è¾“å…¥ä¸€æ®µæ–‡å­—:" -n 6 -t 5 -s password
     echo -e "\npassword is $password"
 
 
@@ -906,21 +906,21 @@ expr µÄ»° £¬* / () ¶¼Òª×ö×ªÒå´¦Àí
     fi
     ```
 
-## source »ò "."(dot)
+## source æˆ– "."(dot)
 
-"."±íÊ¾µ±Ç°Ä¿Â¼
-Ò»¸ö½Å±¾othersÃ»ÓÐxÈ¨ÏÞ£¬Í¨¹ýsource »ò "." »ò /bin/bash ¾Í¿ÉÒÔÖ´ÐÐÁË£¬ÕâÓÐÊ²Ã´°²È«µÄ?
+"."è¡¨ç¤ºå½“å‰ç›®å½•
+ä¸€ä¸ªè„šæœ¬othersæ²¡æœ‰xæƒé™ï¼Œé€šè¿‡source æˆ– "." æˆ– /bin/bash å°±å¯ä»¥æ‰§è¡Œäº†ï¼Œè¿™æœ‰ä»€ä¹ˆå®‰å…¨çš„?
 
-### source filename Óë sh filename ¼°./filenameÖ´ÐÐ½Å±¾µÄÇø±ð
+### source filename ä¸Ž sh filename åŠ./filenameæ‰§è¡Œè„šæœ¬çš„åŒºåˆ«
 
-1. µ±shell½Å±¾¾ßÓÐ¿ÉÖ´ÐÐÈ¨ÏÞÊ±£¬ÓÃsh filenameÓë./filenameÖ´ÐÐ½Å±¾ÊÇÃ»ÓÐÇø±ðµÃ¡£./filenameÊÇÒòÎªµ±Ç°Ä¿Â¼Ã»ÓÐÔÚPATHÖÐ£¬ËùÓÐ"."ÊÇÓÃÀ´±íÊ¾µ±Ç°Ä¿Â¼µÄ¡£
+1. å½“shellè„šæœ¬å…·æœ‰å¯æ‰§è¡Œæƒé™æ—¶ï¼Œç”¨sh filenameä¸Ž./filenameæ‰§è¡Œè„šæœ¬æ˜¯æ²¡æœ‰åŒºåˆ«å¾—ã€‚./filenameæ˜¯å› ä¸ºå½“å‰ç›®å½•æ²¡æœ‰åœ¨PATHä¸­ï¼Œæ‰€æœ‰"."æ˜¯ç”¨æ¥è¡¨ç¤ºå½“å‰ç›®å½•çš„ã€‚
 
-1. sh filename ÖØÐÂ½¨Á¢Ò»¸ö×Óshell£¬ÔÚ×ÓshellÖÐÖ´ÐÐ½Å±¾ÀïÃæµÄÓï¾ä£¬¸Ã×Óshell¼Ì³Ð¸¸shellµÄ»·¾³±äÁ¿£¬µ«×ÓshellÐÂ½¨µÄ¡¢¸Ä±äµÄ±äÁ¿²»»á±»´ø»Ø¸¸shell£¬³ý·ÇÊ¹ÓÃexport¡£
+1. sh filename é‡æ–°å»ºç«‹ä¸€ä¸ªå­shellï¼Œåœ¨å­shellä¸­æ‰§è¡Œè„šæœ¬é‡Œé¢çš„è¯­å¥ï¼Œè¯¥å­shellç»§æ‰¿çˆ¶shellçš„çŽ¯å¢ƒå˜é‡ï¼Œä½†å­shellæ–°å»ºçš„ã€æ”¹å˜çš„å˜é‡ä¸ä¼šè¢«å¸¦å›žçˆ¶shellï¼Œé™¤éžä½¿ç”¨exportã€‚
 
-1. source filename£ºÕâ¸öÃüÁîÆäÊµÖ»ÊÇ¼òµ¥µØ¶ÁÈ¡½Å±¾ÀïÃæµÄÓï¾äÒÀ´Î**ÔÚµ±Ç°shellÀïÃæÖ´ÐÐ£¬Ã»ÓÐ½¨Á¢ÐÂµÄ×Óshell¡£**ÄÇÃ´½Å±¾ÀïÃæËùÓÐÐÂ½¨¡¢¸Ä±ä±äÁ¿µÄÓï¾ä¶¼»á±£´æÔÚµ±Ç°shellÀïÃæ¡£
-
-
+1. source filenameï¼šè¿™ä¸ªå‘½ä»¤å…¶å®žåªæ˜¯ç®€å•åœ°è¯»å–è„šæœ¬é‡Œé¢çš„è¯­å¥ä¾æ¬¡**åœ¨å½“å‰shellé‡Œé¢æ‰§è¡Œï¼Œæ²¡æœ‰å»ºç«‹æ–°çš„å­shellã€‚**é‚£ä¹ˆè„šæœ¬é‡Œé¢æ‰€æœ‰æ–°å»ºã€æ”¹å˜å˜é‡çš„è¯­å¥éƒ½ä¼šä¿å­˜åœ¨å½“å‰shellé‡Œé¢ã€‚
 
 
-À©Õ¹ÔÄ¶Á
+
+
+æ‰©å±•é˜…è¯»
     https://www.cnblogs.com/liang-io/p/9825363.html

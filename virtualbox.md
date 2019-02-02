@@ -1,41 +1,41 @@
-## ²Ëµ¥À¸Ã»ÓÐºó
-    1. Ctrl+C £º×Ô¶¯Ëõ·ÅÄ£Ê½
-    1. Ctrl+A£º×Ô¶¯µ÷Õû´°¿Ú´óÐ¡
+## èœå•æ æ²¡æœ‰åŽ
+    1. Ctrl+C ï¼šè‡ªåŠ¨ç¼©æ”¾æ¨¡å¼
+    1. Ctrl+Aï¼šè‡ªåŠ¨è°ƒæ•´çª—å£å¤§å°
 
-## VirtualBoxÐéÄâ»ú¿ËÂ¡Ç¨ÒÆ²½Öè
-ÓÐµÄÊ±ºòÐèÒª¶ÔÐéÄâ»ú½øÐÐÇ¨ÒÆ¡£±ÈÈçÎÒÃÇÔ­À´µÄ·þÎñÆ÷£¬Ê¹ÓÃµÄwin10²Ù×÷ÏµÍ³£¬ÉÏÃæÀûÓÃVirtualBox°²×°ÁË¶à¸öÐé»ú×÷Îª·þÎñÆ÷£¬tomcat·þÎñÆ÷£¬virtuosoÊý¾Ý¿â·þÎñÆ÷£¬mysql·þÎñÆ÷µÈ£¬ÓÉÓÚwin10ÎïÀí»ú³öÏÖÁËÎÊÌâ£¬ÐèÒª½«Ðé»úÇ¨³ö£¬ËùÒÔ³¢ÊÔ×Å½«Ðé»úÇ¨ÒÆµ½ÁíÒ»Ì¨win2008µÄÏµÍ³ÖÐ¡£
+## VirtualBoxè™šæ‹Ÿæœºå…‹éš†è¿ç§»æ­¥éª¤
+æœ‰çš„æ—¶å€™éœ€è¦å¯¹è™šæ‹Ÿæœºè¿›è¡Œè¿ç§»ã€‚æ¯”å¦‚æˆ‘ä»¬åŽŸæ¥çš„æœåŠ¡å™¨ï¼Œä½¿ç”¨çš„win10æ“ä½œç³»ç»Ÿï¼Œä¸Šé¢åˆ©ç”¨VirtualBoxå®‰è£…äº†å¤šä¸ªè™šæœºä½œä¸ºæœåŠ¡å™¨ï¼ŒtomcatæœåŠ¡å™¨ï¼Œvirtuosoæ•°æ®åº“æœåŠ¡å™¨ï¼ŒmysqlæœåŠ¡å™¨ç­‰ï¼Œç”±äºŽwin10ç‰©ç†æœºå‡ºçŽ°äº†é—®é¢˜ï¼Œéœ€è¦å°†è™šæœºè¿å‡ºï¼Œæ‰€ä»¥å°è¯•ç€å°†è™šæœºè¿ç§»åˆ°å¦ä¸€å°win2008çš„ç³»ç»Ÿä¸­ã€‚
 
-VirtualBox±£´æÐé»úÊý¾ÝµÄÊÇvdiÎÄ¼þ£¬¼òµ¥À´Ëµ¾ÍÊÇ¿½±´vdiÎÄ¼þ£¬È»ºóÔÚÐÂµÄÎïÀí»úÉÏ£¬°²×°VirtualBox´ò¿ªÕâ¸övdiÎÄ¼þ¡£¾ßÌå²½ÖèÈçÏÂ¡£
+VirtualBoxä¿å­˜è™šæœºæ•°æ®çš„æ˜¯vdiæ–‡ä»¶ï¼Œç®€å•æ¥è¯´å°±æ˜¯æ‹·è´vdiæ–‡ä»¶ï¼Œç„¶åŽåœ¨æ–°çš„ç‰©ç†æœºä¸Šï¼Œå®‰è£…VirtualBoxæ‰“å¼€è¿™ä¸ªvdiæ–‡ä»¶ã€‚å…·ä½“æ­¥éª¤å¦‚ä¸‹ã€‚
 
-1. »ñÈ¡vdiÎÄ¼þ
-Ã¿¸öÐé»ú¶¼¶ÔÓ¦Ò»¸ö»ò¶à¸övdiÎÄ¼þ£¬ÔÚVirtualBoxÖÐµÄÈ«¾ÖÉèÖÃ£¬¿ÉÒÔ²é¿´Ðé»úvdiÎÄ¼þµÄ´æ·ÅÄ¿Â¼£¬Ã¿¸öÐé»úµÄÊý¾Ý¶¼±£´æÔÚÒÔÐé»úÃû³ÆÎªÎÄ¼þ¼ÐÀïÃæ¡£
-    1. vdiÎÄ¼þ¿ÉÒÔ¿´×÷Ðé»úµÄ»ù´¡Êý¾Ý¡£Èç¹ûÐéÄâ±£´æÁË¿ìÕÕ£¨±¸·Ý£©£¬»¹ÓÐÒ»¸ösnapshotÄ¿Â¼£¬ÀïÃæ±£´æµÄÊÇÐé»ú¿ìÕÕ¡£
-    1. ¿ìÕÕµÄvdi¿ÉÒÔ¿´×÷ÊÇÐé»úµÄ×´Ì¬ÐÅÏ¢£¬
-    1. »ù´¡Êý¾ÝºÍ×´Ì¬ÐÅÏ¢¼ÓÔÚÒ»ÆðÊÇÐé»úµÄËùÓÐÊý¾Ý.
-    1. Ò»°ãÎÒÃÇ¿ÉÒÔ¹Ø±ÕÐé»ú£¬È»ºóÔÙÉ¾³ý¿ìÕÕ£¬ÕâÑù¾ÍÊ£ÏÂ¸ùÄ¿Â¼µÄvdi£¬Ò²¾ÍÊÇÐé»úµÄvdiÊý¾Ý£¬Õâ¸övdi¾ÍÊÇÎÒÃÇÒªµÄvdi¡£
+1. èŽ·å–vdiæ–‡ä»¶
+æ¯ä¸ªè™šæœºéƒ½å¯¹åº”ä¸€ä¸ªæˆ–å¤šä¸ªvdiæ–‡ä»¶ï¼Œåœ¨VirtualBoxä¸­çš„å…¨å±€è®¾ç½®ï¼Œå¯ä»¥æŸ¥çœ‹è™šæœºvdiæ–‡ä»¶çš„å­˜æ”¾ç›®å½•ï¼Œæ¯ä¸ªè™šæœºçš„æ•°æ®éƒ½ä¿å­˜åœ¨ä»¥è™šæœºåç§°ä¸ºæ–‡ä»¶å¤¹é‡Œé¢ã€‚
+    1. vdiæ–‡ä»¶å¯ä»¥çœ‹ä½œè™šæœºçš„åŸºç¡€æ•°æ®ã€‚å¦‚æžœè™šæ‹Ÿä¿å­˜äº†å¿«ç…§ï¼ˆå¤‡ä»½ï¼‰ï¼Œè¿˜æœ‰ä¸€ä¸ªsnapshotç›®å½•ï¼Œé‡Œé¢ä¿å­˜çš„æ˜¯è™šæœºå¿«ç…§ã€‚
+    1. å¿«ç…§çš„vdiå¯ä»¥çœ‹ä½œæ˜¯è™šæœºçš„çŠ¶æ€ä¿¡æ¯ï¼Œ
+    1. åŸºç¡€æ•°æ®å’ŒçŠ¶æ€ä¿¡æ¯åŠ åœ¨ä¸€èµ·æ˜¯è™šæœºçš„æ‰€æœ‰æ•°æ®.
+    1. ä¸€èˆ¬æˆ‘ä»¬å¯ä»¥å…³é—­è™šæœºï¼Œç„¶åŽå†åˆ é™¤å¿«ç…§ï¼Œè¿™æ ·å°±å‰©ä¸‹æ ¹ç›®å½•çš„vdiï¼Œä¹Ÿå°±æ˜¯è™šæœºçš„vdiæ•°æ®ï¼Œè¿™ä¸ªvdiå°±æ˜¯æˆ‘ä»¬è¦çš„vdiã€‚
 
-2. ¿ËÂ¡vdiÊý¾Ý
-    Èç¹ûÖ±½Ó¿½±´vdiÊý¾Ý£¬ÔÚÐÂµÄVirtualBoxÖÐ²»ÄÜ´ò¿ª
-    1. ÒòÎªÃ¿¸övdiÎÄ¼þ¶¼°üº¬ÁËÒ»¸öuuidµÄÊý¾Ý£¬Èç¹ûÖ±½Ó¿½±´£¬uuidÔÚÐÂµÄVirtualBoxÖÐÊÇ²»ÄÜÓÃµÄ£¬ËùÒÔ»á´ò¿ªÊ§°Ü£¬
-    1. ÎÒÃÇÐèÒª¸øÔÚÔ­À´vdiµÄ»ù´¡ÉÏ£¬Éú³ÉÐÂµÄvdiÊý¾Ý£¬°üº¬ÐÂµÄuuid£¬¿ÉÒÔÔÚVirtualBoxÖÐ´ò¿ª¡£
-    1. Õâ¸ö°üº¬ÐÂuuidµÄvdiÊý¾Ý¿ÉÒÔÍ¨¹ýVirtualBoxÃüÁîÉú³É¡£
+2. å…‹éš†vdiæ•°æ®
+    å¦‚æžœç›´æŽ¥æ‹·è´vdiæ•°æ®ï¼Œåœ¨æ–°çš„VirtualBoxä¸­ä¸èƒ½æ‰“å¼€
+    1. å› ä¸ºæ¯ä¸ªvdiæ–‡ä»¶éƒ½åŒ…å«äº†ä¸€ä¸ªuuidçš„æ•°æ®ï¼Œå¦‚æžœç›´æŽ¥æ‹·è´ï¼Œuuidåœ¨æ–°çš„VirtualBoxä¸­æ˜¯ä¸èƒ½ç”¨çš„ï¼Œæ‰€ä»¥ä¼šæ‰“å¼€å¤±è´¥ï¼Œ
+    1. æˆ‘ä»¬éœ€è¦ç»™åœ¨åŽŸæ¥vdiçš„åŸºç¡€ä¸Šï¼Œç”Ÿæˆæ–°çš„vdiæ•°æ®ï¼ŒåŒ…å«æ–°çš„uuidï¼Œå¯ä»¥åœ¨VirtualBoxä¸­æ‰“å¼€ã€‚
+    1. è¿™ä¸ªåŒ…å«æ–°uuidçš„vdiæ•°æ®å¯ä»¥é€šè¿‡VirtualBoxå‘½ä»¤ç”Ÿæˆã€‚
 
-´Ë´¦ÓÃÁË¿ËÂ¡µÄ·½·¨£¬Ò²¿ÉÒÔÖ±½Ó¿½±´¹ýÈ¥£¬È»ºóÔÙÍ¨¹ýVirtualBoxÃüÁî´¦Àí¡£
-    1. ¿ËÂ¡µÄ·½·¨£¬½øÈëcmdÃüÁîÐÐ£¬È»ºó½øÈëVirtualBoxµÄ°²×°Ä¿Â¼£¬±ÈÈçVitualBoxµÄ°²×°Ä¿Â¼ÊÇC:\Program Files\Oracle\VirtualBox£¬Ô­ÓÐvdiÎÄ¼þÔÚdÅÌ£¬Éú³ÉÐÂµÄvdi·Åµ½eÅÌ¡£ÃüÁîÎª
+æ­¤å¤„ç”¨äº†å…‹éš†çš„æ–¹æ³•ï¼Œä¹Ÿå¯ä»¥ç›´æŽ¥æ‹·è´è¿‡åŽ»ï¼Œç„¶åŽå†é€šè¿‡VirtualBoxå‘½ä»¤å¤„ç†ã€‚
+    1. å…‹éš†çš„æ–¹æ³•ï¼Œè¿›å…¥cmdå‘½ä»¤è¡Œï¼Œç„¶åŽè¿›å…¥VirtualBoxçš„å®‰è£…ç›®å½•ï¼Œæ¯”å¦‚VitualBoxçš„å®‰è£…ç›®å½•æ˜¯C:\Program Files\Oracle\VirtualBoxï¼ŒåŽŸæœ‰vdiæ–‡ä»¶åœ¨dç›˜ï¼Œç”Ÿæˆæ–°çš„vdiæ”¾åˆ°eç›˜ã€‚å‘½ä»¤ä¸º
 
     ```
     C:\Program Files\Oracle\VirtualBox>vboxmanage.exe  clonehd  "d:\xxx.vdi" "e:\xxx.vdi"
     ```
 
-    »Ø³µÖ®ºó³öÏÖ0%...£¬ÐèÒªµãÊ±¼ä²ÅÄÜÉú³ÉvdiÎÄ¼þ£¬10¶àGµÄÊý¾Ý¿ÉÄÜÒª10À´·ÖÖÓÊ±¼ä¡£Ö´ÐÐÍê³Éºó»á³öÏÖ0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%ÀàËÆµÄÐÅÏ¢¡£ÕâÑù¿ËÂ¡vdiÊý¾ÝÎÄ¼þµÄ¹¤×÷Íê³ÉÁË¡£
+    å›žè½¦ä¹‹åŽå‡ºçŽ°0%...ï¼Œéœ€è¦ç‚¹æ—¶é—´æ‰èƒ½ç”Ÿæˆvdiæ–‡ä»¶ï¼Œ10å¤šGçš„æ•°æ®å¯èƒ½è¦10æ¥åˆ†é’Ÿæ—¶é—´ã€‚æ‰§è¡Œå®ŒæˆåŽä¼šå‡ºçŽ°0%...10%...20%...30%...40%...50%...60%...70%...80%...90%...100%ç±»ä¼¼çš„ä¿¡æ¯ã€‚è¿™æ ·å…‹éš†vdiæ•°æ®æ–‡ä»¶çš„å·¥ä½œå®Œæˆäº†ã€‚
 
-3 ÀûÓÃvdiÊý¾Ý´´½¨Ðé»ú
+3 åˆ©ç”¨vdiæ•°æ®åˆ›å»ºè™šæœº
 
-ÔÚÐÂµÄVirtualBoxÖÐ´´½¨ÐÂµÄÐé»ú£¬¸øÐé»úÆð¸öÃû×Ö£¬Ñ¡Ôñ²Ù×÷ÏµÍ³¡£µã»÷ÏÂÒ»²½£¬Ê¹ÓÃÒÑÓÐvdiÎÄ¼þ´´½¨Ðé»ú£¬Ñ¡Ôñ¸ÕÉú³ÉµÄvdiÎÄ¼þ´´½¨¡£
+åœ¨æ–°çš„VirtualBoxä¸­åˆ›å»ºæ–°çš„è™šæœºï¼Œç»™è™šæœºèµ·ä¸ªåå­—ï¼Œé€‰æ‹©æ“ä½œç³»ç»Ÿã€‚ç‚¹å‡»ä¸‹ä¸€æ­¥ï¼Œä½¿ç”¨å·²æœ‰vdiæ–‡ä»¶åˆ›å»ºè™šæœºï¼Œé€‰æ‹©åˆšç”Ÿæˆçš„vdiæ–‡ä»¶åˆ›å»ºã€‚
 
-ÕâÑùÐé»úµÄÇ¨ÒÆÈÎÎñ¾ÍÍê³ÉÁË¡£
+è¿™æ ·è™šæœºçš„è¿ç§»ä»»åŠ¡å°±å®Œæˆäº†ã€‚
 
 
-Á´½Ó£º
+é“¾æŽ¥ï¼š
     1. https://www.cnblogs.com/coodream2009/p/8578216.html
-    1. https://www.linuxidc.com/Linux/2017-08/146130.htm   ºÍÉÏ±ßÄÇ¸öÒ»Ñù£¬ÓÐ½ØÍ¼
+    1. https://www.linuxidc.com/Linux/2017-08/146130.htm   å’Œä¸Šè¾¹é‚£ä¸ªä¸€æ ·ï¼Œæœ‰æˆªå›¾

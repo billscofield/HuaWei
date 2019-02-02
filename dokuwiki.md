@@ -1,32 +1,32 @@
 
-1. Dokuwiki ÊÇphpµÄ£¬ËùÒÔÒªÏÈ´î½¨php»·¾³£¬ÏÂÔØ apacheºÍphp£¬µÚ1¡¢2²½ÏÂÔØÍê£¬Ïà¹ØµÄÒÀÀµ¶¼»áÏÂÔØ
+1. Dokuwiki æ˜¯phpçš„ï¼Œæ‰€ä»¥è¦å…ˆæ­å»ºphpçŽ¯å¢ƒï¼Œä¸‹è½½ apacheå’Œphpï¼Œç¬¬1ã€2æ­¥ä¸‹è½½å®Œï¼Œç›¸å…³çš„ä¾èµ–éƒ½ä¼šä¸‹è½½
 
-## Dokuwiki °²×°
+## Dokuwiki å®‰è£…
 1. httpd
     yum -y install httpd
-    // ÔÚä¯ÀÀÆ÷ÖÐÊäÈëhttp://localhost Èç¹ûÏÖÊµIt worksÔòËµÃ÷Apache°²×°³É¹¦£¬·ñÔòApacheÎ´³É¹¦°²×°
+    // åœ¨æµè§ˆå™¨ä¸­è¾“å…¥http://localhost å¦‚æžœçŽ°å®žIt worksåˆ™è¯´æ˜ŽApacheå®‰è£…æˆåŠŸï¼Œå¦åˆ™ApacheæœªæˆåŠŸå®‰è£…
 
 2. php
     yum -y install php
-    //ÖØÆôApache£¬ÒÔ±ãApache×¢²áPHPÄ£¿é sudo /etc/init.d/apache2 restart
+    //é‡å¯Apacheï¼Œä»¥ä¾¿Apacheæ³¨å†ŒPHPæ¨¡å— sudo /etc/init.d/apache2 restart
 
     ```
-    ²âÊÔPHPÊÇ·ñ°²×°³É¹¦
+    æµ‹è¯•PHPæ˜¯å¦å®‰è£…æˆåŠŸ
 
-    Ê¹ÓÃvi±à¼­Æ÷ÔÚ/var/www/htmlÄ¿Â¼ÏÂÐÂ½¨Ò»¸öphp½Å±¾test.php
+    ä½¿ç”¨viç¼–è¾‘å™¨åœ¨/var/www/htmlç›®å½•ä¸‹æ–°å»ºä¸€ä¸ªphpè„šæœ¬test.php
 
     vi /var/www/html/test.php
-    ÔÚtest.phpÖÐÌí¼ÓÒÔÏÂ´úÂë
+    åœ¨test.phpä¸­æ·»åŠ ä»¥ä¸‹ä»£ç 
 
     <?php
       phpinfo();
     ?> 
-    ÔÙ´ÎµÇÂ¼ÍøÒ³£¬ÊäÈë£ºlocalhost/test.phpÈç¹ûÏÔÊ¾ÁËphpµÄ°æ±¾ÐÅÏ¢µÈ£¬ÄÇÃ´¾ÍËµÃ÷³É¹¦Ö§³ÖPHP,µ½´Ë×¼±¸¹¤×÷Íê±Ï¡£
+    å†æ¬¡ç™»å½•ç½‘é¡µï¼Œè¾“å…¥ï¼šlocalhost/test.phpå¦‚æžœæ˜¾ç¤ºäº†phpçš„ç‰ˆæœ¬ä¿¡æ¯ç­‰ï¼Œé‚£ä¹ˆå°±è¯´æ˜ŽæˆåŠŸæ”¯æŒPHP,åˆ°æ­¤å‡†å¤‡å·¥ä½œå®Œæ¯•ã€‚
     ```
 
-ÒòÎªÓÃyumÃüÁîÕÒ²»µ½°²×°°ü£¬ËùÒÔÖ±½ÓÈ¥¹ÙÍøÏÂÔØÎÈ¶¨°æ
+å› ä¸ºç”¨yumå‘½ä»¤æ‰¾ä¸åˆ°å®‰è£…åŒ…ï¼Œæ‰€ä»¥ç›´æŽ¥åŽ»å®˜ç½‘ä¸‹è½½ç¨³å®šç‰ˆ
 
-3. ÏÂÔØ²¢½âÑ¹dokuwiki³ÌÐò°ü
+3. ä¸‹è½½å¹¶è§£åŽ‹dokuwikiç¨‹åºåŒ…
     wget -c http://download.dokuwiki.org/src/dokuwiki/dokuwiki-stable.tgz
     tar -zvxf dokuwiki-stable.tgz
 
@@ -34,96 +34,96 @@
     
     ```
 
-apache Ä¬ÈÏµØÖ·ÊÇ /var/www/html £¬ËùÒÔ°Ñdokuwiki³ÌÐò°ü½âÑ¹ºó·Åµ½´ËµØÖ·
+apache é»˜è®¤åœ°å€æ˜¯ /var/www/html ï¼Œæ‰€ä»¥æŠŠdokuwikiç¨‹åºåŒ…è§£åŽ‹åŽæ”¾åˆ°æ­¤åœ°å€
 
-4. ½«½âÑ¹ºóµÄÎÄ¼þ¼ÐÒÆµ½ apache Ä¬ÈÏÂ·¾¶ÖÐ
+4. å°†è§£åŽ‹åŽçš„æ–‡ä»¶å¤¹ç§»åˆ° apache é»˜è®¤è·¯å¾„ä¸­
     mv dokuwiki-2017-02-19e/ /var/www/html/wiki
     
     ``` ???
-    ÉèÖÃÈ¨ÏÞ£¬Èç¹û²»ÉèÖÃÈ¨ÏÞ»áµ¼ÖÂÎÞ·¨Õý³£°²×°
+    è®¾ç½®æƒé™ï¼Œå¦‚æžœä¸è®¾ç½®æƒé™ä¼šå¯¼è‡´æ— æ³•æ­£å¸¸å®‰è£…
 
-    #dataºÍconfÄ¿Â¼ÐèÒªÐ´È¨ÏÞ
+    #dataå’Œconfç›®å½•éœ€è¦å†™æƒé™
     cd dokuwiki
     sudo chown -R www-data:www-data data conf
     ```
 
-httpd Ä¬ÈÏÆô¶¯µÄÓÃ»§¼°×éÊÇ apache£¬ËùÒÔÐÞ¸ÄÎÄ¼þ¼ÐËùÊôÓÃ»§¼°×é
+httpd é»˜è®¤å¯åŠ¨çš„ç”¨æˆ·åŠç»„æ˜¯ apacheï¼Œæ‰€ä»¥ä¿®æ”¹æ–‡ä»¶å¤¹æ‰€å±žç”¨æˆ·åŠç»„
 
-5. ÐÞ¸ÄÎÄ¼þ¼ÐËùÊôÓÃ»§¼°×é
+5. ä¿®æ”¹æ–‡ä»¶å¤¹æ‰€å±žç”¨æˆ·åŠç»„
     chown -R apache:apache /var/www/html/wiki
 
-    ``` Á´½Ó3
-    °²×°DokuWiki¡ª¡ªÔÚä¯ÀÀÆ÷ÖÐÊäÈë°²×°: http://localhost/dokuwiki/install
+    ``` é“¾æŽ¥3
+    å®‰è£…DokuWikiâ€”â€”åœ¨æµè§ˆå™¨ä¸­è¾“å…¥å®‰è£…: http://localhost/dokuwiki/install
 
-    ÖÁ´Ë£¬°²×°³É¹¦¡£
+    è‡³æ­¤ï¼Œå®‰è£…æˆåŠŸã€‚
     ```
 
-6. Æô¶¯ httpd
+6. å¯åŠ¨ httpd
     service httpd start
 
-¼ì²é¶Ë¿Ú80ÊÇ·ñÓÐ¿ªÍ¨
-    firewall ¿ªÍ¨80¶Ë¿Ú
+æ£€æŸ¥ç«¯å£80æ˜¯å¦æœ‰å¼€é€š
+    firewall å¼€é€š80ç«¯å£
     firewall-cmd --zone=public --add-port=80/tcp --permanent
     firewall-cmd --reload
 
-7. ·ÃÎÊ install.php ½øÐÐ×îºó°²×°
-    http://IP»òÕßÓòÃû/wiki
+7. è®¿é—® install.php è¿›è¡Œæœ€åŽå®‰è£…
+    http://IPæˆ–è€…åŸŸå/wiki
 
-8. °²×°ÅäÖÃ
-    1. Î¬»ùÃû³Æ£ºÄãwikiµÄÃû×Ö£¬±ÈÈçÎÒµÄÊÇLainme's Blog
-    1. ÆôÓÃACL£¨ÍÆ¼ö£©£º¼´ÆôÓÃÈ¨ÏÞ¿ØÖÆ£¬Õâ¸ö±£³ÖÄ¬ÈÏ£¨Ñ¡ÖÐ×´Ì¬£©
-    1. ³¬¼¶ÓÃ»§£ºÊäÈë³¬¼¶ÓÃ»§µÄÓÃ»§Ãû
-    1. È«Ãû£º³¬¼¶ÓÃ»§µÄÈ«Ãû£¬ºÍÉÏÒ»¸öÒ»Ñù¾ÍÐÐ
-    1. E-Mail£º³¬¼¶ÓÃ»§µÄµç×ÓÓÊ¼þµØÖ·
-    1. ÃÜÂë£º³¬¼¶ÓÃ»§µÄÃÜÂë
-    1. ÇëÔÙÊäÒ»´Î£ºÔÙ´ÎÊäÈëÃÜÂë
-    1. ³õÊ¼µÄACLÕþ²ß£ºÈ«¾ÖÈ¨ÏÞ¿ØÖÆ²ßÂÔ£¬ÔÚÏÂÀ­ÁÐ±íÖÐÑ¡ÔñÒ»¸öºÏÊÊµÄ
-    1. ¿ª·ÅµÄÎ¬»ù£¨ÈÎºÎÈË¶¼ÓÐ¶Á¡¢Ð´¡¢ÉÏ´«µÄÈ¨ÏÞ£©
-    1. ¹«¿ªµÄÎ¬»ù£¨ÈÎºÎÈË¶¼ÓÐ¶ÁµÄÈ¨ÏÞ£¬Ö»ÓÐ×¢²áÓÃ»§²ÅÓÐÐ´ºÍÉÏ´«µÄÈ¨ÏÞ£©
-    1. ¹Ø±ÕµÄÎ¬»ù£¨Ö»ÓÐ×¢²áÓÃ»§²ÅÓÐ¶Á¡¢Ð´¡¢ÉÏ´«µÄÈ¨ÏÞ£©
+8. å®‰è£…é…ç½®
+    1. ç»´åŸºåç§°ï¼šä½ wikiçš„åå­—ï¼Œæ¯”å¦‚æˆ‘çš„æ˜¯Lainme's Blog
+    1. å¯ç”¨ACLï¼ˆæŽ¨èï¼‰ï¼šå³å¯ç”¨æƒé™æŽ§åˆ¶ï¼Œè¿™ä¸ªä¿æŒé»˜è®¤ï¼ˆé€‰ä¸­çŠ¶æ€ï¼‰
+    1. è¶…çº§ç”¨æˆ·ï¼šè¾“å…¥è¶…çº§ç”¨æˆ·çš„ç”¨æˆ·å
+    1. å…¨åï¼šè¶…çº§ç”¨æˆ·çš„å…¨åï¼Œå’Œä¸Šä¸€ä¸ªä¸€æ ·å°±è¡Œ
+    1. E-Mailï¼šè¶…çº§ç”¨æˆ·çš„ç”µå­é‚®ä»¶åœ°å€
+    1. å¯†ç ï¼šè¶…çº§ç”¨æˆ·çš„å¯†ç 
+    1. è¯·å†è¾“ä¸€æ¬¡ï¼šå†æ¬¡è¾“å…¥å¯†ç 
+    1. åˆå§‹çš„ACLæ”¿ç­–ï¼šå…¨å±€æƒé™æŽ§åˆ¶ç­–ç•¥ï¼Œåœ¨ä¸‹æ‹‰åˆ—è¡¨ä¸­é€‰æ‹©ä¸€ä¸ªåˆé€‚çš„
+    1. å¼€æ”¾çš„ç»´åŸºï¼ˆä»»ä½•äººéƒ½æœ‰è¯»ã€å†™ã€ä¸Šä¼ çš„æƒé™ï¼‰
+    1. å…¬å¼€çš„ç»´åŸºï¼ˆä»»ä½•äººéƒ½æœ‰è¯»çš„æƒé™ï¼Œåªæœ‰æ³¨å†Œç”¨æˆ·æ‰æœ‰å†™å’Œä¸Šä¼ çš„æƒé™ï¼‰
+    1. å…³é—­çš„ç»´åŸºï¼ˆåªæœ‰æ³¨å†Œç”¨æˆ·æ‰æœ‰è¯»ã€å†™ã€ä¸Šä¼ çš„æƒé™ï¼‰
 
-ÌîÐ´Íê³Éºó°´¡°±£´æ¡±Íê³É°²×°¡£ÏÖÔÚÔÙ´Î½øÈëhttp://IP»òÕßÓòÃû/wiki£¬¿ÉÒÔÔÚÓÒÏÂ½Ç¿´µ½ÓÐ¸ö¡°µÇÂ¼¡±°´Å¥£¬Í¬Ê±±êÌâÀ¸Ò²±ä³ÉÁËÄãÉè¶¨µÄÍøÕ¾Ãû³Æ¡£
+å¡«å†™å®ŒæˆåŽæŒ‰â€œä¿å­˜â€å®Œæˆå®‰è£…ã€‚çŽ°åœ¨å†æ¬¡è¿›å…¥http://IPæˆ–è€…åŸŸå/wikiï¼Œå¯ä»¥åœ¨å³ä¸‹è§’çœ‹åˆ°æœ‰ä¸ªâ€œç™»å½•â€æŒ‰é’®ï¼ŒåŒæ—¶æ ‡é¢˜æ ä¹Ÿå˜æˆäº†ä½ è®¾å®šçš„ç½‘ç«™åç§°ã€‚
 
-9. °²×°³É¹¦ºó
-    1. É¾³ý install.php
+9. å®‰è£…æˆåŠŸåŽ
+    1. åˆ é™¤ install.php
         rm -f /var/www/html/wiki/install.php
-    2. ¶ÔURL½øÐÐ¹ýÂËÒÔ±£Ö¤Êý¾Ý°²È«
+    2. å¯¹URLè¿›è¡Œè¿‡æ»¤ä»¥ä¿è¯æ•°æ®å®‰å…¨
         vim /etc/httpd/conf/httpd.conf
-        ÔÚ httpd.conf Ìí¼ÓÏÂÃæ´úÂë
+        åœ¨ httpd.conf æ·»åŠ ä¸‹é¢ä»£ç 
 
         ```
         <LocationMatch "/wiki/(data|conf|bin|inc)/">
-        ¡¡¡¡Order allow,deny
-        ¡¡¡¡Deny from all
-        ¡¡¡¡Satisfy all
+        ã€€ã€€Order allow,deny
+        ã€€ã€€Deny from all
+        ã€€ã€€Satisfy all
         </LocationMatch>
         ```
     
-10. ¿ª»ú×ÔÆô apache
+10. å¼€æœºè‡ªå¯ apache
     chkconfig --levels 235 httpd on
 
-### Óöµ½µÄÎÊÌâ1£ºDokuwiki Setup Error
+### é‡åˆ°çš„é—®é¢˜1ï¼šDokuwiki Setup Error
 DokuWiki Setup Error
 
 The datadir ('pages') at ./data/pages is not found, isn't accessible or writable. You should check your config and permission settings. Or maybe you want to run the installer?
 
-½â¾ö·½·¨£ºÓÃyumÃüÁîÏÈ°²×° httpd£¬ÔÙ°²×° php¡£¿ªÊ¼µÄÊ±ºòÖ±½ÓÓÃ yum °²×° php£¬Í¨¹ýÒÀÀµ»á×Ô¶¯°²×°ÆäËû»·¾³£¬°üÀ¨ httpd£¬µ«ÊÇÒ»Ö±±¨ Dokuwiki Setup Error£¬ÍøÉÏ¶¼Ã»ÓÐÕÒµ½½â¾ö·½·¨£¬ºóÀ´ÖØÐÂ´îÒ»¸ö»·¾³£¬ÏÈ×° httpd£¬ÔÙ×° php£¬¾ÍÃ»ÓÐ³öÏÖÕâ¸ö´íÎóÁË
+è§£å†³æ–¹æ³•ï¼šç”¨yumå‘½ä»¤å…ˆå®‰è£… httpdï¼Œå†å®‰è£… phpã€‚å¼€å§‹çš„æ—¶å€™ç›´æŽ¥ç”¨ yum å®‰è£… phpï¼Œé€šè¿‡ä¾èµ–ä¼šè‡ªåŠ¨å®‰è£…å…¶ä»–çŽ¯å¢ƒï¼ŒåŒ…æ‹¬ httpdï¼Œä½†æ˜¯ä¸€ç›´æŠ¥ Dokuwiki Setup Errorï¼Œç½‘ä¸Šéƒ½æ²¡æœ‰æ‰¾åˆ°è§£å†³æ–¹æ³•ï¼ŒåŽæ¥é‡æ–°æ­ä¸€ä¸ªçŽ¯å¢ƒï¼Œå…ˆè£… httpdï¼Œå†è£… phpï¼Œå°±æ²¡æœ‰å‡ºçŽ°è¿™ä¸ªé”™è¯¯äº†
 
-### Óöµ½µÄÎÊÌâ2£ºÈç¹û·ÃÎÊÊ±ÏÔÊ¾ 403 Forbidden£¬ÐèÒª¹Ø±ÕSELinux
-²é¿´SELinux×´Ì¬£º
-1¡¢/usr/sbin/sestatus -v ##Èç¹ûSELinux status²ÎÊýÎªenabled¼´Îª¿ªÆô×´Ì¬
+### é‡åˆ°çš„é—®é¢˜2ï¼šå¦‚æžœè®¿é—®æ—¶æ˜¾ç¤º 403 Forbiddenï¼Œéœ€è¦å…³é—­SELinux
+æŸ¥çœ‹SELinuxçŠ¶æ€ï¼š
+1ã€/usr/sbin/sestatus -v ##å¦‚æžœSELinux statuså‚æ•°ä¸ºenabledå³ä¸ºå¼€å¯çŠ¶æ€
 SELinux status: enabled
-2¡¢getenforce ##Ò²¿ÉÒÔÓÃÕâ¸öÃüÁî¼ì²é
+2ã€getenforce ##ä¹Ÿå¯ä»¥ç”¨è¿™ä¸ªå‘½ä»¤æ£€æŸ¥
 
-¹Ø±ÕSELinux£º
-    1. ÁÙÊ±¹Ø±Õ£¨²»ÓÃÖØÆô»úÆ÷£©£º
-        setenforce 0 //ÉèÖÃSELinux ³ÉÎªpermissiveÄ£Ê½
-        //setenforce 1 ÉèÖÃSELinux ³ÉÎªenforcingÄ£Ê½
-    2. ÐÞ¸ÄÅäÖÃÎÄ¼þÐèÒªÖØÆô»úÆ÷£º
-        ÐÞ¸Ä/etc/selinux/config ÎÄ¼þ
-        ½«SELINUX=enforcing¸ÄÎªSELINUX=disabled
-        ÖØÆô»úÆ÷¼´¿É
-### Á´½Ó
+å…³é—­SELinuxï¼š
+    1. ä¸´æ—¶å…³é—­ï¼ˆä¸ç”¨é‡å¯æœºå™¨ï¼‰ï¼š
+        setenforce 0 //è®¾ç½®SELinux æˆä¸ºpermissiveæ¨¡å¼
+        //setenforce 1 è®¾ç½®SELinux æˆä¸ºenforcingæ¨¡å¼
+    2. ä¿®æ”¹é…ç½®æ–‡ä»¶éœ€è¦é‡å¯æœºå™¨ï¼š
+        ä¿®æ”¹/etc/selinux/config æ–‡ä»¶
+        å°†SELINUX=enforcingæ”¹ä¸ºSELINUX=disabled
+        é‡å¯æœºå™¨å³å¯
+### é“¾æŽ¥
 https://www.cnblogs.com/error503/p/8041982.html
 
 https://thishosting.rocks/build-your-own-wiki-on-ubuntu-with-dokuwiki/
@@ -136,15 +136,15 @@ https://www.linuxprobe.com/ubuntu-dokuwiki-wiki.html
 
 https://www.dokuwiki.org/zh:install:ubuntu (official methods)
 
-DokuwikiÏµÁÐ½Ì³Ì
+Dokuwikiç³»åˆ—æ•™ç¨‹
     1. https://blog.csdn.net/wszll_alex/article/category/7650010
 
-Ê¹ÓÃ½Ì³Ì
+ä½¿ç”¨æ•™ç¨‹
     1. http://www.360doc.com/content/15/0716/13/15077656_485261906.shtml
-    1. dokuwiki×¢²á¼°·¢ÓÊ¼þÎÊÌâµÄ½â¾ö
+    1. dokuwikiæ³¨å†ŒåŠå‘é‚®ä»¶é—®é¢˜çš„è§£å†³
         1. http://www.fwolf.com/blog/post/82
     1. https://blog.csdn.net/leekwen/article/details/54907445
 
-## Dokuwiki»ù±¾Óï·¨
-Î¬»ùÓï·¨£¬Ò²Ö§³ÖMarkdownÓï·¨
+## DokuwikiåŸºæœ¬è¯­æ³•
+ç»´åŸºè¯­æ³•ï¼Œä¹Ÿæ”¯æŒMarkdownè¯­æ³•
 

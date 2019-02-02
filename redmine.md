@@ -1,11 +1,11 @@
-# ¿ªÔ´ÏîÄ¿¹ÜÀíÈí¼şRedmine
+# å¼€æºé¡¹ç›®ç®¡ç†è½¯ä»¶Redmine
 
 ## 
-RedmineÊÇÀàËÆJIRAµÄÒ»¸öÏîÄ¿/BUG¹ÜÀí¹¤¾ß£¬Ê¹ÓÃrubyÓïÑÔ±àĞ´µÄ
+Redmineæ˜¯ç±»ä¼¼JIRAçš„ä¸€ä¸ªé¡¹ç›®/BUGç®¡ç†å·¥å…·ï¼Œä½¿ç”¨rubyè¯­è¨€ç¼–å†™çš„
 
 https://blog.csdn.net/hxpjava1/article/details/79710999
 
 https://blog.csdn.net/jzd1997/article/details/80990512
 
-redmineÉµ¹Ï²¿Êğ
+redmineå‚»ç“œéƒ¨ç½²
     https://blog.csdn.net/begin000/article/details/79115215

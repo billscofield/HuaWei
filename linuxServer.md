@@ -1,14 +1,14 @@
 # Linux Server
 
 ## ip
-×ÓÍø¿¨
+å­ç½‘å¡
 
 1. ifconfig
-    1. Ö÷ÒªÊÇ²é¿´£¬ÒòÎª²»ÄÜ±£´æµ½Ó²ÅÌ£¬¶øÊÇ´æÔÚÄÚ´æÖĞ
+    1. ä¸»è¦æ˜¯æŸ¥çœ‹ï¼Œå› ä¸ºä¸èƒ½ä¿å­˜åˆ°ç¡¬ç›˜ï¼Œè€Œæ˜¯å­˜åœ¨å†…å­˜ä¸­
     1. ifconfig eth0 192.168.1.1 netmask 255.255.255.0
-        1. ×ÓÍø¿¨(ĞéÄâÍø¿¨)
+        1. å­ç½‘å¡(è™šæ‹Ÿç½‘å¡)
             ifconfig eth0:0 192.168.1.2 netmask 255.255.255.0
-    1. ¿ªÆô/¹Ø±ÕÍø¿¨
+    1. å¼€å¯/å…³é—­ç½‘å¡
         1. ifconfig eth0 down
         1. ifconfig eth0 up
 
@@ -17,13 +17,13 @@ service networking restart
 /etc/init.d/networking restart
 
 
-1. Í¼ĞÎ»¯
+1. å›¾å½¢åŒ–
 
-1. setup(redhat×¨ÓĞ)
+1. setup(redhatä¸“æœ‰)
 
     AMD(Advanced Micro Device)
 
-1. ÅäÖÃÎÄ¼ş
+1. é…ç½®æ–‡ä»¶
     1. /etc/network/interfaces
     1. auto eth0
     1. inet 
@@ -34,7 +34,7 @@ service networking restart
     1. address 
     1. netmask
     1. gateway
-    1. broadcast ¿ÉÑ¡
+    1. broadcast å¯é€‰
     1. dns-nameservers 192.168.0.1
 
 ```
@@ -45,64 +45,64 @@ netmask 255.255.255.0
 dns-nameservers 8.8.8.8
 ```
 
-ÅäÖÃÎÄ¼şĞŞ¸Äºó£¬Linux ping²»Í¨ÍâÍø£¬¿ÉÒÔpingÍ¨ÄÚÍøºÍ8.8.8.8, ÕâÊÇÊ²Ã´Ô­Òò?
+é…ç½®æ–‡ä»¶ä¿®æ”¹åï¼ŒLinux pingä¸é€šå¤–ç½‘ï¼Œå¯ä»¥pingé€šå†…ç½‘å’Œ8.8.8.8, è¿™æ˜¯ä»€ä¹ˆåŸå› ?
 
 
 
 dns
-    /etc/resolf.conf        //don't edit this file   ÈíÁ¬½ÓÖ¸Ïò /run/systemd/resolve/stub-resolv.conf
+    /etc/resolf.conf        //don't edit this file   è½¯è¿æ¥æŒ‡å‘ /run/systemd/resolve/stub-resolv.conf
 
 
 ifdown 
 ifup
-    ÕâÁ½¸öÔõÃ´ÓÃ£¿
-    1. Ã²ËÆÊÇÖ»ÓĞµ±/etc/network/interfaces ÓĞ¶ÔÓ¦µÄitemÊ±£¬²Å¿ÉÒÔÓÃÕâÁ½ÌõÃüÁî£¬·ñÔò»áÌáÊ¾ unknown interface [Íø¿¨Ãû³Æ]
+    è¿™ä¸¤ä¸ªæ€ä¹ˆç”¨ï¼Ÿ
+    1. è²Œä¼¼æ˜¯åªæœ‰å½“/etc/network/interfaces æœ‰å¯¹åº”çš„itemæ—¶ï¼Œæ‰å¯ä»¥ç”¨è¿™ä¸¤æ¡å‘½ä»¤ï¼Œå¦åˆ™ä¼šæç¤º unknown interface [ç½‘å¡åç§°]
 
     ```
-    /etc/network/interfaces Ìí¼ÓÁË ens33
-    init 6 Ê¹¸ÃÅäÖÃÉúĞ§ºó
+    /etc/network/interfaces æ·»åŠ äº† ens33
+    init 6 ä½¿è¯¥é…ç½®ç”Ÿæ•ˆå
 
-    ifdown ÌáÊ¾ cannot assign requested address  ÊÇÊ²Ã´ÒâË¼?
+    ifdown æç¤º cannot assign requested address  æ˜¯ä»€ä¹ˆæ„æ€?
     ```
 
-Ã²ËÆĞŞ¸ÄÁË/etc/network/interfaces£¬¼´Ê¹/etc/init.d/networking restart »òÕß  ifconfig ens33 down && ifconfig ens33 up »òÕß ifdown ens33 && ifup ens33 Ò²²»»áÉúĞ§£¬init 6 ²Å»áÉúĞ§
+è²Œä¼¼ä¿®æ”¹äº†/etc/network/interfacesï¼Œå³ä½¿/etc/init.d/networking restart æˆ–è€…  ifconfig ens33 down && ifconfig ens33 up æˆ–è€… ifdown ens33 && ifup ens33 ä¹Ÿä¸ä¼šç”Ÿæ•ˆï¼Œinit 6 æ‰ä¼šç”Ÿæ•ˆ
 
 
 
-## Ö÷»úÃû
-1. ÁÙÊ±ĞŞ¸Ä
-    hostname ĞÂÖ÷»úÃû
-    ÖØĞÂµÇÂ½Ò»¸öÖÕ¶Ë¾Í¿ÉÒÔ¿´µ½¸Ä±äÁË
+## ä¸»æœºå
+1. ä¸´æ—¶ä¿®æ”¹
+    hostname æ–°ä¸»æœºå
+    é‡æ–°ç™»é™†ä¸€ä¸ªç»ˆç«¯å°±å¯ä»¥çœ‹åˆ°æ”¹å˜äº†
 
-1. ²é¿´ËùÓĞip
+1. æŸ¥çœ‹æ‰€æœ‰ip
     hostname -I , --all-ip-addresses
-    hostname -i , --ip-adress   //ºÍhostname¶ÔÓ¦µÄÄÇ¸öip
+    hostname -i , --ip-adress   //å’Œhostnameå¯¹åº”çš„é‚£ä¸ªip
 
-    ÀıÈçdocker nginx
+    ä¾‹å¦‚docker nginx
 
-    ÉÏ±ßÁ½¸ö·¢ÏÖ
+    ä¸Šè¾¹ä¸¤ä¸ªå‘ç°
 
-1. Ö÷»úÃûÎÄ¼ş
+1. ä¸»æœºåæ–‡ä»¶
     1. /etc/hostname
 
-## Ö÷»úÃûºÍip¶ÔÓ¦¹ØÏµ
+## ä¸»æœºåå’Œipå¯¹åº”å…³ç³»
 1. /etc/hosts
 
-´æ·ÅµÄÊÇÓòÃûÓëipµÄ¶ÔÓ¦¹ØÏµ£¬ÓòÃûÓëÖ÷»úÃûÃ»ÓĞÈÎºÎ¹ØÏµ£¬Äã¿ÉÒÔÎªÈÎºÎÒ»¸öIPÖ¸¶¨ÈÎÒâÒ»¸öÃû×Ö
+å­˜æ”¾çš„æ˜¯åŸŸåä¸ipçš„å¯¹åº”å…³ç³»ï¼ŒåŸŸåä¸ä¸»æœºåæ²¡æœ‰ä»»ä½•å…³ç³»ï¼Œä½ å¯ä»¥ä¸ºä»»ä½•ä¸€ä¸ªIPæŒ‡å®šä»»æ„ä¸€ä¸ªåå­—
 ?
 
 
 ## netstat
--t:ÁĞ³ötcpĞ­Òé¶Ë¿Ú
--u:ÁĞ³öudpĞ­Òé¶Ë¿Ú
+-t:åˆ—å‡ºtcpåè®®ç«¯å£
+-u:åˆ—å‡ºudpåè®®ç«¯å£
 
--a:ËùÓĞÍøÂçÁ¬½Ó  --all  display all sockets (default:connected)
--l:½öÁĞ³öÔÚ¼àÌı×´Ì¬ÍøÂç·şÎñ --listening    display listening server sockets
--n:²»Ê¹ÓÃÓòÃûÓë·şÎñÃû£¬¶øÊ¹ÓÃIPµØÖ·ºÍ¶Ë¿ÚºÅ --numeric    don't resolve names
+-a:æ‰€æœ‰ç½‘ç»œè¿æ¥  --all  display all sockets (default:connected)
+-l:ä»…åˆ—å‡ºåœ¨ç›‘å¬çŠ¶æ€ç½‘ç»œæœåŠ¡ --listening    display listening server sockets
+-n:ä¸ä½¿ç”¨åŸŸåä¸æœåŠ¡åï¼Œè€Œä½¿ç”¨IPåœ°å€å’Œç«¯å£å· --numeric    don't resolve names
 
 -r --route      display routing table
-    Í¬ route
-    ¿ÉÒÔ²é¿´gateway
+    åŒ route
+    å¯ä»¥æŸ¥çœ‹gateway
 -i --interface  display interface table
 -g --groups     display multicast group memberships
 
@@ -112,7 +112,7 @@ netstat -na
 netstat -tln
 netstat -tuln
 
-tcp²Å»áÓĞ¼àÌı£¨listen£©
+tcpæ‰ä¼šæœ‰ç›‘å¬ï¼ˆlistenï¼‰
 
 
 established 
@@ -145,13 +145,13 @@ http://www.steves-internet-guide.com/using-nslookup/
 
 
 ## telnet
-telnetÊ¹ÓÃµÄÊÇtcpĞ­Òé£¬»»¾ä»°ËµtelnetÖ»ÄÜ¼ì²âtcpµÄÕâ¸ö¶Ë¿Ú´ò¿ªÁËÃ»
+telnetä½¿ç”¨çš„æ˜¯tcpåè®®ï¼Œæ¢å¥è¯è¯´telnetåªèƒ½æ£€æµ‹tcpçš„è¿™ä¸ªç«¯å£æ‰“å¼€äº†æ²¡
 
-TelnetÊÇ»ùÓÚTCPµÄ£¬Ä¬ÈÏ¶Ë¿ÚÊÇ23¡£**¶Ë¿Ú³ĞÔØµÄ·şÎñ¿ÉÒÔÓÉÓÃ»§Éè¶¨¡£** sqlserverµÄTelnet·şÎñÊÇ1433¶Ë¿Ú
+Telnetæ˜¯åŸºäºTCPçš„ï¼Œé»˜è®¤ç«¯å£æ˜¯23ã€‚**ç«¯å£æ‰¿è½½çš„æœåŠ¡å¯ä»¥ç”±ç”¨æˆ·è®¾å®šã€‚** sqlserverçš„TelnetæœåŠ¡æ˜¯1433ç«¯å£
 
-telnet ip port²âÊÔÄ¿±êÖ÷»ú¶Ë¿ÚÊÇ·ñ¿ª·Å
+telnet ip portæµ‹è¯•ç›®æ ‡ä¸»æœºç«¯å£æ˜¯å¦å¼€æ”¾
 
-²»Òª¿ªtelnet·şÎñ¶Ë
+ä¸è¦å¼€telnetæœåŠ¡ç«¯
 
 telnet ip port
 telnet 192.168.1.1 23
@@ -161,15 +161,15 @@ telnet www.baidu.com 80
 
 connected to www.a.shifen.com
 escape character is '^]'
-±íÊ¾Õâ¸ö¶Ë¿ÚÊÇ´ò¿ªµÄ
+è¡¨ç¤ºè¿™ä¸ªç«¯å£æ˜¯æ‰“å¼€çš„
 ```
 
-telnetÎªÊ²Ã´¿ÉÒÔÓÃÀ´¼ì²âÄ³¸ö¶Ë¿ÚÊÇ¿ªÆôÁËµÄÄØ? 
-telnet 80¶Ë¿ÚÊÇÊ²Ã´ÒâË¼ÄØ?
-telnet ·şÎñ¶Ë¶¼Ã»ÓĞ¿ªÆô£¬ÎªÊ²Ã´»¹¿ÉÒÔtelnet 80¶Ë¿ÚÄØ?
+telnetä¸ºä»€ä¹ˆå¯ä»¥ç”¨æ¥æ£€æµ‹æŸä¸ªç«¯å£æ˜¯å¼€å¯äº†çš„å‘¢? 
+telnet 80ç«¯å£æ˜¯ä»€ä¹ˆæ„æ€å‘¢?
+telnet æœåŠ¡ç«¯éƒ½æ²¡æœ‰å¼€å¯ï¼Œä¸ºä»€ä¹ˆè¿˜å¯ä»¥telnet 80ç«¯å£å‘¢?
 
 ## traceroute
-Ê¹ÓÃµÄÊÇping£¬Èç¹û½ûÖ¹ÁËping£¬ÄÇÃ´¾Í...
+ä½¿ç”¨çš„æ˜¯pingï¼Œå¦‚æœç¦æ­¢äº†pingï¼Œé‚£ä¹ˆå°±...
 
 -n, --numeric   
 

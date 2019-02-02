@@ -1,4 +1,4 @@
-﻿## about ensp
+## about ensp
 1. Enterprise Network Simulation Platform
 1. 每台设备启动之后占用300MB左右的内存
 

@@ -1,25 +1,25 @@
 1. ip spoof
     1. https://www.bilibili.com/video/av12381067?p=3
 1. smurf
-    1. ¹¥»÷ÕßÊ¹ÓÃvictim ip ·¢ËÍ¹ã²¥°ü-´óÁ¿icmp request ±¨ÎÄ£¬icmp reply ±¨ÎÄ½«Ê¹victimÌ±»¾
-1. ICMPÖØ¶¨Ïò  
-    1. ¸üºÃµÄÂ·¾¶
-1. ICMP²»¿É´ï
-    1. Î±Ôìvictim ip ·¢ËÍ´óÁ¿icmp²»¿É´ï »Ø¸´±¨ÎÄ£¬ÈÃ´ó¼ÒÎóÒÔÎªvictim ²»¿É´ï
-    1. ·À·¶·½·¨
-        1. ¹Ø±Õicmp²»¿É´ï???
+    1. æ”»å‡»è€…ä½¿ç”¨victim ip å‘é€å¹¿æ’­åŒ…-å¤§é‡icmp request æŠ¥æ–‡ï¼Œicmp reply æŠ¥æ–‡å°†ä½¿victimç˜«ç—ª
+1. ICMPé‡å®šå‘  
+    1. æ›´å¥½çš„è·¯å¾„
+1. ICMPä¸å¯è¾¾
+    1. ä¼ªé€ victim ip å‘é€å¤§é‡icmpä¸å¯è¾¾ å›žå¤æŠ¥æ–‡ï¼Œè®©å¤§å®¶è¯¯ä»¥ä¸ºvictim ä¸å¯è¾¾
+    1. é˜²èŒƒæ–¹æ³•
+        1. å…³é—­icmpä¸å¯è¾¾???
     
-1. TCPÆÛÆ­
-    1. ¶ÔB½øÐÐddos¹¥»÷£¬Ê¹ÆäÌ±»¾£¬ÔÚÒÔBµÄÉí·ÝºÍAÍ¨ÐÅ
+1. TCPæ¬ºéª—
+    1. å¯¹Bè¿›è¡Œddosæ”»å‡»ï¼Œä½¿å…¶ç˜«ç—ªï¼Œåœ¨ä»¥Bçš„èº«ä»½å’ŒAé€šä¿¡
 
-1. »º³åÇøÒç³ö¹¥»÷
+1. ç¼“å†²åŒºæº¢å‡ºæ”»å‡»
 
-×Ü½áÒ»µã¾ÍÊÇ: **request && reply**
-È±·¦Éí·ÝÑéÖ¤»úÖÆ
+æ€»ç»“ä¸€ç‚¹å°±æ˜¯: **request && reply**
+ç¼ºä¹èº«ä»½éªŒè¯æœºåˆ¶
 
 
-±»¶¯¹¥»÷(ÍµÌý)
+è¢«åŠ¨æ”»å‡»(å·å¬)
 
-Ö÷¶¯¹¥»÷
+ä¸»åŠ¨æ”»å‡»
 
-ÖÐ¼äÈË¹¥»÷:ÍµÌý ²¢ÐÞ¸Ä
+ä¸­é—´äººæ”»å‡»:å·å¬ å¹¶ä¿®æ”¹

@@ -1,4 +1,4 @@
-## kali°²×°sogoÊäÈë·¨
+## kaliå®‰è£…sogoè¾“å…¥æ³•
 apt-get install fcitx 
 apt --fix-broken install
 dpkg -i sogo...deb

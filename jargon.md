@@ -1,1 +1,1 @@
-RTM版的英文全称为：Release To Manufacturing（发布到制造）
+RTM鐗堢殑鑻辨枃鍏ㄧО涓猴細Release To Manufacturing锛堝彂甯冨埌鍒堕�狅級

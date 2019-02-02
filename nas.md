@@ -2,14 +2,14 @@
 
 ## what is NAS
 
-Network Attached Storage£ºÍøÂç¸½Êô´æ´¢,Ò²³ÆÎª¡°ÍøÂç´æ´¢Æ÷¡±¡£
+Network Attached Storageï¼šç½‘ç»œé™„å±žå­˜å‚¨,ä¹Ÿç§°ä¸ºâ€œç½‘ç»œå­˜å‚¨å™¨â€ã€‚
 
-Synology ÈºêÍ
+Synology ç¾¤æ™–
 
-    Ö÷ÒªÓÐÏ£½ÝµÄ ERC ÂÌÅÌ ºÍ Î÷ÊýµÄTLER ºìÅÌ
-
-
-´ÅÅÌÕóÁÐ
+    ä¸»è¦æœ‰å¸Œæ·çš„ ERC ç»¿ç›˜ å’Œ è¥¿æ•°çš„TLER çº¢ç›˜
 
 
-¶¯Ì¬DDNS
+ç£ç›˜é˜µåˆ—
+
+
+åŠ¨æ€DDNS

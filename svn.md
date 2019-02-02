@@ -3,27 +3,27 @@ sudo apt install subversion
 
 svnserve --version
 
-´´½¨°æ±¾¿âÄ¿Â¼
+åˆ›å»ºç‰ˆæœ¬åº“ç›®å½•
 mkdir /home/hjimi/
 
-´´½¨°æ±¾¿â
+åˆ›å»ºç‰ˆæœ¬åº“
 mkdir /home/hjimi/svn-znjj/
 
 svnadmin create /home/hjmim/svn-znjj/
 
-°æ±¾¿â  /home/hjimi/svn-znjj/
+ç‰ˆæœ¬åº“  /home/hjimi/svn-znjj/
 
-°æ±¾¿âµÄÄ¿Â¼ /home/hjimi/
+ç‰ˆæœ¬åº“çš„ç›®å½• /home/hjimi/
 
-## ÅäÖÃ
-svnadmin create /home/hjimi/svn-znjj/ ÏÂconfÄ¿Â¼
-    /home/hjimi/svn-znjj Ä¿Â¼±ØĞëÎª¿Õ
+## é…ç½®
+svnadmin create /home/hjimi/svn-znjj/ ä¸‹confç›®å½•
+    /home/hjimi/svn-znjj ç›®å½•å¿…é¡»ä¸ºç©º
 
 1. authz
-    1. ÕËºÅÈ¨ÏŞµÄ¹ÜÀí
+    1. è´¦å·æƒé™çš„ç®¡ç†
     
     ```
-    [/home/hjimi/svn-znjj/]   //µÚ¶ş¸öÁ´½ÓËµ Ğ´³É[\]
+    [/home/hjimi/svn-znjj/]   //ç¬¬äºŒä¸ªé“¾æ¥è¯´ å†™æˆ[\]
     tomrw = rw
     tomr = r
     tomw = w
@@ -34,51 +34,51 @@ svnadmin create /home/hjimi/svn-znjj/ ÏÂconfÄ¿Â¼
     tomr = tomr
     tomw = tomw
 
-1. svnserve.conf (svn·şÎñÅäÖÃ)
+1. svnserve.conf (svnæœåŠ¡é…ç½®)
     anon-access = read
     auth-access = write
-    (Ç°±ßµÄ¿Õ¸ñÒ²È¥µô)
+    (å‰è¾¹çš„ç©ºæ ¼ä¹Ÿå»æ‰)
     password-db = passwd
-    authz-db = authz        //µÚ¶ş¸öÁ´½ÓËµÕâ¸ö²»Òª½â·â
+    authz-db = authz        //ç¬¬äºŒä¸ªé“¾æ¥è¯´è¿™ä¸ªä¸è¦è§£å°
     realm = My First Repository
     
 
-1. svn¶Ë¿ÚºÅ3690
-    (tomcat¶Ë¿ÚºÅ8080)
+1. svnç«¯å£å·3690
+    (tomcatç«¯å£å·8080)
     
     /sbin/iptables -I INPUT -p tcp --dport 3690 -j ACCEPT
-    (ubuntu 16 server Ä¬ÈÏÃ»ÓĞÆô¶¯iptables???)
+    (ubuntu 16 server é»˜è®¤æ²¡æœ‰å¯åŠ¨iptables???)
 
     /etc/init.d/iptables save
     /etc/init.d/iptables restart
 
-    ufw enable  //¿ªÆô·À»ğÇ½
-    ufw disable //¹Ø±Õ·À»ğÇ½
+    ufw enable  //å¼€å¯é˜²ç«å¢™
+    ufw disable //å…³é—­é˜²ç«å¢™
     
-    svnserve -d -r /home/hjimi   //(°æ±¾¿âÄ¿Â¼µØÖ·)
+    svnserve -d -r /home/hjimi   //(ç‰ˆæœ¬åº“ç›®å½•åœ°å€)
 
     netstat -apn | grep 3690
 
 
-°´ÕÕµÚ¶ş¸öÁ´½ÓµÄ×ö·¨ ·¢ÏÖÈ¨ÏŞÃ»Æğ×÷ÓÃ£¬tomr Ò²¿ÉÒÔÉÏ´«
+æŒ‰ç…§ç¬¬äºŒä¸ªé“¾æ¥çš„åšæ³• å‘ç°æƒé™æ²¡èµ·ä½œç”¨ï¼Œtomr ä¹Ÿå¯ä»¥ä¸Šä¼ 
 
-svn Ã»ÓĞÖ±½ÓÖØÆôµÄ·½·¨£¬¾ßÌå²½ÖèÈçÏÂ£º
+svn æ²¡æœ‰ç›´æ¥é‡å¯çš„æ–¹æ³•ï¼Œå…·ä½“æ­¥éª¤å¦‚ä¸‹ï¼š
     1. ps -ef | grep svn
-    1. kill -9 [½ø³ÌºÅ]
-    1. svnserve -d -r /home/hjimi   (ËùÔÚÄ¿Â¼)
+    1. kill -9 [è¿›ç¨‹å·]
+    1. svnserve -d -r /home/hjimi   (æ‰€åœ¨ç›®å½•)
 
-    -r±íÊ¾½«svnµÄÄ¿Â¼µ±×÷¸ùÄ¿Â¼
+    -rè¡¨ç¤ºå°†svnçš„ç›®å½•å½“ä½œæ ¹ç›®å½•
 
 add
-commit  //¾ÍÊÇÏò·şÎñÆ÷Ìá½»ÁË
+commit  //å°±æ˜¯å‘æœåŠ¡å™¨æäº¤äº†
 
-update ¾ÍÊÇ pull
-
-
-SVNÔÚ·şÎñÆ÷¶ËµÄ´æ´¢·½Ê½ºÍ¿Í»§¶ËÊÇ²»Ò»ÑùµÄ£¬ËùÒÔÔÚ·şÎñÆ÷¶ËÊÇ¿´²»µ½Ô´ÎÄ¼şµÄ¡£·şÎñÆ÷¶ËÓĞÁ½ÖÖ´æ´¢·½Ê½FSFSºÍBDB£¬Ä¿Ç°Ä¬ÈÏ¶¼ÊÇFSFS¡£
+update å°±æ˜¯ pull
 
 
-ÔõÃ´ÇĞ»»ÓÃ»§ÄØ?
+SVNåœ¨æœåŠ¡å™¨ç«¯çš„å­˜å‚¨æ–¹å¼å’Œå®¢æˆ·ç«¯æ˜¯ä¸ä¸€æ ·çš„ï¼Œæ‰€ä»¥åœ¨æœåŠ¡å™¨ç«¯æ˜¯çœ‹ä¸åˆ°æºæ–‡ä»¶çš„ã€‚æœåŠ¡å™¨ç«¯æœ‰ä¸¤ç§å­˜å‚¨æ–¹å¼FSFSå’ŒBDBï¼Œç›®å‰é»˜è®¤éƒ½æ˜¯FSFSã€‚
+
+
+æ€ä¹ˆåˆ‡æ¢ç”¨æˆ·å‘¢?
 
 
 
