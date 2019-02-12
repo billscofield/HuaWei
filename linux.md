@@ -72,4 +72,117 @@ quiet splash rw init=/bin/bash
 
 
 
+## md5sum && sha1sum
+
+在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的
+
+md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值
+
+SHA1与md5类似，是另一种常用的校验和算法。160位二进制数据，它从给定的输入文件中生成一个长度为40个字符的十六进制串
+
+md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA*系列的
+
+生成md5值重定向到指定的文件，通常文件的扩展名我们会命为.md5
+    md5sum data > data.md5
+
+将多个文件的md5重定向到指定的文件(每个文件的md5生成为一行)
+    md5sum * > data.md5
+    
+-c选项来对文件md5进行校验。校验时，根据已生成的md5来进行校验。生成当前文件的md5，并和之前已经生成的md5进行对比，如果一致，则返回OK，否则返回错误信息
+
+
+    ```
+    bf7e63bb97c951df00046d6677e4d2ff  linux.md  //这个是test.md5文件中的内容，md5是和文件名对应的    
+    md5sum -c test.md5
+        --check
+
+
+    linux.md: OK
+
+    linux.md: FAILED
+    ```
+
+
+1. md5sum 是校验文件内容，与文件名是否相同无关
+1. md5sum 值逐位校验，所以文件越大，校验时间越长。
+
+sha1sum 用法同 md5sum 完全一致
+
+
+    一致返回0，不一致返回1
+
+--quiet
+    成功不输出，失败则输出
+
+    md5sum -c test.md5
+    echo $?
+
+
+使用grep过滤
+
+md5sum -c test.md5 | grep -v OK
+
+
+
+## 查看发行版本
+
+1.  lsb_release
+    lsb_release只是一个小程序
+    lsb_release其实是红帽的一个项目，其名为redhat-lsb
+    更准确的说是redhat-lsb-core
+
+
+    yum install redhat-lsb
+    或者
+    yum install redhat-lsb-core
+
+    两者的区别，只是redhat-lsb-core只安装core核心部分，而redhat-lsb则是多安装以下几个包：分别是compat、graphics、printing
+
+    为什么小编知道lsb_release是属于哪个包的呢？
+    rpm -qf $(which lsb_release)
+
+1. cat /etc/*-release
+1. cat /etc/issue
+
+
+
+## apt
+
+1. install
+1. remove
+1. update
+1. upgrade
+1. dist-upgrade
+1. purge  净化
+1. clean    //清除缓存信息
+    apt-cache 就是先看缓存的
+
+
+apt-cache pkgnames 
+    列出了源包含有哪些包
+
+### check package information
+apt-cache show 包名字
+
+
+before installing get info of this package from sources.list
+需要哪些dependences ，大小等等
+
+
+## apt-file
+sudo apt install apt-file
+apt-file update     //从服务器获取元数据
+apt-file search 文件名 比如/bin/ls  //查询包含了/bin/ls 这个关键字的包有哪些
+
+dpkg -l 
+    列出了本机安装了哪些包
+
+
+
+apt list --upgradable
+
+
+
+
+
 
