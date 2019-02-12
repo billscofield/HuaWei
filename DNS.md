@@ -194,6 +194,8 @@ www.magedu.com.                                             IN              A   
         ```
 
 
+## 实战 BIND
+BIND 现在是由 ISC 负责维护，DHCP目前也是由 ISC 负责维护，所以可以去www.isc.org/downloads 不过貌似被和谐了
 
 
 
