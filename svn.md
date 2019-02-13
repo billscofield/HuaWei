@@ -60,6 +60,21 @@ svnadmin create /home/hjimi/svn-znjj/ 下conf目录
     netstat -apn | grep 3690
 
 
+    ```
+    如果你的svn库的路径为：/home/svn/svntest
+    那么你启动时，不能用命令：
+
+    svnserve -d -r /home/svn/svntest
+    而要用命令：
+
+    svnserve -d -r /home/svn/
+
+    否则会提示 URL svn://192.168.1.99/svntest doesn't exist...
+
+    http://blog.sina.com.cn/s/blog_ed260ed30102w8oj.html
+    ```
+
+
 按照第二个链接的做法 发现权限没起作用，tomr 也可以上传
 
 svn 没有直接重启的方法，具体步骤如下：
@@ -67,7 +82,8 @@ svn 没有直接重启的方法，具体步骤如下：
     1. kill -9 [进程号]
     1. svnserve -d -r /home/hjimi   (所在目录)
 
-    -r表示将svn的目录当作根目录
+    -r  表示将svn的目录当作根目录
+    -d  daemon 后台方式
 
 add
 commit  //就是向服务器提交了
@@ -82,8 +98,29 @@ SVN在服务器端的存储方式和客户端是不一样的，所以在服务�
 
 
 
+## 添加用户
+vi passwd
+添加用户
+
+## 关闭svn服务
+ps -ef | grep svn
+kill -9 
+
+
+## 启动svn服务
+svnserve -d -r /var/svn/svnrepos
+
+不要使用/etc/init/svn start
+
+
+
+
+
+
 https://www.bilibili.com/video/av40310479/?p=3
 
 https://www.cnblogs.com/Life-Record/p/7099297.html
 
 https://www.cnblogs.com/ygj0930/p/6623148.html
+
+https://www.cnblogs.com/Life-Record/p/7099297.html

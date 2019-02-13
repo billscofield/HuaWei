@@ -2,17 +2,19 @@
 https://www.bilibili.com/video/av40331948/?p=70
 
 ## 什么叫域名
-www.magedu.com 这是主机名 FQDN:Full Qualified Domain Name 完全限定域名，完全g合格域名
+www.magedu.com 这是主机名,主机名也叫 FQDN:Full Qualified Domain Name 完全限定域名，完全合格域名
 
 域是一个范围
 
+
 magedu.com | .com  才是一个域名，
 magedu.com 这个域下有很多主机，
-    www.magedu.com
-    mail.magedu.com
-    ftp.magedu.com
+    1. www.magedu.com
+    1. mail.magedu.com
+    1. ftp.magedu.com
 
 ## DNS 是用来干吗的
+
 名称解析，Name Resolving, 查询数据库,实现 "FQDN 和 IP" 的对应关系,双向的
 
     MySQL是数据库管理软件
@@ -21,7 +23,7 @@ magedu.com 这个域下有很多主机，
 用户名 到 id 也是名称解析
 web服务 端口80 这也是名称解析
 
-nsswitch:为多种需要实现名称解析的机制 提供名称解析的平台
+nsswitch:为多种需要实现名称解析的机制 提供名称解析的平台,类似淘宝，提供一个平台，主体是各个卖家
 
 nsswitch 配置文件 /etc/nsswitch.conf
 
