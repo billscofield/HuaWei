@@ -1,3 +1,9 @@
+
+## 网站
+hub.docker.com
+docker-cn.com
+
+## Docker 背景知识
 用户空间
 
 内核空间
@@ -50,6 +56,7 @@ docker 镜像(image)也可以自己制作
 1. Maven/Git相关知识
 1. javaEE
 1. Docker由go语言开发
+
 ### docker是什么
 1. 为什么会出现docker
     开发的代码 被运维 放到服务器就挂了。环境不一样，代码就不能用了
@@ -70,13 +77,34 @@ docker 镜像(image)也可以自己制作
 ### Docker 能干什么
 1. 之前的虚拟化技术
     虚拟机
-        1. 
+        1. 模拟的是整套系统，硬件 + 软件
+    特点
+        1. 太重
+        1. 启动慢
+        1. 耗费资源
+        就好像老式坦克一样
 
     容器虚拟化技术
-1. 开发/运维（DevOps)
-    1. 一次开发
 
-1. 镜像，容器，仓库
+Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔离。
+有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。
+不需要捆绑一整套操作系统，只需要软件工作所需要的库资源和设置。
+容器没有内核，使用的是系统的内核
+每个容器都有自己的文件系统
+
+基于容器的虚拟化，仅包含业务运行所需的runtime环境
+
+弹性云扩容
+大规模动态调度
+
+整体交付（运行环境+代码）
+
+
+1. 开发/运维（DevOps)  开发并自己运维
+    1. 一次开发,到处运行
+    1. 搬家 和 搬楼 的区别
+
+1. 容器，镜像，仓库
     Docker Hub
 
     1. centos 6.5 以上版本
@@ -97,8 +125,12 @@ Docker 就像是那条鲸鱼
 大海就是实体Linux
 
 
+2013年3月份第一次发布
 
 
+
+
+## 实践
 
 -------------------------------------
 Docker 的容器技术 是虚拟化的一种
@@ -107,6 +139,7 @@ Docker 的容器技术 是虚拟化的一种
     操作系统级别的虚拟化
     只能运行相同或相似内核的操作系统
     依赖于Linux内核特性：Namespace 和 Cgroups (Control Group)，(不能，也没有windows容器)
+
         Namespace
             封装-》系统资源的隔离，进程，网络，文件系统...
             1. PID (process ID) 进程隔离
@@ -157,7 +190,7 @@ the docker engine consists of two parts:
     a daemon:a server process that manages all the containers
     a client:which acts as a remote control for the daemon
 
-
+## 安装
 安装方式
     检查
         1. 内核 uname -r
@@ -166,9 +199,8 @@ the docker engine consists of two parts:
         sudo apt install docker.io
         source /etc/bash_completion.d/docker.io  //没有额...
 
-    1. 方法2 Docker维护的安装方式
-        检查 /usr/lib/apt/metods/https 文件是否存在
-
+    1. **方法2** Docker维护的安装方式
+        检查对https的支持状况 /usr/lib/apt/metods/https 文件是否存在
 
         docker 提供的shell脚本
         sudo apt install curl
@@ -176,7 +208,17 @@ the docker engine consists of two parts:
 
     1. ubuntu默认的那个管理账户添加到docker组里边还是提示权限问题，添加了一个普通用户添加到docker组里边就OK了...
         docker version
+        If you would like to use Docker as a non-root user, you should now consider adding your user to the "docker" group with something like:
 
+          sudo usermod -aG docker your-user
+
+        
+        sudo groupadd docker
+        sudo gpasswd -a ${USER} docker
+        sudo service docker restart
+
+systemctl start docker
+service docker start
 
 启动容器
     docker run [IMAGE] [command] [args]
@@ -191,11 +233,13 @@ the docker engine consists of two parts:
         --no-trunk //do not truncate output
         -q --quiet //only show numeric ids
         -s --size   //total size
+
 详细查看容器
     docker inspect [id或name]
 
 自定义容器名
     docker run --name=container01 -i -t ubuntu /bin/bash
+
 重命名容器名
     docker rename [old-container-name] [new-container-name]
 
@@ -550,3 +594,8 @@ Nvidia关于nvidia-docker的博客强调了使用便携式GPU容器的两个关�
 CUDA（Compute Unified Device Architecture），是显卡厂商NVIDIA推出的运算平台。 CUDA?是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
 
 https://www.sohu.com/a/209301090_609513
+
+
+
+## docker 搭建 git server
+https://blog.csdn.net/xxkalychen/article/details/82219821
