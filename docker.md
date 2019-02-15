@@ -1,6 +1,8 @@
 
 ## 网站
-hub.docker.com
+https://github.com/docker
+https://www.docker.com
+https://hub.docker.com
 docker-cn.com
 
 ## Docker 背景知识
@@ -11,7 +13,6 @@ docker-cn.com
 
 docker 镜像(image)也可以自己制作
     通常是使用 alpine(精简Linux) 封装各种服务
-    https://hub.docker.com
 
     docker image ls
     docker pull [镜像]
@@ -57,24 +58,44 @@ docker 镜像(image)也可以自己制作
 1. javaEE
 1. Docker由go语言开发
 
+2013年dotCloud公司(现已改名为Docker Inc)发布Docker容器技术
+
 ### docker是什么
+容器虚拟化技术
+
+容器 镜像 仓库
+
+docker 是容器
+镜像就是虚拟的环境
+仓库用于存放镜像
+
+
 1. 为什么会出现docker
-    开发的代码 被运维 放到服务器就挂了。环境不一样，代码就不能用了
     把开发的环境：代码、配置、系统、数据 打包给运维
     软件+环境 安装
-    把原始环境一模一样的复制过来
+    把原始环境和代码一模一样的复制过来
 
 1. 镜像
     1. 代码
     1. 运行环境
     1. 操作系统
     1. 内核
+
 1. 理念
     Build, Ship and Run Any App, Anywhere
     集装箱：隔离的作用
     集装箱就是开发者的每个工具，我现在是把开发者所有的工具、环境拿过来，放到鲸鱼上
 
-### Docker 能干什么
+
+作为Docker三大核心技术之一的镜像技术在Docker的快速发展之路上可谓功不可没：
+镜像让容器真正插上了翅膀，实现了容器自身的重用和标准化传播，使得开发、交付、运维流水线上的各个角色真正围绕同一交付物，“test what you write, ship what you test”成为现实。
+
+
+Docker技术本质上并不是新技术，而是将已有技术进行了更好地整合和包装。内核容器技术以一种完整形态最早出现在Sun公司的Solaris操作系统上，Solaris是当时最先进的服务器操作系统。2005年Sun发布了Solaris Container技术，从此开启了内核容器之门。
+
+https://tonybai.com/tag/lxc/
+
+
 1. 之前的虚拟化技术
     虚拟机
         1. 模拟的是整套系统，硬件 + 软件
@@ -84,12 +105,11 @@ docker 镜像(image)也可以自己制作
         1. 耗费资源
         就好像老式坦克一样
 
-    容器虚拟化技术
 
 Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔离。
 有了容器，就可以将软件运行所需的所有资源打包到一个隔离的容器中。
 不需要捆绑一整套操作系统，只需要软件工作所需要的库资源和设置。
-容器没有内核，使用的是系统的内核
+容器没有内核，使用的是系统的内核, 通过系统内核调用硬件资源
 每个容器都有自己的文件系统
 
 基于容器的虚拟化，仅包含业务运行所需的runtime环境
@@ -124,10 +144,10 @@ container = App + Bins/Libs, 就像那个集装箱
 Docker 就像是那条鲸鱼
 大海就是实体Linux
 
-
 2013年3月份第一次发布
 
 
+<img src="./materials/dockerVSvm">
 
 
 ## 实践
@@ -141,17 +161,32 @@ Docker 的容器技术 是虚拟化的一种
     依赖于Linux内核特性：Namespace 和 Cgroups (Control Group)，(不能，也没有windows容器)
 
         Namespace
-            封装-》系统资源的隔离，进程，网络，文件系统...
+            封装->系统资源的隔离，进程，网络，文件系统...
             1. PID (process ID) 进程隔离
             1. NET (network) 管理网络接口
             1. IPC (InterProcess Communication) 管理跨进程通信的访问
             1. MNT (Mount)  管理挂载点
             1. UTS (Unix Timesharing System) 隔离内核和版本标识
-        Cgroups (2007年被整合进Linux内核)
+        Cgroups (2007年被整合进Linux内核),对资源进行管理
             1. 资源限制
             1. 优先级设定
             1. 资源计量
             1. 资源控制
+
+
+    文件系统隔离
+    资源隔离
+    网络隔离
+    日志记录
+    交互式shell
+
+
+docker 用于计算，存储交给别人
+    日志，跟踪，数据库等通常应放在docker容器外
+    外部挂载的方式
+
+oracle 不适合使用docker,oracle太大了
+
 
     依托Linux内核的虚拟化
 
@@ -191,13 +226,25 @@ the docker engine consists of two parts:
     a client:which acts as a remote control for the daemon
 
 ## 安装
+
+docker-io
+docker-engine
+上面两个是什么，有什么区别?
+
+docker-ce(community edition)
+docker-ee(enterprise edition)
+
+
 安装方式
     检查
         1. 内核 uname -r
         1. ls -l /sys/class/misc/device-mapper
     1. 方法1 Ubuntu 的apt
         sudo apt install docker.io
-        source /etc/bash_completion.d/docker.io  //没有额...
+        //source /etc/bash_completion.d/docker.io  //没有 docker.io 这个文件啊,也不用检查这个吧，哪个教程说要检查这个来的?
+
+
+        **安装完成后，将当前用户添加到docker组，service docker restart  后docker ps不行,提示权限不足(权限的配置问题?)，重启可以了**
 
     1. **方法2** Docker维护的安装方式
         检查对https的支持状况 /usr/lib/apt/metods/https 文件是否存在
