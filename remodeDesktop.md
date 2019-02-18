@@ -35,3 +35,10 @@
 ### windows 上的vnc软件
 1. UltraVNC（免费）
 1. TightVNC（免费）
+
+
+
+## linux 上最好用的远程软件
+remmina
+
+https://remmina.org/how-to-install-remmina/#for-users-with-a-distro-that-supports-snap-packages-including-ubuntu

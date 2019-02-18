@@ -1,4 +1,3 @@
-
 ## 网站
 https://github.com/docker
 https://www.docker.com
@@ -10,53 +9,155 @@ docker-cn.com
 
 内核空间
 
-
 docker 镜像(image)也可以自己制作
-    通常是使用 alpine(精简Linux) 封装各种服务
 
-    docker image ls
-    docker pull [镜像]
+    使用的镜像有alpine
+
+
+### 对镜像的操作
+#### 增
+
+#### 删
+
+#### 改
+
+#### 查
+
+
+### 对容器的操作
+#### 增
+
+#### 删
+
+#### 改
+
+#### 查
+
+
+### 网络
+172.17.xxx.xxx
+
+
+
+
+
+
+
+
+
+
+
+常用操作
+
+    1. 列出本机已经pull，安装的镜像
+        docker image ls
+        docker images
+
+    1. 列出运行的镜像
+        docker ps   |   docker container ls
+
+    1. 列出运行的镜像
+        docker ps -a    |   docker container ls -a
+
+    1. docker pull [镜像]
+
+    1. 附加后台镜像实例
+        docker container attach [实例名]
     
+
+
+
     启动服务，安装镜像完成后 ifconfig, 多了个 docker0 的网卡
 
-    docker container ls | docker container ls -a    =>  docker ps | docker ps -a
-    docker container run --name [实例名1] -it [镜像名]  //一个镜像可以有多个实例，实例的名字
-        -i 交互式
-        -t 
+    1. 创建一个交互式镜像实例
+        docker container run --name [实例名1] -it [镜像名]  //一个镜像可以有多个实例，实例的名字
+            -i 交互式
+            -t 
 
-        虽然docker ps 更快，但觉得 docker container ls 更好呢(docker container -l --help,一级一级的 --help)
+        docker run ubuntu echo "hello world"
 
+        docker run | docker container run    are the same, docker --help | grep run  && docker container --help | grep run
+            有网友说docker container run 是新的命令，而docker run是旧命令
+                https://forums.docker.com/t/docker-run-and-docker-container-run/30526
+            这样说的话，docker ps 是旧命令；docker container ls 是新命令
+
+        本地没有镜像的话，会自动下载 ubuntu:latest
+
+    1. 创建一个守护式容器
+        1. 能够长期运行
+        1. 没有交互式会话
+        1. 适合运行应用程序和会话
+
+        1. 方式1 
+            docker run -i -t [镜像名] /bin/bash
+            -t : --tty
+            **ctrl p  ctrl q** //将交互式容器放在后台运行
+
+            docker run -it ubuntu       //每个镜像都有默认的shell,比如Ubuntu是/bin/bash, busybox 是sh
+        
+        1. 方式2 
+            docker run -d 镜像名
+                --detach=true 默认是false
+            docker run --name one -d ubuntu /bin/sh -c "while true;do echo helloworld;sleep1;done"
+
+        exit 是彻底退出容器
+
+    1. 停止一个镜像实例
+        docker stop [实例名]
+
+    1. 开启一个镜像实例
+        docker start [实例名]
     
-    docker container attach [实例名]
 
-    curl 172.17.0.2
+    1. 详细查看容器
+        docker inspect [id或name]
 
-    docker stop [实例名]
+    1. 重命名容器名
+        docker container rename [old-container-name] [new-container-name]
 
-    docker start [实例名]
 
-    docker kill [实例名]
-    docker rm [实例名]
+    1. 重新启动停止的容器
+        docker container start [-i] [容器名]
+            -i : 交互式
+            这里没有 -t, -t 是 docker run 时的
 
-    docker exec [实例名] ifconfig
+    1. 删除已经停止的容器
+        docker rm [容器名]  //不能删除正在运行的容器
 
-    docker exec -it [实例名] /bin/sh
 
-    docker inspect [实例名]
+    docker container kill [实例名]
+
+    docker container exec [实例名] ifconfig
+
+    docker container exec -it [实例名] /bin/sh
+
+    docker container inspect [实例名]
 
 
     haproxy
 
 
+    国内源
+
+        ```
+        /etc/docker/daemon.json //初始状况没有这个文件
+
+        { 
+        "registry-mirrors": 
+            [ 
+            "https://kfwkfulq.mirror.aliyuncs.com", 
+            "https://2lqq34jg.mirror.aliyuncs.com", 
+            "https://pee6w651.mirror.aliyuncs.com",
+            "https://registry.docker-cn.com",
+            "http://hub-mirror.c.163.com" 
+            ], 
+
+        "dns": ["8.8.8.8","8.8.4.4"] 
+        }
+        ```
 
 ---
 
-## docker基础篇
-1. linux相关命令
-1. docker背景知识
-1. Maven/Git相关知识
-1. javaEE
-1. Docker由go语言开发
 
 2013年dotCloud公司(现已改名为Docker Inc)发布Docker容器技术
 
@@ -74,6 +175,8 @@ docker 是容器
     把开发的环境：代码、配置、系统、数据 打包给运维
     软件+环境 安装
     把原始环境和代码一模一样的复制过来
+
+    整体交付（运行环境+代码）
 
 1. 镜像
     1. 代码
@@ -116,8 +219,6 @@ Linux 容器不是模拟一个完整的操作系统，而是对进程进行隔�
 
 弹性云扩容
 大规模动态调度
-
-整体交付（运行环境+代码）
 
 
 1. 开发/运维（DevOps)  开发并自己运维
@@ -190,14 +291,18 @@ oracle 不适合使用docker,oracle太大了
 
     依托Linux内核的虚拟化
 
+
 1. docker client   客户端（C/S架构）
 1. docker daemon   守护进程 
 1. docker image    镜像
+
     层叠的只读文件系统
     联合加载(union mount)
+
 1. docker container    容器
     增加可写层
     写时复制(copy on write)
+
 1. docker registry 仓库
     保存用户构建的镜像
 
@@ -267,10 +372,6 @@ docker-ee(enterprise edition)
 systemctl start docker
 service docker start
 
-启动容器
-    docker run [IMAGE] [command] [args]
-        docker run ubuntu echo "hello world"
-    本地没有镜像的话，会自动下载 ubuntu:latest
 
 查看容器
     docker ps   //正在运行的
@@ -281,43 +382,6 @@ service docker start
         -q --quiet //only show numeric ids
         -s --size   //total size
 
-详细查看容器
-    docker inspect [id或name]
-
-自定义容器名
-    docker run --name=container01 -i -t ubuntu /bin/bash
-
-重命名容器名
-    docker rename [old-container-name] [new-container-name]
-
-重新启动停止的容器
-    docker start [-i] [容器名]
-        -i : 交互式
-        这里没有 -t, -t 是 docker run 时的
-
-删除已经停止的容器
-    docker rm [容器名]  //不能删除正在运行的容器
-
-守护式容器
-    特点
-        1. 能够长期运行
-        1. 没有交互式会话
-        1. 适合运行应用程序和会话
-
-    1. 方式1 
-        docker run -i -t [镜像名] /bin/bash
-        ctrl p  ctrl q //将交互式容器放在后台运行
-
-        docker run -it ubuntu       //每个镜像都有默认的shell,比如Ubuntu是/bin/bash, busybox 是sh
-    
-    1. 方式2 
-        docker run -d 镜像名
-            --detach=true 默认是false
-        docker run --name one -d ubuntu /bin/sh -c "while true;do echo helloworld;sleep1;done"
-
-    docker attach [容器名]
-    
-    exit 是彻底退出容器
 
 查看容器日志(容器内部运行情况)
     docker logs [-f] [-t] [--tail]
