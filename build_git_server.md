@@ -39,3 +39,7 @@ https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b
 
 可能会出现的问题
     https://flysnowxf.iteye.com/blog/1567570
+
+
+
+authorized_keys   chomd 600

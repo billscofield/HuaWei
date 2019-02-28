@@ -31,6 +31,7 @@
 
 1. Remmina
     1. 同时支持RDP和VNC协议
+    1. sudo apt install remmina
 
 ### windows 上的vnc软件
 1. UltraVNC（免费）
@@ -42,3 +43,19 @@
 remmina
 
 https://remmina.org/how-to-install-remmina/#for-users-with-a-distro-that-supports-snap-packages-including-ubuntu
+
+---
+
+## 关于写一个远程桌面程序的资料收集
+志豪的远程桌面逻辑
+    客户端  数据库（密码转换对照表）    远程桌面
+        远程桌面有两个系统
+            windows 上网查资料用
+            linux 在服务器上开发用
+    
+链接
+    https://blog.csdn.net/LxDamon/article/details/78758111
+    https://www.cnblogs.com/xuliangxing/p/7560723.html
+    https://blog.csdn.net/kevin3101/article/details/52275732
+    https://blog.csdn.net/qq_33530388/article/details/64502902
+    https://blog.csdn.net/lushuaiyin/article/details/45391139
