@@ -105,4 +105,16 @@ https://www.cnblogs.com/javanoob/p/wsl.html
 https://www.wengbi.com/thread_96891_1.html
 
 
+## WIN10下搭建一个linux环境(ubuntu+cmder+oh-my-zsh)
+https://blog.csdn.net/lissettecarlr/article/details/81040750
+
+cmder 的操作
+    settings > "choose your startup task or even a shell with arguments" > "command line"
+        %windir%\system32\bash.exe ~ -cur_console:p:n
+
+
+https://blog.csdn.net/qq_17121501/article/details/72804321
+虽然默认是 用户的默认shell 是 /usr/bin/zsh了,但是cmder启动的是bash
+    exec zsh
+    source .zshrc
 

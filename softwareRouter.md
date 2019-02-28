@@ -110,6 +110,12 @@ don't keep old configuration
 
 ## 实际操作
 
+### 网卡改名
+/interface
+set 0 name wan-dianxin
+set 1 name lan
+
+### 网卡添加ip地址
 1. interface   ,     print          查看网卡信息
 1. /    返回根目录
 1. ip   ,   address     进入ip地址配置目录
@@ -117,7 +123,7 @@ don't keep old configuration
 
 
 ### 开启ftp服务
-IP>services>ftp>available from
+ip>services>ftp>available from
     192.168.1.0/24
 
 还需要有相关的人员可以对其进行操作
@@ -175,11 +181,30 @@ ping测试:   tool ping,???  //命令行里边的ping不好用啊
 ## 重启
 /system reboot
 
+## 导出/导入
+导出当前模块的配置信息
+
+    ```
+    ip firewall
+    export file=ip_filewall
+    /
+    file print  //此时可以看到 ip_firewall.rsc
+    ```
+恢复
+    操作路径 /import
+
+    ```
+    file print 
+    import ip_firewall.rsc
+    ```
+
+## ip绑定路由器（未绑定的ip不能和路由器通信）
 
 
 
 
 
+## rb1100 ahx4 (公司20190228到货)
 
 
 

@@ -1,0 +1,3 @@
+Cygwin是一个在windows平台上运行的类UNIX模拟环境，是cygnus solutions公司开发的自由软件（该公司开发的著名工具还有eCos，不过现已被Redhat收购）。
+
+Cygwin主要由Red Hat及其下属社区负责维护。
