@@ -39,3 +39,16 @@ VirtualBox保存虚机数据的是vdi文件，简单来说就是拷贝vdi文件�
 链接：
     1. https://www.cnblogs.com/coodream2009/p/8578216.html
     1. https://www.linuxidc.com/Linux/2017-08/146130.htm   和上边那个一样，有截图
+
+
+
+## ubuntu18 上安装virtualBox 运行ros遇到的问题
+
+"The VirtualBox Linux kernel driver (vboxdrv) is either not loaded..."
+
+sudo apt install dkms
+sudo apt install build-essential module-assistant
+m-a prepare
+sudo /sbin/vboxconfig
+
+

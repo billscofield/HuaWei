@@ -1,7 +1,8 @@
 # software Router
+一般认为用普通PC安装一套专用的路由器程序组成的系统称为软件路由器，PC电脑+免费的软件=专业的软件路由器
 
 ## 品牌
-1. routeros
+1. routeros(ROS,router operating system)
 1. 海蜘蛛
 1. openwrt
 1. pfsense
@@ -108,10 +109,107 @@ QoS
 don't keep old configuration
 
 
+## 语法
+
+### 4中变量
+global - 定义全局变量, 可以要所有的 脚本 中调用共享 
+local - 定义本地变量，只能在其所要的 脚本 下调用，不能被其它 脚本 共享 
+loop index variables - 定义在for或foreach里的索引号变量 
+monitor variables - 监视变量 
+
+### ROS算术操作 
+操作数 和 运算符 原则上要有一个空格(/ 必须有空格)
+1. 数学运算
+    +
+    -
+    *
+    /
+        1. 对于
+
+        1. 对于 有小数点的数字 被认为是ip
+        1. 数字被认为是 time interval, 但是没有时间单位
+            put (6 / 4.0)
+            Script Error: cannot divide time interval by ip prefix
+            put (6.0 / 4)  
+            Script Error: cannot divide ip prefix by time interval
+
+1. 逻辑运算
+    ~   取反
+    !
+    &   
+
+    ^   异或
+
+    &&
+    ||
+    
+1. 比较运算符
+    >
+    >=
+    <
+    <=
+    =   等于
+    !=
+    
+1. 位运算
+    <<
+    >>
+    
+1. 输出
+    put
+
+### 运算 
+1. 运算要放到()里
+
+1. 
+    put (-3*-2)             //返回6
+    put ((-3)*(-2))
+    put (4 / 3)             //返回1
+
+1. 一个运算结果为Boolean，
+    put (2=2=2) //返回false,2=2结果为true,true!=2
+    put (2!=true)   //true
+
+1. 数位取反
+    put (~255.255.255.0)    //返回 0.0.0.255
+
+1. 时间运算
+    put (1h+2m+3s+4ms)      //返回 01:02:03.004
+    put (1h*2)
+    put (2h-30s)
+    put (60s/2)
+    put (10s / 3)           //返回 00:00:03.333333333
+
+    why?
+        put (0:0.1 / 3)         //返回 00:00:02
+        put (0:0.10 / 3)         //返回 00:00:02
+
+1. ip地址运算
+    put (1.1.1.1+2.2.2.2)   //返回3.3.3.3
+    put (1.1.1.1+1)         //返回1.1.1.2
+    put (1.1.1.250+6)       //返回2.2.3.0
+
+1. 比较
+    put (1.1.1.1 < 1.1.1.2) //返回 true
+    put (2.0.0.0 > 1.255.255.255)       //返回true
+
+    why?
+        put (1d,1h)             //返回 1d00:00:00;01:00:00
+        put (1h,1d)             //返回 01:00:00;1d00:00:00
+        put (1d,1h,1s = 1h,1d)              //返回 1d00:00:00;01:00:00;false;1d00:00:00
+        put (1d,1h = 1h,1d)                 //返回 1d00:00:00;true;1d00:00:00
+        put (1d,1h = 1h,1d)                 //返回 1d00:00:00;false;01:00:00
+ 
+    why?
+        put (bridge = routing)      //返回 true
+
+1. put(
+
 ## 实际操作
 
 1. interface   ,     print          查看网卡信息
 1. /    返回根目录
+1. ..   返回上级目录
 1. ip   ,   address     进入ip地址配置目录
     1. add address 192.168.1.1/24 interface 网卡名
 

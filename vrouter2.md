@@ -74,8 +74,6 @@ QoS
 安装
     所有 RouterBOARD 重装都必须通过 Netinstall
 
-
-
 ## 虚拟机安装教程
 1. 6.4.2 版本是基于3.x内核
 1. 硬盘只能用IDE硬盘
@@ -84,7 +82,7 @@ QoS
     1. n 下一个
     1. spacebar 确定
     1. a :all
-    1. M :minimum
+    1. m :minimum
     1. i : to install locally 
     1. q : cancel and reboot
 
