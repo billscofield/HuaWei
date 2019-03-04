@@ -9,9 +9,7 @@ docker-cn.com
 
 内核空间
 
-docker 镜像(image)也可以自己制作
-
-    使用的镜像有alpine
+使用的镜像有alpine
 
 
 ### 对镜像的操作
@@ -40,8 +38,9 @@ docker 镜像(image)也可以自己制作
 
 
 
+dotClout公司
 
-
+SandBox(沙盒)
 
 
 
