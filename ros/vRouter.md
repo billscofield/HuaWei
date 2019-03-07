@@ -44,9 +44,10 @@ MikroTik  发展历程：
     1. 1997 年开发 RouterOS 的软件，基于 Intel（PC）解决路由技术问题；
     1. 2002 年拥有 RouterBOARD 的硬件。
 
-等级
-    level 0
-    level 3
+授权级别
+    level 0 免费24小时
+    level 2
+    level 3 
     level 4
     level 5
     level 6
@@ -489,16 +490,3 @@ ping测试:   tool ping,???  //命令行里边的ping不好用啊
 
 ## 重启
 /system reboot
-
-
-
-
-
-
-
-
-
-
-
-
-

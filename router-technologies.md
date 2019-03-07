@@ -21,3 +21,13 @@
 
 
 为什么呢?
+
+
+## 静态路由
+### cisco
+
+
+### HuaWei
+ip route-static 192.168.3.0 24 192.168.2.2
+display ip routing-table
+
