@@ -9,8 +9,13 @@ General
             要让内网的电脑通过 ros 访问外网，那么就由与公网连接的网卡做 snat ，在添加 src-nat规则时， general 页的 out-interface 就应选 " 外网卡 "
         dstnat
                 dst-nat 除了指定转换后的地址外 , 也将涉及是在那块网卡 (接口)上进行 , 例如, 要将公网发给ros 的 a 端口的数据包转给内网 ip 为 b 的 c 端口 , 那么设置好 a\b\c 的值后 , 在 dst-nat 规则 general页的 in-interface 里, 应选择与 b 地址网段相连的网卡 ( 接口), 显然这是一块内网卡 ,
-        src-address 是指对哪些源地址进行伪装 ( 可以一个可以多个 ),
-        dst-address 是指发向哪些主机的数据包要进行伪装 ( 可以一个可以多个 ) ，
+    Src. address 是指对哪些源地址进行伪装 ( 可以一个可以多个 ),
+        Matches packets which source is equal to specified IP or falls into specified IP range.
+    Dst. address 是指发向哪些主机的数据包要进行伪装 ( 可以一个可以多个 ) ，
+        Matches packets which destination is equal to specified IP or falls into specified IP range.
+        比如外网访问内网服务器的设置
+            Dst. address 写的是 wan口地址
+            Action 中 To Address 写内网服务器的地址
 
         protocol 说明对哪些传输协进行转换 ( 通常有 tcp,udp 等)
         in-interface
