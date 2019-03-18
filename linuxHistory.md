@@ -2,6 +2,7 @@
     Electronic Numerical([njuː'merɪk(ə)l])  Integrator(积分器；整合) And Computer
 
 1. 1941 Dennis Ritchie(D.M.R)
+    Dennis MacAlistair Ritchie
 1. 1942 Ken Tompson
 1. 1957.10 Soviet launched Sputnik
 1. 1958 ARPA
