@@ -35,3 +35,18 @@ https://archive.apache.org/dist/httpd/binaries/win32/
 先就这么滴吧，不追究了。
 
 另外，no_ss 表示无安全证书认证的也就是常用的http：而openssl表示带安全证书的也就是https的（比前者多了一个安全模块），不过大家常用的都是no_ss。
+
+
+ServerRoot "/etc/apache2"   ServerRoot应该指向Apache的根目录
+
+
+## 之前版本的一些配置，2.4.38中没有
+
+### ServerTokens
+ServerTokens Prod   显示“Server: Apache”, 而不包含任何的版本信息
+ServerTokens Major  显示 “Server: Apache/2″
+ServerTokens Minor  显示“Server: Apache/2.2″
+ServerTokens Min    显示“Server: Apache/2.2.17″
+ServerTokens OS     显示 “Server: Apache/2.2.17 (Unix)”
+ServerTokens Full 显示 “Server: Apache/2.2.17 (Unix) PHP/5.3.5″ (如果你这指定任何的值，这个是默认的返回信息)
+

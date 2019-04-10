@@ -1,3 +1,6 @@
+## 
+
+engine x
 
 ## 模块
 1. I/O模型
@@ -158,4 +161,29 @@ PCB : Process Control Block 进程控制块
     **进程的运行实体**
 
 
+占用内存小，并发能力强
 
+nginx在修改配置文件后，不需要重启，重载即可
+相同配置下，比Apache能接受的链接多很多
+静态资源更快
+
+apache安全性比nginx好一些
+
+LNAMP,LNMPA
+
+## 编译与安装
+mainline 
+stable
+
+tar -zxvf
+./configure --prefix=/usr/local/nginx
+    pcre
+    pcre-devel
+make && make install
+
+cd /usr/local/nginx/
+    conf
+    html
+    logs
+    sbin
+./sbin/ngin 

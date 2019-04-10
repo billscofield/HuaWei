@@ -25,6 +25,7 @@
 
 1. 1972 Dennis Ritchie 在B语言基础上开发出C语言(BCPL)的第二个字母
 1. 1973 Dennis Ritchie 和 Ken Tompson 用C语言重写了Unix
+1. 1973 Xerox发明以太网,DEC/Intel/Xerox 在20世纪70年代末将其标准化，称为以太网的DIX实现
 
 1. 1977 ISO (Internation Standardization Organization ) 成立
     1984 颁布 OSI-RM (Open System Interconnection Reference Model)

@@ -182,6 +182,23 @@ dpkg -l
 apt list --upgradable
 
 
+## 关闭在线用户
+1. 方法一
+    who
+    echo "i will close your connection">/dev/pts/2
+    fuser -k /dev/pst/2
+    
+    fuser:show which processes use the named files, sockets, or filesystems
+1. 方法二
+    who 
+    pkill -kill -t pts/0
+    
+    pkill : look up or signal processes based on name and other attributes
+1. 方法三
+    登录用户的bash进程
+    ps -ef | grep bash | grep pts
+    kill -9  1 2 3
+
 
 
 

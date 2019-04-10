@@ -11,6 +11,9 @@ Python 之禅
     1. 语句函数话，如 print(1,2) 打印出1 2，但是 2.x 中意思是print语句打印元组，3.x中意思时函数的2个参数
     1. 整除，如1/2和1//2，3.x版本中/为自然除
     1. round函数，在3.x中i.5的取整变为距离最近的偶数
+        round(2.5)  返回2
+        round(1.5)  返回2
+        round(3.5)  返回4
     1. 3.x 中raw_input 命名为input , 不再使用 raw_input
     1. 字符串统一使用Unicode
     1. 异常的捕获、抛出的语法改变
@@ -25,9 +28,10 @@ Python 之禅
     1. 管理python版本
     1. 管理python的虚拟环境
 
-    1. 例如
-        1. Pyenv
-        1. https://www.bilibili.com/video/av33616020
+        1. 例如
+            1. Pyenv
+            1. https://www.bilibili.com/video/av33616020
+        1. virtualenv
 
 
 1. ipython
