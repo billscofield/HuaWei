@@ -1,0 +1,18 @@
+IRIX是由硅谷图形公司（Silicon Graphics Inc.，一般用简称：SGI，美国图形工作站生产厂商）以System V与BSD延伸程序为基础所发展成的UNIX操作系统
+
+美国硅图公司成立于1982年，是一个生产高性能计算机系统的跨国公司
+
+世界著名的数字工作室Digital Domain公司用了一年半的时间，动用了300多台SGI超级工作站，并派出50多个特技师一天24小时轮流制作「泰坦尼克号」中的电脑特技。
+
+XFS is a high-performance 64-bit journaling file system created by Silicon Graphics, Inc (SGI) in 1993.
+
+Silicon Graphics began development of the Extents File System or XFS in 1993, including it in IRIX for the first time in IRIX version 5.3 in 1994. 
+
+The file system was released under the GNU General Public License (GPL) in May 2000. 
+
+A team led by Steve Lord at SGI ported it to Linux, and first support by a Linux distribution came in 2001. This support gradually became available in almost all Linux distributions.
+
+
+
+
+A journaling file system is a file system that keeps track of changes not yet committed to the file system's main part by recording the intentions of such changes in a data structure known as a "journal", which is usually a circular log. In the event of a system crash or power failure, such file systems can be brought back online more quickly with a lower likelihood of becoming corrupted.

@@ -346,6 +346,7 @@ a.pop()
     pop(self)   默认最后一个元素
     pop(self,index)
         删除并返回指定index的元素
+        pop 是唯一既修改列表又返回一个非 None 值的列表方法。
 del(a[n])
     本质上是将一个变量从内存中删除
 ---
@@ -869,7 +870,7 @@ class Father:
 class Mather:
     def Jian_ren(self):
         pass
-class Son:
+class Son(Father,Mather):
     pass
 
 xian = Son()
@@ -896,7 +897,7 @@ class C(A,B):
 
 
 
-MRO : method resolution order 多继承时判断方法、属性的调用路径
+**MRO : method resolution order 多继承时判断方法、属性的调用路径**
 print(C.__mro__)
     (<class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>, <class 'object'>)
 
@@ -1160,8 +1161,10 @@ except Exception as result:
 
 
 ## 装饰器
+python2.4才开始支持这个
 本质上是一个返回函数的函数
 给函数增加功能
+一共外包了两层，其实一层也可以(不可以)
 
     ```
     def func():
@@ -1192,6 +1195,9 @@ except Exception as result:
     
     say = outer(say)
     say(-9)
+
+    装饰器的参数只要包含一个函数作为参数
+    被装饰的函数有自己的参数
     ```
 
     ```
@@ -1210,7 +1216,7 @@ except Exception as result:
     say(-9)
     ```
 
-通用装饰器
+**通用装饰器**
 def outer(func):
     def inner(*args,**kwargs):
         print("hhhh")
@@ -1306,12 +1312,379 @@ cmath.sqrt(-1)
 要将列表的长度初始化为10,可像下面这样做:
     sequence = [None] * 10
 
+切片赋值
+    a[1:1] = range(3)
+    a[1:4] = []
+    a[2:] = "y"  list("hello")->"hey"
+
+### format
+"{}, {} and {}".format("first", "second", "third")
+"{3} {0} {2} {1} {3} {0}".format("be", "not", "or", "to")
+
+from math import pi
+"{name} is approximately {value:.2f}.".format(value=pi, name="π")
+'π is approximately 3.14.'
+
+在Python 3.6中,如果变量与替换字段同名,还可使用一种简写。在这种情况下,可
+使用 f 字符串——在字符串前面加上 f 。
+>>> from math import e
+>>> f"Euler's constant is roughly {e}."
+"Euler's constant is roughly 2.718281828459045."
+
+
+>>> "{foo} {} {bar} {}".format(1, 2, bar=4, foo=3)
+'3 1 4 2'
+
+
+>>> "{foo} {1} {bar} {0}".format(1, 2, bar=4, foo=3)
+'3 2 4 1'
+
+>>> "The number is {num}".format(num=42)
+'The number is 42'
+>>> "The number is {num:f}".format(num=42)
+'The number is 42.000000'
+你也可以将其作为二进制数进行处理。
+>>> "The number is {num:b}".format(num=42)
+'The number is 101010'
+
+b 将整数表示为二进制数
+c 将整数解读为Unicode码点
+d 将整数视为十进制数进行处理,这是整数默认使用的说明符
+e 使用科学表示法来表示小数(用 e 来表示指数)
+E 与 e 相同,但使用 E 来表示指数
+f 将小数表示为定点数
+F 与 f 相同,但对于特殊值( nan 和 inf ),使用大写表示
+g 自动在定点表示法和科学表示法之间做出选择。这是默认用于小数的说明符,但在默认情况下至少有1位小数
+G 与 g 相同,但使用大写来表示指数和特殊值
+n 与 g 相同,但插入随区域而异的数字分隔符
+o 将整数表示为八进制数
+s 保持字符串的格式不变,这是默认用于字符串的说明符
+x 将整数表示为十六进制数并使用小写字母
+X 与 x 相同,但使用大写字母
+% 将数表示为百分比值(乘以100,按说明符 f 设置格式,再在后面加上%)
+
+宽度、精度和千位分隔符
+
+宽度是使用整数指定的,如下所示:
+>>> "{num:10}".format(num=3)
+'
+3'
+>>> "{name:10}".format(name="Bob")
+'Bob
+'
+如你所见,数和字符串的对齐方式不同。
+
+
+可使用逗号来指出你要添加千位分隔符
+>>> 'One googol is {:,}'.format(10**100)
+'One googol is 10,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,000,00
+0,000,000,000,000,000,000,000,000,000,000,000,000,000,000'
+同时指定其他格式设置元素时,这个逗号应放在宽度和表示精度的句点之间.
+>>> "{num:10,.2f}".format(num=123456789.567)
+'123,456,789.57'
+
+
+要指定左对齐、右对齐和居中,可分别使用 < 、 > 和 ^ 。
+>>> print('{0:<10.2f}\n{0:^10.2f}\n{0:>10.2f}'.format(pi))
+3.14
+3.14
+3.14
+
+>>> "{:=^15}".format(" WIN BIG ")                                                                                             
+Out[32]: '=== WIN BIG ==='
+>>> "{:=<15}".format(" WIN BIG ")                                                                                             
+Out[33]: ' WIN BIG ======'
+
+
+info = {"name":"xina","age":2}
+xian = "{name} is {age} years old".format_map(info)
+
+In [64]: "{name:#^10} is {age:5} years old".format_map(info)                                                                       
+Out[64]: '###xian### is     2 years old'
+
+In [65]: "{name:#^10} is {age:#^5} years old".format_map(info)                                                                     
+Out[65]: '###xian### is ##2## years old'
 
 
 
 
 
 
+## 多任务
+
+windows,macos,linux,unix 都支持多任务
+
+轮转时间片
+
+单核CPU实现多任务
+
+进程，线程
+
+
+并发:
+    看上去是一起执行
+    任务数多余CPU核心数
+并行
+    真的在一起执行
+    任务数<=CPU核心数
+    不可能实现
+
+实现多任务的方式
+1. 多进程
+1. 多线程
+1. 协程模式
+1. 多进程+多线程
+
+### 进程
+
+对于操作系统，一个任务就是一个进程;一个浏览器，一个QQ
+
+进程是系统中程序执行和资源分配的基本单位
+
+每个进程都有自己的数据段、代码段、堆栈段
+
+#### 单任务
+
+
+```
+def run():
+    while True:
+        print("run...")
+
+from time import sleep
+
+if __name__ == "__main__":
+    while True:
+        print("hello")
+        sleep(1)
+
+    run()
+
+    像上边的代码，run() 根本没有机会执行。只有上面的while hello 执行完成后，才有机会执行，因为单任务,只有一个进程
+
+```
+
+
+#### 多任务
+
+multiprocessing 多进程库,跨平台
+    提供了Process类来代表一个进程对象
+
+linux 还可以用fork,windows不支持
+
+```
+from multiprocessing import Process
+import time
+
+def run():
+    while True:
+        print("run...")
+        time.sleep(1.5)
+
+if __name__ == "__main__":  ## 这个是主进程,父进程
+    p = Process(target=run)
+        # target 进程执行的任务
+    p.start()   # 启动进程
+
+    while True:
+        print("hello world")
+        time.sleep(1)
+
+
+```
+
+```
+from multiprocessing import Process
+import time
+
+def run(string):
+    while True:
+        print("run... %s" % string)
+        time.sleep(1.5)
+
+if __name__ == "__main__":  ## 这个是主进程,父进程
+    p = Process(target=run,args=("BillScofield",))
+        # target 进程执行的任务
+        # args 需要一个元祖
+    p.start()   # 启动进程
+
+    while True:
+        print("hello world")
+        time.sleep(1)
+
+```
+
+
+os.getpid()     进程号
+os.getppid()    父进程号
+
+```
+from multiprocessing import Process
+import time
+import os
+
+def run(string):
+    while True:
+        print("run... %s #子进程号: %d #父进程号:%d" % (string,os.getpid(),os.getppid()))
+        time.sleep(1.5)
+
+if __name__ == "__main__":  ## 这个是主进程,父进程
+    p = Process(target=run,args=("BillScofield",))
+        # target 进程执行的任务
+        # args 需要一个元祖
+    p.start()   # 启动进程
+
+    while True:
+        print("hello world ## %d" % os.getpid())
+        time.sleep(1)
+
+```
+
+
+
+```
+from multiprocessing import Process
+
+def run(string):
+    print("子进程开始%s " % string)
+    print("子进程结束%s " % string)
+
+if __name__ == "__main__":
+    print("主进程开始...")
+    p = Process(target=run,args=("HelloWorld",))
+    p.start()
+    print("主进程结束...")
+    
+    这种状况的输出结果为
+        主进程开始
+        主进程结束
+        子进程开始
+        子进程结束
+```
+
+
+一般都是子进程结束后，父进程才结束,将子进程纳入到父进程的管理之中，只需 p.join()即可
+子进程结束后再执行父进程
+
+```
+from multiprocessing import Process
+
+def run(string):
+    print("子进程开始%s " % string)
+    print("子进程结束%s " % string)
+
+if __name__ == "__main__":
+    print("主进程开始...")
+    p = Process(target=run,args=("HelloWorld",))
+    p.start()
+    p.join()
+    print("主进程结束...")
+    
+    这种状况的输出结果为
+        主进程开始
+        子进程开始
+        子进程结束
+        主进程结束
+```
+
+父进程负责流程控制，多个任务由子进程去处理，全部子进程结束后，父进程结束
+
+**全局变量在多个*进程*中不能共享**
+
+```
+from multiprocessing import Process
+
+num = 100
+
+def run():
+    print("子进程开始")
+    global num
+    num += 1
+    print("子进程结束")
+
+if __name__=="__main__":
+    print("父进程开始")
+    p = Process(target=run)
+    print("父进程结束%d" % num)
+```
+
+独享数据段，堆栈段，
+
+
+
+from multiprocessing import Pool    进程池
+
+
+pp = Pool(N)
+    # 创建多个进程
+    # 默认是CPU核心数
+
+
+
+
+
+pp = Pool(2)
+
+for i in range(5):
+    # 创建进程，放进进程池统一管理
+    pp.apply_async(run,args=(1,))    异步async  同步sync
+
+# 在调用join之前必须先调用close，在close后边不能再添加新的进程
+pp.close()
+# 所有子进程结束后再去调用父进程
+pp.join()
+
+random.choice([1,2,3])
+
+    ```
+    from multiprocessing import Pool
+    import os
+    import time
+    
+    def run():
+        print("子进程开始 %d " % os.getpid())
+        start = time.time()
+        end = time.time()
+        print("子进程结束 耗时:%.2f" % (end - start))
+    
+    if __name__=="__main__":
+        print("父进程开始 %d " % os.getpid())
+        pp = Pool(8)
+        for i in range(10):
+            pp.apply_async(run)
+         
+        pp.close()
+        pp.join()
+        print("父进程结束")
+
+    ```
+
+
+
+
+## 文件
+open("FILE","r+")
+    以普通方式打开的文件，seek只能从0开始，不能是1 和 2， 错误提示:
+        io.UnsupportedOperation: can't do nonzero end-relative seeks
+        io.UnsupportedOperation: can't do nonzero cur-relative seeks
+        但是 seek(0,1)可以
+    二进制方式不受限制,open("FILE","rb")
+
+    读下一个位置,写下一个位置
+    
+    r+ 还是 rw 都是从位置1开始写
+
+    换行符\n 
+
+使用编辑器例如vi时，会自动添加\n换行符，但是Python的write不会这样做，真实的写入你告诉他的每个字符
+
+
+with open ... as ...
+    __enter__
+    __exit__
+
+文件对象是可迭代的，行
+    
 
 
 

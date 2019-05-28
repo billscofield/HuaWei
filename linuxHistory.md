@@ -52,10 +52,24 @@
     A brief history of Debian 
         https://www.debian.org/doc/manuals/project-history/
 1. 1994.3.14 Linux 1.0内核发布
+    主版本号*次版本号*修订版本号
 
 1. 1995 Bob Young 创办 Red Hat
 
 1. 1997 GNOME(GNU Object Model Environment)
 
 1. 1998 Open Sourse Initiative 开发源代码促进会成立
+
+1. 2004年10月，Mark Shuttleworth 发布Ubuntu
+    LTS 5年
+
+
+## 发行版
+RHEL Fedora centos
+Debian  ubuntu  
+OpenSUSE
+Gentoo
+Slackware
+RedHat
+Arch
 
