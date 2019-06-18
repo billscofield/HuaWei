@@ -1,6 +1,11 @@
 # Linux 三剑客
 ## awk
+    awk '{pattern + action}' {filename}
+
     awk '{print}' a.txt 全部输出 同 cat a.txt
+
+    行从1开始，列从1开始
+    匹配 filename 的每一行执行 action
     
     ---
 
@@ -15,6 +20,7 @@
 
     输入分隔符
         -F " "
+            -F fs --field-separator=fs
     输出分隔符
         默认是",",可以换成自己想要的任意的字符
         awk '{print $1"-"$2}' 
@@ -306,48 +312,6 @@ s   替换
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 1. 管道
     1. stdint 0
     1. stdout 1
@@ -420,15 +384,6 @@ xargs
 而 echo '--help' | xargs cat 等价于 cat --help 什么意思呢，就是xargs将其接受的字符串 --help 做成cat的一个命令参数来运行cat命令，同样  echo 'test.c test.cpp' | xargs cat 等价于 cat test.c test.cpp 此时会将test.c和test.cpp的内容都显示出来。
 
 **xargs 可以将管道或标准输入（stdin）数据转换成命令行参数**
-
-
-
-
-
-
-
-
-
 
 
 

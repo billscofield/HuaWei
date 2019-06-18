@@ -18,11 +18,19 @@ Shift +V：在上方粘贴单元
 
 
 ## 安装
-    pip install jupyter
+pip install jupyter
+
 ## 根据提示输入密码
 jupyter notebook password
+
 ## 启动jupyter,默认端口是8888
-??? nohup jupyter notebook --no-browser --ip=0.0.0.0  --port=10000 &> jupyter.log &
+nohup jupyter notebook --no-browser --ip=0.0.0.0  --port=10000 &> jupyter.log &
+
+nohup 命令
+    nohup is a POSIX command to ignore the HUP (hangup) signal. 
+    The HUP signal is, by convention, the way a terminal warns dependent processes of logout. 
+    Output that would normally go to the terminal goes to a file called nohup.out if it has not already been redirected.
+
 jupyter notebook
 同时，会在你开启 notebook 的文件夹中启动 Jupyter 主界面
 

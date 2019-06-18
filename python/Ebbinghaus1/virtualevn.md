@@ -50,24 +50,38 @@ virtualenv是如何创建“独立”的Python运行环境的呢？原理很简�
     pip freeze > requirements.md
     pip3 install -r requirements.txt
 
-
+这个目录下的bin、include、lib分别对环境操作工具、依赖库、安装的库进行分别管理
 
 
 
 
 ## virtualenvwrapper
+virtaulenvwrapper是virtualenv的扩展包，用于更方便管理虚拟环境,它的主要亮点有：
+    1.可以将所有的虚拟环境整合到一个目录下，方便管理，而不是像virtualenv那样将虚拟环境放置在和项目同一个目录， 这样将每个环境与项目剥离开，使得每个环境的多次使用非常方便。
+    2.可以非常方便地对虚拟环境进行添加、删除、复制等管理操作，还可以很方便地对使用的环境进行切换。
+
+https://www.cnblogs.com/weiwei-python/p/9893599.html
 
 pip install virtualenvwrapper
 
 编辑 ~/.zshrc
 export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/workspace
 source /usr/local/bin/virtualenvwrapper.sh
+    会创建 VIRTUALENVWRAPPER_PYTHON, 默认是 `which python`,因此如果想指定python3,需要手工在.zshrc中配置
+
+    ```
+    if [ "${VIRTUALENVWRAPPER_PYTHON:-}" = "" ]
+    then
+        VIRTUALENVWRAPPER_PYTHON="$(command \which python)"
+    fi
+
+    ```
 
 source ~/.zshrc
 
 
 mkvirtualenv test : 创建运行环境test
+    -p PYTHON_EXE, --python=PYTHON_EXE
 workon : 查看当前的虚拟环境目录
 workon test : 工作在test环境或切换到test环境
 deactivate : 退出当前环境
@@ -78,9 +92,10 @@ lsvirtualenv : 列出可用的运行环境
 lssitepackages : 列出当前环境安装了的包
 
 cdvirtualenv
-导航到当前激活的虚拟环境的目录中，比如说这样您就能够浏览它的 site-packages 。
+    导航到当前激活的虚拟环境的目录中，比如说这样您就能够浏览它的 site-packages 。
+    首先要在一个激活的虚拟环境中
 cdsitepackages
-和上面的类似，但是是直接进入到 site-packages 目录中。
+    和上面的类似，但是是直接进入到 site-packages 目录中。
 lssitepackages
-显示 site-packages 目录中的内容。
+    显示 site-packages 目录中的内容。
 
