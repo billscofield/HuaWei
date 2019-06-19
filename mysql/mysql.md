@@ -314,5 +314,16 @@ count
 
 根据查找后的结果集上进行筛选
     having
+        分组前筛选 where
+        分组后筛选 having
+
+多个字段分组
+    SELECT AVG(salary), department_id, job_id
+    FROM employees
+    GROUP BY department_id, job_id;
+
+
+
+## 连接查询(多表查询)
 
 
