@@ -7,6 +7,9 @@ select user();
 
 create database `aaa` default character utf8 collate utf8_general_ci;
 
+comment ' '
+
+CHARSET=utf8mb4
 
 varchar(N) N是字符,不是字节
 
@@ -130,9 +133,28 @@ select 数据 from 表明  where 条件;
 length()
     null 的length 还是null
 
+
+
+1. 数据库名和表名是严格区分大小写的
+2. 表的别名严格区分小大写
+3. 列名与列的别名在所有情况下均是忽略小大写的, 字段的值是不区分大小写的
+    对于字段的值，想要区分大小写，可以使用BINARY加以限制。不管是在创建表的时候，还是在查询的条件字句中都可以使用。
+    create table test(name varchar(10),name2 varchar(10) binary);
+    insert into test values('Abc','Abc');
+    select * from test where name='abc' 有
+    select * from test where name2='abc' 无
+    其实是更改了这个字段的 collate
+4. 变量名也是严格区分大小写的
+
+
+NULL值与任何其它值的比较（即使是NULL）永远返回false
+
+
 ## 常见函数
 
 show variables like "%chara%"
+show variables like "%time_zone%"
+    set time_zone='+9:00'
 
 ### 单行函数
     1. 字符函数
@@ -325,5 +347,231 @@ count
 
 
 ## 连接查询(多表查询)
+select count(1) from table1,table2; 计算的是笛卡尔乘积
+
+按年代分类
+    sql92标准
+        仅仅支持内连接
+    sql99标准
+        支持内连接+外连接(左外连接,右外连接)+交叉连接
+
+按功能分类
+    内连接
+        等值连接
+        非等值连接
+        自连接
+    外连接
+        左外连接
+        右外连接
+        全外连接
+    交叉连接
+
+### 等值连接
+where Table1.字段 = Table2.字段
+
+**如果为表起了别名,则查询的字段就不能使用原来的表明去限定,**
+from 第一步执行,生成了类似视图的表,
+然后select第二部执行
+最后where第三步执行
+
+    ```
+    查询有奖金的员工名\部门名
+    select last_name,department_name,commission_pct
+    from employee e, department_name
+    where e.department_id=d.department_id
+    and e.commission_pct is not null
+    ```
+
+加分组
+    
+    ```
+    案例1
+    查询每个城市的部门个数
+
+    第一步
+    select count(1) 个数,city
+    from departments d, location l
+
+    group by city
+
+    第一步
+    select count(1) 个数,city
+    from departments d, location l
+    where l.location_id = d.location_id
+    group by city;
 
 
+
+    案例2
+    查询有奖金的每个部门的部门名 和 部门领导编号 和 该部门最低工资
+
+    select department_name,d.manager_id,min(salary)
+    from departments d, employee e
+    where d.department_id = e.department_id
+    AND commission_pct IS NOT NULL
+    group by department_name,d.manager_id;
+
+
+    案例3 
+    查询每个工种的工种名 和 员工的个数, 并且按员工个数降序
+
+    select e.job_id, job_title, count(*) as c
+    from employees e, jobs j
+    where e.job_id = j.job_id
+    group by e.gob_id, job_title
+    order by c
+
+    做多表查询的时候,先做一个表的,然后 加where条件,即可
+
+
+
+    案例4
+    三表连接
+    查询员工名,部门名和所在的城市
+
+    select last_name, department_name,city
+    from employees e, departments d, locations l
+    where e.department_id=d.department_id
+    and
+    d.location_id = l.location_id;
+    ```
+
+多表等值连接的结果为多表的交集部分
+n表连接，至少需要(n-1)个连接条件
+表的顺序无所谓
+一般使用别名
+
+
+### 非等值连接
+
+就是不等于
+
+案例1 查询员工的工资和工资级别
+
+```
+原理
+select salary,employee_id from employees;
+select * from job_grades;
+
+实际语句
+select e.employee_id,e.last_name,e.salary,j.grade_level
+from employee e, job_grades g
+where salary BETWEEN g.lowest_sal AND g.highest_sal;
+```
+
+
+### 自连接
+不是所有的表都可以自连接，
+
+employees表 可以
+员工对应的领导的名字
+
+select a.employee_id, a.last_name, b.employee_id,b.lastname
+from employees a, employees b
+where a.manager_id = b.employee_id
+
+
+
+## 数据类型
+数值型
+    整型
+        Tinyint     1Byte
+        smallint    2Byte
+        mediumint   3Byte
+        int         4Byte
+        bigint      8Byte
+        unsigned(unsigned 要写在int的后面)
+        
+        int(4) 是显示宽度，加了zerofill后会在左面补零，但是我的没有看到效果
+        添加了 zerofill 就默认无符号了
+    小数
+        定点数
+            dec/decimal(M,D)    8Byte
+            默认(10,0)
+        浮点数
+            float(M,D)   4Byte
+            double(M,D)  8Byte
+            默认没有，你插入什么就是什么
+
+            D表示小数点位数，这三个多了四舍五入
+            M-D 表示整数位，不能超过，否则错误，或者插不进去,或者插入临界值(依据不同的DBMS版本)
+    字符型
+        较短的文本
+            char(M)
+                此处M默认为1
+            varchar(M)
+                不可以省略M
+        较长的文本
+            text
+            blob(二进制)
+    日期型
+        必须用单引号
+        date        4Byte   1000-01-01                  9999-12-31
+        datetime    8Byte   1000-01-01 00:00:00         9999-12-31 23:59:59
+            与时区无关
+        timestamp   4Byte   1970                        2038年的某个时刻
+            更改时区会发生变化,会受到实际时区的影响
+            受MySQL版本和SQLMode的影响很大
+            **timestamp类型适合用来记录数据的最后修改时间，因为只要你更改了记录中其他字段的值，timestamp字段的值都会被自动更新。（如果需要可以设置timestamp不自动更新）**
+        time        3Byte   -838:59:59                  838:59:59
+        year        1Byte   1902                        2155
+        
+
+    枚举 enum
+        create table test(name enum('a','b','c'));
+        insert into test values ('a'),('b'),('c');
+        insert into test values ('A');
+        insert into test values ('F');  报错
+
+        **字段没有设置binary的话，不区分大小写，**
+
+    集合 set
+        create table test(name set('a','b','c'));
+        insert into test values ('a');
+        insert into test values ('a,b');
+        insert into test values ('a,c,b'); 
+
+        **字段没有设置binary的话，不区分大小写，**
+
+
+
+
+## 存储过程
+
+类似Python中的方法
+
+参数类型
+    in  向过程里面传参数
+    out 向过程外面传参数
+    既可以向内，也可以向外(尽量少用)
+
+
+### 变量的定义和赋值
+
+declare 变量名 类型
+    declare name varchar(10)
+
+set 变量名 = 变量值
+
+
+### 条件控制
+
+    ```
+    if 条件 then
+        条件为真时的语句
+    else if 条件 then
+        条件为真时的语句
+    else
+        else情况下的语句
+    endif
+    ```
+
+### 存储过程的建立
+
+```
+delimiter//
+create procedure p_存储过程名
+begin
+select * from test
+end;
+//
