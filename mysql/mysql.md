@@ -156,37 +156,77 @@ show variables like "%chara%"
 show variables like "%time_zone%"
     set time_zone='+9:00'
 
+
 ### 单行函数
-    1. 字符函数
-        length
-            返回的时字节数    
-        char_length
-            返回字符数
+1. 字符函数
+    length
+        返回的时字节数    
+    char_length
+        返回字符数
 
-    1. concat
+1. concat
 
-    1. upper()
-    1. lower()
-    
-    1. substr/substring('string',start[,char_length])
-        索引从1开始
-        双闭区间
+1. upper()
+1. lower()
 
-    1. instr('helloworld','hello')  参数二在参数一中第一次出现时的索引
-        没有则返回零
+1. substr/substring('string',start[,char_length])
+    索引从1开始
+    双闭区间
 
-    1. trim(' helo ') 去除前后空格
-        char_length 和 length 都会计算空格字符' '
-        \t \n 等算一个字符
+1. instr('helloworld','hello')  参数二在参数一中第一次出现时的索引
+    没有则返回零
 
-    1. trim( 'a' from '目标字符串')
+1. trim(' helo ') 去除前后空格
+    char_length 和 length 都会计算空格字符' '
+    \t \n 等算一个字符
 
-    1. lpad('a',num,'char')
-        num是总长度
-        lpad('刘蛟', 5, '*') => ***刘蛟
-    1. rpad('abc',num,'char')
+1. trim( 'a' from '目标字符串')
 
-    1. replace('hello world','hello','HELLO')
+1. lpad('a',num,'char')
+    num是总长度
+    lpad('刘蛟', 5, '*') => ***刘蛟
+1. rpad('abc',num,'char')
+
+1. replace('hello world','hello','HELLO')
+
+1. cast
+    CAST函数语法规则是：Cast(字段名 as 转换的类型 )，其中类型可以为：
+
+    CHAR[(N)] 字符型 
+    DATE 日期型
+    DATETIME 日期和时间型
+    DECIMAL float型
+    SIGNED int
+        +-------------------------+
+        | cast(now() as signed)   |
+        |-------------------------|
+        | 20190620200458          |
+        +-------------------------+
+    TIME 时间型
+
+    select cast(now(),date)
+
+    我觉得主要是 字符串和时间类型的转换，但是 date(),time(),year() 也可以啊
+
+    mysql root@(none):bill> select * from tt;
+    +------------+
+    | mdate      |
+    |------------|
+    | 2019-01-01 |
+    | 2018/02/02 |
+    +------------+
+    2 rows in set
+    Time: 0.024s
+    mysql root@(none):bill> select datetime(mdate) from tt;
+    (1064, "You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(mdate) from tt' at line 1")
+    mysql root@(none):bill> select cast(mdate as datetime) from tt;
+    +---------------------------+
+    | cast(mdate as datetime)   |
+    |---------------------------|
+    | 2019-01-01 00:00:00       |
+    | 2018-02-02 00:00:00       |
+    +---------------------------+
+
 
 ### 数学函数
 1. round(1.65)    四舍五入,默认到整数
@@ -566,12 +606,152 @@ set 变量名 = 变量值
     endif
     ```
 
+### 
+
 ### 存储过程的建立
 
 ```
 delimiter//
-create procedure p_存储过程名
+create procedure p_存储过程名()
 begin
 select * from test
 end;
 //
+delimiter ;
+
+call p_存储过程名()
+```
+
+实例
+```
+show PROCEDURE STATUS;
+
+DROP PROCEDURE age;
+
+delimiter //
+CREATE PROCEDURE age()
+BEGIN
+DECLARE age INT;
+SET age=3;
+IF age>10 THEN
+    SELECT ">10";
+ELSEIF age>5  THEN
+    SELECT ">5";
+ELSE
+    SELECT "<=5";
+END IF;
+END
+//
+delimiter ;
+
+CALL age();
+```
+
+case XXX
+when    then
+```
+drop PROCEDURE mcase
+
+delimiter //
+CREATE PROCEDURE mcase()
+BEGIN
+DECLARE age int;
+SET age=10;
+
+case age
+WHEN 11 THEN SELECT "11";
+WHEN 10 THEN SELECT "10";
+WHEN 9 THEN SELECT "9";
+END case;
+end;
+//
+delimiter ;
+
+call mcase();
+```
+
+
+循环结构
+```
+
+```
+
+
+
+
+1) 加索引
+   mysql> alter table 表名 add index 索引名 (字段名1[，字段名2 …]);
+
+例子： mysql> alter table employee add index emp_name (name);
+
+2) 加主关键字的索引
+    mysql> alter table 表名 add primary key (字段名);
+
+例子： mysql> alter table employee add primary key(id);
+
+3) 加唯一限制条件的索引
+   mysql> alter table 表名 add unique 索引名 (字段名);
+
+例子： mysql> alter table employee add unique emp_name2(cardnumber);
+
+4) 删除某个索引
+   mysql> alter table 表名 drop index 索引名;
+
+例子： mysql>alter table employee drop index emp_name;
+
+5) 增加字段
+    mysql> ALTER TABLE table_name ADD field_name field_type;
+
+6) 修改原字段名称及类型
+    mysql> ALTER TABLE table_name CHANGE old_field_name new_field_name field_type;
+
+7) 删除字段
+    MySQL ALTER TABLE table_name DROP field_name;
+
+全文：http://c.biancheng.net/cpp/html/1456.html
+
+ 
+
+8) 修改字段
+
+如果要修改字段的话就用这个：
+
+ALTER TABLE 创建好的表名称 MODIFY COLUMN 创建好的表需要修改的字段 INT AUTO_INCREMENT
+
+全文：https://zhidao.baidu.com/question/359185899.html
+
+ 
+
+9) 修改字段属性
+
+mysql修改已存在的表增加ID属性为auto_increment自动增长
+
+今天有需要将已经存在表设置自动增长属性
+具体如下
+alter table customers change id id int not null auto_increment primary key;
+
+
+
+
+添加新用户
+    create user 'editest'@'localhost' identified by 'editest123456';
+    create user 'editest'@'%' identified by 'editest123456';
+
+    用户创建完成后，刷新授权
+        flush privileges
+
+
+对用户开放数据库的权限
+    ```
+    grant all privileges on `editestdb`.* to 'editest'@'localhost' identified by 'editest123456' with grant option;
+    grant all privileges on `editestdb`.* to 'editest'@'%' identified by 'editest123456' with grant option;
+    GRANT ALL PRIVILEGES ON *.* TO 'root'@'%'IDENTIFIED BY 'root' WITH GRANT OPTION
+    flush privileges
+    ```
+
+mysql远程连接命令,更改127.0.0.1到0.0.0.0
+    修改mysql配置文件：/etc/mysql/mysql.conf.d/mysqld.cnf
+    将bind_address的值从127.0.0.1修改成0.0.0.0
+
+    **service mysql restart**
+
