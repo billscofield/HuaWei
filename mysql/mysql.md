@@ -672,9 +672,102 @@ call mcase();
 
 
 循环结构
-```
 
 ```
+while:
+
+CREATE PROCEDURE mwhilesum()
+BEGIN
+DECLARE i int;
+DECLARE sum int;
+set i=1;
+set sum=0;
+WHILE i<=10 DO 
+    set sum=sum+i;
+    set i=i+1;
+END while;
+select sum;
+END;
+
+
+
+repeat     until 
+
+CREATE PROCEDURE prepeat()
+BEGIN
+DECLARE i int;
+DECLARE sum int;
+set i=1;
+set sum=0;
+REPEAT
+set sum = sum + i;
+set i = i + 1;
+UNTIL i>10
+END repeat;
+SELECT sum;
+END;
+```
+
+### 触发器
+
+与表有关的数据库对象
+对插入的数据进行处理,
+
+1. 触发条件
+    1. after
+    1. before
+
+
+```
+## insert
+
+CREATE TABLE stu (
+    id INT PRIMARY KEY auto_increment,
+    NAME VARCHAR (20),
+    age INT
+);
+
+CREATE TABLE teacher (
+    id INT NOT NULL PRIMARY KEY auto_increment,
+    NAME VARCHAR (20),
+    stu_name VARCHAR (20)
+);
+
+CREATE TRIGGER g_insertAfter_stu AFTER INSERT ON stu FOR EACH ROW
+BEGIN
+    INSERT INTO teacher
+VALUES
+    (NULL, 'li', new. NAME);
+
+
+END
+
+insert into stu values(null,'zheng',2);
+
+select * from stu;
+select * from teacher;
+
+
+
+## update
+
+create trigger g_afterUpdate_stu
+AFTER UPDATE on stu for each ROW
+BEGIN
+IF old.name='zhou' THEN
+UPDATE teacher set name='kong' where stu_name=old.name;
+end if;
+END;
+
+update stu set age=1 where name='zhou'
+
+```
+
+
+
+
+
+
 
 
 
