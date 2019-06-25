@@ -848,3 +848,159 @@ mysql远程连接命令,更改127.0.0.1到0.0.0.0
 
     **service mysql restart**
 
+### 内连接 (交集)
+
+```
+select * from a
+inner join b
+on a.key = b.key
+```
+
+### 外连接
+左右连接
+
+一般用于查询一个表中有，另一个表中没有的记录
+
+主表中的 全部显示
+    如果从表中有匹配的，则显示匹配的值
+    如果从表中没有匹配的，则显示null
+
+left join 左边的是主表
+    left outer join
+
+right join 右边的是主表
+
+
+案例
+```
+select mn.name from beauty mv
+left join boys b
+on mn.boyfriend_id = b.id
+where b.name is not null
+
+哪个部门没有员工
+select d.*, e.employee_id
+from departments d
+left join employees e
+on d.department_id = e.department_id
+where e.employee_id is null
+
+```
+
+
+全外连接
+MySQL不支持全外连接，所以只能采取关键字UNION来联合左、右连接的方法：
+查询语句：SELECT s.*,subject,score FROM student s LEFT JOIN mark m ON s.id=m.id 
+UNION 
+SELECT s.*,subject,score FROM student s RIGHT JOIN mark m ON s.id=m.id;
+
+```
+select b.*,bo.*
+from beauty b
+full outer join boys bo
+on a.boyfriend_id = bo.id
+```
+
+A U (A ∩ B) U B
+
+
+### 交叉连接(笛卡尔乘积) sql99
+
+```
+select b.*, bo.*
+from beauty b
+cross join boys bo;
+```
+
+
+<img src="./static/jihe.png">
+
+
+
+```
+查询哪个城市没有部门
+
+select city,d.*
+from location l
+left join departments d
+on l.location_id = d.location_id
+where d.department_id is null;
+
+select city,d.*
+from locations l
+left join departments d
+on l.location_id = d.location_id
+where d.department_id is null;
+
+
+
+查询部门名为 SAL 或 IT的员工信息
+select e.last_name, d.department_name 
+from employees e
+right join departments d
+on e.department_id = d.department_id;
+where d.department_name = 'SAL'
+or d.department_name = 'IT';
+
+
+select e.last_name, d.department_name 
+from employees e
+right join departments d
+on e.department_id = d.department_id;
+where d.department_name in ('SAL','IT');
+```
+
+
+### 子查询
+
+select first_name from employees where
+department_id in (
+    select department_id from departments
+    where location_id = 1700
+);
+
+
+按子查询出现的位置
+    select 后面
+        只支持 标量子查询
+    from 后面
+        支持表子查询
+    where 或 having 后面  ★
+        标量子查询      ★
+        列子查询        ★
+        行子查询
+    exists 后面(相关子查询)
+        表子查询
+
+按结果集的行列数不同
+    标量子查询(结果集只有一行一列)(单行子查询)
+    列子查询(结果集只有一列多行)(多行子查询)
+    行子查询(结果集有一行多列)
+    表子查询(结果集一般为多行多列)
+
+
+where 或 having 后面
+    单行操作符
+        > < >= <= <> =
+    多行操作符
+        in any some all
+
+
+1. 标量子查询
+
+谁的工资比 Abel 高
+
+    ```
+    select last_name, salary from employees
+    where salary > (
+        select salary from employees where last_name = 'Abel'
+    ); 
+    ```
+
+返回 job_id 与 141 号员工相同，salary 比 143 号员工多的员工  姓名，job_id 和工资
+```
+select last_name,job_id,salary from employees
+where job_id = (
+    select job_id from employees where employee_id=141
+);
+```
