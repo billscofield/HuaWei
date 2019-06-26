@@ -1,4 +1,4 @@
-表 和 OOP的类 很相似，所以字段会出现在Python中,每一列类似属性
+表 和 OOP的类 很相似，所以字段会出现在 Python中,每一列类似属性
 
 show tables from 库名;
 select database();
@@ -8,6 +8,10 @@ select user();
 create database `aaa` default character utf8 collate utf8_general_ci;
 
 comment ' '
+
+
+原来mysql支持的 utf8 编码最大字符长度为 3 字节
+MySQL在5.5.3之后增加了这个 utf8mb4 的编码，mb4 就是most bytes 4的意思，专门用来兼容四字节的unicode,utf8mb4是utf8的超集
 
 CHARSET=utf8mb4
 
@@ -19,11 +23,17 @@ truncate table `teacher_info`
 desc 表名;
 
 
+
+如果是不支持事务的引擎，如myisam，则是否commit都没有效的
+如果是支持事务的引擎，如innodb，则得知道你事物支持是否自动提交事务（即commit）
+看自己的数据库是否是自动commit，可以使用mysql> show variables like '%autocommit%';来进行查看，如果是OFF即不自动commit，需要手动commit操作（命令行可以直接“commit；“命令），否则是自动commit。
+
+
+
 sql语句不区分大小写，但是库、表、字段、区分大小写
 
 单行注释 #
 单行注释 -- --
-
 多行注释 /* */
 
 
@@ -41,6 +51,7 @@ TCL 事务控制语言
 
 建议用双引号
 
+
 去重 select distinct 字段
     select distinct a,b from 表名;
 
@@ -50,6 +61,7 @@ TCL 事务控制语言
     1. 字符串不可以转换为数字:字符转换为零
         select 'name'+1
     1. 有一个操作数是 Null，则结果为Null
+    1. '123abc'+1 =>12
 
 
 concat
@@ -57,6 +69,7 @@ concat
     select concat(a,',',b,...);
 
     **如果某条记录的某一个字段值为Null,则 concat的结果只有一个Null**
+
 
 IFNULL(为Null的字段,你希望显示的默认值)
     select concat(a,IFNULL(name,"无名氏")) from 表名;
@@ -87,6 +100,8 @@ not like
 
     **like '%' 不能匹配NULL**
     相比较于 concat , where name like '%' or id like '%' 不会像concat那样，有一个字段为NULL，就整个为NULL，like 会更普通
+        select * from beauty where name like '%';
+        select concat(name,photo) from beauty;
 
     可以判断数值型
     
@@ -120,6 +135,8 @@ select 数据 from 表明  where 条件;
     对每一条数据进行条件匹配,如果没有条件，则每一条记录都为True，会执行select输出
     select更像是print
 
+    select * from beauty where true;    结果为全部数据
+    select * from beauty where false;  结果为空
 
 
 
@@ -127,6 +144,8 @@ select 数据 from 表明  where 条件;
     order by 字段 desc;降序
     order by 字段 asc;升序
     order by 表达式
+        select * from beauty order by concat(name,id);
+            结果 Angelababy 成为第一个
     order by 别名
 
 
@@ -134,10 +153,14 @@ length()
     null 的length 还是null
 
 
+## 关于null的总结
+NULL值与任何其它值的比较（即使是NULL）永远返回false
 
+
+## 关于大小写
 1. 数据库名和表名是严格区分大小写的
 2. 表的别名严格区分小大写
-3. 列名与列的别名在所有情况下均是忽略小大写的, 字段的值是不区分大小写的
+3. **列名与列的别名在所有情况下均是忽略小大写的, 字段的值是不区分大小写的**
     对于字段的值，想要区分大小写，可以使用BINARY加以限制。不管是在创建表的时候，还是在查询的条件字句中都可以使用。
     create table test(name varchar(10),name2 varchar(10) binary);
     insert into test values('Abc','Abc');
@@ -147,31 +170,37 @@ length()
 4. 变量名也是严格区分大小写的
 
 
-NULL值与任何其它值的比较（即使是NULL）永远返回false
-
-
 ## 常见函数
 
 show variables like "%chara%"
 show variables like "%time_zone%"
     set time_zone='+9:00'
+show variables like "%autocommit%"
 
 
 ### 单行函数
 1. 字符函数
     length
-        返回的时字节数    
+        返回的是字节数    
     char_length
         返回字符数
 
-1. concat
+    案例
+        ```
+        select a.*,(
+            select char_length(b.name)
+            from beauty b
+            where a.id = b.id
+        ) from beauty a;
+        ```
 
+1. concat
 1. upper()
 1. lower()
 
 1. substr/substring('string',start[,char_length])
     索引从1开始
-    双闭区间
+    闭区间
 
 1. instr('helloworld','hello')  参数二在参数一中第一次出现时的索引
     没有则返回零
@@ -182,9 +211,10 @@ show variables like "%time_zone%"
 
 1. trim( 'a' from '目标字符串')
 
-1. lpad('a',num,'char')
+1. lpad('a',char-length,'filled-char')
     num是总长度
     lpad('刘蛟', 5, '*') => ***刘蛟
+
 1. rpad('abc',num,'char')
 
 1. replace('hello world','hello','HELLO')
@@ -230,10 +260,10 @@ show variables like "%time_zone%"
 
 ### 数学函数
 1. round(1.65)    四舍五入,默认到整数
-    round(1.65,2)   2 表示小数保存两位)
+    round(1.654,2)   2 表示小数保存两位)
+1. truncate(1.29,1)  小数点后截断只剩1位
 1. ceil() 向上取整
 1. floor() 向下取整
-1. truncate(1.29,1)  小数点后截断只剩1位
 1. mod(10,3)    `**取余数  a-a/b*b**
             
 ### 日期函数
@@ -587,11 +617,19 @@ where a.manager_id = b.employee_id
 
 
 ### 变量的定义和赋值
+一般是用在 procedure 之类的当中，不能单独使用
+
+    declare mname = 'hello'; 报错
+    
 
 declare 变量名 类型
     declare name varchar(10)
 
 set 变量名 = 变量值
+
+
+
+
 
 
 ### 条件控制
@@ -985,10 +1023,10 @@ where 或 having 后面
     多行操作符
         in any some all
 
-
+#### 标量子查询
 1. 标量子查询
 
-谁的工资比 Abel 高
+例子1:谁的工资比 Abel 高
 
     ```
     select last_name, salary from employees
@@ -997,10 +1035,180 @@ where 或 having 后面
     ); 
     ```
 
-返回 job_id 与 141 号员工相同，salary 比 143 号员工多的员工  姓名，job_id 和工资
+例子2:返回 job_id 与 141 号员工相同，salary 比 143 号员工多的员工  姓名，job_id 和工资
+
+    ```
+    select last_name,job_id,salary from employees
+    where job_id = (
+        select job_id from employees where employee_id=141
+    );
+    ```
+
+例子3:查询员工的姓名， job_id 和工资，要求job_id=例子1，并且salary>例子2
+
+    ```
+    select last_name, job_id, salary from employees
+    where job_id = (
+    select job_id from employees where last_name = 'Abel'     
+    )
+    and
+    salary > (
+    select salary from employees where employee_id = 141
+    );
+    ```
+
+例子4 返回公司工资最少的员工的last_name, job_id 和 salary
+
+    ```
+    select last_name, job_id, salary
+    from employees
+    where salary = (
+    select min(salary) from employees
+    );
+    ```
+
+例子5 查询(最低工资大于)(50号部门最低工资)(的部门id)和其最低工资
+
+    ```
+    step one:50号部门的最低工资
+
+        select department_id, min(salary) from employees where department_id=50 group by department_id;
+
+    step two: target department
+
+        select department_id, min(salary) from employees 
+        group by department_id
+        having min(salary)>(
+            select min(salary) from employees where department_id = 50
+        )
+
+    我想连接departments 表，查询department_name, left join 应该放在那里?
+    ```
+
+
+
+#### 列子查询(多行子查询)
+1. in/not in   :等于列表中(任意一个)
+1. any | some  :和子查询返回的(某一个)值比较,any & some 都代表任意, 
+    a > any(10,20,30) 当a = 15 即可, 可用 min 进行替换, 所以中文语境下用得少
+1. all         :和子查询返回的(所有)值比较
+    a > any(10,20,30) 当 a = 31 才可以，用 max 进行替换, 所以中文语境下用得少
+
+
+例子1 返回location_id 是1400 或 1700 的部门中的所有员工姓名
+
+    ```
+    step 1:
+        select distinct department_id from departments where location_id in (1400,1700);
+
+    step 2:
+        select last_name from employees where department_id in (
+            select distinct department_id form departments where location_id in (1400,1700)
+        )
+    ```
+
+例子2 返回其他部门中比 job_id 为 "IT_PROG" 工种 任一(max)工资低的员工的: 工号、姓名、job_id 以及 salary
+
+    ```
+    step1
+        select distinct salary 
+        from employees
+        where job_id = 'IT_PROG'
+
+    step2
+        select employee_id, last_name, job_id, salary
+        from employees
+        where salary < ANY(
+            select distinct salary from employees where job_id = 'IT_PROG'
+        );
+        
+    ```
+
+例子3 查询员工号、姓名、job_id 以及 salary, salary<例子2的任意一个
+
+    ```
+    select last_name, employee_id, job_id, salary
+    from employees
+    where salary < any(
+        select distinct salary
+        from employees
+        where job_id = 'IT_PROG'
+    )
+    and job_id <> 'IT_PROG';
+    ```
+
+
+例子4 返回其他部门中比 job_id 为 "IT_PROG" 工种 所有工资都低的员工的: 工号、姓名、job_id 以及 salary
+
 ```
-select last_name,job_id,salary from employees
-where job_id = (
-    select job_id from employees where employee_id=141
+
+```
+
+in      等价于  =any
+not in  等价于  <>all
+
+
+#### 行子查询(一行多列或多行多列)
+
+例子1 查询(员工编号最小) 并且 (工资最高)的(员工信息)
+
+```
+select min(employee_id) from employees
+
+select max(salary) from employees
+
+select * from employees
+where employee_id = (
+    select min(employee_id) from employees)
+and
+salary = (
+    select max(salary) from employees);
+这个例子逻辑上有问题吧
+
+
+select * from employees
+where (employee_id, salary)=(
+    select min(employee_id),max(salary)
+    from employees
+)
+```
+
+
+
+#### select 后面的子查询
+
+每个部门的员工人数
+```
+select d.*,(
+    select count(1) from deployees e 
+    where e.department_id = d.department_id
+)
+from departments d;
+```
+
+
+查询员工号为102的部门名
+```
+select department_id from employees where employee_id = 102;
+
+select department_name from departments where employee_id= ?
+
+
+select (
+    select department_name
+    from departments d
+    inner join employees e
+    on d.department_id = e.department_id
+    where e.employee_id = 102
 );
+这个只能单行单列
 ```
+
+
+https://www.bilibili.com/video/av49181542/?p=92
+
+
+
+
+
+create table B as select * from A;
