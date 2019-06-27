@@ -17,18 +17,13 @@ CHARSET=utf8mb4
 
 varchar(N) N是字符,不是字节
 
-
 truncate table `teacher_info`
 
 desc 表名;
 
-
-
 如果是不支持事务的引擎，如myisam，则是否commit都没有效的
 如果是支持事务的引擎，如innodb，则得知道你事物支持是否自动提交事务（即commit）
 看自己的数据库是否是自动commit，可以使用mysql> show variables like '%autocommit%';来进行查看，如果是OFF即不自动commit，需要手动commit操作（命令行可以直接“commit；“命令），否则是自动commit。
-
-
 
 sql语句不区分大小写，但是库、表、字段、区分大小写
 
@@ -51,7 +46,6 @@ TCL 事务控制语言
 
 建议用双引号
 
-
 去重 select distinct 字段
     select distinct a,b from 表名;
 
@@ -62,7 +56,6 @@ TCL 事务控制语言
         select 'name'+1
     1. 有一个操作数是 Null，则结果为Null
     1. '123abc'+1 =>12
-
 
 concat
     select concat(a,b,...);
@@ -155,6 +148,9 @@ length()
 
 ## 关于null的总结
 NULL值与任何其它值的比较（即使是NULL）永远返回false
+null 的length 还是null
+% 不匹配 null
+运算操作和null沾边都变为null
 
 
 ## 关于大小写
@@ -166,13 +162,17 @@ NULL值与任何其它值的比较（即使是NULL）永远返回false
     insert into test values('Abc','Abc');
     select * from test where name='abc' 有
     select * from test where name2='abc' 无
+    select * from test where binary name2='abc' 无
     其实是更改了这个字段的 collate
+        utf8 就是 utf8_bin
+        utf8mb4 就是 utf8mb4_bin
 4. 变量名也是严格区分大小写的
 
+not null 和 binary 不能一块使用吗?
 
 ## 常见函数
 
-show variables like "%chara%"
+show variables like "%character%"
 show variables like "%time_zone%"
     set time_zone='+9:00'
 show variables like "%autocommit%"
@@ -265,7 +265,8 @@ show variables like "%autocommit%"
 1. ceil() 向上取整
 1. floor() 向下取整
 1. mod(10,3)    `**取余数  a-a/b*b**
-            
+    被除数是整数，结果为整数；被除数是负数，结果为负数
+
 ### 日期函数
 1. now()    2019-06-18 16:44:03 
 1. curdate()    
@@ -439,7 +440,7 @@ select count(1) from table1,table2; 计算的是笛卡尔乘积
 ### 等值连接
 where Table1.字段 = Table2.字段
 
-**如果为表起了别名,则查询的字段就不能使用原来的表明去限定,**
+**如果为表起了别名,则查询的字段就不能使用原来的表名去限定,**
 from 第一步执行,生成了类似视图的表,
 然后select第二部执行
 最后where第三步执行
@@ -447,7 +448,7 @@ from 第一步执行,生成了类似视图的表,
     ```
     查询有奖金的员工名\部门名
     select last_name,department_name,commission_pct
-    from employee e, department_name
+    from employee e, department d
     where e.department_id=d.department_id
     and e.commission_pct is not null
     ```
@@ -457,6 +458,11 @@ from 第一步执行,生成了类似视图的表,
     ```
     案例1
     查询每个城市的部门个数
+    ???
+    select city, count(1)    --city 要从 location 里边取
+    from departments 
+    group by city;
+    ???
 
     第一步
     select count(1) 个数,city
