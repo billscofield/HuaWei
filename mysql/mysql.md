@@ -168,7 +168,24 @@ null 的length 还是null
         utf8mb4 就是 utf8mb4_bin
 4. 变量名也是严格区分大小写的
 
-not null 和 binary 不能一块使用吗?
+binary
+mysql root@(none):bill> create table aaa2(id int not null,name varchar(10) binary not null);
+Query OK, 0 rows affected
+Time: 0.029s
+
+关于多表查询的对比顺序：主表集中火力，将目标各个击破
+
+    ```
+    mysql root@(none):bill> select name,mname from aaa,aaa2;
+    +--------+---------+
+    | name   | mname   |
+    |--------+---------|
+    | a      | A       |
+    | b      | A       |
+    | a      | B       |
+    | b      | B       |
+    +--------+---------+
+    ```
 
 ## 常见函数
 
@@ -195,11 +212,12 @@ show variables like "%autocommit%"
         ```
 
 1. concat
+1. cast(,)
 1. upper()
 1. lower()
 
 1. substr/substring('string',start[,char_length])
-    索引从1开始
+    **索引从1开始**
     闭区间
 
 1. instr('helloworld','hello')  参数二在参数一中第一次出现时的索引
@@ -264,7 +282,7 @@ show variables like "%autocommit%"
 1. truncate(1.29,1)  小数点后截断只剩1位
 1. ceil() 向上取整
 1. floor() 向下取整
-1. mod(10,3)    `**取余数  a-a/b*b**
+1. ???mod(10,3)    `**取余数  a-a/b*b**
     被除数是整数，结果为整数；被除数是负数，结果为负数
 
 ### 日期函数
@@ -417,6 +435,7 @@ count
 
 
 
+
 ## 连接查询(多表查询)
 select count(1) from table1,table2; 计算的是笛卡尔乘积
 
@@ -436,6 +455,22 @@ select count(1) from table1,table2; 计算的是笛卡尔乘积
         右外连接
         全外连接
     交叉连接
+
+
+案例
+
+    ```
+    select a.last_name,b.employee_id,b.last_name from employees a,employees b
+    where a.manager_id = b.employee_id;
+
+
+    select a.last_name,b.last_name,b.employee_id from employees a
+    inner join employees b
+    on a.manager_id=b.employee_id;
+
+    ```
+
+
 
 ### 等值连接
 where Table1.字段 = Table2.字段
@@ -458,11 +493,9 @@ from 第一步执行,生成了类似视图的表,
     ```
     案例1
     查询每个城市的部门个数
-    ???
     select city, count(1)    --city 要从 location 里边取
     from departments 
     group by city;
-    ???
 
     第一步
     select count(1) 个数,city

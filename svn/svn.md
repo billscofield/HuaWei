@@ -25,26 +25,30 @@ rm /data/svn/project_two/conf/passwd authz
         user1 = pass1
         user2 = pass2
     authz  //组、权限
+
         [groups]
-            svnadmin = user1,user2
+        svnadmin = user1,user2  //不可以有缩进
         
         [/]  或者是 [SVN:/]
-            svnadmin = rw
-            * = 
-        [project_one:/]     //应该是[/project_one:/]的缩写
-            dev = rw
-            * =             //**这一个最好写上，因为权限具有继承性，这句话的作用就是切除继承性**
+        svnadmin = rw
+        * = 
 
-            ```
-            * 是指所有人，= 后面表示权限
-                1. 空，表示没有任何权限
-                1. r , 表示只读权限
-                1. rw ， 表示读写权限
-            ```
+        [project_one:/]     //应该是[/project_one:/]的缩写
+        dev = rw
+        * =             //**这一个最好写上，因为权限具有继承性，这句话的作用就是切除继承性**
+
+
+        ```
+        * 是指所有人，= 后面表示权限
+            1. 空，表示没有任何权限
+            1. r , 表示只读权限
+            1. rw ， 表示读写权限
+        ```
             
-            配置文件不允许存在前置空格
-            对某个子目录具备读权限，就必须对其父目录具备读权限
-            如果让某人访问某目录，必须显式指明
+        配置文件不允许存在前置空格
+        对某个子目录具备读权限，就必须对其父目录具备读权限
+        如果让某人访问某目录，必须显式指明
+
     vi svnserve
         anon-access = none
         auth-access = write
