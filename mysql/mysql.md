@@ -645,6 +645,78 @@ where a.manager_id = b.employee_id
 
 
 
+
+## 变量
+
+### 局部变量
+只在当前begin/end代码块中有效
+一般用在sql语句块中，比如存储过程的begin/end。其作用域仅限于该语句块，在该语句块执行完毕后，局部变量就消失了。declare语句专门用于定义局部变量，可以使用default来说明默认值。
+
+declare var_name [, var_name]... data_type [ DEFAULT value ]
+
+set 或者 select ... into ...形式赋值
+    ```
+    select employee_name, employee_salary
+    into v_employee_name, v_employee_salary
+    from employees
+    where employee_id=1;
+    ```
+
+
+
+### 用户变量
+用户变量，在客户端链接到数据库实例整个过程中用户变量都是有效的。
+
+使用set时可以用“=”或“:=”，但是使用select时必须用“:=赋值”
+
+使用 set 直接赋值
+变量名已@开头
+    set @var = 1;
+    set @var:=1;
+
+使用 select 直接赋值
+    select @var:=1;
+    select @name:=password from user;
+        如果这个查询返回多个值的话，那@name变量的值就是最后一条记录的password字段的值 。 
+
+
+select语句一般用来输出用户变量，比如select @变量名，用于输出数据源不是表格的数据。
+
+MySQL里面的变量是不严格限制数据类型的，它的数据类型根据你赋给它的值而随时变化。（SQL SERVER中使用declare语句声明变量，且严格限制数据类型。） 
+
+
+
+session 和 local 是同义词
+
+show variables，没有指定是输出全局变量还是会话变量的话，默认就输出会话变量。
+如果想输出所有全局变量：
+    show global variables
+
+### 系统变量
+系统变量在变量名前面有两个@
+
+
+### 会话变量(无法我们自己创建,只能用系统定义好的)
+会话变量的作用域与用户变量一样，仅限于当前连接。当当前连接断开后，其设置的所有会话变量均失效。
+
+set session var_name = value;
+set @@session.var_name = value;
+set var_name = value;  #缺省session关键字默认认为是session
+
+
+show session variables;
+show variables;
+show variables like '%name';
+
+例子:
+    set autocommit = 'off';
+
+
+### 存储过程变量
+以declare关键字声明的变量，只能在存储过程中使用，称为存储过程变量
+    declare var1 int default 0; 
+
+
 ## 存储过程
 
 类似Python中的方法
@@ -949,6 +1021,7 @@ right join 右边的是主表
 
 
 案例
+
 ```
 select mn.name from beauty mv
 left join boys b
@@ -967,11 +1040,12 @@ where e.employee_id is null
 
 全外连接
 MySQL不支持全外连接，所以只能采取关键字UNION来联合左、右连接的方法：
+
+```
 查询语句：SELECT s.*,subject,score FROM student s LEFT JOIN mark m ON s.id=m.id 
 UNION 
 SELECT s.*,subject,score FROM student s RIGHT JOIN mark m ON s.id=m.id;
 
-```
 select b.*,bo.*
 from beauty b
 full outer join boys bo
@@ -982,12 +1056,13 @@ A U (A ∩ B) U B
 
 
 ### 交叉连接(笛卡尔乘积) sql99
+If WHERE clause is used with CROSS JOIN, it functions like an INNER JOIN.
 
-```
-select b.*, bo.*
-from beauty b
-cross join boys bo;
-```
+    ```
+    select b.*, bo.*
+    from beauty b
+    cross join boys bo;
+    ```
 
 
 <img src="./static/jihe.png">
@@ -1246,8 +1321,75 @@ select (
 
 https://www.bilibili.com/video/av49181542/?p=92
 
-
-
-
-
 create table B as select * from A;
+
+
+
+## 事务 transaction
+TCL transaction control language
+一个或一组sql语句组成一个执行单元，这个单元要么全部执行，要么全部都不执行
+
+表类型，存储引擎 engine
+    show engines;
+    innodb 支持事务(默认)
+
+
+
+### 原子性 atomicity
+不可分割，例如转账操作，要么都成功，要么都失败
+
+### 隔离性 isolation
+不同事务之间隔离
+
+场景
+    1. 小明向小强转账100元
+    1. 小明向小红转账100元
+
+隔离性表示 两个操作互不影响
+
+SET [SESSION | GLOBAL] TRANSACTION ISOLATION LEVEL {READ UNCOMMITTED | READ COMMITTED | REPEATABLE READ | SERIALIZABLE}
+
+默认的行为（不带session和global）是为下一个（未开始）事务设置隔离级别
+你可以用下列语句查询全局和会话事务隔离级别：
+
+    ```
+    SELECT @@global.tx_isolation; 
+    SELECT @@session.tx_isolation; 
+    SELECT @@tx_isolation;
+
+    查看 autocommit 是否打开
+    方法1. select @@[global/session].autocommit; 
+    方法2. show [global/session] variables like 'autocommit'; 
+    ```
+
+#### 读未提交 read uncommited
+
+#### 读已提交 read commited
+
+#### 可重复读 repeatable read
+commit之后读到的值还和之前一样
+
+#### 串行化
+以上3中隔离级别都允许对同一条记录同时进行 读读，读写，写读 的并发操作，如果我们不允许读写，写读的并发操作，可以适合用 serializable 隔离级别，对同一条记录的操作都是串行的，所以不会出现脏读、幻读等现象
+
+### 一致性 consistency
+事务必须使数据库从一个一致性状态变换到另一个一致性状态
+
+### 持久化 durability
+对于转账的交易记录，需要永久保存
+
+### 自动提交
+show variables like '%autocommit%';
+
+
+隐式提交
+
+begin;  --开启事务
+
+rollback;
+commit;
+
+
+### 保存点
+savepoint 保存点名称
+rollback to 保存点名称;
