@@ -9,6 +9,8 @@ create database `aaa` default character utf8 collate utf8_general_ci;
 
 comment ' '
 
+create table (id int not null auto_increment comment 'key')   comment 不可以有 "="
+
 
 原来mysql支持的 utf8 编码最大字符长度为 3 字节
 MySQL在5.5.3之后增加了这个 utf8mb4 的编码，mb4 就是most bytes 4的意思，专门用来兼容四字节的unicode,utf8mb4是utf8的超集
@@ -1393,3 +1395,24 @@ commit;
 ### 保存点
 savepoint 保存点名称
 rollback to 保存点名称;
+
+
+
+
+# what's the problem
+what's the difference between "default charset utf8mb4" and "default character set utf8mb4"?
+
+```
+engine = innodb default charset utf8mb4;
+等价于
+engine = innodb default charset = utf8mb4;
+```
+
+
+
+jobs
+locations
+departments foreign key locations(location_id)
+employees foreign key departments(department_id)
+          foreign key jobs(job_id)
+    

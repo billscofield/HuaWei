@@ -200,6 +200,9 @@ apt list --upgradable
     kill -9  1 2 3
 
 
+## 查看
+1. 查看内核 cat /proc/version
 
+1. 查看发行版本 cat /etc/os-release
 
 
