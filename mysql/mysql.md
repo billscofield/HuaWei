@@ -11,9 +11,12 @@ comment ' '
 
 create table (id int not null auto_increment comment 'key')   comment 不可以有 "="
 
+    creat table buffer(id int comment 'COMMENT') comment = 'COMMENT'
+    表内部不要'=',外部需要'='
+    
 
 原来mysql支持的 utf8 编码最大字符长度为 3 字节
-MySQL在5.5.3之后增加了这个 utf8mb4 的编码，mb4 就是most bytes 4的意思，专门用来兼容四字节的unicode,utf8mb4是utf8的超集
+MySQL在5.5.3之后增加了这个 utf8mb4 的编码，mb4 就是 most bytes 4 的意思，专门用来兼容四字节的 unicode,utf8mb4 是 utf8 的超集
 
 CHARSET=utf8mb4
 
@@ -115,7 +118,8 @@ not in
 is null
 is not null
     和null相关的计算都是null
-        lenght,char_length
+        lenght
+        char_length
 
 isnull 函数
     isnull(filed) 是返回1,否返回0
@@ -153,13 +157,14 @@ NULL值与任何其它值的比较（即使是NULL）永远返回false
 null 的length 还是null
 % 不匹配 null
 运算操作和null沾边都变为null
+    concat('nihao',null)
 
 
 ## 关于大小写
 1. 数据库名和表名是严格区分大小写的
 2. 表的别名严格区分小大写
 3. **列名与列的别名在所有情况下均是忽略小大写的, 字段的值是不区分大小写的**
-    对于字段的值，想要区分大小写，可以使用BINARY加以限制。不管是在创建表的时候，还是在查询的条件字句中都可以使用。
+    对于字段的值，想要区分大小写，可以使用 BINARY 加以限制。不管是在创建表的时候，还是在查询的条件字句中都可以使用。
     create table test(name varchar(10),name2 varchar(10) binary);
     insert into test values('Abc','Abc');
     select * from test where name='abc' 有
@@ -168,7 +173,7 @@ null 的length 还是null
     其实是更改了这个字段的 collate
         utf8 就是 utf8_bin
         utf8mb4 就是 utf8mb4_bin
-4. 变量名也是严格区分大小写的
+4. **变量名也是严格区分大小写的**
 
 binary
 mysql root@(none):bill> create table aaa2(id int not null,name varchar(10) binary not null);
@@ -1370,6 +1375,7 @@ SET [SESSION | GLOBAL] TRANSACTION ISOLATION LEVEL {READ UNCOMMITTED | READ COMM
 
 #### 可重复读 repeatable read
 commit之后读到的值还和之前一样
+默认
 
 #### 串行化
 以上3中隔离级别都允许对同一条记录同时进行 读读，读写，写读 的并发操作，如果我们不允许读写，写读的并发操作，可以适合用 serializable 隔离级别，对同一条记录的操作都是串行的，所以不会出现脏读、幻读等现象
@@ -1416,3 +1422,97 @@ departments foreign key locations(location_id)
 employees foreign key departments(department_id)
           foreign key jobs(job_id)
     
+
+set autocommit = 'off';
+
+start transaction; 可选
+编写事务中的sql语句(select insert update delete)
+    create alter drop 没有事务之说
+commit; 提交事务
+rollback; 回滚事务
+
+```
+update account set balance = 500 where username = '张无忌';
+update account set balance = 1500 where username = '赵敏';
+commit;
+```
+
+
+脏读：对于T1,T2 两个事务，T1读取了已经被T2更新但还没有被提交的字段之后，若T2回滚，T1读取的内容就是临时且无效的。
+
+不可重复读：对于两个事务 T1, T2, T1 读取了一个字段，然后 T2 更新了该字段之后，T1 再次读取同一个字段，值不一样了
+
+幻读：对于两个事务 T1,T2, T1 从一个表中读取了一个字段，然后T2在该表中 插入/删除 了一些新的行之后，如果 T1 再次读取同一个表，就会多出/少几行
+    和脏读，不可重复读 差不多
+
+    https://www.bilibili.com/video/av49181542/?p=136
+
+例子
+    ```
+    两个终端，都设置 隔离级别，关闭自动提交事务
+    ```
+
+    https://www.bilibili.com/video/av49181542/?p=137
+
+
+                    脏读        不可重复读      幻读
+read uncommitted:   T           T               T
+read committed:     F           T               T
+repeatable read:    F           F               T
+serializable:       F           F               F
+
+
+
+
+## 视图
+### 视图的修改
+方法一
+    create or replace view view_name
+    as
+    ...
+
+方法二
+    alter view view_name
+    as
+    ...
+
+
+### 删除视图
+    drop view view_nam1, view_name2, ...
+
+
+### 查看视图
+    desc view_name
+    show create view view_name;
+    
+
+
+### 创建用户
+ 
+1. 创建本地连接用户
+    CREATE USER test@localhost IDENTIFIED BY '123456';
+
+1. 创建远程连接用户
+    create user test2 identified by '123456';
+
+select user,host,authentication_string from `mysql`.`user`;
+
+### 授权
+GRANT {} privileges ON databasename.tablename TO 'username'@'host'
+
+privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等。如果要授予所的权限则使用 ALL;
+
+databasename - 数据库名,tablename-表名,如果要授予该用户对所有数据库和表的相应操作权限则可用`*表示, 如*.*`
+
+% 代表这个用户允许从任何地方登录；
+    为了安全期间，这个%可以替换为你允许的ip地址；
+
+然后刷新mysql用户权限相关表；
+    flush privileges ;
+
+
+### 设置与更改用户密码
+SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword')
+
+如果是当前登陆用户
+    SET PASSWORD = PASSWORD("newpassword");
