@@ -1466,3 +1466,34 @@ serializable:       F           F               F
     desc view_name
     show create view view_name;
     
+
+
+### 创建用户
+ 
+1. 创建本地连接用户
+    CREATE USER test@localhost IDENTIFIED BY '123456';
+
+1. 创建远程连接用户
+    create user test2 identified by '123456';
+
+select user,host,authentication_string from `mysql`.`user`;
+
+### 授权
+GRANT {} privileges ON databasename.tablename TO 'username'@'host'
+
+privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等。如果要授予所的权限则使用 ALL;
+
+databasename - 数据库名,tablename-表名,如果要授予该用户对所有数据库和表的相应操作权限则可用`*表示, 如*.*`
+
+% 代表这个用户允许从任何地方登录；
+    为了安全期间，这个%可以替换为你允许的ip地址；
+
+然后刷新mysql用户权限相关表；
+    flush privileges ;
+
+
+### 设置与更改用户密码
+SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword')
+
+如果是当前登陆用户
+    SET PASSWORD = PASSWORD("newpassword");
