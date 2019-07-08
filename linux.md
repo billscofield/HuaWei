@@ -19,11 +19,12 @@ libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的lib
 Welcome to the home of musl, a new standard library to power a new generation of Linux-based devices. musl is lightweight, fast, simple, free, and strives to be correct in the sense of standards-conformance and safety.
 
 
-1. Glibc = GNU C Library 是GNU项（GNU Project）目，所实现的 C语言标准库（C standard library）。 目前，常见的桌面和服务器中的GNU/Linux类的系统中，都是用的这套C语言标准库。 其实现了常见的C库的函数，支持很多种系统平台，功能很全，但是也相对比较臃肿和庞大。
+1. Glibc = GNU C Library 是GNU项（GNU Project）目，所实现的 C语言标准库（C standard library）。 目前，常见的桌面和服务器中的GNU/Linux类的系统中，都是用的这套C语言标准库。 其实现了常见的C库的函数，支持很多种系统平台，**功能很全，但是也相对比较臃肿和庞大。**
 
 2. uClibc 一个小型的C语言标准库，主要用于嵌入式。 其最开始设计用于uClinux（注：uClinux不支持MMU），因此比较适用于微处理器中。 对应的，此处的u意思是μ，Micro，微小的意思。 
     1. uClibc的特点： 
-        1. uClibc比glibc要小很多。 (2)uClibc是独立的，为了应用于嵌入式系统中，完全重新实现出来的。和glibc在源码结构和二进制上，都不兼容。
+        1. uClibc 比 glibc 要小很多。 
+        2. uClibc 是独立的，为了应用于嵌入式系统中，完全重新实现出来的。和 glibc 在源码结构和二进制上，都不兼容。
 
 3. EGLIBC = Embedded GLIBC EGLIBC是，（后来）glibc的原创作组织FSF所（新）推出的，glibc的一种变体，目的在于将glibc用于嵌入式系统。 
     EGLIBC的目标是： 
@@ -61,11 +62,10 @@ quiet splash rw init=/bin/bash
 
 
 1. splash 使（液体）溅起;
-    1. splash的意思是启动的时候使用图形化的进度条代替init的字符输出过程
+    1. splash 的意思是启动的时候使用图形化的进度条代替 init 的字符输出过程
 
 
 /boot/grub/grub.cfg
-
 
 
 
@@ -78,15 +78,15 @@ quiet splash rw init=/bin/bash
 
 md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值
 
-SHA1与md5类似，是另一种常用的校验和算法。160位二进制数据，它从给定的输入文件中生成一个长度为40个字符的十六进制串
+SHA1 与 md5 类似，是另一种常用的校验和算法。160位二进制数据，它从给定的输入文件中生成一个长度为40个字符的十六进制串
 
-md5校验，有很小的概率不同的文件生成的md5可能相同。比md5更安全的校验算法还有SHA系列的
+**md5校验，有很小的概率不同的文件生成的 md5 可能相同。比md5更安全的校验算法还有SHA系列的**
 
 生成md5值重定向到指定的文件，通常文件的扩展名我们会命为.md5
     md5sum data > data.md5
 
 将多个文件的md5重定向到指定的文件(每个文件的md5生成为一行)
-    md5sum * > data.md5
+    md5sum * > data.md6
     
 -c选项来对文件md5进行校验。校验时，根据已生成的md5来进行校验。生成当前文件的md5，并和之前已经生成的md5进行对比，如果一致，则返回OK，否则返回错误信息
 
@@ -114,8 +114,10 @@ sha1sum 用法同 md5sum 完全一致
 --quiet
     成功不输出，失败则输出
 
-    md5sum -c test.md5
+    md5sum -c test.md5  //输入的是.md5文件
     echo $?
+    
+    **.md5中 后面的文件名 要和 待检测的文件的文件名一致**
 
 
 使用grep过滤
@@ -148,18 +150,41 @@ md5sum -c test.md5 | grep -v OK
 
 ## apt
 
-1. install
-1. remove
 1. purge  净化
-1. update
-1. upgrade
-1. dist-upgrade
 1. clean    //清除缓存信息
-    apt-cache 就是先看缓存的
+    apt-cache 就是看缓存下来的
 
+1. update - Retrieve new lists of packages
+1. upgrade - Perform an upgrade
+1. dist-upgrade - Distribution upgrade, see apt-get(8)
+1. dselect-upgrade - Follow dselect selections
+
+1. install - Install new packages (pkg is libc6 not libc6.deb)
+1. reinstall - Reinstall packages (pkg is libc6 not libc6.deb)
+
+1. remove - Remove packages
+1. purge - Remove packages and config files
+1. autoremove - Remove automatically all unused packages
+
+1. build-dep - Configure build-dependencies for source packages
+
+1. clean - Erase downloaded archive files
+1. autoclean - Erase old downloaded archive files
+1. check - Verify that there are no broken dependencies
+
+1. source - Download source archives
+1. download - Download the binary package into the current directory
+1. changelog - Download and display the changelog for the given package
+
+
+apt-get install packagename --reinstall 重新安装包
+apt-get -f install 修复安装”-f = –fix-missing”
+
+apt-cache depends packagename 了解使用依赖
+apt-cache rdepends packagename 是查看该包被哪些包依赖
 
 apt-cache pkgnames 
-    列出了源包含有哪些包
+    列出了源包含有哪些包(以最后一次 apt update 为准)
 
 ### check package information
 apt-cache show 包名字
@@ -170,16 +195,106 @@ before installing get info of this package from sources.list
 
 
 ## apt-file
-sudo apt install apt-file
-apt-file update     //从服务器获取元数据
-apt-file search 文件名 比如/bin/ls  //查询包含了/bin/ls 这个关键字的包有哪些
+1. sudo apt install apt-file
+
+1. apt-file update     //从服务器获取元数据,更新数据库
+
+1. apt-file search 文件名 比如/bin/ls  //查询包含了/bin/ls 这个关键字的包有哪些
+1. **apt-file list 包名称**
+    列出包中的文件
+
+
 
 dpkg -l 
     列出了本机安装了哪些包
+dpkg -L 软件包(安装后查询)
+    列出安装的所有文件清单()
+dpkg -c 软件包.deb(安装前查询)
+    --contents
+    列出deb安装包中的所有文件
+dpkg -l 软件包(已安装)
+    查看软件包的状态标识,是否正常
+
+    第一个字符为，期望值；包括如下状态：
+    u 状态未知；意味软件包未安装，并且用户也未发出安装请求；
+    i 用户请求安装软件包；
+    r 用户请求卸载软件包；
+    p 用户请求清楚软件包；
+    h 用户请求保持软件包版本锁定；
+     
+    第二个字符，当前状态；包括：
+    n 软件包未安装；
+    i 软件包安装并完成配置；
+    c 软件包以前安装过，现在删除了，但是配置文件再留在系统中；
+    u 软件包被解包，但未配置；
+    f 试图配置软件包，单失败；
+    h 软件包安装，单没有成功；
+     
+    第三个字符，错误状态；包括：
+    h 软件包被强制保持，因为有其他软件包依赖需求，无法升级；
+    r 软件包被破坏，可以需要重新安装才能正常使用（包括删除）；
+    x 软件包被破坏，并且被强制保持；
+dpkg -s 软件
+    显示软件的详细信息
+    未安装的话提示没有安装
+dpkg -r 软件
+    删除软件，保留配置文件
+dpkg -P --purge package
+    Purge  an  installed  or  already  removed  package.  This removes everything, including conffiles, and anything else cleaned up from  postrm. 
+
+
+
+
 
 
 
 apt list --upgradable
+
+/etc/apt/source.list
+    1. 第一字段，是deb或deb-src，表示直接通过.deb文件或者源文件的方式来进行安装; 
+    1. 第二字段，即deb和deb-src字段后是一段URL，这是软件源的地址； 
+    1. 第三字段，即URL后的字段，是在URL路径中dists目录下对应的发行版文件夹下的文件夹
+
+    main / universe / restricted / multiverse
+
+ubuntu 版本号命名规则
+    Canonical 用动物命名的惯例，即使用首字母相同的两个单词，第一个单词往往是形容词或其他描述性单词，第二个单词则是动物
+    从D版本开始又增加了一个规则，首字母要顺延上个版本，如果当前版本是 D ，下个版本就要以 E 来起头
+
+    版本;别名（codename）;发布日期
+    4.10;Warty Warthog(长疣的疣猪);2004年10月20日
+    5.04;Hoary Hedgehog(灰白的刺猬);2005年4月8日
+    5.10;Breezy Badger(活泼的獾);2005年10月13日
+    6.06;Dapper Drake(整洁的公鸭);2006年6月1日(LTS)
+    6.10;Edgy Eft(急躁的水蜥);2006年10月6日
+    7.04;Feisty Fawn(坏脾气的小鹿);2007年4月19日
+    7.10;Gutsy Gibbon(勇敢的长臂猿);2007年10月18日
+    8.04;Hardy Heron(耐寒的苍鹭);2008年4月24日(LTS)
+    8.10;Intrepid Ibex (勇敢的野山羊);2008年10月30日
+    9.04;Jaunty Jackalope(得意洋洋的怀俄明野兔);2009年4月23日
+    9.10;Karmic Koala(幸运的考拉);2009年10月29日
+    10.04;Lucid Lynx(清醒的猞猁);2010年4月29日
+    11.10;Oneiric Ocelot(梦幻的豹猫);2010年10月13日
+    11.04;Natty Narwhal(敏捷的独角鲸);2011年4月28日
+    12.04;Precise Pangolin(精准的穿山甲);2012年的4月26日(LTS)
+    12.10;Quantal Quetzal(量子的绿咬鹃);2012年的10月20日
+    13.04;Raring Ringtail(铆足了劲的猫熊);2013年4月25日
+    13.10;Saucy Salamander(活泼的蝾螈);2013年10月17日
+    14.04;Trusty Tahr (可靠的塔尔羊);2014年4月18日 (LTS)
+    14.10;Utopic Unicorn(乌托邦独角兽);2014年10月23日
+    15.04;Vivid Vervet (活泼的小猴);2015年4月
+    15.10;Wily Werewolf (狡猾的狼人);2015年10月
+    16.04;Xenial Xerus (好客的非洲地松鼠);2016年4月 （LTS）
+    16.10;Yakkety Yak（牦牛）;2016年10月
+    17.04;Zesty Zapus(开心的跳鼠);2017年4月
+    17.10;Artful Aardvark(机灵的土豚);2017年10月
+    18.04;Bionic Beaver（仿生海狸）;2018年4月(LTS)
+
+    每两年的 4 月份，都会推出一个长期支持版本（LTS），其支持期长达五年，而非 LTS 版本的支持期通常只有半年。
+
+    检查当前版本codename
+        lsb_release -a
+        如果你需要自己编辑更新列表文件， /etc/apt/sources.list ，你就会发现在 url 的后面紧跟着一个 codename 
 
 
 ## 关闭在线用户
