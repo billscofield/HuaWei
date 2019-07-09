@@ -201,6 +201,8 @@ show variables like "%time_zone%"
     set time_zone='+9:00'
 show variables like "%autocommit%"
 
+show variables like 'port'
+
 
 ### 单行函数
 1. 字符函数
@@ -1516,3 +1518,37 @@ SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword')
 
 如果是当前登陆用户
     SET PASSWORD = PASSWORD("newpassword");
+
+
+
+
+
+
+
+数据表改名
+alter table <tb_name> rename to|as <new_tbname>
+RENAME TABLE <tb_name> TO <new_tbname>;
+
+
+
+### 更改端口号
+/etc/mysql/mysql.conf.d/mysqld.cnf
+
+    /etc/mysql/mysql.cnf 
+  
+
+
+### 忘记密码
+/etc/mysql/mysql.conf.d/mysqld.cnf 
+G
+o
+skip-grant-tables
+:wq
+
+service mysql restart
+mysql //进入数据库，修改密码
+
+去除/etc/mysql/mysql.conf.d/mysql.cnf 最下面添加的 skip-grant-tables
+mysql -uroot -p     //重新登陆
+
+

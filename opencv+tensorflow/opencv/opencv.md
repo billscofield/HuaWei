@@ -26,6 +26,13 @@ pip install opencv-contrib-python   扩展的,这两个二选一即可,不要两
         IMREAD_GRAYSCALE(0)  作为灰度图像加载进来
         IMREAD_COLOR(>0)     作为RGB图像加载进来
 
+        cv2.imread('tupian.jpg',0)
+            0 灰度
+            1 彩色
+        
+        cv2.imshow('窗体名称',读到的图片)
+        
+
         支持jpg,png,tiff等常见格式
     
 1. 修改图像    cv::cvtColor

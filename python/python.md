@@ -1687,6 +1687,10 @@ with open ... as ...
     
 
 
+python里怎么终止程序的执行
+    quit() exit()
+
+
 
 
 

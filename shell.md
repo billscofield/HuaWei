@@ -1,3 +1,5 @@
+
+
 # shell
 
 ```
@@ -21,9 +23,48 @@
 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b
 
 \b 应该是和vim关于单词的定义是一样的，
-    
 
-### .sh文件自动添加注释，文件头
+
+## zsh
+cat /etc/shells
+apt install zsh
+
+chsh -s `which zsh`
+
+oh-my-zsh
+
+git clone git://github.com/robbyrussell/oh-my-zsh.git 
+cp ~/.zshrc ~/.zshrc.bak    备份已有的zshrc
+cp ./oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+
+### 主题
+oh-my-zsh集成了大量的主题, 位于oh-my-zsh/theme
+
+配置主题, 可以通过修改~/.zshrc中的环境变量ZSH_THEME来完成
+
+
+### 配置插件
+修改～/.zshrc中plugins
+    plugins=(git bundler osx rake ruby)
+    
+### 更新 oh-my-zsh
+默认情况下, 您将被提示检查每几周的升级. 如果你想我ZSH自动升级本身没有提示你, 修改`~/.zshrc
+    disable_update_prompt = true
+
+禁用自动升级, 修改~/.zshrc
+    disable_auto_update = true
+
+如果你想在任何时间点升级,你只需要运行：
+    upgrade_oh_my_zsh
+
+卸载oh-my-zsh
+    uninstall_oh_my_zsh zsh
+
+
+
+
+
+## .sh文件自动添加注释，文件头
 
 ```
 autocmd BufNewFile *.sh exec ":call setTitle()"
