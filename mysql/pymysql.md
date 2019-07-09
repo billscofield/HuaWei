@@ -7,6 +7,7 @@ cursor = db.cursor()
 sql = 'select database()' 
 
 cursor.execute(sql)
+cursor.executemany("insert into hosts(host,color_id) values(%s,%s)", [("1.1.1.11",1),("1.1.1.11",2)])
 
 data1=cursor.fetchone()
 
@@ -29,6 +30,8 @@ cursor.scroll(1,mode='absolute')
 cursor.fetchone()
 cursor.fetchmany(Number)
 cursor.fetchall()
+
+rowcount: 这是一个只读属性，并返回执行execute()方法后影响的行数。
 
 
 ## insert 语句

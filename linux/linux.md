@@ -247,11 +247,13 @@ rm -rf -- --test
 
 
 
+在ubuntu下，由于版权的原因，默认不支持exfat格式的u盘，不过可以很方便就能添加对exfat的支持：
+    sudo apt-get install exfat-utils
+    安装完之后重启生效。
+    
 
 
-
-
-
+find ./ -inum 222 -exec rm -i {} \; // \; 前面必须有一个空格
 
 
 
