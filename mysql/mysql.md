@@ -203,6 +203,16 @@ show variables like "%autocommit%"
 
 show variables like 'port'
 
+show variables like '%profiling%' 资料收集,性能开销的收集
+    +------------------------+---------+
+    | Variable_name          | Value   |
+    |------------------------+---------|
+    | have_profiling         | YES     |    是否可用 profiling
+    | profiling              | OFF     |    是否开启 profiling
+    | profiling_history_size | 15      |    保留最近执行的记录数量，最大100,0相当于禁用
+    +------------------------+---------+
+
+
 
 ### 单行函数
 1. 字符函数
@@ -1552,3 +1562,41 @@ mysql //进入数据库，修改密码
 mysql -uroot -p     //重新登陆
 
 
+### 跟踪语句各阶段性能开销
+select @@profiling
+show variables like '%profiling%'
+
+启用profiling
+    set profiling = 1
+    set profiling_history_size = 10;
+
+查看当前连接最近执行语句情况，编号越大为当前最近执行的
+    查看结果
+        show profiles; 会列出编号
+
+        Status ： sql 语句执行的状态
+
+    表头的含义
+        Duration: sql 执行过程中每一个步骤的耗时
+        CPU_user: 当前用户占有的cpu
+        CPU_system: 系统占有的cpu
+        Block_ops_in : I/O 输入
+        Block_ops_out : I/O 输出
+        
+    查看么某次命令的详细情况
+        show profile 字段1,字段2,... for query 编号
+        show profile all for query 编号
+
+    profile 字段有哪些
+        1. ALL: 显示所有的开销信息
+        1. BLOCK IO ： 显示块IO相关开销
+        1. CONTEXT SWITCHS: 上下文切换相关开销
+        1. CPU : 显示cpu 相关开销
+        1. IPC: 显示发送和接收相关开销
+        1. MEMORY： 显示内存相关开销
+        1. PAGE FAULTS：显示页面错误相关开销信息
+        1. SOURCE ： 显示和Source_function ,Source_file,Source_line 相关的开销信息
+        1. SWAPS：显示交换次数相关的开销信息
+
+        例如 show profile cpu, block io for query 1;
+             show profile all for query 1;

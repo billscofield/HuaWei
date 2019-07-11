@@ -256,8 +256,57 @@ rm -rf -- --test
 find ./ -inum 222 -exec rm -i {} \; // \; 前面必须有一个空格
 
 
+vi 模式 
+    vi ~/.zshrc
+    G
+    set -o vi
+
+
+## 进程
+
+### ps
+???docker 中没有 ps
+
+ps --help
+    Try 'ps --help <simple|list|output|threads|misc|all>'
+    or 'ps --help <s|l|o|t|m|a>'
+
+    ps --help s
+
+三种风格 
+    unix95      -a
+    BSD         a
+    GNU长选项   --a
+
+ps --help s
+Basic options:
+ -A, -e               all processes
+ -a                   all with tty, except session leaders
+  a                   all with tty, including other users
+ -d                   all except session leaders
+ -N, --deselect       negate selection 反选
+  r                   only running processes
+  T                   all processes on this terminal
+  x                   processes without controlling ttys 没有控制终端的进程
 
 
 
 
+
+
+top -h 
+procps-ng
+    本质上去读 /proc/
+
+
+
+
+
+## 监控linux
+### 内存
+### free
+
+vmstat 时间间隔(秒)
+
+sar -r 3
 
