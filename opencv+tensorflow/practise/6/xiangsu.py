@@ -2,7 +2,7 @@ import cv2
 
 img = cv2.imread('boqiu.jpg',1)
 
-b,g,r = img[100,100]
+#b,g,r = img[100,100]
 
 #print(b,g,r)
 
