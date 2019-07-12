@@ -89,12 +89,16 @@ ip link set dev eth0 address FF:FF:FF:FF:FF:FF
     修改mac地址
 
 ip route show
-    查看路由
+    查看路由(ip r)
+
 ip route add default via 192.168.1.1 dev eth0
-    添加默认路由
 ip route replace default via 192.168.1.1 dev eth0
-    删除默认路由
+    添加默认路由
 ip route add 172.16.16.0 via 192.168.1.1 dev eth0    
+    添加静态路由
+
+ip route delete 
+    删除默认路由
 
 ip neigh
     查看arp信息
@@ -105,5 +109,10 @@ ip neigh del 192.168.1.100 dev eth0
     删除arp绑定
 
 
-
-
+查看网络连接
+ss -ltp
+    -t tcp
+    -l listening
+    -n numeric, do not try to resolve service names
+    -p show process using socket
+    -u udp
