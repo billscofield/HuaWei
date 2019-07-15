@@ -4,7 +4,7 @@ cv2.imread('图片',类型)
     1 彩色
 cv2.imshow('窗体名',读到的图片)
 
-cv2.waitKey(0)  暂停
+cv2.waitKey(0)  暂停,毫秒
 
 ## 主要模块
 core

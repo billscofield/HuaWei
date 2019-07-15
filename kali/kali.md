@@ -65,4 +65,4 @@ cd /usr/share/metasploit-framework/payloads/
 
 
 ## 微软漏洞编号
-ms07-010  07年第10个
+ms17-010  17年第10个
