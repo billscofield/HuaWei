@@ -15,3 +15,14 @@
 
 人工智能
     地平线 Horizon Robotics
+
+
+
+
+信息安全管理工程师证书
+
+nginx、tomcat、redis、mysql、rabbitmq、elk、zabbix、jenkins、fastdfs、solr
+
+weblogic
+
+springBoot SpringCloud

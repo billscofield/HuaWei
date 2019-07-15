@@ -9,7 +9,7 @@ BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。B
 ## Libc
 libc的名字来源于历史，指**C开发包的函数库**，包括头文件和基本C库libc.a，最初的libc由发明C语言那些人写的，后来随着C移植到不同平台，libc也有了多个版本，可能是为了兼容吧，很多头文件和libc.a的文件名都没有变（很好的传统）。
 
-**现在libc泛指C函数库，而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版Linux用的就是glibc。**
+现在libc泛指C函数库，**而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版Linux用的就是glibc。**
 
 libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的libc.so其实不是.so文件，而是一个ld Script，这没有关系，gnu ld 会正确处理的。
 
@@ -45,6 +45,7 @@ Welcome to the home of musl, a new standard library to power a new generation of
 4. Musl-libc C语言标准库Musl-libc项目发布了1.0版。Musl是一个轻量级的C标准库，设计作为GNU C library (glibc)、 uClibc或Android Bionic的替代用于嵌入式操作系统和移动设备。它遵循POSIX 2008规格和 C99 标准，采用MIT许可证授权，使用Musl的Linux发行版和项目包括sabotage，bootstrap-linux，LightCube OS等等。
 
 目前openwrt LEDE默认使用Musl-libc了。。。CC分支还是uclibc
+
 
 
 
@@ -178,7 +179,6 @@ dpkg -l
     列出了本机安装了哪些包
 
 
-
 apt list --upgradable
 
 
@@ -192,6 +192,9 @@ apt list --upgradable
 1. 方法二
     who 
     pkill -kill -t pts/0
+
+    pgrep, pkill - look up or signal processes based on name and other attributes
+
     
     pkill : look up or signal processes based on name and other attributes
 1. 方法三
@@ -309,4 +312,66 @@ procps-ng
 vmstat 时间间隔(秒)
 
 sar -r 3
+    systat
+    -r [ALL]
+
+
+
+
+## /etc/shadow
+
+1. 该列留空，即"::"，表示该用户没有密码。
+1. 该列为"!"，即":!:"，表示该用户被锁，被锁将无法登陆，但是可能其他的登录方式是不受限制的，如ssh公钥认证的方式，su的方式。
+1. 该列为"*"，即":*:"，也表示该用户被锁，和"!"效果是一样的。
+1. 该列以"!"或"!!"开头，则也表示该用户被锁。
+1. 该列为"!!"，即":!!:"，表示该用户从来没设置过密码。
+
+1. 如果格式为"$id$salt$hashed"，则表示该用户密码正常。其中$id$的id表示密码的加密算法，
+    $1$表示使用MD5算法，
+    $2a$表示使用Blowfish算法，
+    "$2y$"是另一算法长度的Blowfish,
+    "$5$"表示SHA-256算法，
+    "$6$"表示SHA-512算法，目前基本上都使用sha-512算法的，但无论是md5还是sha-256都仍然支持。
+    $salt$是加密时使用的salt，hashed才是真正的密码部分。
+
+
+以用户letuknowit为例（15400对应的日期为2012年3月1日），其保护如下信息：
+    1. letuknowit:$1$cPf/cIvr$sCws95uSip2ljTK052DDB.:15400:5:60:7:2:15490:
+　　1. 用户letuknowit最近一次修改密码的日期是2012年3月1日， 
+　　1. 在2012年3月6日之前不能再改动密码了， 
+　　1. 在2012-3-1到2012-4-29期间letuknowit需要更改密码， 
+　　1. 在2012-4-29之前的7天，letuknowit登陆系统的时候，系统会提示letuknowit其密码即将过期， 
+　　1. 如果letuknowit一直到2012-4-29都没有修改密码，则其仍然可以继续使用该账户2天，2天后该账户将不可用 
+　　1. 无论如何，到了2012年5月29日，该账号都将失效
+    https://blog.csdn.net/qq_36747237/article/details/80447526
+
+who am i
+
+POSIX表示可移植操作系统接口（Portable Operating System Interface of UNIX，缩写为 POSIX ）
+
+
+
+bash 是GNU计划的一部分，用来替代 B shell
+
+
+## X window
+
+斯坦福大学的 Athena 计划
+    W Window
+
+1984 麻省理工和 DEC 公司基于 W Window 开发了 X Window
+    1987 年发布的 X11
+    1994 年发布的 X11 R6(X Protocol version 11 Release 6)
+    2005 年发布的 X11 R7
+
+只不过在LINUX上最常用的是XFree86.(现在的linux发行版都用Xorg了)
+
+顺便说一句，苹果电脑的图形界面用的也是X协议，而且被认为是做的最好的X协议图形界面，并且他对X协议的实施是做在系统内核里的，所以性能明显好很多，这就是为什么很多大型三维图形设计软件都是在苹果平台上的原因
+
+
+gnome 
+    gdm(Gnome Display manager)
+    lightDM(light display manager)
+
+
 
