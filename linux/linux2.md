@@ -9,15 +9,15 @@ top500
 SGI 图形工作站(Silicon Graphics)
     1997年, Linux 全面占领好莱坞
     SGI 不是 Linux 内核? 和 Linux 有什么区别?
-    IRIX是由硅谷图形公司 SGI 是以System V与BSD延伸程序为基础所发展成的UNIX操作系统，对于3-D视图和虚拟现实环境最优化了的应用软件。
+    IRIX 是由硅谷图形公司 SGI 是以System V与BSD延伸程序为基础所发展成的UNIX操作系统，对于3-D视图和虚拟现实环境最优化了的应用软件。
 
 6个主要的 Unix 变种
-    SGI Irix
-    IBM AIX
-    Compaq Tru64 Unix
-    Hewlett-Packard HP-UX
-    SCO UnixWare
-    Sun Solaris
+    1. SGI Irix
+    1. IBM AIX
+    1. Compaq Tru64 Unix
+    1. Hewlett-Packard HP-UX
+    1. SCO UnixWare
+    1. Sun Solaris
 
 linux 内核
     提供设备驱动，文件系统，进程管理，网络通信等功能的系统软件
