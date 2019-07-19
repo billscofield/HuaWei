@@ -297,3 +297,7 @@ shutdown -r 16:00
 shutdown -r +10 "shutdown"
 
 shutdown -c
+
+
+
+:read !ip a

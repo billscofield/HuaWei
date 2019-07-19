@@ -489,4 +489,31 @@ gnome
     lightDM(light display manager)
 
 
+## root 直接登录
+vi /usr/share/lightdm/lightdm.conf.d/50-ubuntu.conf
 
+greeter-show-manual-login=true 
+
+如果需要关闭guest用户，则再在最后一行加入 allow-guest=false 
+
+重启
+
+这个看看 lightdm
+
+### Ubuntu启用root账户后，登录root账户时报错：读取/root/.profile时发现错误：mesg:ttyname failed:对设备不适当的ioctl操作 作为结果，会话不会被正确配置
+
+
+方法一：
+将/root/.profile文件中的mesg n
+
+替换成tty -s && mesg n
+
+重启
+
+方法二：
+
+将非root账户目录中的.profile复制到/root/：
+
+例如：cp /home/username/.profile /root/
+
+重启
