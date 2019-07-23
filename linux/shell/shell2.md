@@ -208,3 +208,58 @@ SECONDS
 
 $0 当前程序的名称
 
+
+
+
+```
+if expr 1 \& 0 ;then
+    echo "True";
+else
+    echo "False";
+fi
+输出False
+
+if [ 0 ];then
+    echo "True";
+else
+    echo "False";
+fi
+输出True
+
+```
+
+break 只是退出当前循环还会继续执行函数后面的命令
+return 退出当前函数还会继续执行主脚本
+exit 彻底退出脚本
+
+
+
+```
+#!/bin/bash
+num=0
+
+while [ 1  ]
+do
+    num=$(expr $num + 1)    //如何重新赋值
+    echo $num
+    if [ $num = 3  ];then
+        break;
+    fi
+done
+```
+
+## for 循环
+```
+#!/bin/bash
+for skill in basketbasll tennis socker
+    do
+        echo "I am good at ${skill} sport" //推荐给所有变量加上花括号，这是个好的编程习惯。
+    done
+
+---
+
+for i in $(ls)
+do
+    echo "$i"
+done
+```
