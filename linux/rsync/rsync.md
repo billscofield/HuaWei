@@ -1,7 +1,8 @@
 ## 介绍
 
-sync:同步，刷新文件系统焕春，强制将修改过得数据块写入磁盘，并且更新超级块
+sync:同步，刷新文件系统缓存，强制将修改过得数据块写入磁盘，并且更新超级块
     性能有影响
+
 async:异步，将数据先放到缓冲区，再周期性（一般是30s）的去同步到磁盘
     存在数据丢失的风险
 
@@ -17,7 +18,6 @@ rsync: remote synchronous
 
 依赖 ssh 的命令
     scp slogin sftp rsync
-
 
 ## 语法
 
@@ -41,12 +41,15 @@ SYNOPSIS
 
 Options
     -a 归档模式，递归的方式传输文件，并保持文件的属性, 等价于 -rlptgoD    
+
     -r 递归拷贝目录
     -l 保留软连接
-    -p 保留原有权限
-    -t 保留原有时间(修改)
+    -p 保留原有权限 --perms  preserve permissions
+    -t 保留原有时间(修改)   --times
+
     -g 保留属组权限
     -o 保留属主权限
+
     -D --devices --specials 表示支持 b,c,s,p 类型的文件
         1. l 软连接 
         1. p 管道
@@ -56,6 +59,16 @@ Options
             tty , 能够输入输出的
         1. b 块设备
         1. s socket
+        
+        ```
+        --devices
+              This  option  causes  rsync  to transfer **character and block device files** to the remote system to
+              recreate these devices.  This option has no effect if the receiving  rsync  is  not  run  as  the
+              super-user (see also the --super and --fake-super options).
+       --specials
+              This option causes rsync to transfer **special files** such as named sockets and fifos.
+
+        ```
 
     -R 保留相对路径
         即第一个参数最后有没有"/", 效果同没有"/", 即都会把源的目录作为文件同步到 destination 文件夹下
@@ -83,9 +96,10 @@ rsync -av /dir1 /dir2
     所以，源目录要写成 source/ ,右边有个"/"
     目标目录可以有，也可以没有"/"
     **源是文件，目标是目录**
+
 rsync -av ./dir1/* ./dir2
     将 /dir1/下的文件同步到 /dir2/下
-    不会同步删除的源文件
+    不会同步 删除的源文件
 
     --delete  delete extraneous files from dest dirs
 
@@ -127,7 +141,7 @@ port 873端口
 依赖服务
     没有自己的启动脚本
     依赖于xineted服务，xineted 是一个独立服务，作为一个管理者对轻量服务进行管理
-    rsync telnet
+    rsync, telnet
     省资源
 
 
@@ -135,19 +149,20 @@ port 873端口
 man 5 rsyncd.conf
 后台运行方式
     rsync --daemon
-    必须有/etc/rsyncd.conf, 即使是空的
+    必须有 /etc/rsyncd.conf 配置文件, 即使是空的
 
 
 rsyncd.conf
+
 ```
 在代码源服务器上
 
-[app1]   //模块名可自定义,就是path的别名
+[app1]   //模块名可自定义,就是 path 的别名
 path = /app/java_project    //需要备份的文件
 log file=/var/log/rsyncd
 
 
-rsync -a 192.168.10.1:: 查看远程源代码配置的pull模块名
+rsync -a 192.168.10.1:: 查看远程源代码配置的 pull 模块名
 
 语法1:
     在源代码服务器上配置 /etc/rsyncd.conf 
@@ -160,7 +175,8 @@ rsync -a 192.168.10.1:: 查看远程源代码配置的pull模块名
 
         crontab -e
             f1 f2 f3 f4 f5   program
-            分 时 日 月 周几 program
+            f1 f2 f3 f4 f5  user   program
+            分 时 日 月 星期 program
             当 f1 为 * 时表示每分钟都要执行 program，f2 为 * 时表示每小时都要执行程序，其馀类推
             当 f1 为 a-b 时表示从第 a 分钟到第 b 分钟这段时间内要执行，f2 为 a-b 时表示从第 a 到第 b 小时都要执行，其馀类推
             当 f1 为 */n 时表示每 n 分钟个时间间隔执行一次，f2 为 */n 表示每 n 小时个时间间隔执行一次，其馀类推

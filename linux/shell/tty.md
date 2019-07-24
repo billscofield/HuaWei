@@ -13,3 +13,15 @@ man里面是这样说的：ptmx and pts - pseudo-terminal master and slave，pts
 个终端，这个终端就叫pts/0，如果你再打开一个终端，这个新的终端就叫pts /1。
 
 
+
+当使用 tmux 时, 调用 who 命令，我们会看到 tmux 的虚拟 tty
+shell git:(master) ✗ who
+root     pts/0        2019-07-15 06:49 (10.0.0.10)
+root     pts/1        2019-07-15 06:58 (tmux(29091).%0)
+root     pts/2        2019-07-17 08:39 (tmux(29091).%5)
+root     pts/3        2019-07-15 06:58 (tmux(29091).%2)
+root     pts/4        2019-07-18 11:12 (tmux(29091).%6)
+root     pts/5        2019-07-19 13:29 (tmux(29091).%9)
+
+目前我不太清除是如何分配的，但可以通过实验确定tmux的那些个窗口分别是pts/几
+    echo "hello world">/dev/pts/0
