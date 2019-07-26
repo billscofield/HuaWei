@@ -97,6 +97,7 @@ cd ../bandwidthTest
 sudo make
 ./bandwidthTest
 ```
+
 如果这两个测试的最后结果都是Result = PASS，说明CUDA安装成功啦
 
 ## cuDNN
