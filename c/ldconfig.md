@@ -14,3 +14,4 @@ ldconfig通常在系统启动时运行，而当用户安装了一个新的动态
 
 https://linux.die.net/man/8/ld-linux
 https://www.cnblogs.com/MYSQLZOUQI/p/5901765.html
+https://blog.csdn.net/weixin_43053387/article/details/86518563
