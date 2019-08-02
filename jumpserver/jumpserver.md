@@ -64,3 +64,35 @@ apt install -y mysql-server
 
 cd /opt/jumpserver
 $ cp config_example.yml config.yml
+
+
+
+
+## 问题
+
+1. 启动tomcat服务报错
+
+```
+Cannot find bin/catalina.sh 
+The file is absent or does not have executepermission 
+This file is needed to run thisprogram 
+
+原因： 没有权限
+解决 ： chmod 777 *.sh
+```
+
+
+1. jumpserver.conf nginx配置文件
+    https://docs.jumpserver.org/zh/docs/faq_install.html
+    参考上面的链接中的地址，不过没有写 server_name, 自己补充上去就可以
+
+
+
+1. 启动 jumpserver 后, 访问 8080 端口页面显示不正常
+这是因为你在 config.yml 里面设置了 DEBUG: false
+跟着教程继续操作, 后面搭建 nginx 代理即可正常访问
+
+
+1. 不能创建文件夹，文件，上传文件的问题??? 文件管理
+
+1. 如何查看 jumpserver 的版本???

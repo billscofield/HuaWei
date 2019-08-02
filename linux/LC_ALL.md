@@ -33,7 +33,7 @@ LC_ALL=C 是为了去除所有本地化的设置，让命令能正确执行。
 7.    LANG
 LC_*的默认值，是最低级别的设置，如果LC_*没有设置，则使用该值。类似于 LC_ALL。
 
-8.    LC_ALL
+8.    **LC_ALL**
 它是一个宏，如果该值设置了，则该值会覆盖所有LC_*的设置值。注意，LANG的值不受该宏影响。
 
 "C"是系统默认的locale，"POSIX"是"C"的别名。所以当我们新安装完一个系统时，默认的locale就是C或POSIX。
@@ -108,6 +108,7 @@ LC_MONETARY= "C"
 LC_MESSAGES= "C"
 LC_ALL=C
 
+```
 Locale是某一个地域内的人们的语言习惯和文化传统和生活习惯，是根据计算机用户所使用的语言，所在国家或者地区，以及当地的文化传统所定义的一个软件运行时的语言环境。 
 Locale是软件在运行时的语言环境, 它包括语言(Language), 地域 (Territory) 和字符集(Codeset)。一个locale的书写格式为: 语言[_地域[.字符集]]。完全的locale表达方式是 [语言[_地域][.字符集] [@修正值]。zh_CN.GB2312＝中文_中华人民共和国＋国标2312字符集。 
 
@@ -121,3 +122,17 @@ LANG和LANGUAGE的区别：
 LANG - Specifies the default locale for all unset locale variables  
 LANGUAGE - Most programs use this for the language of its interface  
 LANGUAGE是设置应用程序的界面语言。而LANG是优先级很低的一个变量，它指定所有与locale有关的变量的默认值  ]
+```
+
+
+
+## /etc/locale.gen
+This file lists locales that you wish to have built. You can find a list
+of valid supported locales at /usr/share/i18n/SUPPORTED, and you can add
+user defined locales to /usr/local/share/i18n/SUPPORTED. If you change
+this file, you need to rerun locale-gen.
+
+/usr/share/i18n/SUPPORTED
+locale-gen
+
+乱码了可以设置LC_ALL=zh_CN.UTF-8

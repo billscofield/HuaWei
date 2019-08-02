@@ -1,6 +1,8 @@
 1. IBM (International Business Machines Corporation)
     Hollerith成立了制表机械公司，这家公司后来在1924年与其他的机械制造商合并成为了“国际商业机器公司”简称IBM
-    赫尔曼·何乐礼，1896年，创办了制表机器公司（Tabulating Machine Company），后来成为IBM的前身
+    赫尔曼·何乐礼(Herman Hollerith)，1896年，创办了制表机器公司（Tabulating Machine Company），后来成为IBM的前身
+
+    《IBM与纳粹》
 
 1. 1941 Dennis Ritchie(D.M.R)
     Dennis MacAlistair Ritchie
