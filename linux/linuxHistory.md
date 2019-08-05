@@ -17,6 +17,13 @@
     Department of Defence
     Advanced Research Project Agency
 
+1. 60年代初, MIT 兼容分时操作系统
+
+1. IEEE(Institute of Electrical and Electronics Engineers)
+    IEEE的两个前身AIEE（美国电气工程师协会）成立于1884年，IRE（无线电工程师协会）成立于1912年
+    二战以后，两个组织竞争日益加剧1961年两个组织的领导人果断决定将二者合并，终于1963年1月1日合并成立IEEE。
+
+
 1. 1964 MULTICS(Multiplexed['mʌltɪpleks] Information and Computing Service)
     1. Bell Lab, GE, 麻省理工学院
 
@@ -30,10 +37,6 @@
 1. 1969 Ken Tompson, Dennis Ritchie 在PDP-7 上开发出 Unix
     Star Travel
     编译器
-
-1. IEEE(Institute of Electrical and Electronics Engineers)
-    IEEE的两个前身AIEE（美国电气工程师协会）成立于1884年，IRE（无线电工程师协会）成立于1912年
-    二战以后，两个组织竞争日益加剧1961年两个组织的领导人果断决定将二者合并，终于1963年1月1日合并成立IEEE。
 
 1. 1972 Dennis Ritchie 在B语言基础上开发出C语言(BCPL)的第二个字母
 1. 1973 Dennis Ritchie 和 Ken Tompson 用C语言重写了Unix
