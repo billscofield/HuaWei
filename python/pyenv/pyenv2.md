@@ -1,3 +1,16 @@
+## 原理
+pyenv 的工作原理，修改系统环境变量 PATH 
+
+对于系统环境变量 PATH ，里面包含了一串由冒号分隔的路径，例如 /usr/local/bin:/usr/bin:/bin 。每当在系统中执行一个命令时，例如 python 或 pip ，操作系统就会在 PATH 的所有路径中从左至右依次寻找对应的命令。因为是依次寻找，因此排在左边的路径具有更高的优先级。
+
+而 pyenv 做的，就是在 PATH 最前面插入一个 $(pyenv root)/shims 目录。这样， pyenv 就可以通过控制 shims 目录中的Python版本号，来灵活地切换至我们所需的Python版本。
+    $(pyenv root)/shims:/usr/local/bin:/usr/bin:/bin
+
+Through a process called rehashing, pyenv maintains shims in that directory to match every Python command across every installed version of Python—python, pip, and so on.
+
+
+
+
 ## 安装 git
 
 ## 安装 pyenv
@@ -13,6 +26,8 @@ echo -e 'if command -v pyenv 1>/dev/null 2>&1; then\n eval "$(pyenv init -)"\nfi
 最后，在使用 pyenv 之前，重新初始化 shell 环境，执行如下命令
 exec $SHELL  或者  source ~/.bashrc
 
+查看 pyenv 的版本
+    pyenv --version
 
 ## 安装 pyenv virutalenv
 
@@ -59,6 +74,7 @@ source ~/.bashrc
 cd ~/.pyenv 或者 cd $(pyenv root)
 git pull
 
+
 ## 卸载 pyenv
 由于 pyenv 把一切都放在 ~/.pyenv 下了，所以卸载很方便，两个步骤就行了
 
@@ -72,10 +88,15 @@ rm -rf ~/.pyenv 或者 rm -rf $(pyenv root)
 ## 使用刚才安装的 python 3.6.6
 
 1. 创建虚拟环境
- pyenv virtual env 3.6.6 liujiao-env-3.6.6
+ pyenv virtualenv 3.6.6 liujiao-env-3.6.6
 
 1. 激活虚拟环境
  pyenv activate liujiao-env-3.6.6
+    可能会提示：
+    ```
+    pyenv-virtualenv: prompt changing will be removed from future release. configure export PYENV_VIRTUALENV_DISABLE_PROMPT=1' to simulate the behavior.``
+    ```
+    说的是 取消掉 在PS1 中的 python版本名称 前导符, 将来的版本中将会成为默认
 
  查看当前环境下的 python 版本, pip 版本, pip 路径
     python --version
@@ -101,3 +122,37 @@ pyenv virtualenvs 　　　　　　　 　　　　　　　 # 列出所有虚�
 pyenv activate your_env_name 　　 　　　　　　# 使用某虚拟环境
 pyenv deactivate 　　　　　　　　　　　　　　　　# 退出虚拟环境，回到系统环境
 pyenv uninstall your_env_name  　　 　　　　 # 卸载虚拟环境
+
+
+
+
+## 删除虚拟环境 或 由 pyenv 下载的 python
+### pyenv uninstall 3.7.0
+    这个会首先提示 删除遍历到的每一个 由 3.7.0 派生的虚拟环境，最后会提示是否删除 3.7.0 这个python版本
+
+
+### 手动删除 python 虚拟环境
+.pyenv/versions
+
+删除掉软连接 和 真实目录即可
+
+```
+➜  versions git:(master) pwd
+/root/.pyenv/versions
+➜  versions git:(master) tree -L 2
+.
+├── 3.6.9
+│   ├── bin
+│   ├── include
+│   ├── lib
+│   └── share
+├── 3.7.3
+│   ├── bin
+│   ├── envs
+│   ├── include
+│   ├── lib
+│   └── share
+└── liujiao373 -> /root/.pyenv/versions/3.7.3/envs/liujiao373
+
+```
+

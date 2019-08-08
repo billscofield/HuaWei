@@ -1,4 +1,5 @@
 
+
 nvidia-smi是用来查看GPU使用情况的。我常用这个命令判断哪几块GPU空闲
 
 +-----------------------------------------------------------------------------+
@@ -181,3 +182,11 @@ cuda_8.0.61_375.26_linux.run
     但是发现 还要设置一个 LIBRARY_PATH
     export LIBRARY_PATH=/usr/local/cuda版本/lib64:$LIBRARY_PATH
     ```
+
+
+
+
+CC compute capability
+
+NVIDIA 算力表
+    https://developer.nvidia.com/cuda-gpus
