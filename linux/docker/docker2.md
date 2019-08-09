@@ -1,4 +1,7 @@
 # APT 方法安装Docker
+使用清华的源，否则官方的 非常的慢
+
+https://mirrors.tuna.tsinghua.edu.cn/help/docker-ce/
 
 sudo apt install docker.io
 

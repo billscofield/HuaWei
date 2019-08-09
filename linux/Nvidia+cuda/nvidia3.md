@@ -98,6 +98,14 @@ vi /etc/modprobe/blacklist.conf
 
     依次安装 runtime.deb、 dev.deb、doc.deb
 
+验证
+
+    ```
+    cd  cudnn_samples_v7/mnistCUDNN
+    make && make install
+    ./mnistCUDNN
+    ```
+
     
 
 ## opencv
