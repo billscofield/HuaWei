@@ -247,7 +247,7 @@ Docker 就像是那条鲸鱼
 2013年3月份第一次发布
 
 
-<img src="./materials/dockerVSvm">
+<img src="../materials/dockerVSvm">
 
 
 ## 实践
