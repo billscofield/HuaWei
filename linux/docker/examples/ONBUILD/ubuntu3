@@ -1,0 +1,6 @@
+FROM ubuntu
+MAINTAINER liujiao
+ONBUILD RUN echo "father..."
+
+
+

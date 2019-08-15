@@ -68,6 +68,13 @@ vi /etc/modprobe/blacklist.conf
 ./cuda.run -no-opoengl-libs 表示只安装驱动文件，不安装OpenGL文件。必需参数，
     我没有写这个参数,看看吧
 
+export PATH=/usr/local/cuda/bin:${PATH}
+export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
+export CUDA_HOME=/usr/local/cuda
+
+sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+
+
 安装完后进入 sample
     cd /root/NVIDIA_CUDA-9.0_Samples/1_Utilities/deviceQuery
     make -j 20
@@ -88,12 +95,6 @@ vi /etc/modprobe/blacklist.conf
 
     ld config /usr/local/cuda/lib64/
     
-    vi /etc/.bashrc
-        export PATH=/usr/local/cuda/bin${PATH:+:${PATH}}
-        export LD_LIBRARY_PATH=/usr/local/cuda/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
-        export CUDA_HOME=/usr/local/cuda
-
-    sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
     ```
 
     依次安装 runtime.deb、 dev.deb、doc.deb
@@ -118,3 +119,13 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr/local/opencv3.4.0 -D CMAKE_BUILD_TYPE=Release
 make -j 30
 
 make install
+
+
+## opencv 
+
+查看 opencv 版本
+    pkg-config opencv --modversion
+
+https://blog.csdn.net/qq_33431368/article/details/84717053
+
+https://blog.csdn.net/qq_33431368/article/details/84754421
