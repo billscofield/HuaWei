@@ -94,3 +94,37 @@ Arch
 
 ## 
 Sun:Stanford University Network
+
+
+
+
+
+null 什么都不干，0x00 当做字符串的结尾(c语言)
+s="he\0x00llo"
+
+0x07    Bell    \a
+
+0x08    backspace   退格, 向左移动，但是不会删除(print 语句中,但是如果再输出的话，会覆盖)
+
+0x7f    删除光标所在处的字符，一般和 0x08 一块使用
+    print("abc\0x08\0x7f")
+
+0x0a    Line Feed (LF)  \n
+0x0d    Carrage Return(CR)  \r
+    打字机时代的标准，
+        LF      Linux
+        CR
+        LFCR    windows
+        CRLF
+
+
+传统tty 80列， 一个单元格8个char
+
+0x1b    Escape  转义序列的标志
+
+
+字符界面的浏览器
+    elinks (apt install elinks)
+
+1980-1981年，西雅图电脑产品公司程序员蒂姆·帕特森（Tim Paterson）花费了四个月时间编写出了86-DOS操作系统。
+1981年7月，微软以五万美元的代价向西雅图公司购得本产品的全部版权，并将它更名为MS-DOS。随后，IBM发布了第一台个人计算机，当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，正式发布MS-DOS 1.0和PC-DOS 1.0。

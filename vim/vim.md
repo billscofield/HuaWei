@@ -201,3 +201,42 @@ ex 命令下的寄存器
 x、s、d、c、y 都会覆盖寄存器中的内容
 
 复制专用寄存器 "0
+
+
+## tabstop softtabstop
+
+https://vi.stackexchange.com/questions/4244/what-is-softtabstop-used-for
+
+See the example below,
+
+// Start vim without loading your vimrc. set only tabstop=8 softtabstop=4.
+// This makes <Tab> in insert mode equals to 4 <Space> length at max.
+
+// In insert mode, type 12, one <Tab>, 5. We get insertion below,
+12··5
+// Quit insert mode. Move cursor back, we find 2 <Space> inserted.
+
+// In insert mode, type 12, two <Tab>, 9. We get insertion below,
+12······9
+// Quit insert mode. Move cursor back, you find a <Tab> inserted.
+
+// In insert mode, type 12, three <Tab>, 3. We get insertion below,
+12··········3
+// Move the cursor back, you find a <Tab> and 4 <Space> inserted.
+
+// We can even set sotftabstop=12, but this time we only need type one <Tab>, then 3.
+12··········3
+// Move the cursor back, you find a <Tab> and 4 <Sapce> inserted.
+
+So tabstop is about how wide a Tab is defined, while softtabstop is about how far cursor moves while typing Tab. 
+When they are not set to be the same value, it means that if you hit the Tab keystroke, it does not imply trivially a Tabcharacter. 
+In whatever cases, It is vim who decide once you quit insert mode. Vim will first try to match the insertion by as many tabstop as it can;
+if at last it cannot make a full tabstop, vim simply compensates by Space.
+
+To speak a little bit more, if you set expandtab, it is equal to say to vim:
+    Please do not bother to calculate how many Tab and Sapce is needed. Simply insert Space.
+
+***softtabstop 是按下 Tab 键时移动多少个字符宽度, 不足一个 softtabstop 时以空格补齐, 建议 采用 et, 并且设置 tabstop == softtabstop***
+
+
+
