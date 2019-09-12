@@ -11,6 +11,9 @@
 1. 1946 ENIAC
     Electronic Numerical([njuː'merɪk(ə)l])  Integrator(积分器；整合) And Computer
 
+1. 1953 
+    Richard Mathew Stallman 出生
+
 1. 1957.10 Soviet launched Sputnik
 
 1. 1958 ARPA
@@ -33,6 +36,7 @@
     1941 生
 
 1. 1969 贝尔实验室退出 Mutics 项目
+    4个节点网络
 
 1. 1969 Ken Tompson, Dennis Ritchie 在PDP-7 上开发出 Unix
     Star Travel
@@ -40,6 +44,7 @@
 
 1. 1972 Dennis Ritchie 在B语言基础上开发出C语言(BCPL)的第二个字母
 1. 1973 Dennis Ritchie 和 Ken Tompson 用C语言重写了Unix
+    英国、挪威 加入卫星通讯网络
 
 1. 1973 Xerox 发明以太网, DEC/Intel/Xerox 在20世纪70年代末将其标准化，称为以太网的DIX实现
 
