@@ -1,3 +1,8 @@
+Ken Thompson        重写 QED
+UNIX                ed
+George Coulsuris    em
+Bill Joy            ex/vi
+Bram Moolenaar      vim
 
 ## 
 :h vimtutor

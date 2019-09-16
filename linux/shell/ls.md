@@ -13,3 +13,50 @@
 . 和 .. 所以是两个
 
 目录的 硬链接数 代表的是这个目录下边的目录个数(一级目录数，子子目录不计算在内)，= 隐藏目录数 + 普通目录数
+
+
+
+## commands start with ls
+ls
+lsa
+    alias lsa='ls -lah'
+lsattr
+    list file attributes on a Linux second extended file system
+lsblk
+    list block devices
+lsb_release
+    print distribution-specific information
+LSCOLORS
+LS_COLORS
+
+lscpu
+    display information about the CPU architecture
+lsusb
+
+lspci
+    list all PCI devices
+
+lshw
+    list hardware
+
+lsintramfs
+    list content of an initramfs image
+
+lsipc
+    show information on IPC facilities currently employed in the system
+
+lslocks
+    list local system locks
+
+lslogins
+    display information about known users in the system
+
+lsmod
+    Show the status of modules in the Linux Kernel
+
+lsof
+    list open files
+
+lspgpot
+    extracts the ownertrust values from PGP keyrings and list them in GnuPG ownertrust format.
+

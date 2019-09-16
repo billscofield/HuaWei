@@ -5,6 +5,14 @@ MTA
 SMTP：  从一个主机传到另一个主机
         具有路由功能
 
+~/mbox
+
+
+open relay 开放中继
+
+
+
+
 Postfix is a Mail Transfer Agent(MTA)——that is, software that mail servers use to route mail.
     compatible with sendmail
     easy to config
@@ -13,7 +21,9 @@ Postfix is a Mail Transfer Agent(MTA)——that is, software that mail servers u
 
     written by security expert Wietse Venema
 
-SASL:   Security Layer
+SASL:   Security Layer Secure Layer 简单认证安全层
+        通过添加组件实现访问 MySQL 数据库
+
 TLS:    Transport Layer Security(TLS, an upgrade of SSL)
 
 
@@ -178,6 +188,61 @@ The header fields are separated from the message body by an empty line.
 https://www.php.cn/code/24987.html
 postfix
 dovecot
+
+
+---
+LDAP : lightweight Directory Access Protocol
+    读快写慢
+    管理起来比较复杂
+    windows域
+
+
+虚拟账号
+    不能登录系统
+
+sasl:(使用的是v2版本)
+    cyrus-sasl
+    courier-authlib
+
+MDA
+    sendmail    使用 procmail
+    maildrop
+
+
+MRA
+    cyrus-imap
+    dovecot
+
+MUA
+    mutt(文本界面)
+
+webmail
+    openwebmail
+    squirrelmail(centos 自带)
+    Extmail
+        商业化软件, 有开源版
+        定制的centos 叫做 EMOS
+
+
+
+
+
+
+postfix + sasl(courier-authlib) + mysql
+
+dovecot + mysql
+
+extmail + extman + httpd
+
+
+
+centos自带的不支持虚拟认证，所以要用源码安装
+
+service sendmail stop
+chkconfig sendmail off
+apt remove --purge sendmail
+
+
 
 
 
