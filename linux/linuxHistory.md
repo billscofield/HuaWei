@@ -51,7 +51,20 @@
 1. 1977 ISO (Internation Standardization Organization ) 成立
     1984 颁布 OSI-RM (Open System Interconnection Reference Model)
 
+1. 1978 Berkeley Software Distribution(BSD)
+    1981 BSD4.1
+    1985 BSD4.2
+    1993 BSD4.3    4.4
+        NetBSD,FreeBSD,OpenBSD 均基于 BSD4.3
+        2001 Mac OS X 基于 FreeBSD
+
+1. **关于 ARPANET**
+    美国国防部项目 ARPANET 就是以BSD Unix作为研究系统的，ARPANET发展为了今天的Internet
+    AT&T开发的 SystemIII 以及后面开发的 SystemV 等系列的 Unix 也是非常优秀的，但是由于其商业化，因此它的影响力远远没有BSD那么大。
+
 1. 1979 贝尔实验室公布了 Unix 的商业计划
+
+1. 1980 ARPANET 正式推出 TCP/IP
 
 1. 1983 Richard Stallman 发起了 FreeSoftware 运动，即GNU
     GNU(GNU is not UNIX)
