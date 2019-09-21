@@ -18,7 +18,6 @@ password      : 空
 /interfaces print
 /ip address add address=192.168.1.254/24 interface=ether1
 
-
 /system reboot
 
 ## UPGRADE
@@ -118,7 +117,7 @@ GW          10.172.16.253/24
     1. 伪装(IP -> Firewall -> Nat)
         chain:srcnat
         src. Address:192.168.1.0/24
-        Action:masquarade
+        Action:masquerade [,mɑːskə'reɪd; ,mæs-]']
     1. 路由(IP -> Routers)
         Destination:0.0.0.0/0
         Gateway:ISP IP(10.172.16.253/32)
@@ -238,3 +237,220 @@ DHCP client udp 68
 Dst-nat 目标地址转换,也就是我们说的端口映射
 
 比如，我们内外有一台服务器IP地址是192.168.1.200，为了使外部网络能访问到我们内网的服务器，我们就必须使用 dst-nat
+
+Src. address 是指对哪些源地址进行伪装 ( 可以一个可以多个  ),
+    Matches packets which source is equal to specified IP or falls into specified IP range.
+
+Dst. address 是指发向哪些主机的数据包要进行伪装 ( 可以一个可以多个  ) ，
+    Matches packets which destination is equal to specified IP or falls into specified IP range.
+
+
+### 源地址转换 chain:srcnat
+
+内网地址转换为外网地址
+
+General
+    chain:          srcnat
+    Src Address:    就是那些内网 IP 进行转换
+    Dst Address: 
+Advanced
+    Src Address List: 同 General Src Address
+    Dst Address List: 同 General Dst Address
+Action:
+    Action:masquerade
+
+案例一:
+    General 
+        srcnat
+    Action
+        Action:masquerade
+
+案例二
+    General
+        srcnat
+        Out Interface:WAN口
+    Action:
+        Action:masquerade
+
+
+案例三:
+    General 
+        srcnat
+        Src Address:192.168.1.20          Src Address:192.168.1.0/24        Src Address:192.168.1.10-192.168.1.20
+
+    Action
+        Action:masquerade
+
+案例四:(说这个比较高效)
+    General 
+        srcnat
+    Action
+        Action:src-nat
+        To Address: WAN口地址
+        To Ports:不选
+
+
+
+### 目标地址转换 chain:dstnat
+外网访问内网
+
+General 
+    Chain:dstnat
+    Dst Address:    WAN口地址
+    Protocol:       6 (tcp)
+    Dst Port:       3389
+
+Action
+    Action:         dst-nat
+    To Address:     192.168.10.110(内网服务器地址)
+    To Port:        3389
+
+
+做完之后可以直接在内网用WAN口地址访问?(11集)
+   
+ 
+案例二:
+
+General 
+    Chain:dstnat
+    Protocol:       6 (tcp)
+    Dst Port:       3389
+    In interface:   WAN口
+
+Action
+    Action:         dst-nat
+    To Address:     192.168.10.110(内网服务器地址)
+    To Port:        3389
+
+
+## mangle 标记
+
+应该主要是用来标记不同的应用的流量来进行限速
+
+ROS的精华和核心的东西就是 mangle
+
+Forward         转发
+Prerouting      路由之前
+input           进入路由
+output          从路由出去
+Postrouting     路由之后
+
+## VLAN
+
+4095个
+
+虚拟局域网 异地相同部门??? 
+二层广播帧的传播范围就会被限制得小一些
+
+## 映射和回流
+
+### 映射
+内网服务器暴露给互联网
+IP -> Firewall -> NAT
+
+General
+    Chain:          dstnat
+    Dst Address:    WAN口地址
+    Protocol:       6
+    Dst Port:       3389
+Action:
+    Action:         dst-nat
+    To Address:     服务器地址
+    To Port:        3389
+
+### 回流
+解决内网用户用对外的地址访问内网的服务器受限
+只让那些设置了端口映像的回流即可
+
+外网IP -> WAN口IP -> masquerade(内网的一个IP,或者说打了标记的LAN口IP) -> 内网服务器
+
+内网服务器 -> 
+    General
+        chain:srcnat
+        Dst Address:    内网服务器IP
+        Protocol:       6(TCP)
+        Port:           80
+    Action
+        Action:         masquerade      或者 Action: src-nat    To Address LAN口?
+
+
+## VPN
+
+
+## ROS 密码找回
+Nova/store/user.dat
+
+1. 清空密码
+    U盘启动
+    挂载
+    /nova/store -> /rw/store/user.dat
+    直接删除即可
+    
+1. 密码找回
+    Ros Reader (U盘启动)
+
+1. PXE网卡 破解
+    Ros Reader 找回
+
+
+
+## Simple Queue
+
+General
+        limit at:1M
+        Max Limit:2M
+    Burst
+        Burst Limit         4M      突破速度
+        Burst Threshold     1500K   突破阈值
+        Burst Time          16      突破时间(秒)
+
+    
+burst time 时间内，速度没有达到 Max Limit, 速度最大可达 Burst Limit, 一旦平均速度达到Burst Threshold, 降至max limit, 保证 limit at 速度
+
+主要用于开网页
+
+
+## ROS 安全设置
+1. 用户安全性
+    1. Group
+        1. Full Group 
+        1. Normal Group
+        1. Read Group
+        1. Write Group
+
+1. 服务安全性
+    关闭不需要的服务
+    限制某些IP才可以访问
+
+1. 防火墙
+
+## Hotspot 热点认证
+一种基于 web 的认证, 经过认证后才可以上网
+
+一般步骤
+    1. 建立hotspot pool
+    1. IP -> Hotspot
+            名称
+            选择地址池
+            Shared Users: 可以有几个登录
+            Rate Limit(rx/tx):速度限制
+        Users 创建用户密码
+            
+
+
+
+## 防火墙
+
+1. input
+    进入路由器，packet 的目的地址是路由器的某一个接口
+
+1. output
+    从路由器出来，packet的源IP地址是路由器的某一个接口
+
+1. forward
+    原地址和目标地址均不是路由器的某个接口
+
+
+实验一
+    禁止内网 ping 路由器
+
