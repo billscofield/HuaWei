@@ -175,6 +175,54 @@ mygame.show()
 ```
 
 
+### 静态方法
+只能被类本身调用，不能被实例调用
+
+```
+class Game
+    def initialize(id,title,price)
+        @id = id
+        @title = title
+        @price = price
+    end
+
+    # 这个是实例方法
+    def showGame
+        puts @id.to_s + ":" + @title + ":" + @price.to_s
+    end
+
+    # 这个是类方法，惊掉下巴
+    def self.toStr
+        puts "i love this game"
+    end
+end
+
+one = Game.new(1,"hello",29)
+two = Game::new(2,"hello",29)
+
+
+  Game.toStr
+
+
+
+
+## 继承
+
+class SteamGame < Game
+    def SteamInfo
+        puts "this is extended from Game"
+    end
+end
+
+
+SteamGame.toStr     # 调用父类的类方法
+
+mygame = SteamGame.new(22,"22",22)
+mygame.showGame
+mygame.SteamInfo
+```
+
+
 ## 初探数组
 
 ### 数组的定义
@@ -293,3 +341,84 @@ end
 
 1. 双引号中 大括号(运算式)
     score = "#{2 * 7}"
+
+
+## 哈希变量(key-value)
+
+    ```ruby
+    team_members = {
+        "zhangsan" => 1,
+        "lisi" => 2,
+        "wangwu" => 3
+    }
+    
+    puts team_members["lisi"]
+    ```
+
+    ```
+    类似 Json 的用法
+    player = {
+        name:'lina',            #name :   这样报错, 也就是 key 和 冒号 之间不能有空格
+        age:27,
+        gender:'girl'
+    }
+
+    puts player
+        输出:
+        {:name=>"lina", :gender=>"girl", :age=>22}
+
+
+    puts player[:name]
+
+    
+    ```
+
+## 类型转换
+1. 字符 - 数值
+1. 数值 - 字符
+
+
+a = '10'
+b = '20'
+
+a.to_i + b.to_i 
+
+to_f
+to_s
+
+
+不是四舍五入
+
+'nihao'.to_i    输出 0
+
+12345.5678.to_s         这样也可以!!!
+
+
+
+
+## 模块
+
+```
+module BaseFunc
+    Version = "0.1.1"
+
+    def v
+        return Version
+    end
+
+    def add(a,b)
+        return a + b
+    end
+
+    def self.showVersion
+        return Version
+    end
+
+    # 将 方法定义为静态方法
+    module_function:V
+end
+
+class BaseClass include BaseFunc
+
+end
+```
