@@ -1,3 +1,32 @@
+## 
+
+## 基带传输和宽带传输的区别
+
+1. 基带传输：信号源产生的原始电信号称为基带信号，将数字数据0、1直接用两种不同的电压表示，然后送到线路上去传输。
+1. 宽带传输：将基带信号进行调制后形成模拟信号，然后采用频分复用技术实现宽带传输。
+
+BASE是英文baseband的缩写，指的就是基带。表示没有使用频分复用或者其它频率转换技术，每一个信号在一个单一频率上完全控制线缆。
+
+
+1. 100BASE-T has three major standard versions in copper and fiber mediums:
+
+    1. 100BASE-TX: Used for full-duplex point-to-point communication with two twisted cable pairs. One pair receives signals while the other sends them. 100BASE-TX uses an RJ-45 cable for physical connection and supports segment lengths of up to 100 meters.
+
+    1. 100BASE-T4: One of the earliest Fast Ethernet versions. It uses CAT-3 twisted pair cables, and requires four cable pairs for communication. One pair receives and one pair sends signals. The two remaining pairs are reserved and used as required.
+
+    1. 100BASE-FX: This optical fiber cable standard uses thin infrared light wavelengths for communication via two twists of cable. The two strands are used to transmit and receive signals; one sends and the other receives to provide full-duplex communication. 100BASE-FX allows for a distance of up to six miles between two stations. A repeater is required every 165 yards over long haul distances.
+
+
+1. CAT3,4,5,6
+    没有电磁干扰的情况下，能够承载的最大数据传输速率
+
+cat 5e      1Gbps       Enhanced
+cat 6       1Gbps       10Gbps(cable length under 100 meters)
+cat 6a      10Gbps      Augmented
+cat 7       10Gbps      Added shielding to the wires(Cat6 的屏蔽版本)
+cat 8       40Gbps      (distance up to 30 meters,屏蔽)
+
+
 /etc/network/interface
 auto eth0
 iface eth0 inet dhcp
