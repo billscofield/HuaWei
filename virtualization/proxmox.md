@@ -29,3 +29,4 @@ deb http://download.proxmox.wiki/debian/pve buster pve-no-subscription
 ```
 
 
+ceph 分布式存储

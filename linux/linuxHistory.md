@@ -24,7 +24,7 @@
 
 1. IEEE(Institute of Electrical and Electronics Engineers)
     IEEE的两个前身AIEE（美国电气工程师协会）成立于1884年，IRE（无线电工程师协会）成立于1912年
-    二战以后，两个组织竞争日益加剧1961年两个组织的领导人果断决定将二者合并，终于1963年1月1日合并成立IEEE。
+    二战以后，两个组织竞争日益加剧1961年两个组织的领导人果断决定将二者合并，终于**1963年1月1日合并成立IEEE。**
 
 
 1. 1964 MULTICS(Multiplexed['mʌltɪpleks] Information and Computing Service)
@@ -38,7 +38,7 @@
 1. 1969 贝尔实验室退出 Mutics 项目
     4个节点网络
 
-1. 1969 Ken Tompson, Dennis Ritchie 在PDP-7 上开发出 Unix
+1. 1969 Ken Tompson, Dennis Ritchie 在 PDP-7 上开发出 Unix
     Star Travel
     编译器
 
@@ -59,7 +59,7 @@
         2001 Mac OS X 基于 FreeBSD
 
 1. **关于 ARPANET**
-    美国国防部项目 ARPANET 就是以BSD Unix作为研究系统的，ARPANET发展为了今天的Internet
+    美国国防部项目 ARPANET 就是以 BSD Unix 作为研究系统的，ARPANET发展为了今天的Internet
     AT&T开发的 SystemIII 以及后面开发的 SystemV 等系列的 Unix 也是非常优秀的，但是由于其商业化，因此它的影响力远远没有BSD那么大。
 
 1. 1979 贝尔实验室公布了 Unix 的商业计划
@@ -71,7 +71,7 @@
     GPL(General Plublic License)
 
 1. 1984 颁布 OSI-RM (Open System Interconnection Reference Model)
-1. 1984 反托拉斯法案，AT&T 分拆 贝尔7兄弟
+1. 1984 反托拉斯法案，AT&T 分拆 **贝尔7兄弟**
 
 1. 1987 Richard Stallman 开发出了 GCC 编译器
     GCC GNU C Compile
@@ -144,5 +144,6 @@ s="he\0x00llo"
 字符界面的浏览器
     elinks (apt install elinks)
 
-1980-1981年，西雅图电脑产品公司程序员蒂姆·帕特森（Tim Paterson）花费了四个月时间编写出了86-DOS操作系统。
-1981年7月，微软以五万美元的代价向西雅图公司购得本产品的全部版权，并将它更名为MS-DOS。随后，IBM发布了第一台个人计算机，当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，正式发布MS-DOS 1.0和PC-DOS 1.0。
+1980-1981年，西雅图电脑产品公司程序员 蒂姆·帕特森（Tim Paterson）花费了四个月时间编写出了 86-DOS 操作系统。
+1981年7月，微软以五万美元的代价向西雅图公司购得本产品的全部版权，并将它更名为 MS-DOS。随后，IBM发布了第一台个人计算机，当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，正式发布MS-DOS 1.0 和 PC-DOS 1.0。
+

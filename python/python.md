@@ -94,7 +94,8 @@ python解释器 大小只有3.4MB
 
 number  int,float
     python2 中还有long,python3 中只有int   type(2 ** 64)
-    333L
+    333L(a=22L 在Python3中报错,在Python2中正常)
+    a=2E10  (1024.0)
 bool
     True:非零数 算数运算中为1
     False: 算数运算中为0
@@ -176,11 +177,25 @@ str
     .split(str="空白符",num) 返回list
     string.join(seq)    string作为分隔符
 
+文本总是 unicode, 由str 表示，
+二进制数据则由 bytes 类型表示
+python3 不会以任意隐式的方式混用 str 和 bytes
 
 
+'好'.encode('utf-8')
+'好'.encode('utf8')
+    输出   b'\xe5\xa5\xbd'
 
+        --->  string  ---
+  decode|               |encode
+        |               |
+        ----  bytes  <---
 
+print('你好'.encode('utf8').decode('utf8'))
+           要转换成什么编码         你原来是什么编码格式
+**socket 编程时必须全部转换为 二进制形式**
 
+.encode()   默认utf8(python2 中默认用系统的，这个可以看函数的定义)
 
 type()
 
@@ -200,6 +215,7 @@ bool()
 
 print("%4.2f" % 3.2)
     一共4位，不足会补齐，超过没关系，该怎么显示就怎么显示
+    两位小数
 
 print("%.2f" % 3.2)
 
@@ -208,6 +224,16 @@ print("%.2f%%" % 90.2)  90.20%  转换为百分数后保留2位小数
 print("%05d" % 1)
 
 标识符区分大小写
+
+### format 方法
+
+"{name} {age} {gender}".format(name="liujiao",age="30",gender="man")
+
+"{0} {1} {0}".format(name="liujiao",age="30",gender="man")
+
+
+
+
 
 ## if
 
@@ -306,12 +332,19 @@ pyc c:compiled 编译过
     被import的文件就会被编译
     我 __pycache__的virtualenv 是在 import 文件夹下
 
-## list
+## list 列表
 其他语言中叫数组
 
 .sort()  升序
 .sort(reverse=True) 降序
     .sort(self,key=None,reverse=False)
+以上两个返回 None
+
+sorted(元素) 返回list
+
+reversed(元素)  返回迭代器对象
+
+---
 
 .reverse()  逆序
 
@@ -337,18 +370,23 @@ pyc c:compiled 编译过
     同 + *
 ---
 
-a.remove()  相当于del，无返回
+a.remove()  相当于del，返回 None
     remove first occurrence of value
-    不存在会报错
+    **不存在会报错**
+
 a.clear()
     remove all items from list
+
 a.pop()
     pop(self)   默认最后一个元素
     pop(self,index)
         删除并返回指定index的元素
-        pop 是唯一既修改列表又返回一个非 None 值的列表方法。
+        **pop 是唯一既修改列表又返回一个非 None 值的列表方法。**
+
 del(a[n])
     本质上是将一个变量从内存中删除
+    不存在报 "index out of range 错误"
+
 ---
 len(X)
 .count()

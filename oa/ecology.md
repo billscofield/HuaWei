@@ -1,3 +1,6 @@
+KB是微软对补丁的命名方式，是 Knowledge Base(知识库) 的简称。
+    其指的是某个补丁对应微软知识库中哪一篇文章。
+    例如KB888111，就是对应知识库中888111号文章。
 
 # e-cology [ɪ'kɒlədʒɪ; e-]']
 泛微协同管理平台E-cology系统
@@ -6,17 +9,6 @@ https://www.iqiyi.com/w_19s0iumonp.html
 
 https://v.youku.com/v_show/id_XMzQ0OTM3NTAyOA==.html
 
-
-人体骨架识别
-    古迎冬
-    向晶
-    刘澈
-
-骨架 抠图  组长 古迎冬 
-于天慧，李亚林，孟夏，王磊   组长 古迎冬
-
-
-    
 
 ## 工作流程搭建
 
