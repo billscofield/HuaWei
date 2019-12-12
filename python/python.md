@@ -135,20 +135,51 @@ str
     .isdecimal()    只包含数字
         只能判断单纯的阿拉伯数字
         不支持小数
+
     .isdigit()      只包含数字
         unicode码'\u00b2'  也可以
         不支持小数
-    .isnumeric()    只包含数字
+
+    .isnumeric()    只包含数字  only numeric
         支持中文数字: "一千零一"
         '\u00b2'
         不支持小数
+
+
+    三者的区别:
+        isdigit()
+        True: Unicode数字，byte数字（单字节），全角数字（双字节），罗马数字
+        False: 汉字数字
+        Error: 无
+
+        isdecimal()
+        True: Unicode数字，，全角数字（双字节）
+        False: 罗马数字，汉字数字
+        Error: byte数字（单字节）
+
+        isnumeric()
+        True: Unicode数字，全角数字（双字节），罗马数字，汉字数字
+        False: 无
+        Error: byte数字（单字节）
+
+        b"1" # byte
+        https://www.cnblogs.com/jebeljebel/p/4006433.html
+
+
 
     .istitle()      每个单词的首字母大写    忽略数字，"Hello 5You" 返回True,数字被忽略，认为没有,"Hello 5you" 返回False
     .islower()
     .isupper()
 
+    .swapcase()
+
     .startswith(str)
-    .endswith(str)
+    .endswith(str)      //True or False
+
+
+    .isprintable()      //tty file, drive file
+
+    .expandtabs(tabsize=Num)    //tab键变成多少个空格
 
     .find(str,start=0,end=len(string))
     .rfind(str,start=0,end=len(string))
@@ -162,11 +193,27 @@ str
         返回一个新的字符串,不会修改原字符串
 
 
+    .format()
+
+    .format_map(字典)
+    "{name} {age} {gender}".format_map({'name':'liujiao','age':30,'gender':'man'})
+
+    
+    .isidentifier()     //是否是合法的标识符
+
+
+    delimiter.join(序列)    //这个序列必须使字符串的
+        '='.join(['1','2','3'])
+        '='.join(('1','2','3'))
+
 文本对齐
-    .ljust(width,fillchar=" ")
-    .rjust(width,fillchar=" ")
+    .ljust(width,fillchar=" ")  字符串在左边，填充在右边
+    .rjust(width,fillchar=" ")  字符串在右边，填充在左边
     .center(width,fillchar=" ")
         默认英文空格
+
+
+    .zfill(count)   //左边补0
 
 去除空白字符
     .lstrip(char=" ")
@@ -174,12 +221,24 @@ str
     .strip(char=" ")
 
 拆分和连接
-    .split(str="空白符",num) 返回list
+    .split(str="空白符",num)    //返回list
     string.join(seq)    string作为分隔符
+
+    .splitlines()   //.split(\n)   或者 .split(\r) 根据系统定
+
+
+    .maketrans()
+        table = str.maketrans('abc','123')
+        'aAbBcC'.translate(table)
+
 
 文本总是 unicode, 由str 表示，
 二进制数据则由 bytes 类型表示
 python3 不会以任意隐式的方式混用 str 和 bytes
+
+
+    字符串.capitalize()     //Aabcdef
+    
 
 
 '好'.encode('utf-8')
@@ -424,7 +483,7 @@ info_str = "%s 的年龄是 %d " % ("lisi",18)
 range(10)   [)
 
 
-dict
+### 字典 dict
 存储无序的对象的集合
 键:值
 键值对,键值对
@@ -432,7 +491,7 @@ dict
 键只能是str,num,tuple
 
 info = {"name":"xiaoming",
-        "age":27,
+        "age":30,
         "gender":"boy",
         "height":174
         }
@@ -443,8 +502,13 @@ dicta["key"]
 .keys()
 len(dicta)   键值对的数量
 
+dict.get('key')     //没有也不会报错
+
+key in 字典         //返回 True 或者 False
+
 1. 增
 dicta["key"]=value
+有就是修改
 
 1. 改
 dicta["key"]=value
@@ -452,9 +516,14 @@ dicta["key"]=value
 1. 删
 dicta.pop("key")
     key不存在报错
+    返回值
 dicta.pop("key",default)
     key不存在返回default
 dicta.clear()
+
+dicta.popitem() 随便删掉一个
+
+del()
 
 1. 合并
 dicta.update(dictb)

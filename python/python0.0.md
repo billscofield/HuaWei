@@ -179,6 +179,8 @@ listA.copy() //shallow copy
     
     b 复制了 这个地址指针, 这个地址指针还是指向那个子list
 
+    1 is 1 => True
+    
 
 shallow copy 的作用:类似联合账号
 ```
