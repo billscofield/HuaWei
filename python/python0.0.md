@@ -110,6 +110,12 @@ for i in xrange(N):
 
 ## 模块
 
+1. time
+time.strftime("%F")     //%Y-%m-%d
+%F   full date; same as %Y-%m-%d
+%T   time; same as %H:%M:%S
+
+
 1. 当前目录路径
 
 自己安装的第三方库 一般放在 site-package 里边
@@ -134,6 +140,9 @@ sys.argv
 
 	```
 
+sys.getdefaultencoding()
+
+
 ## OS 模块
 os.system('系统命令')
 返回值为命令的执行成功否，0：成功，1：失败(同Linux)
@@ -154,6 +163,9 @@ import a
 执行b.py,直接输出 helo
 ```
 
+打字机效果
+os.stdout.write()
+os.stdout.flush()
 
 ## copy 模块
 copy.deepcopy(元素)   
@@ -201,7 +213,136 @@ husband[1][1]=1000
 
 对应的关键字参数不能写在位置参数前边
 
+```
+def say(x=1,y=x):   //不合法， name 'x' is not defined
+    pass
+```
+
+位置参数
+默认参数
+关键字参数
+args
+kwargs
+    不能喝默认参数一样的名字，否则报错 got multiple values for argument '名字'
+    不论位置放到哪里，即使放在后边
+
 
 ## 三元运算
 
 a = value if 条件 else value2
+
+
+
+
+## 变量
+
+
+## 递归
+
+```
+def say(n):
+    print(n)
+    if n//2 > 0:
+        return say(n//2)
+    print("底部")
+```
+
+
+## 高阶函数 (1或2)
+
+1. 可以接受函数作为参数的函数
+2. 返回之中包含函数名
+
+lambda x:x+3
+
+
+```
+def say():
+     print("saying")
+     print(walk())      //函数的定义在下边，但是无妨,下边有函数或变量的定义即可
+    print(id(walk))
+    print(x)
+
+def walk():
+    print("walking")
+
+x = 10
+
+say()
+
+print(id(walk))
+
+
+
+
+
+
+```
+### 列表生成器
+案例一
+[(x,y) for x in [1,6] for y in range[6,10]]
+
+
+案例二
+list1=[1,2,3,4,5,6,7,8,9]
+
+list2=[1,2,3,4,5,6,7,8,9]
+
+result=[str (i) + '*' + str (a) + '=' +str (a*i)  for i in list1   for a in list2  if a>=i]
+
+print(result)
+
+
+### 迭代器
+
+判断方法
+    from collections import Iterable
+    isinstance(对象,Iterable)
+
+    from collections import Iterator
+
+
+next()方法, 直到抛出异常
+
+---
+可以被next()函数调用并不断返回下一个值的对象称为**迭代器**: Iterator
+可迭代对象：可以直接作用于for循环的对象
+---
+
+生成器都是 Iterator 对象, 但 list,dict,str虽然是 Iterable, 却不是 Iterator
+iter() 能把list,dict,str等 Iterable 变成 Iterator
+
+Iterator 可以表示一个无限大的数据流，例如全体自然数
+
+
+
+### 生成器  generator
+姑且叫她元祖推导式吧
+
+```
+方法只有一个
+.__next__()
+
+
+yield 方法
+
+def say(max):
+    n = 0
+    while n<max:
+        yield n
+        n += 1
+
+print(type(say))    -> function
+print(type(say(2))) -> generator
+for i in say(2):
+    print(i)
+
+
+
+用__next__() 方法最后一个没有了，会抛异常
+next(生成器)
+
+```
+
+
+## 生产者消费者

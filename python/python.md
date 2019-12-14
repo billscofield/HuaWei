@@ -240,21 +240,58 @@ python3 不会以任意隐式的方式混用 str 和 bytes
     字符串.capitalize()     //Aabcdef
     
 
+    ```
+    '好'.encode('utf-8')
+    '好'.encode('utf8')
+        输出   b'\xe5\xa5\xbd'
 
-'好'.encode('utf-8')
-'好'.encode('utf8')
-    输出   b'\xe5\xa5\xbd'
+            --->  string  ---
+      decode|               |encode
+            |               |
+            ----  bytes  <---
 
-        --->  string  ---
-  decode|               |encode
-        |               |
-        ----  bytes  <---
+    print('你好'.encode('utf8').decode('utf8'))
+               要转换成什么编码         你原来是什么编码格式
+    **socket 编程时必须全部转换为 二进制形式**
 
-print('你好'.encode('utf8').decode('utf8'))
-           要转换成什么编码         你原来是什么编码格式
-**socket 编程时必须全部转换为 二进制形式**
+    .encode()   默认utf8(python2 中默认用系统的，这个可以看函数的定义)
 
-.encode()   默认utf8(python2 中默认用系统的，这个可以看函数的定义)
+
+
+
+    ________________________________
+    |                               |
+    |            Unicode            |
+    |_______________________________|
+        |   |               |   |
+        |   |               |   |
+        |   |               |   |
+    ___________         _____________
+    |          |        |           |
+    |  UTF-8   |        |  GBK      |       bytes
+     __________         _____________
+
+    '你好'.decode('utf8').encode('gbk')
+
+
+
+    u'你好'     //unicode, python中默认就是这个, 而不是utf8
+
+    文件编码
+    string encoding
+        #coding:gbk
+        Defining Python Source Code Encodings
+        python3 都是unicode
+    
+    ```
+
+3.x去掉了 unicode类型 和 unicode()函数，（也就没有u'xxx'这种写法了），区分出str类型和bytes类型，而且str不再同时有encode和decode方法，bytes只有decode，str只有encode
+
+
+不同的国家和地区制定了不同的标准，由此产生了 GB2312, BIG5, JIS 等各自的编码标准。
+这些使用 2 个字节来代表一个字符的各种汉字延伸编码方式，称为 **ANSI** 编码。
+在简体中文系统下，ANSI 编码代表 GB2312 编码，在日文操作系统下，ANSI 编码代表 JIS 编码。
+
 
 type()
 
@@ -495,40 +532,57 @@ info = {"name":"xiaoming",
         "gender":"boy",
         "height":174
         }
+1. 创建字典
+    dict.fromkeys(序列，Default=None)
 
 1. 取值
-dicta["key"]
-    没有会报错
-.keys()
-len(dicta)   键值对的数量
+    dicta["key"]
+        没有会报错
+    .keys()
+    .values()
+    len(dicta)   键值对的数量
 
-dict.get('key')     //没有也不会报错
+    dict.get('key')     //没有也不会报错
 
-key in 字典         //返回 True 或者 False
+    key in 字典         //返回 True 或者 False
+
+    .items()            //返回元祖列表
+        
+    ```
+    for i,j in dictA.items():
+        print(i,' : ',j)
+
+    for i in dictA:
+        print(i,' : ',dictA[i])
+    ```
 
 1. 增
-dicta["key"]=value
-有就是修改
+    dicta["key"]=value
+    有就是修改
+
+    .setdefault(key,default=None)
+        如果存在，则返回
+        如果没有，则增加
 
 1. 改
-dicta["key"]=value
+    dicta["key"]=value
 
 1. 删
-dicta.pop("key")
-    key不存在报错
-    返回值
-dicta.pop("key",default)
-    key不存在返回default
-dicta.clear()
+    dicta.pop("key")
+        key不存在报错
+        返回值
+    dicta.pop("key",default)
+        key不存在返回default
+    dicta.clear()
 
-dicta.popitem() 随便删掉一个
+    dicta.popitem() 随便删掉一个
 
-del()
+    del()
 
 1. 合并
-dicta.update(dictb)
-    重复key取覆盖，即使用dictb的
-
+    dicta.update(dictb)
+        重复key取覆盖，即使用dictb的
+        dicta 会进行更新
 
 .values()
 
@@ -1271,14 +1325,31 @@ except Exception as result:
 python2.4才开始支持这个
 本质上是一个返回函数的函数
 给函数增加功能
-一共外包了两层，其实一层也可以(不可以)
+
+某些函数已经上线，却要增加功能
+
+
+装饰一个函数，所以肯定要传入一个函数作
+
+
+新增的功能1                 三者封装称为一个新的功能函数
+原来函数的功能  fun()
+新增的功能2
+
+
+
+
+高阶函数
+变量指向函数
+函数递归
+
 
     ```
     def func():
         print("I am  years old")
 
     def out(fun):
-        def inner():
+        def inner():            //如果不定义里边的这个函数，也可以实现同名，但是那样就直接执行了
             print("-" * 20)
             fun()
             print("-" * 20)
@@ -1286,11 +1357,24 @@ python2.4才开始支持这个
 
     f = out(func)
     f()
-    ```
 
-    ```
+    只有一层，直接执行的例子：
+    def say():
+        print("This is saying")
+
+    def outer(fun):
+        print("装饰1")
+        fun()
+        print("装饰2")
+
+    say = outer(say)            //直接执行了,改变了调用方式,使用方式
+
+
+    --------------
+
+
     def say(age):
-        print("i am %d years old" % age)
+        print("i am %d years old" % age)        
     
     def outer(fun):
         def inner(age):
@@ -1305,11 +1389,10 @@ python2.4才开始支持这个
 
     装饰器的参数只要包含一个函数作为参数
     被装饰的函数有自己的参数
-    ```
 
-    ```
-    def outer(fun):
-        def inner(age):
+
+    def outer(fun):                         //装饰器要写在被装饰函数的上边，因为形式如下:  @装饰器  ==》 被装饰函数 = 装饰器()
+        def inner(age):                     //如果写在下边，顺序执行，装饰器还没有定义，则报错
             if age < 0:
                 print("no")
             else:
@@ -1321,13 +1404,74 @@ python2.4才开始支持这个
         print("i am %d years old" % age)
 
     say(-9)
+
+
+
+    3层装饰器
+
+    def auth(fun):
+        def inner(*args,**kwargs):
+            username = input("Username:").strip()
+            password= input("password:").strip()
+            
+            if username == "user" and password == "pass":
+                return(func(*args,**kwargs))                //如果被修饰函数有返回值
+            else:
+                exit("wrong username or password")
+        return inner
+
+    def index():
+        print("index")
+
+    @auth
+    def home():
+        print("home")
+        return('return from home')                          //如果被修饰函数有返回值
+
+    @auth
+    def bbs():
+        print("bbs")
+
+
+    3层
+
+    def auth(auth_type):
+        def wrap(fun):                                          //当然也可以把要添加的条件写在这里作为参数,但是这样就改变了调用方式
+            def inner(*args,**kwargs):
+                username = input("Username:").strip()
+                password= input("password:").strip()
+                
+                if username == "user" and password == "pass":
+                    return(func(*args,**kwargs))                //如果被修饰函数有返回值
+                else:
+                    exit("wrong username or password")
+            return inner
+        return wrap
+
+    def index():
+        print("index")
+
+    @auth(auth_type='local')
+    def home():
+        print("home")
+        return('return from home')                          //如果被修饰函数有返回值
+
+    @auth(auth_type='ldap')
+    def bbs():
+        print("bbs")
+
+
+
+
+
     ```
 
 **通用装饰器**
+
 def outer(func):
     def inner(*args,**kwargs):
         print("hhhh")
-        func(*args,**kwargs)
+        func(*args,**kwargs)                //关键是这个参数
     return inner
 
 @outer
@@ -1770,7 +1914,24 @@ random.choice([1,2,3])
 
 
 ## 文件
-open("FILE","r+")
+help(open)
+
+open("FILE","r+",encoding='utf8')
+
+    mode
+        r
+        w:从头开始写，覆盖
+        a:append ,这个不能读， a+ 就可以了
+        +    
+        b:二进制文件
+            rb
+
+            wb
+                .write('helo'.encode())
+        U 表示在读取时，可以将\r\n 自动转换为\n
+            rU
+            r+U        
+
     以普通方式打开的文件，seek只能从0开始，不能是1 和 2， 错误提示:
         io.UnsupportedOperation: can't do nonzero end-relative seeks
         io.UnsupportedOperation: can't do nonzero cur-relative seeks
@@ -1786,6 +1947,13 @@ open("FILE","r+")
 使用编辑器例如vi时，会自动添加\n换行符，但是Python的write不会这样做，真实的写入你告诉他的每个字符
 
 
+    ```迭代器
+    for line in handle:
+        print(line)
+
+    ```
+
+
 with open ... as ...
     __enter__
     __exit__
@@ -1793,12 +1961,51 @@ with open ... as ...
 文件对象是可迭代的，行
     
 
+.tell()
+.seek(offset[,whence])
+
+.encoding
+
+.name           //文件名
+.isatty()       //unseekable
+.seekable()
+.readable()
+.writable()
+.flush()
+.closed()
+
+.truncate(Num)     //从文件开头其，跳到Num这个位置，将后边的删除,seek不管用，仅保留从开头到Num这些字符
+
+写入是有缓冲区的，缓冲区满或换行会触发写入操作
+
 
 python里怎么终止程序的执行
     quit() exit()
 
+mode
+    r+  方式写入时，是在最后边追加
+    w+  清空，写还是在最后边追加
 
 
+### 修改
 
+    ```
+    import sys
 
+    target_str = sys.argv[1]
+    new_str= sys.argv[2]
 
+    f = open(file_one,'r')
+    f_new = open(file_two,'w')
+
+    for line in f:
+        if target_str in line:
+            line = line.replace(target_str,new_str)
+        else:
+            f_new.write(line)
+    ```
+
+### with
+
+with open(one) as f1, open(two) as f2:
+    pass
