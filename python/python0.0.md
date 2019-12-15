@@ -346,3 +346,131 @@ next(生成器)
 
 
 ## 生产者消费者
+
+
+
+## 序列化
+
+### json
+
+```
+import json
+
+info = {'name':'liujiao'}
+
+with open('文件','w') as handle:
+    handle.write(json.dumps(info))
+
+print('序列化完毕')
+
+---
+import json
+
+res = ''
+
+with open('文件','r') as handle:
+    res = json.loads(handle.read())
+
+print('结果是: %s\n反序列化完毕' % res)
+
+```
+
+json只能序列化基础数据类型，不能序列化复杂数据类型
+
+json 中只能有一个对象，不能存两个对象？
+    loads 两个对象出错
+
+### pickle
+
+```
+import pickle
+
+def say():
+    print("saying")
+
+
+info = {
+    'name':'liujiao',
+    'age':30,
+    'fun':say
+}
+
+with open('文件','wb') as handle:           //一定是 b(bytes)
+    handle.write(pickle.dumps(info))
+    #pickle.dump(info,文件句柄)
+
+print("Pickle 序列化成功")
+
+---
+res = ''
+with open('文件','rb') as handle:
+    res = pickle.loads(handle.read())       //复杂对象,如函数可以，但是如果反序列化脚本是一个单独的文件
+    #pickle.load(文件句柄)                  //则反序列化文件也要有这个对象的定义
+
+print("反序列化完毕")
+
+
+
+
+一个handle json.dumps(对象)两次，是写入两边
+
+
+
+
+```
+
+
+## 项目结构
+
+```
+Foo/
+|---bin/
+|   |---foo
+|
+|---foo/
+|   |---tests/              //测试代码
+|   |---|---__init__.py
+|   |---|---test_main.py
+|   |
+|   |
+|   |---__init__.py
+|   |---test_main.py
+|
+|
+|---docs/
+|   |---conf.py   
+|   |---abc.rst
+|
+|---setup.py
+|---requirements.txt        //pip依赖关系
+|---README
+
+```
+
+
+
+## class 类
+
+```
+class Dog:
+    mouth = 'big'                   //类变量  直接Dog.mouth 或 实例.mouth
+    def __init__(self,name):        //构造函数,实例化时做一些类的初始化工作
+        self.name = name            //实例变量，静态属性
+    def bark(self):                 //方法，动态属性
+        print("%s is barking" % self.name)
+
+dog1 = Dog('wangcai')               //实例 等价于 Dog.(dog1,'wangcai')
+```
+
+
+类变量
+实例变量
+
+
+
+
+
+
+
+
+
