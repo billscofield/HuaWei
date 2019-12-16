@@ -452,7 +452,8 @@ Foo/
 ## class 类
 
 ```
-class Dog:
+
+class Dog(object):                  //新式类,主要体现在继承上，super是新式的
     mouth = 'big'                   //类变量  直接Dog.mouth 或 实例.mouth
     def __init__(self,name):        //构造函数,实例化时做一些类的初始化工作
         self.name = name            //实例变量，静态属性
@@ -465,7 +466,56 @@ dog1 = Dog('wangcai')               //实例 等价于 Dog.(dog1,'wangcai')
 
 类变量
 实例变量
+    私有变量
 
+实例方法
+    私有方法
+
+
+
+
+### 继承
+
+    ```
+    def __init__(self,参数...):
+        super(子类自己,self).__init__(参数,没有self) 或者 
+        父类.__init__(self,参数)
+
+    ```
+
+
+多继承
+    从左到右依次继承
+    第一个没有显示声明构造函数，就从下一个里边找
+
+
+    ```
+    class A(object):
+        def __init__(self,a):
+            print('A')
+
+    class B(object):
+        def __init__(self,b):
+            print('B')
+
+    class C(object):
+        def __init__(self,c):
+            print('C')
+
+    class D(A,B,C):
+        def __init__(self,a,b,c)
+            super(D,self).__init__(a)
+            super(A,self).__init__(a)
+            super(B,self).__init__(c)
+
+    ```
+
+
+
+
+python2中的经典类 是深度优先,旧式类
+python2中的新式类 是广度优先,新式类
+python3中的新式类和广式类 都是广度优先
 
 
 
