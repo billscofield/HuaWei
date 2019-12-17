@@ -67,7 +67,7 @@ password = getpass.getpass("prompt")
 while 条件:
 
 else:
-    **正常**退出是要执行的代码
+    **正常**退出时要执行的代码
 
 
 ### while 中跳出两层循环
@@ -121,6 +121,9 @@ time.strftime("%F")     //%Y-%m-%d
 自己安装的第三方库 一般放在 site-package 里边
 标准库一般路径 /usr/lib/python3.6
 
+pyenv 中的 site-packages 路径
+    ~/.pyenv/versions/3.7.3/envs/liujiao373/lib/python3.7/site-packages
+
 ## sys 模块
 这个模块用c语言写的，不是.py 这种
 
@@ -149,6 +152,8 @@ os.system('系统命令')
 
 os.popen('系统命令').read()
 popen 返回一个内存地址, 用read读出
+    只能用read读一遍，没有seek方法，underlying stream is not seekable
+
 
 os.mkdir('目录')
 
@@ -169,7 +174,7 @@ os.stdout.flush()
 
 ## copy 模块
 copy.deepcopy(元素)   
-copy.copy(元素) <==>  [:] 切片是浅拷贝
+copy.copy(元素) <==>  [:] 切片是**浅拷贝**
 
 切片(或者shallow copy)：对“是不可变对象的子元素“的修改或增删操作不会影响另一对象
 切片(或者shallow copy)：对“是可变对象的子元素“的操作会影响另一对象
@@ -195,6 +200,7 @@ listA.copy() //shallow copy
     
 
 shallow copy 的作用:类似联合账号
+
 ```
 info = ["name",['saving',100]]
 husband = info[:]
@@ -288,7 +294,7 @@ list1=[1,2,3,4,5,6,7,8,9]
 
 list2=[1,2,3,4,5,6,7,8,9]
 
-result=[str (i) + '*' + str (a) + '=' +str (a*i)  for i in list1   for a in list2  if a>=i]
+result=[str (i) + '*' + str (a) + '=' +str (a*i) for i in list1 for a in list2 if a>=i]
 
 print(result)
 
@@ -517,10 +523,70 @@ python2中的经典类 是深度优先,旧式类
 python2中的新式类 是广度优先,新式类
 python3中的新式类和广式类 都是广度优先
 
+C3算法
+
+```
+类名._mro__
+类名.mro()
+```
 
 
 
 
+### 多态
+一种接口多种实现
+**不同的子类对象 调用相同的 父类方法，产生不同的执行结果**
+
+```
+        人类
+        (工作)
+程序员          设计师
+(工作)          (工作)
+
+继承 + 重写
+
+```
 
 
 
+## 单例模式
+正在播放的音乐只有一个
+打印机对象同时只有一个
+
+### __new__()方法
+
+内置静态方法
+
+为对象分配内存空间
+返回对象的内存引用
+
+new 分配空间，返回给 init, init 进行初始化
+
+```
+class MusicPlayer():
+    instance = None
+    def __new__(cls,*args,**kwargs):    //cls 相当于self    new 是静态方法，必须有类参数
+        if cls.instance is None:
+            cls.instance = super().__new__(cls)      //调用父类的new方法进行空间分配, cls为当前类
+        return cls.instance                           //返回即可,两种情况都返回 cls.instance
+
+    def __init__(self):
+        print("init")
+
+player = MusicPlayer()
+
+```
+
+
+
+初始化方法 只执行一次
+```
+init_flag = Flase
+def __init__(self):
+
+    if not init_flag:
+        return
+    else:
+        ...
+
+```

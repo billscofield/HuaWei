@@ -56,6 +56,7 @@ if __name__ == '__main__':
 
 
 debug=True  这个1.0版本后就不支持了，使用 export Flask_Debug=1 
+然后 app.run(debug=True) 这里边也要设置
 
 ```
 
@@ -167,6 +168,9 @@ def index():
     @app.route('/')
     def index():
         if request.method == 'POST':
+
+            password = request.form.get('password1')
+
             if password == password1:
                 flash('密码正确')
         return render_template('index.html')
@@ -190,9 +194,102 @@ def index():
         {% endfor %}
     ```
 
+    ---
+
+    ```
+    py文件 a.py
+    from flask import Flask
+    
+    app=Flask(__main__)
+    
+    @app.route('/')
+    def index(name):
+
+
+    html文件 index.html
+    
+    <body>
+        {{ name }}
+
+    </body>
+    ```
+
 
 ### WTForms 常用验证函数
 
 
 
 
+## flask_bootstrap
+https://flask-bootstrap-zh.readthedocs.io/zh/latest/basic-usage.html
+
+pip install flask_bootstrap
+
+
+
+### 继承
+```
+base.html
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<style>
+    ...
+
+    {% block head %}
+    {% endblock %}
+</style>
+<body>
+
+
+{% block 名字 %}
+    
+{% endblock %}
+</body>
+</html>
+
+---
+
+index.html
+{% extends 'base.html' %}
+
+{% block 名字 %}
+    这里是首页的内容
+{% endblock %}
+
+
+```
+
+父模板中要事前定义好
+
+
+
+### url链接
+
+```
+a.py 文件
+@app.route('')
+def index():
+    pass
+
+
+@app.route('/login/')
+def login():
+    pass
+
+
+index.html
+<a href='http://192.168.10.151/login/'>LOGIN</a>    //方法一
+<a href='/login/'>LOGIN</a>
+<a href='{{ url_for("login") }}'>LOGIN</a>
+
+```
+
+
+
+1.静态文件引入：{{ url_for('static', filename='文件路径')  }}
+2.定义路由：{{ url_for('模块名.视图名'，变量=参数)  }}
+3.定义数据块：{% block 数据块名称 %}...{% endblock %}
+4.继承模板：{% extends "home/home.html" %}
+5.包含模板： {% include "home/menu.html" %}
