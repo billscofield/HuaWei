@@ -96,3 +96,34 @@ This file is needed to run thisprogram 
 1. 不能创建文件夹，文件，上传文件的问题??? 文件管理
 
 1. 如何查看 jumpserver 的版本???
+
+
+
+
+
+
+
+# jumpserver
+
+https://github.com/jumpserver/jumpserver
+
+可以先看看 wiki
+
+
+http://study.magedu.com/course/76
+
+
+
+
+
+## 重置密码
+
+管理密码忘记了或者重置管理员密码
+$ source /opt/py3/bin/activate
+$ cd /opt/jumpserver/apps
+$ python manage.py changepassword  <user_name>
+
+新建超级用户的命令如下命令
+$ python manage.py createsuperuser --username=user --email=user@domain.com
+
+
