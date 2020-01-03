@@ -457,3 +457,90 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True  //
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:mysql@127.0.0.1:3306/test3'
 
 app.config['SQLALCHEMY_ECHO'] = True  //显示转换后的原始sql语句
+
+
+
+
+
+### SQLAlchemy
+ORM框架
+把关系表结构映射到对象
+
+关系对象映射
+    1. 类对应数据库的表
+    1. 对象对应数据库的行
+
+
+原生SQL 就用 pymysql 或 MySQLdb
+    1. pymysql 支持 Python2/3
+    1. MySQLdb 仅支持 Python2
+
+ORM 就用 SQLAlchemy
+
+
+```
+一 然后创建一个声明类，映射类到表的关系
+from sqlalchemy.ext.declarative import declarative_base
+BaseModel = declarative_base()
+
+二 定义我们的python类 - -> 数据库中的表
+from sqlalchemy import Integer, String, Column
+class User(BaseModel):
+    __tablename__ = 'user'
+    
+    id = Column(Integer, primary_key = True)
+    name = Column(String(32), index = True, nullable = False)
+
+
+三 所有的数据库操作， 我们首先要创建一个连接。 告诉我们的代码， 连接到我们数据库的路径
+from sqlalchemy.engine import create_engine
+engine = create_engine('mysql+pymysql://root:root@127.0.0.1/test?charset=utf8')
+
+
+四 创建数据表
+##BaseModel.metadata.create_all(engine) 会找到 BaseModel 的所有子类，并在数据库中建立这些表
+BaseModel.metadata.create_all(engine)                           
+
+
+五 会话制造工厂
+from sqlalchemy.orm import sessionmaker
+select_db = sessionmaker(engine)
+
+db_session = select_db()
+
+
+
+六 数据库操作
+db_session.query
+
+
+
+session.commit()
+session.close()
+
+
+
+四
+```
+
+
+synchronize_session
+
+```
+synchronize_session –
+
+chooses the strategy for the removal of matched objects from the session. Valid values are:
+
+False - don’t synchronize the session. This option is the most efficient and is reliable once the session is expired, which typically occurs after a commit(), or explicitly using expire_all(). Before the expiration, objects may still remain in the session which were in fact deleted which can lead to confusing results if they are accessed via get() or already loaded collections.
+
+'fetch' - performs a select query before the delete to find objects that are matched by the delete query and need to be removed from the session. Matched objects are removed from the session.
+
+'evaluate' - Evaluate the query’s criteria in Python straight on the objects in the session. If evaluation of the criteria isn’t implemented, an error is raised.
+
+The expression evaluator currently doesn’t account for differing string collations between the database and Python.
+
+Returns
+the count of rows matched as returned by the database’s “row count” feature.
+
+https://docs.sqlalchemy.org/en/13/orm/query.html
+```
