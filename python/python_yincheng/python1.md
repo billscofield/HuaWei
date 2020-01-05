@@ -30,6 +30,8 @@ int, float, bool, str, tuple, list, dict, complex(复数)
 
 
 交互式类型转换用 eval()
+eval arg must be a string, bytes or code object
+eval(1) wrong
 
 
 拆分多行
@@ -54,3 +56,94 @@ round 四舍五入
     ```
     100%9  == 100 - 100//9*9
     ```
+
+## 数学函数
+max
+min
+abs
+pow
+math.sqrt
+math.sin()
+
+
+print(help(math.pow))
+
+print(1,2,3,sep='!',end='END')
+
+ord('a')
+chr(65)
+
+a 65
+z 90
+
+'\u十六进制'
+    '\u6211' -> 我
+
+## format函数
+format(value, format_spec='', /)
+print(format(2,'10.2'))     右对齐
+print(format(2,'<10.2'))    左对齐
+
+
+## 进制
+二进制      print(0b10)
+八进制      print(0o10)
+十六进制    print(0x10)
+
+
+一个数 %N 范围是 [0,N-1]
+    比如5,6,7,8,9 10
+    %5
+
+
+生成随机字母
+    摸
+
+    ```
+    根据时间来生成随机字母
+    import time
+
+    for i in range(100):
+        temp = time.time() * 10**7
+        target = int(temp % 26)
+        print(chr(ord('A')+target),end=' ',flush=True)
+        time.sleep(0.2)
+    ~
+    ```
+
+
+元角分
+round(实数,小数位)
+    小数位默认0位
+
+    ```
+    元:int(输入)
+    角:round(输入*10 ) % 10
+    分:round((输入 * 100 )) % 10
+    print("{yuan} 元\n {jiao} 角 \n {fen} 分".format(yuan=yuan,jiao=jiao,fen=fen))
+    ```
+
+random.randint(a,b) [a,b]
+random.random() [0,1)
+random.randrange(start,stop=None,step=1)    [start,stop)
+
+
+
+## 关系运算符 - 字符串
+
+ord('a'):97
+ord('0'):48
+ord('1'):49
+
+主要用于排序
+
+
+
+bool('0') True
+bool(' ') True
+
+
+
+逻辑运算
+and or not
+

@@ -178,12 +178,12 @@ WAN--防火墙--LAN
 从防火墙的角度看，RX 就是进入防火墙，TX就是走出防火墙
 
 对于LAN
-    LAN <- 防火墙 TX(下载)
-    LAN -> 防火墙 RX(上传)
+    LAN <- 防火墙 TX()
+    LAN -> 防火墙 RX()
 
 对于WAN
-    WAN <- 防火墙 TX(下载)
-    WAN -> 防火墙 RX(上传)
+    WAN <- 防火墙 TX()
+    WAN -> 防火墙 RX()
 
 Name    TXRate      RXRate
 LAN     10Mbps      1Kbps
@@ -243,6 +243,12 @@ Src. address 是指对哪些源地址进行伪装 ( 可以一个可以多个  ),
 
 Dst. address 是指发向哪些主机的数据包要进行伪装 ( 可以一个可以多个  ) ，
     Matches packets which destination is equal to specified IP or falls into specified IP range.
+
+### srcnat & dstnat
+中文名称：源地址转换。每个packet都有 source ip 和 destination ip, 把 source ip 替换的就是srcnat, 把destination ip 替换的就是 dstnat
+
+### masquerade
+在固定IP的上网方式上，srcnat 还好，WAN口的IP是固定不变的，但是在ADSL拨号上网的方式上，传统的srcnat 就显得有些不太方便了，每次拨号，WAN 口 IP 就会变化，所以 Action:masquerade 代表 srcnat 使用 WAN口 IP 替换源IP
 
 
 ### 源地址转换 chain:srcnat
@@ -453,4 +459,30 @@ burst time 时间内，速度没有达到 Max Limit, 速度最大可达 Burst Li
 
 实验一
     禁止内网 ping 路由器
+
+
+
+## 总结关于内网IP访问Internet 之 srcnat
+General中 out interface 写与不写
+Action中 masquerade 与 (srcnat src address wan口)
+方法一
+    General
+        chain:srcnat
+        src address:不写
+        out interface:wan口
+    Action
+        action:masquerade
+方法二
+    General
+        chain:srcnat
+        src address:不写
+    Action
+        action:masquerade
+
+方法三
+    General
+        chain:srcnat
+        src address:不写
+    Action
+        action:masquerade
 

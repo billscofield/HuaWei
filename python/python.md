@@ -198,6 +198,11 @@ str
     .format_map(字典)
     "{name} {age} {gender}".format_map({'name':'liujiao','age':30,'gender':'man'})
 
+
+    to_print = "{name} is {age} years old"
+    stu_zhangsan = {'name':'zhangsan','age':30}
+    to_print.format_map(stu_zhangsan)
+
     
     .isidentifier()     //是否是合法的标识符
 
@@ -321,14 +326,16 @@ print("%05d" % 1)
 
 标识符区分大小写
 
+
 ### format 方法
 
 "{name} {age} {gender}".format(name="liujiao",age="30",gender="man")
 
 "{0} {1} {0}".format(name="liujiao",age="30",gender="man")
 
+print(format(2,'10.2'))
 
-
+### .format_map(字典)
 
 
 ## if
@@ -1505,6 +1512,11 @@ BIF(Built in Functions)
     10%3       返回1   
     10%-3      返回-2  
 
+    10/-3 == -3.33333   向下取整等于 -4
+
+    10/-3向下取整的商 乘以 除数 + 余数 == 被除数(由此得到余数)
+    10 除以  3 ==  3 余  1
+    10 除以 -3 == -4 余 -2
     取余数看取整的结果,向下取整
 
 int("011",base=8)
