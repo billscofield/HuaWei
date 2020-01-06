@@ -141,9 +141,147 @@ ord('1'):49
 
 bool('0') True
 bool(' ') True
+bool('') False
+bool(None) False
 
 
 
-逻辑运算
+## 逻辑运算
 and or not
 
+not 结合性:从右往左
+
+
+
+if id(a) is id(b):
+    print("同一个id地址")
+
+
+not 优先于 and 优先于 or
+
+print(9>8>7)    -> 9>8 and 8>7
+print(9>8<7)    -> 9>8 and 8<7
+
+
+## None
+
+cmd = None
+
+if cmd:
+    print('有对象')
+else:
+    print('没有对象')
+
+## 判断类型
+isinstance(1,(int,float))
+isinstance(eval(input("请输入一个数字")),(int,float))
+
+
+## 语音
+control / 轻松使用 / 语音识别 / 文本到语音转换
+
+ 微软Windows的Python扩展提供了对Win32 API的访问、创建和使用COM对象的能力以及PythOnWin环境。Pywin32是一个Python库，为python提供访问Windows API的扩展，提供了齐全的windows常量、接口、线程以及COM机制等等。
+
+    ```
+    import win32com.client  #系统客户端包
+    speaker = win32com.client.Dispatch("SAPI.SPVOICE")    #系统接口
+
+    speaker.Speak("文本内容")
+     ```
+
+
+## 修改内存
+
+     ```
+import win32process #进程模块
+import win32con #系统定义
+import win32api # 
+import ctypes   # C语言类型
+import win32gui # 界面
+
+# 一个常量，标识最高权限打开一个进程
+PROCESS_ALL_ACCESS=(0x000F0000 | 0x00100000 | 0xFFF)
+
+     ```
+
+## while float
+
+     ```
+    num = 1.0
+    while num != 0:
+        print(num)
+        #num = round(num - 0.1, 1)
+        num -= 0.1
+        time.sleep(0.5)
+        if num-0 < 10e5:
+            num = 0
+     ```
+
+## 三元运算
+print('hello' if num>5 else 'world')
+
+
+赌博概率
+
+```
+import random
+num = random.randint(1,100)
+print('win' if num > 60 else 'lose')
+```
+
+
+
+## 排序
+
+
+
+
+## 闰年
+能被4整除，且不能被100整除
+能被400整除
+
+普通闰年:公历年份是4的倍数的，且不是100的倍数，为闰年。（如2004年就是闰年）；
+世纪闰年:公历年份是整百数的，必须是400的倍数才是世纪闰年（如1900年不是世纪闰年，2000年是世纪闰年）；
+
+
+
+## 扑克牌
+shuzi = random.randint(1,13)
+huaxing = random.randint(1,4)
+
+if huaxing == 1:
+    return("红桃")
+elif huaxing == 2:
+    return("黑桃")
+elif huaxing == 3:
+    return("方块")
+elif huaxing == 4:
+    return("梅花")
+
+
+
+## 循环穷举法 13x + 8y = 100 股票选股,均为正整数
+
+x = 0
+while x < 100//13:
+    if (100 - 13*x)%8 == 0:
+        print(x)
+    x +=1
+
+
+## 异步模式搞死电脑内存
+
+while True:
+    os.system('notepad') # 同步模式，一个程序执行结束，才执行下一个
+
+    os.system("start notepad") # 异步模式
+
+
+
+
+## 金融误差
+
+    ```
+    金融误差不能用 等于，而要用 num - 0 < 10e5
+
+    ```
