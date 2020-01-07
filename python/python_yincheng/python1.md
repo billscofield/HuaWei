@@ -24,10 +24,7 @@ keyword.iskeyword('with')
 
 常量表
 
-
-
 int, float, bool, str, tuple, list, dict, complex(复数)
-
 
 交互式类型转换用 eval()
 eval arg must be a string, bytes or code object
@@ -40,7 +37,7 @@ eval(1) wrong
 
 
     ```
-    **0.5 是开放
+    **0.5 是开方
     8**(1/3)
 
     num**3
@@ -97,7 +94,7 @@ print(format(2,'<10.2'))    左对齐
 
 
 生成随机字母
-    摸
+    模
 
     ```
     根据时间来生成随机字母
@@ -285,3 +282,50 @@ while True:
     金融误差不能用 等于，而要用 num - 0 < 10e5
 
     ```
+
+
+
+
+## 猜数字
+
+    ```
+    import random
+
+    target =random.randint(1,100)
+
+    num = eval(input("Plz input a num:"))
+
+    while target != num:
+        if num > target:
+            print("too Big")
+        else:                                 ## 这里 else 即可 相等的条件在while处(第一步)
+            print("too Small")
+        num = eval(input("Plz input a num:"))
+    else:
+        print("RIGHT")
+    ```
+
+for i in range(1,1) 是没有输出的
+
+
+## range
+
+for i in range(10,1,-1):    # step must be integer
+    print(i)
+
+同样不包含右边的 [first,end)
+
+
+
+## continue 坑
+
+```
+num = 0
+while num < 10:
+    print(n)
+    if num == 3:
+        continue
+    num += 1
+
+死循环
+```
