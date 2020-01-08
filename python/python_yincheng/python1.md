@@ -362,7 +362,7 @@ class 'function'
     ```
 
 
-函数返回值作为参数
+## 函数返回值作为参数
 
 ```
 def max(n1,n2):
@@ -374,3 +374,73 @@ def max(n1,n2):
 max(max(1,4),max(4,10))
 
 ```
+
+## nonlocal 引用外层
+
+```
+num = 1
+
+def test():
+    num = 10
+    def testin():
+        nolocal num         ## 引用外层变量 global是引用全局变量
+        num = 100
+        print('testin:',num)
+    testin()
+    print('test:',num)
+
+test()
+
+---
+
+def test():
+    num = 10
+    def testin():
+        num = 100
+        print('testin:',num)    # 此时num为新的变量，和外层的num不一个id. 不曾存在的变量会新建
+    testin()
+    print('test:',num)
+
+test()
+
+```
+
+type(print)
+    -> 'builtin_function_or_method'
+print(id(print))
+
+内置函数 = say, 此时 type(内置函数) 就是 普通function 了
+
+
+## 劫持
+
+```
+def say(str):
+    if str.find('liujiao') != -1:
+        os.system('echo ' + str)
+    else:
+        pass
+
+print = say
+
+print('')
+
+print 是无辜程序
+say 是劫持程序
+
+---
+
+
+
+import os
+backossystem = os.system
+
+def check收费(mystr):
+    if mystr.find('已收费') != -1:
+        backossystem(mystr)
+    else:
+        print("请交保护费")
+
+os.system = check收费
+```
+
