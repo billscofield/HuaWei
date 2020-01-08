@@ -329,3 +329,48 @@ while num < 10:
 
 死循环
 ```
+
+
+
+瀑布式
+
+
+质数(只能分解为1×n)
+0 和 1 不是质数
+2 和 3 是质数
+
+
+函数类
+class 'function'
+
+
+禁止创建进程
+指向了异常的函数地址(应该是系统函数)
+
+
+## None
+
+    ```
+    def say():
+        print('hi')
+
+    def say():
+        print('hi') 
+        return
+    
+    两者都是返回None
+    ```
+
+
+函数返回值作为参数
+
+```
+def max(n1,n2):
+    max_num = n1
+    if n2 > n1:
+        max_num = n2
+    return max_num
+
+max(max(1,4),max(4,10))
+
+```
