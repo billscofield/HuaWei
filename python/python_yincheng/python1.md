@@ -1,5 +1,6 @@
 解释性语言：先编译再执行,最具交互性
 
+
 // 整除     1//3==0         有一个是实数，结果就是实数
 /  小数除   1/3=0.33333     有一个是实数，结果就是实数
 
@@ -7,7 +8,6 @@
 语法错误 SyntaxError
 运行错误 5/0 ZeroDivisionError
 逻辑错误 
-
 
 
 taskkill /f /m mspaint.exe
@@ -81,6 +81,11 @@ format(value, format_spec='', /)
 print(format(2,'10.2'))     右对齐
 print(format(2,'<10.2'))    左对齐
 
++:显示正负号
+-:仅显示负号
+
+'{name} {age}'.format(name='liujiao',age=20)
+
 
 ## 进制
 二进制      print(0b10)
@@ -110,7 +115,7 @@ print(format(2,'<10.2'))    左对齐
 
 
 元角分
-round(实数,小数位)
+round(实数,小数位=0)
     小数位默认0位
 
     ```
@@ -120,10 +125,9 @@ round(实数,小数位)
     print("{yuan} 元\n {jiao} 角 \n {fen} 分".format(yuan=yuan,jiao=jiao,fen=fen))
     ```
 
-random.randint(a,b) [a,b]
+random.randint(a,b)     #[a,b]
 random.random() [0,1)
 random.randrange(start,stop=None,step=1)    [start,stop)
-
 
 
 ## 关系运算符 - 字符串
