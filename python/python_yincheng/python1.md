@@ -18,11 +18,12 @@ shutdown -r -t 5
 import keyword  //关键字
 keyword.kwlist
 keyword.iskeyword('with')
-
-    del 是关键字
+keyword.iskeyword('lambda')
+keyword.iskeyword('del')
 
 
 常量表
+
 
 int, float, bool, str, tuple, list, dict, complex(复数)
 
@@ -366,7 +367,7 @@ class 'function'
     ```
 
 
-函数返回值作为参数
+## 函数返回值作为参数
 
 ```
 def max(n1,n2):
@@ -378,3 +379,171 @@ def max(n1,n2):
 max(max(1,4),max(4,10))
 
 ```
+
+## nonlocal 引用外层
+
+```
+num = 1
+
+def test():
+    num = 10
+    def testin():
+        nolocal num         ## 引用外层变量 global是引用全局变量
+        num = 100
+        print('testin:',num)
+    testin()
+    print('test:',num)
+
+test()
+
+---
+
+def test():
+    num = 10
+    def testin():
+        num = 100
+        print('testin:',num)    # 此时num为新的变量，和外层的num不一个id. 不曾存在的变量会新建
+    testin()
+    print('test:',num)
+
+test()
+
+```
+
+type(print)
+    -> 'builtin_function_or_method'
+print(id(print))
+
+内置函数 = say, 此时 type(内置函数) 就是 普通function 了
+
+
+## 劫持
+
+```
+def say(str):
+    if str.find('liujiao') != -1:
+        os.system('echo ' + str)
+    else:
+        pass
+
+print = say
+
+print('')
+
+print 是无辜程序
+say 是劫持程序
+
+---
+
+
+
+import os
+backossystem = os.system
+
+def check收费(mystr):
+    if mystr.find('已收费') != -1:
+        backossystem(mystr)
+    else:
+        print("请交保护费")
+
+os.system = check收费
+```
+
+
+## 函数参数
+位置参数在左边，关键字参数在右边
+不能重复赋值
+
+混合时不能交叉  
+
+```
+def say(a,b,c,d):
+    print(a,b,c,d)
+
+say(1,2,c=3,4) # 错误
+
+---
+
+def say(a,b,c=3,d=4):
+    print(a,b,c,d)
+
+say(1,2,c=33,44)    # 错误
+
+SyntaxError: positional argument follows keyword argument
+位置参数不能在关键字参数之后
+
+```
+
+## 真正的匿名 调用方式
+(lambda x,y:x**y)(2,10)
+(lambda mystr:print(mystr))('helo')
+
+
+
+## 类
+
+函数实现了代码的重用
+类实现了 数据、代码的重用
+
+self 指代了 实例，只能在类的方法中使用，因为不能通过类直接去调用某个实例
+
+```
+class Person():
+    def __init__(self,name):
+        print("initial",id(self))
+        self.name = name
+    self.name = 'helo'
+
+
+
+
+class Person():
+    name = '人类'
+    def __init__(self)
+        print(self.name)    ## 可以
+
+    **属性可以放在 方法 外部，但一般放在方法内部**
+```
+
+
+
+## tkinter
+
+import tkinter
+mytk = tkinter.Tk()     # TK 是一个类，tk()构造函数
+mtk = tkinter.title('hello')
+mtk.geometry("100x600+100+0")   # 宽度x高度+x+y (相对于屏幕左上角)
+mtk.mainloop()
+
+
+
+## 动态增加属性，方法
+
+xiaoming.name = 'xiaoming'
+xiaoming.go = lambda name:print(name, ' is going ')
+
+**动态增加不能使用 self**
+
+
+
+### 重载
+class abc:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+    def show(self):
+        
+
+    def __add__(self,other):    # 重载的含义就是针对本类型，对于 + 重新解释
+        self.x += other.x    
+        self.y += other.y    
+
+        
+a = abc(1,2)
+a.show()
+b = abc(3,5)
+a.show()
+
+
+

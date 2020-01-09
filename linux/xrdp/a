@@ -1,5 +1,0 @@
-if [ 2 > 1 ];then
-    echo "ok";
-else
-    echo "bad";
-fi

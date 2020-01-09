@@ -1137,8 +1137,8 @@ Python2 中定义类时，如果没有指定，则不会以 object 作为基类
     在程序运行时，类同样会被加载到内存，不过只有一份，
     除了封装 实例 的属性和方法外，类对象还可以拥有自己的属性和方法
 
-    类属性
-    类方法
+    1. 类属性
+    1. 类方法
         通过类名. 的方式访问
 
 
@@ -1147,7 +1147,7 @@ Python2 中定义类时，如果没有指定，则不会以 object 作为基类
         count = 0
         def __init__(self,name):
             self.name = name
-            Tool.count += 1     不能使用self 而应该使用类名
+            Tool.count += 1     # 不能使用self 而应该使用类名, 没有super() 一样的替代方法???
 
     tool1 = Tool("锤子")
     tool1 = Tool("斧头")
@@ -1232,7 +1232,7 @@ __init__
 
 class Music(object):
     def __new__(cls,*args,**kwargs):
-        instance = super().__new__(cls)
+        instance = super().__new__(cls)     # 是 super(), 有小括号
         return instance
 
     def __init__(self):
