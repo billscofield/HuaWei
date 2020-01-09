@@ -545,5 +545,148 @@ a.show()
 b = abc(3,5)
 a.show()
 
+a + b
+
+--- 返回值
+
+def __add__(self,other):
+    return abc(self.x+other.x, self.y+other.y)  ## 返回一个新的对象
+
+a.__add__(b)    ==  a + b
+
+
+--- 重载类和int类型的加法
+class abc:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+    def __add__(self,num):
+        return abc(self.x+num,self.y+num)   ## 返回一个对象
+
+a = abc(1,3)
+aa = a + 10
+print(aa.x,aa,y)
+
+
+--- 结合
+
+class abc:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+    def __add__(self, other):
+        if type(other) == type(self):   ## 或者 if isinstance(other,abc):
+            return abc(self.x+other.x, self.y + other.y)
+        elif isinstance(other,int):
+            return abc(self.x + other, self.y + other)
+        else:
+            pass
+
+a = abc(1, 2)
+b = abc(2, 5)
+A = a + b
+
+B = a + 10
+
+print(A.x,A.y)
+print(B.x,B.y)
+
+
+
+### 类的深浅拷贝
+
+class A:
+    def __init__(self,x,y):
+        self.x = x
+        self.y = y
+
+
+a = A(1,2)
+b = a       ## 这是浅拷贝
+print(id(a) == id(b))
+
+
+
+b = A(a.x,a.y)  这是深拷贝
+print(id(a) == id(b))
+
+
+----
+
+### 函数参数 副本机制
+
+num = 1
+print(id(num))      ## 400800   main
+def add(num):
+    print(id(num))  ## 300500   first in
+    num = 10
+    print(id(num))  ## 200400   second in
+
+say(100)            ## 当这个为10时， first in 和 second in 的id才一样
+
+print(id(num))      ## 400800   main
+
+
+
+
+
+## 类的私有属性
+
+```
+class Person:
+    def __init__(self,__money):
+        self.__money = money
+    
+    def show(self):
+        print(self.__money)
+
+a = Person(1000)
+a.show()
+
+a.__money = 100
+a.show()        # 还是1000
+print(a.__money)    # 输出100
+
+```
+
+
+变量或属性存在，引用，不存在动态绑定
+有引用，无绑定
+
+```
+class Bank:
+    def __init__(self,name,password, money):
+        self.name = name
+        self.__password = password
+        self.__money = money
+
+    def cun(self,money):
+        self.__money += money
+
+    def qu(self, money):
+        if eval(input("Password:"))==self.__password:
+            if money <= self.__money:
+                print('取款成功,余额是%d'%(self.__money - money))
+            else:
+                print('余额不足')
+        else:
+            print('wrong password')
+
+
+a = Bank('a',123,1000)
+a.qu(1)
+
+
+私有属性原理
+
+print(dir(a)) 发现有一个_Bank_money (_类名__私有属性)    私有方法也是一样
+
+直接修改这个值，是可以的
+
+```
+
+
 
 
