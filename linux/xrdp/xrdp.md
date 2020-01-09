@@ -36,7 +36,14 @@ echo “xfce4-session” >~/.xsession(每个用户)
 service xrdp restart
 
 
-sesman is xrdp session manager
+
+
+
+### 
+1. "Xfce" 的名字最初是代表的是"XForms Common Environment"，这是因为起初开发使用XForms作为工具包。 但是之后Xfce被重写了两次并且放弃了使用XForms工具包。
+这个名字虽然仍被保留下来，但是它的全名英文缩写不再是 "XFCE"，而变成了"Xfce"。
+
+1. sesman is xrdp session manager
 
 ### xubuntu 中 terminal 不能用的问题
 

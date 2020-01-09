@@ -83,7 +83,7 @@ python的发行包下Tool/scripts的文件夹。里面的ptags.py可以用来生
 脚本的目录是python源码下的Tool/script／ptags.py。 如果不想去找，可以直接copy一份，http://svn.python.org/projects/python/trunk/Tools/scripts/ptags.py，放在你方便的位置，然后使用ptags.py生成tag。
 
 为当前目录生成tag文件 :  ptags.py *.py
-为整个项目生成tag文件：find  . -name \*.py -print | xargs ptags.py
+为整个项目生成tag文件：find . -name \*.py -print | xargs ptags.py
 
 然后就有tag了。在vim的配置文件中导入tag文件的目录就可以了。
 比如在.vimrc 中添加：
