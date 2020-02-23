@@ -13,3 +13,18 @@ Synology 群晖
 
 
 动态DDNS
+
+
+
+## openmediavault
+
+需要两块硬盘, 一块安装系统，一块用于存储
+
+domain name:local
+
+
+http://openmediavault.local 或 使用 IP 地址
+
+安装完成后，用户名：admin 密码:openmediavault
+
+
