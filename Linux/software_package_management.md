@@ -21,6 +21,118 @@ dpkg --unpack package-name 解开软件包到系统目录，但不进行配置
     dpkg -S filename-pattern 从已经安装的软件包中查找包含filename的软件包名称
 
 
+    -C|--audit [<package>...]        Check for broken package(s).
+        audit 审计，查账
+
+    -L|--listfiles <package>...      List files 'owned' by package(s).
+        List files installed to your system from package-name.
+
+
+    -l|--list [<pattern>...]         List packages concisely.
+        dpkg -l     简洁的列出所有的软件包 concise
+            Name
+            Version
+            Architecture
+            Description
+
+
+
+    -S|--search <pattern>...         Find package(s) owning file(s).
+        dpkg -S "ssh"
+        包含"*ssh*"的文件
+
+    -s|--status [<package>...]       Display package status details.
+        dpkg -s net-tools 
+
+    
+    --configure        <package>... | -a|--pending
+
+        --configure package...|-a|--pending
+              Configure a package which has been unpacked but not yet configured.  If -a or --pending is given instead of package, all unpacked but unconfigured packages are configured.
+
+              To reconfigure a package which has already been configured, try the dpkg-reconfigure(8) command instead.
+
+              Configuring consists of the following steps:
+
+              1. Unpack the conffiles, and at the same time back up the old conffiles, so that they can be restored if something goes wrong.
+
+              2. Run postinst script, if provided by the package.
+
+
+
+
+    --triggers-only    <package>... | -a|--pending
+
+
+    -r|--remove        <package>... | -a|--pending
+
+        Remove  an  installed  package.   This  removes  everything  except  conffiles and other data cleaned up by the postrm script, which may avoid having to reconfigure the package if it is reinstalled later (conffiles are
+              configuration files that are listed in the DEBIAN/conffiles control file).  If there is no DEBIAN/conffiles control file nor DEBIAN/postrm script, this command is equivalent to calling --purge.  If -a or  --pending  is
+              given instead of a package name, then all packages unpacked, but marked to be removed in file /var/lib/dpkg/status, are removed.
+
+              Removing of a package consists of the following steps:
+
+              1. Run prerm script
+
+              2. Remove the installed files
+
+              3. Run postrm script
+
+
+
+
+    -P|--purge         <package>... | -a|--pending
+
+        Purge  an installed or already removed package. This removes everything, including conffiles, and anything else cleaned up from postrm.  If -a or --pending is given instead of a package name, then all packages unpacked
+            or removed, but marked to be purged in file /var/lib/dpkg/status, are purged.
+
+            Note: some configuration files might be unknown to dpkg because they are created and handled separately through the configuration scripts. In that case, dpkg won't remove them by itself, but the package's postrm script
+            (which is called by dpkg), has to take care of their removal during purge. Of course, this only applies to files in system directories, not configuration files written to individual users' home directories.
+
+            Purging of a package consists of the following steps:
+
+            1. Remove the package, if not already removed. See --remove for detailed information about how this is done.
+
+            2. Run postrm script.
+
+    /var/lib/dpkg/status 中应该是所有的软件
+
+
+    -R, --recursive
+        Recursively handle all regular files matching pattern *.deb found at specified directories and all of its subdirectories. This can be used with -i, -A, --install, --unpack and --record-avail actions.
+
+    -G     Don't install a package if a newer version of the same package is already installed. This is an alias of --refuse-downgrade.
+
+    --admindir=dir
+        Set the administrative directory to directory.  This directory contains many files that give information about status of installed or uninstalled packages, etc.  Defaults to «/var/lib/dpkg».
+
+## apt-cache
+
+apt-cache queries and displays available information about installed
+and installable packages. It works exclusively on the data acquired
+into the local cache via the 'update' command of e.g. apt-get. The
+displayed information may therefore be outdated if the last update was
+too long ago, 
+
+Most used commands:
+    showsrc - Show source records
+    search - Search the package list for a regex pattern
+    depends - Show raw dependency information for a package
+    rdepends - Shows a listing of each reverse dependency a package has.
+        哪些软件依赖你所写的软件
+        apt-cache rdepends libc6
+    show - Show a readable record for the package
+    pkgnames - List the names of all packages in the system
+    policy - Show policy settings
+        软件来源 应该是 /etc/apt/sources.list 以及 PPA
+
+    policy <pkg>
+    madison <pkg>
+        It displays available versions of a package in a tabular format.
+
+
+
+
 ## apt
 
 简单来说就是：apt = apt-get、apt-cache 和 apt-config 中最常用命令选项的集合。
@@ -138,4 +250,12 @@ Alien工具可以将RPM软件包转换成DEB软件包，或把DEB软件包转换
 
 
 
+## apt-get 
+
+-d, --download-only
+    Download only; package files are only retrieved, not unpacked or installed.
+
+apt-get -d install openssh
+cd /var/cache/apt/archives
+dpkg -i ./*
 

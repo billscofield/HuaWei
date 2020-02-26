@@ -7,7 +7,8 @@
     tftp - Trivial file transfer protocol client
     tftpd - Trivial file transfer protocol server
 
-1. tftp Trivial ftp 
+1. tftp 
+    Trivial ftp 
     very simple transfer protocol
     主要用于局域网，配置网络设备，如防火墙、路由器 传输配置文件和固件文件
     使用UDP

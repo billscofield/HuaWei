@@ -655,6 +655,7 @@ print(a.__money)    # 输出100
 变量或属性存在，引用，不存在动态绑定
 有引用，无绑定
 
+
 ```
 class Bank:
     def __init__(self,name,password, money):
@@ -688,5 +689,44 @@ print(dir(a)) 发现有一个_Bank_money (_类名__私有属性)    私有方法
 ```
 
 
+## chardet
+
+with open('a.txt','r') as f:
+    s = f.read()
+    print(chardet.detect)
+    ## 输出结果为:
+    ##{'encoding':'GB2312','confidence':0.99}
+    
+    #newdata = s.decode('gb2312')
+
+with open('newfile','w') as f
+    f.wirte(newdata)
 
 
+
+
+## 发送短信
+
+1. 互亿无线
+1. 阿里大于
+
+
+
+## 发送邮件
+
+import smtplib
+from email.mime.text import MIMEText
+
+SMTPServer = "smtp.163.com"
+sender = 'sender@163.com'
+password = '123'
+text = "hello python"
+
+message = MIMEText(text)
+message['Subject'] = '主题'
+message['From'] = sender
+message['To'] = 'abc@126.com'
+
+mailserver = smtplib.SMTP(SMTPServer,25)
+mailserver.login(sender,password)
+mailserver.sendmail(sender,['抄送1','抄送2'],message.as_string())

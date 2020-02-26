@@ -1,14 +1,19 @@
 
+## Linux 应用领域
+
 netcraft
-    What’s that site running?
-    还有一些安全类的资料
+    信息统计网站，类似与nmap服务器, 扫描获取相关信息
 
 top500
     www.top500.org
 
 SGI 图形工作站(Silicon Graphics)
     1997年, Linux 全面占领好莱坞
-    SGI 不是 Linux 内核? 和 Linux 有什么区别?
+    SGI 市公司的名字
+        S: Super
+        G: Graphic
+        I: Insight 突破性的洞察力
+    开发了 xfs 日志文件系统
     IRIX 是由硅谷图形公司 SGI 是以System V与BSD延伸程序为基础所发展成的UNIX操作系统，对于3-D视图和虚拟现实环境最优化了的应用软件。
 
 6个主要的 Unix 变种
