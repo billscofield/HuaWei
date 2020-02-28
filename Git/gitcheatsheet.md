@@ -175,24 +175,6 @@ git add -u
 
 ## branch
 
--v, -vv, --verbose
-    When in list mode, show sha1 and **commit subject line for each head**, along with relationship to upstream branch (if any).
-    If given twice, print the path of the linked worktree (if any) and the name of the upstream branch,
-    as well (see also git remote show <remote>). Note that the current worktree’s HEAD will not have its path printed (it will always be your current directory).
-
-
--l, --list
-    List branches. With optional <pattern>..., e.g.  git branch --list 'maint-*', list only the branches that match the pattern(s).
-
--r, --remotes
-    List or delete (if used with -d) the remote-tracking branches. Combine with --list to match the optional pattern(s).
-
-
-
-git branch -a
-git branch [new branch] [branch-base]
-git branch [new branch] [commit]
-
 
 git-checkout
     Switch branches or restore working tree files
@@ -338,34 +320,13 @@ git remote update [origin]
 * git rebase --abort
 * git commit --amend
     * git commit --amend --date="$(date -R)" 
-* git status
 * git shortlog -sn
-
-
-git log 
-    冒泡式，上面的是时间上最新的
-
-    --oneline 
-        This is a shorthand for "--pretty=oneline --abbrev-commit" used together.
-
-    -<number>, -n <number>, --max-count=<number>
-        Limit the number of commits to output.
-        
-        git log -4 --oneline
-
-    --stat 显示每次更新的文件修改统计信息。
-
-    --since=/--before=
-    --after=/--until=
-        git log --since='2019-01-01' --before='2019-06-01'
-
 
 
 
 
 * git log
     * --decorate
-    * --author=
     * --committer=
         * format
             * %H	提交对象（commit）的完整哈希字串
@@ -394,9 +355,6 @@ git log
     * --shortstat 只显示 --stat 中最后的行数修改添加移除统计。
     * --name-only 仅在提交信息后显示已修改的文件清单。
     * --name-status 显示新增、修改、删除的文件清单。
-    * --abbrev-commit 仅显示 SHA-1 的前几个字符，而非所有的 40 个字符。
-    * --relative-date 使用较短的相对时间显示（比如，“2 weeks ago”）。
-    * --graph 显示 ASCII 图形表示的分支合并历史。
     * --pretty 使用其他格式显示历史提交信息。可用的选项包括 oneline，short，full，fuller 和 format（后跟指定格式）。
 
 ### 推荐用法
