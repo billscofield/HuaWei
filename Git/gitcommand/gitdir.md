@@ -94,8 +94,9 @@ tags 目录
         ```
 
         一个 commit 有一棵 tree 
-        tree 就是某个commit的快照, tree 里有blob（具体的文件,目录）
+        tree 就是文件夹, tree 里有 tree 和 blob（具体的文件,目录）
         blob 就是文件内容，只要文件内容一致，在git里就是唯一的一个blob
+        blob 和文件名没有关系，只和文件内容有关
 
         
 info文件夹
