@@ -14,14 +14,11 @@ dpkg软件包相关文件介绍
         dpkg -s 软件包
     /var/lib/dpkg/info          记安装软件包控制目录的控制信息文件
 
-dpkg --unpack package-name 
-    解开软件包到系统目录，但不进行配置
-
 下面几个命令用于对软件包进行查询
     dpkg -I filename 查看软件说明(直接使用dpkg -l 查询所有安装的软件包，filename可以使用正则，我通常用```dpkg -l | grep "filename"因为会存在软件名记不住的情况)
     dpkg -L filename 查看package-name对应的软件包安装的文件及目录
     dpkg -s filename 查看package-name对应的软件包信息
-    dpkg -S filename-pattern 从已经安装的软件包中查找包含filename的软件包名称
+    dpkg -S filename-pattern 从**已经安装的软件包中**查找包含filename的软件包名称
 
 
     -C|--audit [<package>...]        Check for broken package(s).
@@ -48,19 +45,24 @@ dpkg --unpack package-name
     -s|--status [<package>...]       Display package status details.
         dpkg -s net-tools 
 
+
+    dpkg --unpack package-name 
+        解开软件包到系统目录，但不进行配置
+
     
     --configure        <package>... | -a|--pending
 
         --configure package...|-a|--pending
-              Configure a package which has been unpacked but not yet configured.  If -a or --pending is given instead of package, all unpacked but unconfigured packages are configured.
+            Configure a package which has been unpacked but not yet configured.  
+            If -a or --pending is given instead of package, all unpacked but unconfigured packages are configured.
 
-              To reconfigure a package which has already been configured, try the **dpkg-reconfigure**(8) command instead.
+            To reconfigure a package which has already been configured, try the **dpkg-reconfigure**(8) command instead.
 
-              Configuring consists of the following steps:
+            Configuring consists of the following steps:
 
-              1. Unpack the conffiles, and at the same time back up the old conffiles, so that they can be restored if something goes wrong.
+            1. Unpack the conffiles, and at the same time back up the old conffiles, so that they can be restored if something goes wrong.
 
-              2. Run postinst script, if provided by the package.
+            2. Run postinst script, if provided by the package.
 
 
 
@@ -111,10 +113,12 @@ dpkg --unpack package-name
     -R, --recursive
         Recursively handle all regular files matching pattern *.deb found at specified directories and all of its subdirectories. This can be used with -i, -A, --install, --unpack and --record-avail actions.
 
-    -G     Don't install a package if a newer version of the same package is already installed. This is an alias of **--refuse-downgrade**
+    -G  Don't install a package if a newer version of the same package is already installed. 
+        This is an alias of **--refuse-downgrade**
 
     --admindir=dir
-        Set the administrative directory to directory.  This directory contains many files that give information about status of installed or uninstalled packages, etc.  Defaults to «/var/lib/dpkg».
+        Set the administrative directory to directory.  This directory contains many files that give information about status of installed or uninstalled packages, etc.  
+        Defaults to «/var/lib/dpkg».
 
 
     --set-selections
@@ -136,6 +140,50 @@ dpkg --unpack package-name
 
 
 
+## priority number
+When multiple Apt repositories are enabled, a package can exist in several of them. To know which one should be installed, Apt assigns priorities to packages. The default is 500.
+
+If the packages have the same priority, the package with a higher version number (most recent) wins.
+If packages have different priorities, the one with the higher priority wins.
+
+To view the priority of a specific package, use apt-cache policy MYPACKAGE
+    https://wiki.debian.org/AptConfiguration
+
+by default Debian backports repositories have a lower priority than stable (100). They won't be installed or upgraded unless explicitly configured to (or the package only exists in backports).
+
+
+Backport的含义是”向后移植”，就是将软件新版本的某些功能移植到旧版本上来,这就称为backport。
+
+Debian向来以稳定性著称，所以就存在一个问题，官方源分发的软件版本比软件本身的版本总是要慢不少，所以就有了 backports 源。 backports 主要从 testing 源，部分安全更新从unstable源重新编译包，使这些包不依赖于新版本的库就可以在 debian 的 stable 发行版上面运行。所以 backports 是 stable 和 testing 的一个折衷。
+    https://cloud.tencent.com/developer/article/1374722
+    
+    
+
+
+
+priority 1
+        to the versions coming from archives which in their Release files are marked as
+        "NotAutomatic: yes" but not as "ButAutomaticUpgrades: yes" like the Debian
+        experimental archive.
+
+    priority 100
+        to the version that is already installed (if any) and to the versions coming from
+        archives which in their Release files are marked as "NotAutomatic: yes" and
+        "ButAutomaticUpgrades: yes" like the Debian backports archive since squeeze-backports.
+
+    priority 500
+        to the versions that do not belong to the target release.
+
+    priority 990
+        to the versions that belong to the target release.
+    The highest of those priorities whose description matches the version is assigned to the
+    version.
+
+    http://manpages.ubuntu.com/manpages/cosmic/man5/apt_preferences.5.html
+    man apt_preferences
+
+
+
 
 ## apt-cache
 
@@ -150,18 +198,25 @@ Most used commands:
         performs a function similar to dpkg --print-avail; 
         it displays the package records for the named packages.
 
-    1. showsrc - Show source records
+        dpkg -p  是这个命令的全集, 它列出所有的
+
+    1. showsrc - Show source records记录
         showsrc pkg...
-           showsrc displays all the source package records that match the given package names. All versions are shown, as well as all records that declare the name to be a binary package. Use --only-source to display only source
-           package names.
+            displays all the source package records that match the given package names. 
+            All versions are shown, as well as all records that declare the name to be a binary package. Use --only-source to display only source package names.
 
         其中有一项叫做：Build-Depends, 依赖的各种东西? 和 apt-cache depends wget 中的还不是特别一样
 
     1. showpkg [pkg]
         showpkg pkg...
-           showpkg displays information about the packages listed on the command line. Remaining arguments are package names. The available versions and reverse dependencies of each package listed are listed, as well as forward
-           dependencies for each version. Forward (normal) dependencies are those packages upon which the package in question depends; reverse dependencies are those packages that depend upon the package in question. Thus, forward
-           dependencies must be satisfied for a package, but reverse dependencies need not be. For instance, apt-cache showpkg libreadline2 would produce output similar to the following:
+            showpkg displays information about the packages listed on the command line. Remaining arguments are package names. The available versions and reverse dependencies of each package listed are listed, as well as forward
+            dependencies for each version. Forward (normal) dependencies are those packages upon which the package in question depends; reverse dependencies are those packages that depend upon the package in question. Thus, forward
+            dependencies must be satisfied for a package, but reverse dependencies need not be. For instance, apt-cache showpkg libreadline2 would produce output similar to the following:
+
+            **主要用来查看依赖和反依赖**
+            依赖项目 和 apt-cache depends 一样
+            反依赖项目 和 apt-cache rdepends 一样
+            等于 apt-cache depends + apt-cache rdepends
 
                Package: libreadline2
                Versions: 2.1-12(/var/state/apt/lists/foo_Packages),
@@ -177,31 +232,41 @@ Most used commands:
            libreadline2 is installed, libc5 and ncurses3.0 (and ldso) must also be installed; libreadlineg2 and libreadline2-altdev do not have to be installed. For the specific meaning of the remainder of the output it is best to
            consult the apt source code.
 
-    1. search - Search the package list for a regex pattern
-        performs a full text search on all available package lists for the POSIX regex pattern given, see regex(7). It searches the package names and the descriptions for an occurrence of the regular expression and prints
-           out the package name and the short description, including virtual package names. 
     1. depends - Show raw dependency information for a package
     
+
     1. rdepends - Shows a listing of each reverse dependency a package has.
         哪些软件依赖你所写的软件
         apt-cache rdepends libc6
+
+
+    1. search - Search the package list for a regex pattern
+        performs a full text search on all **available package lists** for the POSIX regex pattern given, see regex(7). It searches the package names and the descriptions for an occurrence of the regular expression and prints
+           out the package name and the short description, including **virtual package names**???. 
+
     1. pkgnames - List the names of all packages in the system
         pkgnames [prefix]
-           This command prints the name of each package APT knows. The optional argument is a prefix match to filter the name list. The output is suitable for use in a shell tab complete function and the output is generated
-           extremely quickly. This command is best used with the --generate option.
+            This command prints the name of each package APT knows. The optional argument is a prefix match to filter the name list. The output is suitable for use in a shell tab complete function and the output is generated
+            extremely quickly. This command is best used with the --generate option.
 
-           Note that a package which APT knows of is not necessarily available to download, installable or installed, e.g. virtual packages are also listed in the generated list.
+            Note that a package which APT knows of is not necessarily available to download, installable or installed, e.g. virtual packages are also listed in the generated list.
 
-    1. policy - Show policy settings
+            同 apt list ， 列出repository中的
+
+    1. policy  pkg - Show policy settings
         软件来源 应该是 /etc/apt/sources.list 以及 PPA
 
-    1. policy <pkg>
+        500 and 100 are the priority numbers. 
+        To learn more about them, I recommend man apt_preferences. 
+        500 corresponds to installable, 还有安装地址，即apt源
+        100 means installed.
+
 
     1. madison <pkg>
         It displays available versions of a package in a tabular format.
         查询可用的软件包的版本
 
-    1. dumpavail
+    1. dumpavail???
         dumpavail prints out an available list to stdout. This is suitable for use with dpkg(1) and is used by the dselect(1) method.
         应该是 软件源中一共可用的软件有多少
 
@@ -211,7 +276,9 @@ Most used commands:
 
 
     1. stats
-        stats displays some statistics about the cache. No further arguments are expected. Statistics reported are:
+        stats displays some statistics about the cache. 
+        No further arguments are expected. 
+        Statistics reported are:
 
         •   Total package names is the number of package names found in the cache.
 
@@ -259,32 +326,50 @@ apt show            apt-cache show(这个好)          显示安装细节(用来
 
 apt list                                    列出包含条件的包（已安装，可升级等）
         --upgradable
-        --installed | wc -l
-apt-cache depends [package]     了解使用依赖
+        --installed | wc -l     4000个
+
 apt edit-sources    编辑源列表, 很难用的编辑器打开
+
 apt-get check        检查是否有损坏的依赖
+    check is a diagnostic tool; it updates the package cache and checks for broken dependencies.
+
+
 apt-cache pkgnames | grep xxx           repository 中有多少
+    5700个
     这个和apt list 差不太多
 
-apt-cache policy [包]
-    policy is meant to help debug issues relating to the preferences file. 
-    With no arguments it will print out the priorities of each source. Otherwise it prints out detailed information about the priority selection of the named package.
-
-apt-cache rdepends package_name
-    显示软件包的反向依赖关系，即有什么软件包需依赖你所指定的软件包。
 
 apt-get download icinga
+    download will download the given binary package into the current directory.
     在当前的目录中下载包
+
+
 
 apt-get source [包]
     causes apt-get to fetch source packages to current directory 
+    It will then find and download into the current directory the newest available version of that source package 
 
 
 重新安装
+    --reinstall
+        Re-install packages that are already installed and at the newest version. Configuration Item: APT::Get::ReInstall.
+
 　　$ sudo apt-get --reinstall install package_name
+
 
 ???
 sudo apt-get clean && sudo apt-get autoclean # ——–清理下载文件的存档 && 只清理过时的包
+
+
+clean
+    clean clears out the local repository of retrieved package files. It removes everything but the lock file from /var/cache/apt/archives/ and /var/cache/apt/archives/partial/.
+
+autoclean (and the auto-clean alias since 1.1)
+    Like clean, autoclean clears out the local repository of retrieved package files. The difference is that it only removes package files that can no longer be downloaded, and are largely useless. This allows a cache to be
+    maintained over a long period without it growing out of control. The configuration option APT::Clean-Installed will prevent installed packages from being erased if it is set to off.
+
+autoremove (and the auto-remove alias since 1.1)
+    autoremove is used to remove packages that were automatically installed to satisfy dependencies for other packages and are now no longer needed.
 
 
 
@@ -342,7 +427,6 @@ apt-file 是一个命令行界面的 APT 包搜索工具。当我们在编译源
     **apt-file update**
 
 
-
 apt-file [options] action [pattern]
 apt-file [options] -f action <file>
 apt-file [options] -D action <debfile>
@@ -351,7 +435,7 @@ apt-file [options] -D action <debfile>
 
 Action
     list|show          <pattern>        List files in packages
-    list-indices                        List indices configured in APT. 索引，目录
+    list-indices???                     List indices configured in APT. 索引，目录
     search|find        <pattern>        Search files in packages    这个文件在那个包里,用于查找依赖
     update                              Fetch Contents files from apt-sources.
 
@@ -385,6 +469,14 @@ Alien工具可以将RPM软件包转换成DEB软件包，或把DEB软件包转换
 
 
 ## apt-get 
+
+-f, --fix-broken
+           Fix; attempt to correct a system with broken dependencies in place. This option, when used with install/remove, can omit any packages to permit APT to deduce a likely solution. If packages are specified, these have to
+           completely correct the problem. The option is sometimes necessary when running APT for the first time; APT itself does not allow broken package dependencies to exist on a system. It is possible that a system's dependency
+           structure can be so corrupt as to require manual intervention (which usually means using dpkg --remove to eliminate some of the offending packages). Use of this option together with -m may produce an error in some
+           situations. Configuration Item: APT::Get::Fix-Broken.
+
+
 
 -d, --download-only
     Download only; package files are only retrieved, not unpacked or installed.

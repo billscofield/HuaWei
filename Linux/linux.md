@@ -840,12 +840,392 @@ locate a command
 locate the binary, source, and manual page files for a command
 
 
+## 文本处理
+
+
 ## grep 
 
 -i: --ignore-case
     
 -v:--invert-match
     Invert the sense of matching, to select non-matching lines.
+
+--color=auto
+
+--exclude-dir=GLOB   不包括;
+    Skip any command-line directory with a name suffix that matches the pattern GLOB.  When searching  recursively,
+    skip any subdirectory whose base name matches GLOB.  Ignore any redundant trailing slashes in GLOB.
+
+    --exclude-dir=.git                  单个文件夹
+    --exclude-dir={.git,CVS,.svn}       多个文件夹
+
+
+-E, --extended-regexp
+    Interpret PATTERNS as extended regular expressions (EREs, see below).
+
+-R, --dereference-recursive
+    Read all files under each directory, recursively.  Follow all symbolic links, unlike -r.
+    按照所有符号链接递归地读取并处理该目录中的所有文件
+    解除引用的递归, 解除了引用，所以symlink文件被单独的对待
+
+-n, --line-number
+    Prefix each line of output with the 1-based line number within its input file.
+
+
+-r, --recursive
+    Read all files under each directory, recursively, following symbolic links only if  they  are  on  the  command
+    line.   Note  that if no file operand is given, grep searches the working directory.  This is equivalent to the -d recurse option.
+    symlink 仍然当做symlink, 因为和指向的文件是同一个，所以，只显示源文件，而不显示 symlink 文件
+
+-d ACTION, --directories=ACTION
+    If an input file is a directory, use ACTION to process it.  
+    By default, ACTION is read, i.e., read  directories just as if they were ordinary files.  
+    If ACTION is skip, silently skip directories.  
+    If ACTION is recurse, read all files under each directory, recursively, following symbolic links only if they are  on  the  command  line.
+    This is equivalent to the -r option.
+    只有显示的指出了symlink文件，才会显示
+
+
+
+
+-A NUM, --after-context=NUM
+    Print NUM lines of trailing context after matching lines.  Places a  line  containing  a  group
+    separator  (--)  between  contiguous groups of matches.  With the -o or --only-matching option,
+    this has no effect and a warning is given.
+
+-B NUM, --before-context=NUM
+    Print NUM lines of leading context before matching lines.  Places a  line  containing  a  group
+    separator  (--)  between  contiguous groups of matches.  With the -o or --only-matching option,
+    this has no effect and a warning is given.
+
+-C NUM, -NUM, --context=NUM
+    Print NUM lines of output context.  Places a line containing a  group  separator  (--)  between
+    contiguous  groups of matches.  With the -o or --only-matching option, this has no effect and a
+    warning is given.
+
+    == -A + -B
+
+-w, --word-regexp
+    Select  only  those  lines  containing  matches  that  form  whole words.  The test is that the
+    matching substring must either be at the beginning of the  line,  or  preceded  by  a  non-word
+    constituent  character.   Similarly,  it must be either at the end of the line or followed by a
+    non-word constituent character.  Word-constituent  characters  are  letters,  digits,  and  the
+    underscore.  This option has no effect if -x is also specified.
+    匹配单词，而不是字符串
+
+
+-o, --only-matching
+    Print  only the matched (non-empty) parts of a matching line, with each such part on a separate output line.
+    仅仅将匹配的打印出来，一个一行，可以用来进行统计多少个匹配项
+
+
+
+
+
+
+例子
+    grep -E 'liujiao' -R .
+    grep -R 'liujiao' .
+    ./passwd:liujiao:x:1001:1001::/home/liujiao:/bin/sh
+    ./names:1.liujiao
+
+
+    grep -i -n -A 2 'root' passwd
+    grep -i -n -B 2 'root' passwd
+
+    grep -w 'hello' password
+
+    grep -o 'hello' password | wc -l
+    
+
+
+## cut
+
+cut - remove sections from each line of files
+
+字段提取，提取列
+与grep的区别就是 grep 取行，cut 取列
+
+-f, --fields=LIST
+    select only these fields;  
+    also print any line that contains no delimiter character, unless the -s option is specified
+    取第几列
+
+-d, --delimiter=DELIM
+    use DELIM instead of **TAB** for field delimiter
+
+    **空格是分割符的话，就无力从心了, 就要用gawk了**
+    
+    比如df -h 
+        Filesystem      Size  Used Avail Use% Mounted on
+        udev            3.7G     0  3.7G   0% /dev
+        tmpfs           770M   19M  751M   3% /run
+
+        中间不是制表符，而是多个空格
+
+        AxxxxxxxB
+        YfYfYfYfY        f代表分隔符，Y表示取出的数据列, 
+
+        
+
+-s, --only-delimited
+    do not print lines not containing delimiters
+
+-c, --characters=LIST
+    select only these characters
+    第一个字符到第n个字符 []
+    就不分空格和tab了, 空格和tab都是一个字符
+    
+    cut -c 1-5 passwd
+    cut -c 1,3,5 passwd
+    cut -c 5- passwd        从第5个开始到末尾
+
+
+
+
+    cut -d ":" -f 1,2,3 /etc/passwd
+        输出内容还是以原来的分隔符进行分割
+
+    cat passwd| grep /bin/bash | grep -v root | cut -f 1 -d ':'
+
+    cut -d ' ' -f1,3 student
+
+cut适合简单的指定具体分隔符,并且分隔符个数不重复的场景，不适合单个分隔符是不确定个字符的场景
+
+例题: 
+    列出当前运行级别
+        runlevel | cut -c 3
+        runlevel | cut -d ' ' -f 2
+
+        redhat 系列
+        grep -v '^#' /etc/inittab | cut -d':' -f 2
+        tail -1 /etc/inittab | cut -d':' -f 2
+        
+
+## sort
+
+用于排序，从首字符开始，按照ASCII，升序
+
+-u, --unique   去除重复行, 同 mysql 中的distinct
+    with -c, check for strict ordering; without -c, output only the first of an equal run
+
+
+    如果这一行和另外一行完全一样，会只output一行
+-n, --numeric-sort  按照数字排序
+    compare according to string numerical value
+
+-r, --reverse
+    reverse the result of comparisons
+
+
+-t : 分隔符
+-k : 第N列
+
+例子:
+    sort -n -t':' -k3 passwd
+    sort -n -r -t':' -k3 passwd     倒序
+
+
+## uniq  
+
+report or omit repeated lines
+去除连续重复的行
+
+-i, --ignore-case
+    ignore differences in case when comparing
+
+-c, --count
+    prefix lines by the number of occurrences
+    在前面显示出现了几次, 1 表示没有重复
+    一般要写这个
+
+-d, --repeated
+    only print duplicate lines, one for each group
+    只显示重复行
+    只显示有那些内容行是重复的，要自己去手工定位
+
+
+## tee 
+
+从标准输入读取并写入到标准输出**和**文件
+双向重定向
+
+echo "hello" | tee 'hello.txt'
+    同时会在屏幕和**覆盖**文件, 即是 >
+
+-a, --append
+    append to the given FILEs, do not overwrite
+
+
+例子
+    grep -v '^#' /etc/vsftpd.conf | grep -v '^$' | tee 'vsftpd.conf_bak' 
+
+    
+## diff
+
+GNU diff - compare files line by line
+
+正常格式（normal diff）
+上下文格式（context diff）
+合并格式（unified diff）
+
+
+如何改变第一个文件以变成第二个文件
+
+
+< 开头的行表示来自第一个文件
+> 开头的行表示来自第二个文件
+三个横杠"---" 仅仅表示分隔开文件1和文件2的这些行
+
+
+
+-b  不检查空格
+-B  不检查空白行
+-Z, --ignore-trailing-space
+    ignore white space at line end
+
+-b, --ignore-space-change
+    ignore changes in the amount of white space
+
+-w, --ignore-all-space
+    ignore all white space
+
+-B, --ignore-blank-lines
+    ignore changes where lines are all blank
+
+-c, -C NUM, --context[=NUM]
+    output NUM (default 3) lines of copied context
+    上下文格式显示
+
+-u, -U NUM, --unified[=NUM]
+    output NUM (default 3) lines of unified context
+    合并格式显示
+
+    '''aa
+1   aaaa
+2   111
+3   hello world
+4   222
+5   333
+6   bbb
+    '''
+
+    '''bb
+1   aaa
+2   hello
+3   111
+4   222
+5   bbb
+6   333
+7   world
+    '''
+
+    diff aa bb
+    '''
+    1c1,2                       第一个文件的第1行需要改变（change)才能和第2个文件的第一二行匹配[,]
+    < aaaa                      < 表示左边文件的内容
+    ---                         ---表示分隔符
+    > aaa                       > 表示右边文件的内容
+    > hello
+    3d3                         左边文件第3行删除（delete)后才能和第2个文件第三行(222) 
+    < hello world
+    5d4
+    < 333
+    6a6,7                       左边文件增加（add）内容后才能和第二个文件的第6、7行匹配
+    > 333                       需要增加的内容在第二个文件里是 333 和 world
+    > world
+    '''
+    
+    先从首末行找相同的
+
+
+### 目录
+
+diff -q 
+
+-q, --brief
+    report only when files differ
+
+    ```
+    ➜  Music diff -q test test2
+    Only in test: a
+    Only in test2: aaa
+    Files test/b and test2/b differ
+    ➜  Music tree test test2
+    test
+    ├── a
+    ├── b
+    └── hello
+    test2
+    ├── aaa
+    ├── b
+    └── hello
+
+    ```
+
+
+### 生成patch
+patch - apply a diff file to an original
+
+
+-N:将不存在的文件当做空文件
+
+1. 先找出文件不同，然后输出到一个文件
+diff -uN file1 file2 > file.patch
+
+1. 将补丁文件作用于文件
+patch file1 file.patch
+
+1. 验证测试
+diff file1 file2
+
+
+-b  or  --backup
+    Make backup files.  That is, when patching a file, rename or copy the original instead of removing it.
+    See the -V or --version-control option for details about how backup file names are determined.
+
+-R  or  --reverse
+    Assume  that  this  patch  was created with the old and new files swapped.  (Yes, I'm afraid that does
+    happen occasionally, human nature being what it is.)  patch attempts to swap each hunk  around  before
+    applying  it.   Rejects  come  out  in  the  swapped format.  The -R option does not work with ed diff
+    scripts because there is too little information to reconstruct the reverse operation.
+
+    If the first hunk of a patch fails, patch reverses the hunk to see if it can be applied that way.   If
+    it  can,  you are asked if you want to have the -R option set.  If it can't, the patch continues to be
+    applied normally.  (Note: this method cannot detect a reversed patch if it is a normal diff and if the
+    first  command  is  an append (i.e. it should have been a delete) since appends always succeed, due to
+    the fact that a null context matches anywhere.  Luckily, most patches add or change lines rather  than
+    delete  them,  so  most reversed normal diffs begin with a delete, which fails, triggering the heuris‐
+    tic.)
+    卸载补丁
+
+
+
+
+## paste
+
+merge lines of files
+用于合并文件行
+不更改源文件，只显示到屏幕
+
+第一个文件的第一行和第二个文件的第一行合并
+
+-d, --delimiters=LIST
+    reuse characters from LIST instead of TABs
+
+-s, --serial
+    paste one file at a time instead of in parallel
+    串行处理，
+    第一行都是第一个文件
+    第二行都是第二个文件
+    
+
+
+例子
+    paste -d: file1 file2
+
+
+
 
 
 
@@ -2022,47 +2402,6 @@ buffer 缓冲
 
 
 
-## cut
-
-cut - remove sections from each line of files
-
-字段提取，提取列
-与grep的区别就是 grep 取行，cut 取列
-
--f, --fields=LIST
-    select only these fields;  
-    also print any line that contains no delimiter character, unless the -s option is specified
-    取第几列
-
--d, --delimiter=DELIM
-    use DELIM instead of TAB for field delimiter
-
-    **空格是分割符的话，就无力从心了, 就要用gawk了**
-    
-    比如df -h 
-        Filesystem      Size  Used Avail Use% Mounted on
-        udev            3.7G     0  3.7G   0% /dev
-        tmpfs           770M   19M  751M   3% /run
-
-        中间不是制表符，而是多个空格
-
-        AxxxxxxxB
-        YfYfYfYfY        f代表分隔符，Y表示取出的数据列, 
-
-        
-
--s, --only-delimited
-    do not print lines not containing delimiters
-
-
-    cut -d ":" -f 1,2,3 /etc/passwd
-        输出内容还是以原来的分隔符进行分割
-
-    cat passwd| grep /bin/bash | grep -v root | cut -f 1 -d ':'
-
-cut适合简单的指定具体分隔符,并且分隔符个数不重复的场景，不适合单个分隔符是不确定个字符的场景
-
-
 ## printf 格式化输出   
 
 %ns     n个字符
@@ -2095,116 +2434,21 @@ FORMAT 中有几个，后面的argument 就几个为一组
 
 
 
-## awk
-
-从1开始
-
-awk '条件1 {动作1} 条件2 {动作2} ...' 文件
-    如果条件1符合，执行动作1
-    如果条件2符合，执行动作2
-    如果条件3符合，执行动作3
-
-    可以没有条件，只有动作，对全体文件内容执行动作
-
-    awk '{printf $2"\t"$3"\n" }' students
-
-    **制表符、要添加的字符 都要用双引号括起来**
-
-输出结果有时对不齐，此时要借用column命令 
-    例如:
-    df -h | awk '{printf $1 "\t" $2 "\t" $3 "\t" $4 "\n"}' | column -t
-
-    df -h | awk '{print $1 "\t" $2 "\t" $3 "\t" $4 }' | column -t
-
-    print 会自动换行
-
-硬盘数据报警案例
-
-    df -h | grep '/dev/sda1' | awk '{print $5}' | cut -d '%' -f 1
-
-
-BEGIN
-    awk 'BEGIN {print "this is bill coming, u son of bitch..."} {print $1 "\t" $2 "\t" $3 }' students
-
-    this is bill coming, u son of bitch...
-    ID      NAME    GENDER
-    1       A       BOY
-    2       B       Girl
-
-
-
-FS          The input field separator, a space by default.  See Fields, above.
-
-    awk 'BEGIN { FS=":"} { print $1 "\t" $2 "\t" $3 "\t" $4 }' /etc/passwd | column -t
-
-    awk '{ FS=":"} { print $1 "\t" $2 "\t" $3 "\t" $4 }' /etc/passwd | column -t
-        **没有BEGIN第一条数据的分隔符还是空格**
-
-        {}中逗号分割
-        BEGIN可以省略
-
-    输出结果:
-    root               x  0      0
-    daemon             x  1      1
-    bin                x  2      2
-    sys                x  3      3
-    sync               x  4      65534
-    g
-
-
-
-END
-    awk 'BEGIN { FS=":"} { print $1 "\t" $2 "\t" $3 "\t" $4 } END{print "It is over..."}' /etc/passwd | column -t
-
-    **print 语句中也不能有单引号**
- 
-    END 也可以放到前边的位置
-        awk 'END{print "\nIt is over"} {print $1 "\t" $2} BEGIN{FS=":"}' passwd | column -t
-
-
-比较运算
-    awk '$4 > 70 { print $2 "\t" $3 "\t" $4 } BEGIN{print "Grade sheet\n"} END{print "\nIt is over"}' students
-    Grade sheet
-
-    NAME    GENDER  GRADE
-    A       BOY     99
-    B       Girl    85
-    C       BOY     79
-
-    It is over
-
-
-
-
-## column
-
-NAME
-    column — columnate lists
-
-SYNOPSIS
-    column [-entx] [-c columns] [-s sep] [file ...]
-
-DESCRIPTION
-    The column utility formats its input into multiple columns.  Rows are filled before columns.  Input is taken from file operands, or, by default, from the standard input.  Empty lines are ignored unless the -e option is used.
-
--t(table)   Determine the number of columns the input contains and create a table.  
-            Columns are delimited with whitespace, by default, or with the characters supplied using the -s option.  
-            Useful for pretty-printing displays.
-
-
-
-
-
-
-
-
-
-
-
 
 ## 关于热点连接
 
 连接上手机热点后，huostname 变成 bogon
 
 
+
+## tweak
+扭; 拧; 扯; 稍稍调整(机器、系统等);
+
+ubuntu-tweak
+
+unity
+团结一致; 联合; 统一; 完整; 完美; 和谐; 协调;
+
+
+桌面特效配置软件 compiz compizConfigSettingsManager
 
