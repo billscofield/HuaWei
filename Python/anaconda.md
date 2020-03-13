@@ -1,8 +1,8 @@
 anaconda3/bin/conda
     conda is a tool for managing and deploying applications, environments and packages.
 
-
-conda activate base
+conda create --name pythonPytorch python=3.7.1
+conda activate pythonPytorch
 conda deactivate
 
 ## 更改源
@@ -23,5 +23,6 @@ conda create --name test python=2.7 requests
 conda env list  / conda info -e
 conda activate test(source activate test)
     conda 不能用, 而是 source 
+    source activate test
 
 conda install numpy

@@ -1,13 +1,40 @@
 cuda
 
-./cuda.run -no-opoengl-libs 表示只安装驱动文件，不安装OpenGL文件。必需参数，
+./cuda.run --no-opoengl-libs 表示只安装驱动文件，不安装OpenGL文件。必需参数，
     我没有写这个参数,看看吧
+
+    ```安装完成后的输出
+    ===========
+    = Summary =
+    ===========
+
+    Driver:   Not Selected
+    Toolkit:  Installed in /usr/local/cuda-10.1/
+    Samples:  Installed in /root/, but missing recommended libraries
+
+    Please make sure that
+     -   PATH includes /usr/local/cuda-10.1/bin
+     -   LD_LIBRARY_PATH includes /usr/local/cuda-10.1/lib64, or, add /usr/local/cuda-10.1/lib64 to /etc/ld.so.conf and run ldconfig as root
+
+    To uninstall the CUDA Toolkit, run cuda-uninstaller in /usr/local/cuda-10.1/bin
+
+    Please see CUDA_Installation_Guide_Linux.pdf in /usr/local/cuda-10.1/doc/pdf for detailed information on setting up CUDA.
+    ***WARNING: Incomplete installation! This installation did not install the CUDA Driver. A driver of version at least 418.00 is required for CUDA 10.1 functionality to work.
+    To install the driver using this installer, run the following command, replacing <CudaInstaller> with the name of this run file:
+        sudo <CudaInstaller>.run --silent --driver
+
+    Logfile is /var/log/cuda-installer.log
+
+    ```
 
 export PATH=/usr/local/cuda/bin:${PATH}
 export LD_LIBRARY_PATH=/usr/local/cuda/lib64:${LD_LIBRARY_PATH}
 export CUDA_HOME=/usr/local/cuda
 
-sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+
+`sudo chmod a+r /usr/local/cuda/include/cudnn.h /usr/local/cuda/lib64/libcudnn*
+
+
 
 
 安装完后进入 sample
