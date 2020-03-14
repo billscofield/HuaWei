@@ -1,5 +1,4 @@
 
-默认只抓前68个字节
 
 -i interface
     --interface=interface
@@ -132,3 +131,9 @@ tcp报文 flags 为24(push + ack)
 
 
 组播地址：239.255.255.250是SSDP(简单服务发现协议)，这是路由器的UPNP服务使用的协议。
+
+
+
+
+
+
