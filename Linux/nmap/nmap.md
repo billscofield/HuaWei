@@ -26,7 +26,7 @@ The exceptions to this are the ARP (for IPv4) and Neighbor Discovery (for IPv6) 
 
 ---
 
-ARP/Neighbor Discovery (-PR) is done by default against targets on a local ethernet network even if you specify other -P* options, because it is almost always faster and more effective.
+`ARP/Neighbor Discovery (-PR) is done by default against targets on a local ethernet network even if you specify other -P* options, because it is almost always faster and more effective.
 
 
 
