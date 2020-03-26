@@ -8,6 +8,9 @@ scp 1.51.1server.jar .
 
 java -Xms512M -Xmx1024M -jar 1.15.1server.jar nogui
 
+
+游戏和MOD、材质包的版本号，只能版本号相匹配才可以使用模组管理
+
 ## 单机游戏
 
 下载器或者minecraft 管理器吧，类似pyenv
@@ -131,3 +134,33 @@ OpenJDK不包含其他的软件包，比如Rhino Java DB JAXP……，并且可�
 
 
 https://www.iteye.com/blog/fgh2011-1771649
+
+
+
+
+
+## Fabric
+Fabric 是一个用于 Minecraft 1.14.x 的轻量 Mod API，主要作者是 asiekierka（前 BuildCraft 维护人，Charsets 作者）和 modmuss50（TechReborn 和 Steve Carts Reborn 作者）。
+
+Fabric 提供一些基础的接口，允许其它模组注册物品、方块、模型、界面等，也提供一些事件。它也允许模组通过 SpongePowered Mixin 修改 Minecraft 字节码。与 Forge 的 coremod 系统相比，Mixin 可以更好地控制字节码改动，而且更安全。
+
+Fabric 模组并不是最重要的一部分。实现加载模组的部分是 Fabric Loader，Fabric 模组需要有 Fabric Loader 才能运行。Fabric 和 Fabric Loader 的关系有点类似 Minecraft Forge 和 Forge Mod Loader 的关系，只是 Fabric Loader 功能较少（专门读取 mod），更轻量。
+
+Fabric 并不采用 Mod Coder Pack。它有自己的反混淆工程，名叫 yarn（原名 pomf）。yarn 是开源的，任何人可以贡献，开源协议是 CC0 1.0 Universal。因为 Mod Coder Pack 协议限制，给 Fabric 的贡献的内容不能来源于 Mod Coder Pack。
+
+
+
+## 目录
+\bin下面是游戏主程序，minecraft.jar就在里面
+\config下面是一些MOD的设置文件
+\MODS下面是可以由MODLoader加载的一些封装比较好的，不用放入minecraft.jar主程序中的一些MOD，比如小地图、砍树MOD
+\resources下面是游戏的音乐和音效文件，有的只带有游戏主体的MC（一般5-6M大）运行没声音就是少了这个（40多M）
+\Saves下面是放存档的
+\Screenshots下面是截图（在游戏中按F2截图，保存为PNG格式的）
+\Stats保存玩家的统计信息，应该包括成就
+\texturepacks是放材质包的地方，把压缩包直接扔进来就行
+
+
+
+
+
