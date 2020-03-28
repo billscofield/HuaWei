@@ -1,3 +1,17 @@
+## conda 安装
+
+去官网 https://www.anaconda.com/distribution/
+
+wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
+
+chmod +x 文件
+
+sh 文件
+    简单的几个问题就行
+    主要是安装路径
+
+
+## 
 anaconda3/bin/conda
     conda is a tool for managing and deploying applications, environments and packages.
 
