@@ -2,16 +2,34 @@
 
 Nmap脚本引擎（NSE）和 Lua编程语言
     nmap script engine
+
 whereis nmap
 cd /usr/share/nmap/script/     kali是安装在这里
-    script.db 数据库, 显示了每个的功能分类categories
+    script.db 数据库, 显示了每个脚本文件的功能分类categories
         Entry { filename = "afp-serverinfo.nse", categories = { "default", "discovery", "safe",  }  }
 
 均是以nse结尾的脚本
 
+
+版本检测功能 amap 好一些
+
+
+
+
 ### 更新脚本库
 
-nmap --script-update
+nmap --script-updatedb
+--script-updatedb
+    This option updates the script database found in scripts/script.db which is used by Nmap to determine
+    the available default scripts and categories. 
+
+    It is only necessary to update the database if you have added or removed NSE scripts from the default scripts directory or if you have changed the categories of any script. 
+
+    This option is generally used by itself: nmap --script-updatedb.
+
+
+
+
 
 /usr/share/nmap/script/
 
@@ -454,3 +472,21 @@ ndiff [options] {a.xml} {b.xml}
 
 
 
+
+
+## nmap文件
+/usr/share/nmap
+    nmap-mac-prefixes   MAC前缀公司名称
+    nmap.dtd            文档定义类型 document type definition
+    nmap-os-db          OS Fingerprinting 2nd Generation DB.
+    nmap-payloads
+        These payloads are sent with every host discovery or port scan probe
+        by default. This database should only include payloads that are
+        unlikely to crash services, trip IDS alerts, or change state on the
+        server. The idea behind these is to evoke a response using a payload.
+        Some of them are taken from nmap-service-probes.
+    nmap-protocols      IP中的所有协议
+    nmap-service-probes
+    nmap-service-probes
+        Well known service port numbers
+    
