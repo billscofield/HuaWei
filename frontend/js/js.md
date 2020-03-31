@@ -157,4 +157,16 @@ b %= a + 3; 返回3, 右边作为一个整体
 
 
 
+undefined == undefined  true
+Infinity == Infinity    true
 
+
+false
+    undefined
+    null
+    NaN
+    ''
+    0
+    false
+
+NaN == NaN  false
