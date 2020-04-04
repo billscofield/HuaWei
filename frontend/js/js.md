@@ -1589,4 +1589,16 @@ var son = new Son()
 son.money()
 ```
 
+undefined == undefined  true
+Infinity == Infinity    true
 
+
+false
+    undefined
+    null
+    NaN
+    ''
+    0
+    false
+
+NaN == NaN  false
