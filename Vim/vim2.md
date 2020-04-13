@@ -12,3 +12,30 @@ vim --version | egrep clipboard 返回的结果中，clipboard 和 xterm_clipboa
 ## 安装 vundle
 
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+
+
+
+## coc.nvim
+
+1. 安装 nodejs
+    curl -sL install-node.now.sh/lts | bash
+
+1. cd ~/.vim/bundle/coc.nvim
+    ./install.sh
+
+1. vi ~/.vimrc
+    Plugin 'neoclide/coc.nvim'
+
+1. :PluginInstall
+
+
+验证是否安装成功
+    :CocInfo
+
+配置
+    :CocConfig      //~/.vim/coc-settings.json
+
+安装
+    :CocInstall coc-python
+    :CocInstall coc-css
+    :CocInstall coc-bash
