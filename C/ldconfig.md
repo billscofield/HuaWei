@@ -1,9 +1,11 @@
 dynamic linker/loader
 
 ldconfig是一个动态链接库管理命令，其目的为了让动态链接库为系统所共享。
-    ldconfig是一个动态链接库管理命令，其目的为了让动态链接库为系统所共享。
 
-默认搜寻/lilb和/usr/lib，以及配置文件/etc/ld.so.conf内所列的目录下的库文件。
+默认搜寻/lib和/usr/lib，以及配置文件/etc/ld.so.conf内所列的目录下的库文件。
+
+    lrwxrwxrwx 1 root root 7 Mar  9 11:00 /lib -> usr/lib
+
 
 搜索出可共享的动态链接库，库文件的格式为：`lib***.so.**`，进而创建出动态装入程序(ld.so)所需的连接和缓存文件。
 

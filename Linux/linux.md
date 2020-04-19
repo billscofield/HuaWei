@@ -12,6 +12,8 @@ libc的名字来源于历史，指**C开发包的函数库**，包括头文件�
 现在libc泛指C函数库，**而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版Linux用的就是glibc。**
 
 libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的libc.so其实不是.so文件，而是一个ld Script，这没有关系，gnu ld 会正确处理的。
+    ld - The GNU linker
+
 
 还有其他版本的libc，比如newlibc，通常用在嵌入系统中。
 
@@ -66,6 +68,8 @@ quiet splash rw init=/bin/bash
 1. splash 使（液体）溅起;
     1. splash 的意思是启动的时候使用图形化的进度条代替 init 的字符输出过程
 
+debian 忘记密码
+    ro single 改成 rw single init=/bin/bash
 
 /boot/grub/grub.cfg
 
@@ -189,6 +193,16 @@ lsb_release
     -i, --id
         Display the distributor's ID.
 
+    -c, --codename
+        Display the code name of the currently installed distribution.
+
+    -s, --short
+        Use  the  short  output format for any information displayed.  This format omits
+        the leading header(s).
+
+
+    虽然执行成功，但是会返回 No LSB modules are available.
+
 或者 
 
     cat /etc/os-release
@@ -209,6 +223,7 @@ nautilus - a file manager for GNOME
 1. update - Retrieve new lists of packages
 1. upgrade - Perform an upgrade
 1. dist-upgrade - Distribution upgrade, see apt-get(8)
+
 1. dselect-upgrade - Follow dselect selections
 
 1. install - Install new packages (pkg is libc6 not libc6.deb)
@@ -344,7 +359,7 @@ ubuntu 版本号命名规则
     每两年的 4 月份，都会推出一个长期支持版本（LTS），其支持期长达五年，而非 LTS 版本的支持期通常只有半年。
 
     检查当前版本codename
-        lsb_release -a
+        lsb_release -c
         
         Codename:       kali-rolling
         如果你需要自己编辑更新列表文件， /etc/apt/sources.list ，你就会发现在 url 的后面紧跟着一个 codename 
@@ -364,16 +379,25 @@ ubuntu 版本号命名规则
     who
     echo "i will close your connection">/dev/pts/2
     fuser -k /dev/pst/2
+        --kill
     
     fuser:show which processes use the named files, sockets, or filesystems
+
 1. 方法二
     who 
-    pkill -kill -t pts/0
+    pkill -KILL -t pts/0
 
     pgrep, pkill - look up or signal processes based on name and other attributes
+        only PID
 
-    
     pkill : look up or signal processes based on name and other attributes
+
+    -t, --terminal term,...
+        Only  match  processes  whose controlling terminal is listed.  The terminal name
+        should be specified without the "/dev/" prefix.
+
+
+
 1. 方法三
     登录用户的bash进程
     ps -ef | grep bash | grep pts
@@ -1581,6 +1605,10 @@ The JCPU time is the time used by all processes attached to the tty.  It does no
 The PCPU time is the time used by the current process, named in the "what" field.
 
 
+## lz4
+
+apt install liblz4-tool
+
 
 
 ## gzip
@@ -1620,6 +1648,28 @@ zip archive.zip inpath inpath ...
 tar -jcf a.tar.bz2 inpath
 
 
+
+## split
+
+split a file into pieces
+
+
+    -d     use numeric suffixes starting at 0, not alphabetic
+
+    -a, --suffix-length=N
+            generate suffixes of length N (default 2)
+
+    -b, --bytes=SIZE
+            put SIZE bytes per output file
+
+
+tar -zcf - urls-164213-20w-9-list | split -b 100m - helloworld.tar.gz -d -a 2
+    那两个"-"不要漏了，那是tar的ouput和split的input的参数
+    
+    helloworld.tar.gz 输出文件名base
+
+
+cat file1 file2 file3 > bigfile
 
 
 ## write

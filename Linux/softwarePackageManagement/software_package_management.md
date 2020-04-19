@@ -317,6 +317,13 @@ apt purge           apt-get purge           移除软件包及配置文件
     purge is identical to remove except that packages are removed and purged (any configuration files are
     deleted too).
 apt update          apt-get update          刷新存储库索引
+    -q, --quiet
+        Quiet; produces output suitable for logging, omitting progress indicators. More q's will produce more
+        quiet up to a maximum of 2. You can also use -q=# to set the quiet level, overriding the configuration
+        file. Note that quiet level 2 implies -y; you should never use -qq without a no-action modifier such as
+        -d, --print-uris or -s as APT may decide to do something you did not expect. Configuration Item: quiet.
+
+
 apt upgrade         apt-get upgrade         升级所有可升级的软件包
 apt autoremove      apt-get autoremove      自动删除不需要的包
 apt full-upgrade    apt-get dist-upgrade    在升级软件包时自动处理依赖关系
