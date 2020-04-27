@@ -1,3 +1,80 @@
+## 
+
+gdb 是GNU推出的程序调试器
+
+1. 预处理(pre-processing)           
+    -E  只进行预编译，不做其他处理
+    .i  预处理后的文件
+
+1. 编译(compiling)                  
+    -S 只编译不汇编，生成汇编代码
+    .o  编译后的目标文件
+
+1. 汇编(assembling)                 
+    -c 只编译和汇编, 生成目标文件.o, 不链接
+    .s  汇编语言代码文件
+
+1. 链接(linking)                    
+    同时链接 _start 启动代码(gcc提供)
+
+
+-o              文件名
+-g              在生成的可执行程序中包含标准调试信息
+-I dir          头文件路径  /usr/include
+-L dir          库文件路径  /usr/lib
+-static         链接静态库
+-library        链接名为library的库文件
+-O、-O2、-O3    将优化状态打开，不能与-g连用
+-Wall           将警告看成是错误，发生警告是取消编译
+-Werror         将警告看成是错误，发生警告是取消编译
+-w              禁止所有报警
+-pedantic       以ANSI/ISO C标准列出的所有警告
+    当GCC在编译不符合ANSI/ISO C语言标准的源代码时，如果在编译指令中加上了-pedantic选项，那么源程序中使用了扩展语法的地方将产生相应的警告信息。
+
+    ```
+    void main(){                    不能是void
+        printf('hello')             没有返回
+    }
+
+    warning: return type of ‘main’ is not ‘int’ [-Wmain]
+    void main(){
+        ^~~~
+    ```
+
+
+gcc 提供了30多条警告信息和3个告警级别
+
+gcc 通过文件后缀名来区别输入文件的类型
+
+
+
+---
+-E                       Preprocess only; do not compile, assemble or link.
+-S                       Compile only; do not assemble or link.
+-c                       Compile and assemble, but do not link.
+
+
+1. -E后的.i文件
+    gcc -E hello.c -o hello.i
+
+    hello.i: C source, ASCII text
+
+1. -S后的.s文件
+    gcc -S hello.i -o hello.s
+
+    .s 文件 hello.s: assembler source, ASCII text
+
+1. -c后的.o文件
+    gcc -c hello.s -o hello.o
+
+    hello.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
+
+1. gcc hello.o -o hello
+    链接所有目标文件, 
+
+
+
+## 
 -Ldir
            Add directory dir to the list of directories to be searched for -l.
 -I dir
@@ -63,17 +140,49 @@ a.out 格式 是指Linux过去使用的二进制格式
 ELF(Executable and Linking Format)格式是另一种二进制格式，1995年，ELF格式作为 Linux 的标准二进制格式
 
 
-gdb(GUN Debugger) 调试工具
+## gdb(GUN Debugger) 调试工具
+
+apt install gdb
 
 头文件中有函数的申明，库文件实现函数的定义。
 比如，printf函数。使用时应包括stdio.h，打开stdio.h你只能看到，printf这
-个函数的申明,却看不到printf具体是怎么实现的，而函数的实现在相应的C库
-中。而库文件一般是以二进制形式而不是C源文件形式提供给用户使用的。
+个函数的申明,却看不到printf具体是怎么实现的，而函数的实现在相应的C库中。
+而库文件一般是以二进制形式而不是C源文件形式提供给用户使用的。
 
 程序中包括了stdio.h这个头文件, 编译的时候再指定这个库和它的位置，
-链接器就能根据头件中的信息找到printf这个函
-数的实现并链接进这个程序代码段里。
+链接器就能根据头件中的信息找到printf这个函数的实现并链接进这个程序代码段里。
 
+为了是gdb正常工作，必须在编译的时候加上 -g 或者 -ggdb 选项
+
+用法
+    gdb elf文件
+
+
+-g、-ggdb、-g3和-ggdb3之间的区别
+
+具体来说，-g产生的debug信息是OS native format， GDB可以使用之。
+而-ggdb产生的debug信息更倾向于给GDB使用的。
+所以，如果你用的GDB调试器，那么使用-ggdb选项。如果是其他调试器，则使用-g。
+
+3只是级别。这个级别会产生更多的额外debug信息。3这个级别可以调试宏。
+
+
+```dgb的例子
+
+#include <stdio.h>
+int main(){
+    int a = 0;
+    printf("Plz input a number:");
+    scanf("%d",a);                              这里没有加&
+    printf("%d",a);
+}
+
+gcc -ggdb3 hello.c -o hello
+
+gdb hello
+    run
+
+```
 
 
 
@@ -92,8 +201,8 @@ gdb(GUN Debugger) 调试工具
 
 
 ## 真实的例子
-main.c
-```
+
+```main.c
 #include <stdio.h>
 
 int main(){
@@ -101,8 +210,7 @@ int main(){
 }
 ```
 
-say.c
-```
+```say.c
 #include <stdio.h>
 
 void say(){

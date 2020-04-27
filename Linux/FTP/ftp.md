@@ -124,16 +124,20 @@ binary：设定传输方式为二进制方式
 
 ### 控制连接
 
-默认主动模式
+**默认主动模式**
+    服务器端21端口进行监听，客户端进行登录，21号端口进行验证，验证成功，服务器20端口主动连接客户端的端口
 
-服务端端口 21 TCP 用于传输命令
+    服务端端口 21 TCP 用于传输命令
 
 在整个会话期间保持打开状态
 
 服务端和客户端的数据传输，由服务器主动发起连接(主动模式)
 
+
 被动模式的目的
     为了避免本地防火墙的阻拦, 数据传输的请求由客户端发起，服务端的端口就不是20了，这个端口由21端口设定
+
+    我们只能控制自己的, 防火墙也是，当服务器主动时，客户端的防火墙我们控制不了，很有可能就被墙了，而被动模式就好了
 
 ### 数据连接
 
@@ -146,7 +150,7 @@ binary：设定传输方式为二进制方式
 被动模式
     客户端主动发送数据, 随机选择端口，服务器被动接受数据时，服务器随机选择端口，这称为被动模式
 
-
+主动（FTP Port）模式和被动（FTP Passive）模式
 
 
 ## 安装
@@ -162,7 +166,111 @@ vi /etc/vsftpd.conf
 
 会创建ftp用户，anonymous 就是这个用户
 
+
+### 相关配置文件(vsftpd, very secure FTP Daemon)
+
+主配置文件
+    /etc/vsftpd/vsftpd.conf
+
+用户控制列表文件(FTP 明文的密码)
+    /etc/ftpusers    (黑名单)
+    /etc/vsftpd/user_list   (可以通过配置文件变成白名单)
+
+
+### 相关用户
+
+1. 匿名用户
+    anonymous 或 ftp
+
+1. 本地用户
+    linux系统用户,linux用户密码
+    有安全隐患 但是 最简单, 不用配置，系统用户直接登录
+    登录也是/home/aaa 目录
+    如果不加配置，用户能浏览所有根目录, 极不安全, 没有限制在家目录下
+
+1. 虚拟用户
+    
+
+
 ### 配置
+
+listen=NO
+listen_port
+    If vsftpd is in standalone mode, this is the port it will listen on for incoming FTP connections.
+
+    Default: 21
+
+listen=YES  绑定到listen_port指定的端口,既然都绑定了也就是每时都开着的,就是那个什么standalone模式
+listen      If enabled, vsftpd will run in standalone mode. 
+            This means that vsftpd must not be run from an inetd of some kind. Instead, the vsftpd executable is run once directly. 
+            vsftpd itself will then take care of listening for and handling incoming connections.
+
+            Default: NO
+
+---
+
+local_umask
+    The value that the umask for file creation is set to for local users. (文件的权限)
+    NOTE! If you want to specify octal values, remember the "0" prefix otherwise the value will be treated as a base 10 integer!
+
+    Default: 077
+
+---
+
+dirmessage_enable
+    If enabled, users of the FTP server can be shown messages when they first enter a new directory. 
+    By default, a directory is scanned for the file .message, but that may be overridden with the  configuration  setting message_file.
+
+    Default: NO (but the sample config file enables it)
+
+ftpd_banner
+    This string option allows you to override the greeting banner displayed by vsftpd when a connection first comes in.
+
+    Default: (none - default vsftpd banner is displayed)
+
+---
+
+connect_from_port_20=YES　　 使用标准的20端口来连接ftp
+
+
+listen_port = 21
+
+download_enable = yes
+
+max_clients = 0
+
+max_per_ip = 0      限制同一IP地址的并发连接数
+
+
+---
+被动模式
+pasv_enable = yes
+pasv_min_port = 24500
+pasv_max_port = 24600
+
+accept_timeout = 60     被动模式的
+    The timeout, in seconds, for a remote client to establish connection with a PASV style data connection.
+
+    Default: 60
+---
+
+
+
+
+---
+userlist_file
+    This option is the name of the file loaded when the userlist_enable option is active.
+
+    Default: /etc/vsftpd.user_list
+
+userlist_enable
+    If  enabled,  vsftpd will load a list of usernames, from the filename given by userlist_file.  
+    If a user tries to log in using a name in this file, they will be denied before they are asked for a password. 
+    This may be useful in preventing cleartext passwords being transmitted. See also userlist_deny.
+
+
+
+
 
 /etc/ftpusers       黑名单
 
@@ -264,8 +372,8 @@ virtual_use_local_privs=YES     # 虚拟用户拥有系统用户的权限
 #日志
 
 xferlog_enable
-              If  enabled, a log file will be maintained detailling uploads and downloads.  By default, this file will be placed at /var/log/vsftpd.log,
-              but this location may be overridden using the configuration setting vsftpd_log_file.
+    If  enabled, a log file will be maintained detailling uploads and downloads.  By default, this file will be placed at /var/log/vsftpd.log,
+    but this location may be overridden using the configuration setting vsftpd_log_file.
 
 
 ----------
@@ -283,6 +391,32 @@ useradd kefu
 echo kefu | passwd --stdin kefu
 
 
+### 匿名用户
+
+anon-upload_enable = yes
+anon_mkdir_write_enable = yes
+anon_umask = 600
+anon_root
+    This option represents a directory which vsftpd will try to change into after an anonymous login. Failure is silently ignored.
+    Default: (none)
+
+    匿名用户是被现在在了一个目录中，被当做根目录 , **/var/ftp/** ,映射的不能登录的那个系统用户的家目录 (/srv/ftp    root:ftp)
+
+
+
+### 本地用户
+
+local_root   **所有**登录的用户的根目录
+
+local__max_rage=0
+
+local_mask
+
+
+
+
+
+chroot_local_user = yes
 
 ### FTP 虚拟用户
 
@@ -296,19 +430,22 @@ password2
 
 将刚添加的vftpuser.txt虚拟用户口令文件转换成系统识别的口令认证文件。
 
-一
-apt install db-util
+一 虚拟用户口令文件
+    vi /etc/vsftpd/vsftpduser.txt
 
-二
-db_load  -T -t hash -f /etc/vsftpd/vsftpduser.txt /etc/vsftpd/vsftpduser.db
+二 虚拟用户口令认证文件
+    apt install db-util
+    db_load  -T -t hash -f /etc/vsftpd/vsftpduser.txt /etc/vsftpd/vsftpduser.db
 
     -T     The -T option allows non-Berkeley DB applications to easily load text files into databases.
     -t     Specify  the  underlying access method.  If no -t option is specified, the database will be loaded into a database of the same type as was
                   dumped; for example, a Hash database will be created if a Hash database was dumped.
     -f     Read from the specified input file instead of from the standard input.
 
-三
-chmod 600 /etc/vsftpd/vsftpduser*
+三 
+
+``chmod 600 /etc/vsftpd/vsftpduser*
+
 
 四
 vi /etc/pam.d/vsftpdbill
@@ -328,7 +465,7 @@ guest_enable=YES    //允许虚拟用户访问
 
 guest_username=ftp  //虚拟用户映射为本地的用户名
 
-pam_service_name=   //pam文件的名称
+pam_service_name=vsftpd   //pam文件的名称
 
 
 六 建立各个虚拟用户自身的配置文件
@@ -345,3 +482,204 @@ vi /etc/vsftpd/vsftpd_user_conf/user1
     anon_upload_enable=YES          #开放匿名用户上传权限
     anon_mkdir_write_enable=YES     #开放匿名用户创建目录的权限
     anon_other_write_enable=YES     #开放匿名用户删除和重命名的权限
+
+## 配置虚拟用户登录的步骤
+
+1. 添加虚拟用户口令文件
+    vi /etc/vsftpd/vusers.txt   奇数行：用户名；偶数行：密码
+    用户名a
+    a密码
+    用户名b
+    b密码
+
+1. 生成虚拟用户口令认证文件
+    cd /etc/vsftpd/
+    apt install db5.3-util
+    db5.3_load -T -t hash -f /etc/vsftpd/vusers.txt /etc/vsftpd/vusers.db
+        -T     The -T option allows non-Berkeley DB applications to easily load text files into databases.
+        -t     Specify the underlying access method.  If no -t option is specified,  the  database  will  be
+               loaded  into  a database of the same type as was dumped; for example, a Hash database will be
+               created if a Hash database was dumped.
+        -f     Read from the specified input file instead of from the standard input.
+
+
+
+
+1. 编辑vsftpd的PAM认证文件
+    /etc/vsftpd.conf 配置文件中的 pam_service_name=vsftpd
+
+    vi /etc/pad.m/vsftpd
+    默认的配置文件是本地用户的, 可以注释掉，这样本地用户就不能登录了，因为本地用户登录时的验证依然依赖这个文件
+    ???虚拟用户不是也依赖一个系统用户吗?
+
+    ``` /etc/vsftpd.conf
+    local_enable
+        Controls  whether  local  logins  are  permitted  or not. If enabled, normal user accounts in
+        /etc/passwd (or wherever your PAM config references) may be used to log in. This must be  en‐
+        able for any non-anonymous login to work, including virtual users.
+
+
+    pam_service_name=vsftpd
+    ```
+
+
+
+    ```/etc/pam.d/vsftpd 加入这两行
+    找到你的环境pam_userdb.so所在位置。find / -name security -type d 查找下
+
+    auth required /lib/security/pam_userdb.so db=/etc/vsftpd/vusers
+    account required /lib/security/pam_userdb.so db=/etc/vsftpd/vusers
+
+
+    下面这两行是Debian的, 上边的应该是centos的
+    auth    /lib/x86_64-linux-gnu/security/pam_userdb.so db=/etc/vsftpd/vusers
+    account /lib/x86_64-linux-gnu/security/pam_userdb.so db=/etc/vsftpd/vusers
+    ???然后本地用户也不能登录了,不注释其他行，系统用户也不能登录，组织到是什么原因
+
+    其他行必须注释掉以禁用本地用户登录, 但是不能在配置文件中 设置 local_enable=NO
+    ```
+
+1. 建立本地映射用户，并设置宿主目录权限
+    useradd -d /ftphome -s /sbin/nologin vuser
+    chmod 755 /ftphome  家目录都是这样的权限
+
+1. 修改配置文件
+    guest_enable  虚拟用户开关
+        If enabled, all non-anonymous logins are classed as "guest" logins. A guest login is remapped
+        to the user specified in the guest_username setting.
+        Default: NO
+
+    guest_username
+        See the boolean setting guest_enable for a description of what  constitutes  a  guest  login.
+        This setting is the real username which guest users are mapped to.
+        Default: ftp
+
+        ftp:x:114:123:ftp daemon,,,:/srv/ftp:/usr/sbin/nologin
+
+        ```/etc/vsftpd.conf
+        guest_enable=YES
+        guest_username=vuser
+
+
+
+        userlist_enable=YES
+        userlist_deny=NO        //userlist_file 不 deny
+        ```
+
+
+
+1. 重启vsftpd服务
+
+1. 调整虚拟用户权限
+    现在没有上传权限
+
+    
+    虚拟用户的权限用的是匿名用户的权限
+        anon_upload_enable=YES
+        anon_mkdir_write_enable=YES
+        anon_other_write_enable=YES
+
+
+
+注意1:
+
+从2.3.5之后，vsftpd增强了安全检查，如果用户被限定在了其主目录下，则该用户的主目录不能再具有写权限了！如果检查发现还有写权限，就会报该错误。
+
+ 要修复这个错误，可以用命令chmod a-w /home/user去除用户主目录的写权限，注意把目录替换成你自己的。或者你可以在vsftpd的配置文件中增加下列两项中的一项：
+
+allow_writeable_chroot=YES
+
+---
+
+local_root
+    This option represents a directory which vsftpd will try to change into after a  local  (i.e.
+    non-anonymous) login. Failure is silently ignored.
+    如果不设置的话，虚拟用户进入到映射用户的家目录
+
+
+
+### 为每个虚拟用户配置独立的配置文件
+
+user_config_dir
+    This  powerful  option allows the override of any config option specified in the manual page,
+    on a per-user basis. Usage is simple, and is best illustrated with an  example.  If  you  set
+    user_config_dir  to be /etc/vsftpd_user_conf and then log on as the user "chris", then vsftpd
+    will apply the settings in the file /etc/vsftpd_user_conf/chris for the duration of the  ses‐
+    sion.  The  format  of this file is as detailed in this manual page! PLEASE NOTE that not all
+    settings are effective on a per-user basis. For example, many  settings  only  prior  to  the
+    user's  session  being  started. Examples of settings which will not affect any behviour on a
+    per-user basis include listen_address, banner_file,  max_per_ip,  max_clients,  xferlog_file,
+    etc.
+
+    Default: (none)
+
+主配置文件去掉 anon 权限
+
+    ```vi /etc/vsftpd.conf
+        user_config_dir=/etc/vsftpd/vusers_dir
+
+        mkdir vusers_dir
+
+        vi 虚拟用户名
+
+        anon_upload_enable=YES
+        anon_mkdir_write_enable=YES
+        anon_other_write_enable=YES
+        local_root=/路径    可是任何路径，不过还是在映射的linux用户目录下的目录吧
+
+    ```
+
+
+## client
+
+help    列出所有命令
+
+pwd
+
+get     下载, 不支持目录的下载
+        get a.txt
+
+
+put     上传
+        put a.txt
+
+
+mget    下载，也不是目录的下载，而是目录下所有文件下载，所有文件到客户端当前目录, 没有原来的层次结构了
+mput    上传
+
+
+
+不支持断点
+不支持目录的下载(命令行)
+
+
+
+
+
+## 亲自实践
+
+要开启被动模式
+    pasv_enable=YES
+    pasv_min_port=
+    pasv_max_port=
+
+
+    >ls
+    200 PORT command successful. Consider using PASV.
+
+    >quote PASV
+        227 Entering Passive Mode (192,168,200,1,156,65).
+
+    当 pasv_enable=NO时
+        >ls
+        200 PORT command successful. Consider using PASV.
+
+        >quote PASV
+        550 Permission denied.
+
+
+    quote PASV 查看是否是被动模式
+
+
+
+

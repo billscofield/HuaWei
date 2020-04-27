@@ -14,15 +14,9 @@ docker-cn.com
 
 使用go语言编写
 
-### 对镜像的操作
-
-### 对容器的操作
 
 ### 网络
 172.17.xxx.xxx
-
-
-
 
 dotClout公司
 
@@ -190,6 +184,8 @@ Options:
 docker container inspect [id或name]   | dcoker inspect 
     
     Return low-level information on Docker objects
+
+    查看存储信息: docker inspect <ID> | grep "Mounts"
 
 
 1. docker top 

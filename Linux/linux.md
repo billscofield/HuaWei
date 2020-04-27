@@ -51,6 +51,18 @@ Welcome to the home of musl, a new standard library to power a new generation of
 
 
 
+## bash 自动补全
+
+/etc/bash_completion 中的内容:
+    /usr/share/bash-completion/bash_completion
+
+
+## history
+
+~/.history
+    Default filename for reading and writing saved history
+
+
 
 ## quiet splash , nomodeset
 quiet splash rw init=/bin/bash
@@ -477,6 +489,7 @@ linux console 中只有printf, 没有print, echo 不支持颜色
 
 
 ## 创建一个名称为 '--test'的文件
+
 touch -- --test
 rm -rf -- --test
 
@@ -528,6 +541,35 @@ Basic options:
   T                   all processes on this terminal
   x                   processes without controlling ttys 没有控制终端的进程
 
+
+
+
+-m      Show threads after processes.
+-p      pidlist
+            Select by PID.  This selects the processes whose process ID numbers appear in pidlist.  Identical to
+            p and --pid.
+-o      format
+        %cpu
+            cpu utilization of the process in "##.#" format.  Currently, it is the CPU time used
+            divided by the time the process has been running (cputime/realtime ratio), expressed
+            as a percentage.  It will not add up to 100% unless you are lucky.  (alias pcpu).
+
+        %mem    ratio of the process's resident set size  to the physical memory on the machine,
+                expressed as a percentage.  (alias pmem).
+        THREAD
+        pid
+        tid
+            the unique number representing a dispatchable entity (alias lwp, spid).  This value
+            may also appear as: a process ID (pid); a process group ID (pgrp); a session ID for
+            the session leader (sid); a thread group ID for the thread group leader (tgid); and a
+            tty process group ID for the process group leader (tpgid).
+
+        cmd
+        time
+            cumulative(累计) CPU time, "[DD-]HH:MM:SS" format.  (alias cputime).
+
+        comm        COMMAND   command name (only the executable name).
+        command             很多信息，不如comm精简
 
 
 
@@ -666,6 +708,69 @@ greeter-show-manual-login=true
 
     -A, --almost-all
         do not list implied . and ..
+    -R, --recursive
+        list subdirectories recursively
+
+    -F, --classify
+        append indicator (one of */=>@|) to entries
+        区分目录和文件,目录加 /
+
+    -r, --reverse
+        reverse order while sorting
+    -R, --recursive
+        list subdirectories recursively
+
+    -s, --size
+        print the allocated size of each file, in blocks
+    -S     sort by file size, largest first
+
+    --sort=WORD
+        sort by WORD instead of name: none (-U), size (-S), time (-t), version (-v), extension (-X)
+
+    --time=WORD
+        with -l, show time as WORD instead of default modification time: atime or access or use (-u); ctime
+        or status (-c); also use specified time as sort key if --sort=time (newest first)
+
+
+
+
+## cat
+
+concatenate files and print on the standard output
+
+    -b, --number-nonblank
+        number nonempty output lines, overrides -n
+
+    -E, --show-ends
+        display $ at end of each line
+
+    -v, --show-nonprinting
+        use ^ and M- notation, except for LFD and TAB
+
+    -n, --number
+        number all output lines
+
+    -s, --squeeze-blank
+        suppress repeated empty output lines
+
+    -T, --show-tabs
+        display TAB characters as ^I
+
+
+
+## grep 
+
+-v, --invert-match
+    Invert the sense of matching, to select non-matching lines.
+
+-r, --recursive
+    Read  all  files under each directory, recursively, following symbolic links only if they are on the
+    command line.  Note that if no file operand is given, grep searches the working directory.  This  is
+    equivalent to the -d recurse option.
+
+-R, --dereference-recursive
+    Read all files under each directory, recursively.  Follow all symbolic links, unlike -r.
+
 
 
 
@@ -705,6 +810,13 @@ tune2fs -l /dev/nvme0n1p5 | less
         这个属性应该是 stat 中的 Blocks 的同义词,不确定??? 
 
 
+查看绝对值形式的权限
+
+stat -c %a 文件/目录
+-c  --format=FORMAT
+    use the specified FORMAT instead of the default; output a newline after each use of FORMAT
+
+
 ## cp
 
 -p     same as --preserve=mode,ownership,timestamps
@@ -714,6 +826,14 @@ tune2fs -l /dev/nvme0n1p5 | less
 
 --no-preserve=ATTR_LIST
     don't preserve the specified attributes
+
+-L, --dereference   默认
+    always follow symbolic links in SOURCE
+    不复制引用，而是复制目标文件
+
+-P, --no-dereference
+    never follow symbolic links in SOURCE
+    还是复制引用，即复制的文件仍为软连接文件
 
 
 ## touch 
@@ -725,7 +845,11 @@ touch - change file timestamps
     parse STRING and use it instead of current time
     默认修改 access 和 modify 时间, 但是 change 会被修改为命令执行时的时间
 
-    touch -d '2000-1-1' a.txt
+    touch -d '2000-1-1' a.txt       修改 atime 和 mtime
+    touch -a -d '2000-1-1' a.txt    仅修改 atime
+    touch -m -d '2000-1-1' a.txt    仅修改 mtime
+
+-a     change only the access time
 
 -m     change only the modification time
 
@@ -734,6 +858,11 @@ touch - change file timestamps
 
 -c, --no-create
     do not create any files
+
+-h, --no-dereference
+    affect each symbolic link instead of any referenced file (useful only on systems that can change the
+    timestamps of a symlink)
+
 
 
 
@@ -960,7 +1089,69 @@ locate the binary, source, and manual page files for a command
     grep -w 'hello' password
 
     grep -o 'hello' password | wc -l
+
+
+## wc
+
+print newline, word, and byte counts for each file
+
+-c, --bytes
+    print the byte counts
+
+-m, --chars
+    print the character counts
+
+-l, --lines
+    print the newline counts
+
+--files0-from=F
+    read  input  from  the  files specified by NUL-terminated names in file F; If F is - then read names
+    from standard input
+
+-L, --max-line-length
+    print the maximum display width
+
+-w, --words
+    print the word counts
     
+
+## od
+
+dump files in octal and other formats
+
+-t, --format=TYPE
+    select output format or formats
+
+
+Traditional format specifications may be intermixed; they accumulate:
+
+-a     same as -t a,  select named characters, ignoring high-order bit
+
+-b     same as -t o1, select octal bytes
+
+-c     same as -t c,  select printable characters or backslash escapes
+
+-d     same as -t u2, select unsigned decimal 2-byte units
+
+-f     same as -t fF, select floats
+
+-i     same as -t dI, select decimal ints
+
+-l     same as -t dL, select decimal longs
+
+-o     same as -t o2, select octal 2-byte units
+
+-s     same as -t d2, select decimal 2-byte units
+
+-x     same as -t x2, select hexadecimal 2-byte units
+
+TYPE is made up of one or more of these specifications:
+a      named character, ignoring high-order bit
+
+c      printable character or backslash escape
+
+
+od -tc file == od -c file
 
 
 ## cut

@@ -7,3 +7,8 @@ https://www.jianshu.com/p/d01658e623ba
 
 
 
+
+## 使用 docker
+
+查看mount
+docker inspect <id> | less | grep 'Mounts'
