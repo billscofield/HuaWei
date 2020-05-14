@@ -30,9 +30,12 @@ https://blog.csdn.net/u014447845/article/details/80291678
 
 apt-get install tightvncserver
 apt-get install xrdp
+
 apt-get install vnc4server
 apt-get install xubuntu-desktop
 echo “xfce4-session” >~/.xsession(每个用户)
+    ubuntu18之后的版本，不写这个就是默认的unity界面
+
 service xrdp restart
 
 

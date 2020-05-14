@@ -126,9 +126,11 @@ librdb 把文件切成一个个的块 object，每个块最大4MB, 分别存到P
 多个object能放到一个PG上
 
 
+
 PG 对 osd daemon:   1对多
 PG 对 object:       1对多
 osd daemon 对 硬盘: 1对1
+    (OSD:Object Storage Device)
 
 一个osd可以对应多个PG, PG 和 osd： 多对多的关系
 
@@ -206,16 +208,26 @@ ceph osd pool create volumes 128(PG 个数)   可以弄多个pool
 
 
 设置时间同步
-apt install ntp
+apt install ntp 或者 安装 ntpsec
 /etc/ntp.conf
     添加一个内网的主机
     server 192.168.1.1      (admin的ip就可以)
 
+service start ntpd
+
+ntpq -pn
+   -p, --peers  print a list of the peers 
+   -n, --numeric
+
+
+
+
 添加官方证书
 wget -q -O-'https://ceph.com/git/?p=ceph.git;a=blob_plain;f=keys/release.asc' | sudoapt-key add -
 
-添加Ceph软件包源，用稳定版Ceph（如 cuttlefish 、 dumpling 、 emperor 、 firefly 等等）替换掉 {ceph-stable-release} 。例如：
+添加Ceph软件包源，用稳定版Ceph（如 cuttlefish,dumpling,emperor,firefly 等等）替换掉{ceph-stable-release} 。例如：
 echo debhttp://ceph.com/debian-{ceph-stable-release}/ $(lsb_release -sc) main | sudotee /etc/apt/sources.list.d/ceph.list
+    添加国内的ceph源，然后
 
 更新你的仓库，并安装 ceph-deploy ：
 sudo apt-get update && sudo apt-getinstall ceph-deploy
@@ -244,11 +256,18 @@ ceph-deploy forgetkeys
 
 
 admin节点（这里是node0) 上建立一个ceph集群目录:
-mkdir /ceph ^^ cd /ceph
+mkdir /ceph && cd /ceph
 
 创建monitor
 ceph-deploy new node0 node1 node2   # 3个monitor
-执行之后生成ceph.con ceph.log ceph.on.keyring
+执行之后生成
+    ceph.con 
+    ceph.log 
+    ceph.on.keyring             身份验证用
+
+
+ceph-deploy new --public-network 10.0.0.0/24 --cluster-network 10.1.0.0/24 monitor节点计算机名
+
 
 调整ceph的默认参数
 
@@ -313,7 +332,9 @@ admin 节点上建立一个 ceph 集群目录
     方式二：使用清华源
         这个好像没有启作用，用的tsinghua.list中的版本 luminous
 
-        ceph-deploy install 时提示需要在osd上安装python2
+    使用ceph-deploy install 这个命令时，它会重新配置源，所以tsinghua源没有起作用
+
+        ceph-deploy install 时提示需要在osd上安装python2(python-minimal是Python2语言的最小子集)
             切换到 osd 主机，apt install python-minimal
 
         ceph版本配置
@@ -353,6 +374,15 @@ admin 节点上建立一个 ceph 集群目录
         ceph-deploy install ubuntu18-ceph-112
         ceph-deploy install ubuntu18-ceph-113
 
+
+        apt-cache search '^ceph'        在每一个ceph 节点运行???
+            ceph
+            ceph-base
+            ceph-mon
+            ceph-mgr
+            ceph-radosgw
+            ceph-mds
+
     常见错误:
         安装了清华源
         ceph-deploy install 主机名
@@ -360,8 +390,40 @@ admin 节点上建立一个 ceph 集群目录
         [ceph_deploy][ERROR ] RuntimeError: Failed to execute command: env DEBIAN_FRONTEND=noninteractive DEBIAN_PRIORITY=critical apt-get --assume-yes -q update
         这个[ERROR ]是因为[WARNIN] E: The repository 'http://download.ceph.com/debian-{ceph-stable-release} bionic Release' does not have a Release file.造成的。
     
-    
-扩展 monitor
+
+初始化monitory
+    ceph-deploy mon
+        生成了好多秘钥文件 XXX.keyring
+
+
+        ```略过这一步
+        收集秘钥
+            在admin上运行
+            ceph-deploy mon create-initial
+
+                -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-mds.keyring
+                -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-mgr.keyring
+                -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-osd.keyring
+                -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-rgw.keyring
+                -rw-------  1 root root     63 Apr 25 04:04 ceph.client.admin.keyring
+        ```
+
+推送keyring到所有节点
+    ceph-deploy admin 节点1 节点2 节点3
+
+查看ceph状态
+    ceph -s
+
+Deploy a manager daemon. (Required only for luminous+ builds):
+    ceph-deploy mgr create node1
+
+
+再次查看ceph状态
+    ceph -s
+
+
+
+扩展 monitor    
     ceph-deploy mon add ubuntu18-ceph-112 --address 192.168.200.112
     ceph-deploy mon add ubuntu18-ceph-113 --address 192.168.200.113
 
@@ -369,38 +431,53 @@ admin 节点上建立一个 ceph 集群目录
     
     ceph quorum_status    或者 ceph quorum_status --format=json_pretty
 
-    admin 的 ceph.conf 怎么到了 /etc/ceph/ 下?
-    在这个目录 运行 
-        ceph-deploy --overwrite-conf config push ubuntu18-ceph-113 ubuntu18-ceph-113
+    ceph -s
+
+    ceph mon stat
+    ceph mon dump
+
+    ```
+        admin 的 ceph.conf 怎么到了 /etc/ceph/ 下?
+        在这个目录 运行 
+    ceph-deploy --overwrite-conf config push ubuntu18-ceph-113 ubuntu18-ceph-113
 
     添加 mon
         ceph-deploy mon add ubuntu18-ceph-112 --address 192.168.200.112
         ceph-deploy mon add ubuntu18-ceph-113 --address 192.168.200.113
 
-收集秘钥
-    在admin上运行
-    ceph-deploy mon create-initial
+    ```
 
-        -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-mds.keyring
-        -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-mgr.keyring
-        -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-osd.keyring
-        -rw-------  1 root root     71 Apr 25 04:04 ceph.bootstrap-rgw.keyring
-        -rw-------  1 root root     63 Apr 25 04:04 ceph.client.admin.keyring
+扩展 manager
 
-操作 OSD 节点
-    需要在当前目录下运行 /ceph/
-
-    1. ubuntu18-ceph-111
-        ceph-deploy disk zap ubuntu18-ceph-111:/dev/sdb
-        ceph-deploy osd create ubuntu18-ceph-111:/dev/sdb
-
-        ceph-deploy osd activate ubuntu18-ceph-111:/dev/sdb
+    ceph-deploy mgr create 节点1 节点2 节点3
 
 
-    使用ceph –s查看ceph情况
+    ```
+    操作 OSD 节点
+        需要在当前目录下运行 /ceph/
+
+        1. ubuntu18-ceph-111
+            ceph-deploy disk zap ubuntu18-ceph-111:/dev/sdb
+            ceph-deploy osd create ubuntu18-ceph-111:/dev/sdb
+
+            ceph-deploy osd activate ubuntu18-ceph-111:/dev/sdb
 
 
-ceph-deploy admin  ubuntu18-ceph-111 ubuntu18-ceph-112 ubuntu18-ceph-113
+        使用ceph –s查看ceph情况
+
+
+    ceph-deploy admin  ubuntu18-ceph-111 ubuntu18-ceph-112 ubuntu18-ceph-113
+
+    ```
+
+osd
+    ceph-delploy osd create node-1 --date /dev/sdb
+    ceph -s
+    ceph-delploy osd create node-2 --date /dev/sdb
+    ceph-delploy osd create node-3 --date /dev/sdb
+
+    ceph -s 
+    ceph osd tree
 
 
 
@@ -408,18 +485,18 @@ ceph-deploy admin  ubuntu18-ceph-111 ubuntu18-ceph-112 ubuntu18-ceph-113
 ## osd
 
 创建
-    ceph osd pool create ceph-demo 64 64
+    ceph osd pool create ceph-demo 64
 
 查看
     ceph osd lspools
 
-    ceph osd pool get ceph-demo pg_num
+    ceph osd pool get ceph-demo pg_num  //查看pg数目
 
-    ceph osd pool get ceph-demo pgp_num
+    ceph osd pool get ceph-demo pgp_num //查看pgp数目
 
     ceph osd pool get ceph-demo size    //副本数
 
-    ceph osd pool get ceph-demo crush_rule  
+    ceph osd pool get ceph-demo crush_rule  //crush算法，是复制还是什么
 
 
 rbd
@@ -433,8 +510,8 @@ rbd
 
     rbd -p ceph-demo ls
 
-
-    rbd rm -p ceph-demo --image rbd-demo.img --size 1G 或者 rbd rm ceph-demo/rbd-demo.img -s 1G
+    删除
+        rbd rm -p ceph-demo --image rbd-demo.img 或者 rbd rm ceph-demo/rbd-demo.img
 
 
     扩容/也可以缩小，但是不建议缩小

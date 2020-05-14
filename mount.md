@@ -70,6 +70,11 @@ https://www.cnblogs.com/webnote/p/6043434.html
 所以mount 的 -t 可以通过blkid进行查询
 
 
+## 查看uuid
+
+ls -l /dev/disk/by-uuid
+
+
 ## umount
 -f --force
 -l --lazy
@@ -85,10 +90,72 @@ umount [-fn] 设备文件名或挂载点
 umount -fl
 
 
+## 重新挂载 /home 分区
+
+1.把新挂载的4T硬盘进行分区和格式化
+
+
+2.创建目录
+sudo mkdir /media/home
+
+3.把/dev/sdb1挂载到/media/home
+sudo mount /dev/sdb1 /media/home
+
+4.同步/home到/media/home，同步时间根据数据量大小决定，建议在系统空闲时操作
+sudo rsync -aXS /home/. /media/home/.
+
+5.同步完成后重命名/home
+sudo mv /home /home_old
+
+6.新建/home
+sudo mkdir /home
+
+7.取消/dev/sdb1挂载
+sudo umount /dev/sdb1
+
+8.重新挂载/dev/sdb1到home
+sudo mount /dev/sdb1 /home
+
+9.查看/dev/sdb1的UUID
+blkid
 
 
 
+10.把UUID复制下来，修改/etc/fstab文件，实现开机自动挂载
+sudo gedit /etc/fstab
 
+在文件最后添加如下内容：
+
+    UUID=8da46012-ab9c-434f-a855-2484112fd1a7 /home ext4 defaults,nodev,nosuid 0 2 
+
+
+11.保存之后重启系统，查看分区的挂载情况
+df –h
+
+
+
+12.确认一切正常后删除/home_old
+sudo rm -rf /home_old
+
+至此，给/home增加空间的工作就完成了。
+
+https://www.cnblogs.com/saszhuqing/p/8716644.html
+
+## 关于 挂载附加选项
+
+nodev, nosuid, and noexec are fstab options/(flags?) that can improve security of partitions.
+
+It would be ideal if config directives are present in diskimage-builder, to allow an operator to set those values during image building.
+
+rational for each option:
+
+The nodev mount option prevents files from being interpreted as character or block devices. The only legitimate location for device files is the /dev directory located on the root partition. The only exception to this is chroot jails, for which it is not advised to set nodev on these filesystems.
+
+The nosuid mount option can be used to prevent execution of setuid programs from partitions such as temp.
+
+Allowing users to execute binaries from world-writable directories such as /tmp should never be necessary in normal operation and can expose the system to potential compromise.The noexec mount option can be used to prevent binaries from being executed out of /tmp
+
+Each of the above is also requirement in security compliance governance bodies, such as CIS, DISA-STIG etc.
 
 
 

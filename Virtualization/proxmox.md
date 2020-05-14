@@ -102,3 +102,9 @@ PVE虚拟出来的vm系统的cpu,默认不支持vmx，即不支持嵌套虚拟�
 启动虚拟机，运行下面的命令：
 
     egrep --color 'vmx|svm' /proc/cpuinfo
+
+
+
+
+备份路径
+    /var/lib/vz/dump/

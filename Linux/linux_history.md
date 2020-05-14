@@ -121,7 +121,7 @@ Arch        2002
 
 ## 
 
-Sun:Stanford University Network
+SUN:Stanford University Network
 
 
 
@@ -148,7 +148,7 @@ s="he\0x00llo"
         CRLF
 
 
-传统tty 80列， 一个单元格8个char
+传统 tty 80列， 一个单元格8个char
 
 0x1b    Escape  转义序列的标志
 
@@ -157,5 +157,7 @@ s="he\0x00llo"
     elinks (apt install elinks)
 
 1980-1981年，西雅图电脑产品公司程序员 蒂姆·帕特森（Tim Paterson）花费了四个月时间编写出了 86-DOS 操作系统。
-1981年7月，微软以五万美元的代价向西雅图公司购得本产品的全部版权，并将它更名为 MS-DOS。随后，IBM发布了第一台个人计算机，当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，正式发布MS-DOS 1.0 和 PC-DOS 1.0。
+1981年7月，微软以五万美元的代价向西雅图公司购得本产品的全部版权，并将它更名为 MS-DOS。随后，IBM发布了第一台个人计算机，
+    当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，
+    正式发布MS-DOS 1.0 和 PC-DOS 1.0。
 

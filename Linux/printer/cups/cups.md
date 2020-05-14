@@ -118,3 +118,14 @@ https://www.9wy.net/?p=875
 在Windows下，安装CUPS共享的打印机。网上有很多解决方案，很多方案提到用samba来共享打印机，那种方法可行，但配置samba也是一项比较复杂的工作。我们完全可以使用CUPS的网络打印功能，来完成这一任务，
 添加一台网络打印机并输入URL:http://192.168.1.2:631/printers/HP_LaserJet_1020_USB_1，就可以完成打印机添加了，之后的步骤和安装普通的本地打印机一样。
 其中“192.168.1.2:631/printers”是CUPS打印服务所在地址和端口，“HP_Laser_1020_USB_1”是你的打印机名。
+
+
+
+### 取消自动安装打印机
+
+ubuntu 20 打印机做的很好，但是要取消自动发现打印机
+
+systemctl disable cups-browsed
+
+
+https://www.kutu66.com//ubuntu/article_156889

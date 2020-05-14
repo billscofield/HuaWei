@@ -84,10 +84,19 @@ Options
     -H 保留硬链接
     -A 保留ACL策略
     -E 保留可执行权限
-    -X 保留扩展属性信息
+    
+    -X, --xattrs                preserve extended attributes
+        保留扩展属性信息
+    
+    -S, --sparse                turn sequences of nulls into sparse blocks
+        --preallocate           allocate dest files before writing
+        -n, --dry-run               perform a trial run with no changes made
+
     -e 指定要执行的远程 shell 命令
 
 例子:
+
+
 ### 本机同步
     
 ```

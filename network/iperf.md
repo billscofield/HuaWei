@@ -18,10 +18,10 @@ iperf -s -p 端口    //默认TCP 5001 端口, window size:128KByte
     run in server mode
 
 -D, --daemon
-              run the server as a daemon.  On Windows this will also install the IPerfService.
+    run the server as a daemon.  On Windows this will also install the IPerfService.
 
 -p, --port n
-              set server port to listen on/connect to to n (default 5001)
+    set server port to listen on/connect to to n (default 5001)
 
 -t, --time n
     time in seconds to listen for new traffic connections, receive traffic or transmit traffic (Defaults: transmit is 10 secs while listen and receive are indefinite)
@@ -31,7 +31,7 @@ iperf -s -p 端口    //默认TCP 5001 端口, window size:128KByte
 
 
 -w, --window n[kmKM]
-              TCP window size (socket buffer size)
+    TCP window size (socket buffer size)
 
 -u, --udp
     use UDP rather than TCP
@@ -60,12 +60,14 @@ Jitter为抖动，lost/total为丢包数量，Datagrams为包数量
 
 
 
+
 ## 版本的区别
 
 Iperf3 is a rewrite of iperf from scratch to create a smaller, simpler code base. It also includes a library version which enables other programs to use the provided functionality. Another change is that iperf3 is single threaded while iperf2 is multi-threaded[3]. Iperf3 was started in 2009, with the first release in January 2014. Iperf3 is not backwards compatible with iperf2.
 
 
 ## 典型用法
+
 ### 服务器端
 
 iperf -s -i 1 

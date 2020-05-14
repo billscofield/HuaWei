@@ -51,6 +51,20 @@ Welcome to the home of musl, a new standard library to power a new generation of
 
 
 
+## 图形桌面
+
+1. X Window
+    Xorg
+1. KDE
+1. GNOMOE
+1. Unity
+1. 其他
+    Xfce
+
+    setterm
+
+
+
 ## bash 自动补全
 
 /etc/bash_completion 中的内容:
@@ -2692,4 +2706,3 @@ unity
 
 
 桌面特效配置软件 compiz compizConfigSettingsManager
-

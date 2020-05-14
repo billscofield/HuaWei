@@ -63,7 +63,7 @@ host
 src / dst
     If you only want to see traffic in one direction or the other, you can use src and dst.
 
-net???
+net
     To find packets going to or from a particular network or subnet, use the net option.
 
 

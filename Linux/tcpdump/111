@@ -1,0 +1,20 @@
+# Nmap 7.70 scan initiated Fri May  8 11:30:45 2020 as: nmap -Pn -oN 111 192.168.10.111
+Nmap scan report for localhost (192.168.10.111)
+Host is up (0.014s latency).
+Not shown: 987 filtered ports
+PORT      STATE  SERVICE
+22/tcp    open   ssh
+80/tcp    open   http
+443/tcp   open   https
+3690/tcp  closed svn
+8180/tcp  open   unknown
+9000/tcp  open   cslistener
+32768/tcp open   filenet-tms
+49155/tcp closed unknown
+49156/tcp open   unknown
+49157/tcp closed unknown
+49158/tcp closed unknown
+49159/tcp closed unknown
+49160/tcp closed unknown
+
+# Nmap done at Fri May  8 11:31:07 2020 -- 1 IP address (1 host up) scanned in 22.25 seconds

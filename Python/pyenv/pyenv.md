@@ -242,5 +242,15 @@ pyenv-virtualenv插件是虚拟出同一版本的python但是不同依赖库版�
 https://www.cnblogs.com/weiwei-python/p/9893599.html
 
 
-###
+### 加速下载 python
+
+/root/.pyenv/plugins/python-build/share/python-build/ 
+
+这里边是每个python的下载地址, 默认用的国外的地址
+
+可以到国内的 mirrors.sohu.com/python/3.8.0/ 进行下载到 ~/.pyenv/cache/ 下
+
+然后 pyenv install 3.8.0 
+
+
 
