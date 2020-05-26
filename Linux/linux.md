@@ -1,12 +1,15 @@
 
 ## Alpine
+
 Alpine Linux is a security-oriented, lightweight Linux distribution based on **musl libc** and **busybox**.
 
 
 ## BusyBox
+
 BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说BusyBox就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自带的shell。
 
 ## Libc
+
 libc的名字来源于历史，指**C开发包的函数库**，包括头文件和基本C库libc.a，最初的libc由发明C语言那些人写的，后来随着C移植到不同平台，libc也有了多个版本，可能是为了兼容吧，很多头文件和libc.a的文件名都没有变（很好的传统）。
 
 现在libc泛指C函数库，**而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版Linux用的就是glibc。**
@@ -18,6 +21,7 @@ libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的lib
 还有其他版本的libc，比如newlibc，通常用在嵌入系统中。
 
 ### musl libc
+
 Welcome to the home of musl, a new standard library to power a new generation of Linux-based devices. musl is lightweight, fast, simple, free, and strives to be correct in the sense of standards-conformance and safety.
 
 
@@ -300,11 +304,17 @@ before installing get info of this package from sources.list
 
 dpkg -l 
     列出了本机安装了哪些包
+    
 dpkg -L 软件包(安装后查询)
+    --listfiles
     列出安装的所有文件清单()
+
 dpkg -c 软件包.deb(安装前查询)
     --contents
+    List contents of a deb package.
     列出deb安装包中的所有文件
+
+
 dpkg -l 软件包(已安装)
     查看软件包的状态标识,是否正常
 
@@ -523,9 +533,21 @@ rm -rf -- --test
 
 ## Linux终端 vi 模式 
 
+这个叫做 editing-mode       Vi 和 Emacs
+
 vi ~/.zshrc
 G
 set -o vi
+
+---
+
+/etc/inputrc
+
+
+Because Emacs is a little easier to pick up     --《From Bash to Z shell》
+
+
+
 
 
 ## 进程

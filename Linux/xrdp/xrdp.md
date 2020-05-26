@@ -67,3 +67,16 @@ vi /etc/xrdp/sesman.ini
     将KillDisconnected=1；则每次断开连接时，linux都会关闭会话进程。 
     
     然后重启/etc/init.d/xrdp restart 就可解决问题
+
+
+
+
+
+## xrdp 18
+
+开启桌面共享功能
+    设置-> 共享->屏幕共享:
+
+apt install xrdp
+
+用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。

@@ -35,10 +35,10 @@ MBR
     SCSI 硬盘最多有11个逻辑分区，加4个主分区最多能识别15个分区
 
 格式化就是为了写入文件系统, 而不是清除数据
-    ext3 支持最大16TB的分区 和 最大2TB的文件
-    ext4 支持最大1EB的分区 和 最大16TB的文件, 支持无限量子目录
-    fat32 最大支持32GB分区 和 最大4GB的文件
-    ntfs 支持2TB分区 和 最大64GB的文件
+    fat32   最大支持32GB分区 和 最大4GB的文件
+    ntfs    支持2TB分区 和 最大64GB的文件
+    ext3    支持最大16TB的分区 和 最大2TB的文件
+    ext4    支持最大1EB的分区 和 最大16TB的文件, 支持无限量子目录
 
 
 IDE 也叫作 ATA 硬盘，PATA硬盘
@@ -95,8 +95,10 @@ touch 如果文件存在，则会修改文件的时间戳(访问时间access tim
 cp 
     -i 询问，如果目标文件存在, 是否覆盖
         相同的还有 mv -i
+
     -p 保留源文件的属性(所有者，所属组，权限和 **access,modify 时间,change时间会改变**)
         (touch -d)
+
         **所有者，所属组 不会改变是针对root用户cp别的用户的文件而言的，非root用户cp -p 其他用户的文件，所有者和所属组还是会变成自己的, 另外，access time, modify time 不会变，change time 会变更**
             你是一个普通用户，当然不能创建属于root用户的文件
 
@@ -112,8 +114,9 @@ cp
     
     -r recursive
 
-    -n, --no-clobber
+    -n, --no-clobber  [ˈklɒbə(r)] 击倒；痛打
         do not overwrite an existing file (overrides a previous -i option)
+
     -f, --force
         if  an  existing  destination file cannot be opened, remove it and try again (this option is ignored when the -n option is also used)
 
@@ -121,6 +124,7 @@ cp
 mv  
     -n, --no-clobber(如果目标文件已经存在，不会覆盖移动，且不询问用户)
               do not overwrite an existing file
+
     -f, --force
         do not prompt before overwriting
     -i, --interactive
@@ -209,12 +213,13 @@ wc -c filename
 
 size        是文件的真实大小
 blocks      是多少个磁盘512Byte, 也就是扇区大小
-IO Block    是格式化磁盘的时候4K对齐的那个概念
+IO Block    是文件系统的概念，tune2fs
 
 
 ### 总结
+
 查看文件真实大小
-    du -b 文件
+    du -b 文件 这个是占用磁盘空间大小
     wc -c 文件
     stat -c %s 文件
     stat 文件 中的 size (byte)
@@ -228,7 +233,7 @@ ll 显示的大小是一个基于真实大小的大概值
 
 硬件上的 block size, 应该是"sector size"
 
-磁盘分区的"cylinder size"，用fdisk 可以查看。
+磁盘分区的"cylinder size"，用 fdisk 可以查看。
 
 spare file 稀疏文件
 
@@ -253,7 +258,9 @@ unzip 也保留源文件
 ### gz
 gzip 源文件     不保留源文件
 gzip -k 源文件  保留源文件
+
     -c, --stdout      write on standard output, keep original files unchanged
+
 gzip -c 源文件> 目标名称.gz
 
 gzip 只能压缩，不能打包
@@ -269,6 +276,7 @@ gzip -9 --best
 
 
 ### bz2
+
 bzip2 -k 源文件   保留源文件
 bzip2 -c 源文件>目标文件.bz2
 

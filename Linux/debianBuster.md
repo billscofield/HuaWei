@@ -77,4 +77,6 @@ apt install python3-dev
 
 :YcmRestartServer
 
+    重新编译YCM
+
 apt install ctags

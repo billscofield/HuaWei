@@ -25,7 +25,6 @@ SandBox(沙盒)
 
 
 
-
 常用操作
 
 ### 列出镜像
@@ -44,7 +43,7 @@ SandBox(沙盒)
         -f, --filter filter   Filter output based on conditions provided
             --format string   Pretty-print images using a Go template
             --no-trunc        Don't truncate output(显示完整的image ID)
-        -q, --quiet           Only show numeric IDs     //用于script处理
+        -q, --quiet           Only show numeric IDs(image id)     //用于script处理
 
 1. 列出运行的镜像
     docker ps   |   docker container ls
@@ -400,6 +399,9 @@ docker 是容器
 仓库用于存放镜像
 
 
+是一个管理引擎
+
+
 联合文件系统 UnionFS
 
 1. 为什么会出现docker
@@ -409,7 +411,7 @@ docker 是容器
 
     整体交付（运行环境+代码）
 
-    没有Hypervisor实现硬件资源虚拟化
+    **没有Hypervisor实现硬件资源虚拟化**
 
 1. 镜像
     1. 代码
@@ -640,6 +642,7 @@ service docker start
 
         拉取镜像
             阿里云镜像加速配置, 登录阿里云，控制台,搜索"镜像" , "镜像加速器"
+            阿里云上会显示如何配置阿里云的源(根据发行版)
 
             ```
             touch /etc/docker/daemon.json
@@ -660,6 +663,7 @@ service docker start
                 Digest: sha256:8e3114318a995a1ee497790535e7b88365222a21771ae7e53687ad76563e8e76
                 Status: Downloaded newer image for hello-world:latest
 
+            配置文件查看 dpkg --listfiles docker-ce
 
 
         docker映射端口和挂载目录
@@ -843,7 +847,7 @@ curl http://127.0.0.1:端口 并不能访问
 
 
 构建镜像
-    1. 方法1 docker commit   //通过容器构建
+    1. 方法1 docker commit   //通过容器构建, 提交容器副本使之成为一个新的镜像
         docker commit [options] CONTAINER名字 [REPOSITORY[:TAG]] (镜像名)
                                 ??
             -a --author [string]
@@ -977,3 +981,44 @@ https://www.sohu.com/a/209301090_609513
 
 ## docker 搭建 git server
 https://blog.csdn.net/xxkalychen/article/details/82219821
+
+
+
+
+
+## docker file
+
+1. 在根目录下新建 mydocker 文件夹并进入
+    mkdir /mydocker && cd /mydocker
+
+1. "可在Dockerfile中使用 VOLUME指令 来给镜像添加一个或多个数据卷"
+
+    VOLUME["/dataVolumeContainer","/data/VolumeContainer2","/data/VolumeContainer3"]    //全都是容器内的
+
+    出于可移植和分享的考虑，用 -v 主机目录:容器目录  这种方法不能够直接在 Dockerfile 中实现
+    由于宿主机目录是依赖于特定主机的，并不能保证在所有的宿主机上都存在这样的特定目录
+
+1. File 构建
+    vim dockerfile
+
+    ```
+    # volume test
+    FROM centos
+    VOLUME ["/dataVolumeContainer1","/dataVolumeContainer2"]
+    CMD echo "Finished,---success1"
+    CMD /bin/bash
+
+
+    大致等价于下边这条命令
+        docker run -it -v /host1:/dataVolumeContainer1 -v /host2:/dataVolumeContainer2 centos /bin/bash
+
+        就是在容器内生成两个volume文件夹，在主机上没有生成
+    ```
+1. build 生成镜像
+    
+
+1. run 
+
+
+
+## 
