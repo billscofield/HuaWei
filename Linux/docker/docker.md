@@ -1021,4 +1021,21 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
 
 
 
-## 
+## 解决普通用户无法使用docker命令的问题
+
+1.如果普通用户运行docker，是会报错的。
+    Cannot connect to the Docker daemon. Is the docker daemon running on this host?
+
+2.其实这个问题是权限的问题。
+
+    ll /var/run/docker.sock
+    srw-rw---- 1 root docker 0 Jul 18 16:20 /var/run/docker.sock=
+
+可以看到docker.sock这个文件的权限是660，也就是说组用户是有权限的。那么我们只要把用户加到docker这个组下就ok了。
+
+3.usermod修改用户组。
+    usermod -a -G docker 用户
+
+
+重启docker
+    service docker restart
