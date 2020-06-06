@@ -3,9 +3,9 @@
 1. ftp 是File Transfer Protocol的缩写，文件传输协议，用于在网络上进行文件传输的一套标准协议，使用客户/服务器模式。它属于网络传输协议的应用层。
     只是文件传输协议的意思，而实现文件传输协议的服务器和客户端软件非常多，vsftp就是服务器端的一个软件名称，服务器端软件当然需要一个进程来运行了，对于vsftp后台进程就是vsftpd。当然FTP有客户端软件，cuteftp，ws-ftp太多了。
     
-    ftp - classical file transfer client
-    tftp - Trivial file transfer protocol client
-    tftpd - Trivial file transfer protocol server
+    ftp     - classical file transfer client
+    tftp    - Trivial file transfer protocol client
+    tftpd   - Trivial file transfer protocol server
 
 1. tftp 
     Trivial ftp 
