@@ -57,17 +57,26 @@ nsswitch 中有这么一行定义
     自上而下的，每个part都知道自己的直接下级,每个下级都不知道自己的直接上级
     但是每个人都知道 根 在哪里
 
+
+
+
     根域
         1. .
+
     顶级域 TLD:Top Level Domain, 分为3类
         1. 组织域
             .com
             .org
             .net
             .cc
+
         1. 国家域
             .cn
             .us
+
+        1. 新通用顶级域
+            .red .top ...
+
         1. 反向域(将IP转换为FQDN)
             正向和反向用的不是同一个数据库
 
@@ -168,9 +177,9 @@ nsswitch 中有这么一行定义
 
 这个数据库中的每个条目称为一个资源记录（resource record,RR）
 
-NAME                TTL(可以省略,而定义一个全局的TTL值)     IN(internet)    RRT(RR type)    VALUE
-www.magedu.com.                                             IN              A               1.1.1.1
-1.1.1.1                                                     IN              PTR             www.magedu.com.
+NAME                TTL(可以省略,而定义一个全局的TTL值,缓存时间)     IN(internet)    RRT(RR type)    VALUE
+www.magedu.com.                                                      IN              A               1.1.1.1
+1.1.1.1                                                              IN              PTR             www.magedu.com.
 
 资源记录类型
     1. A(address)  : FQDN -> IPv4
