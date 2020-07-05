@@ -1,18 +1,153 @@
 ## awk gawk
 
-awk 是一门语言
+awk 是一门语言, 有变量
 
 Alfred Aho
 Brian Kernighan
 Peter Weinberger
 
+在 GNU 当中，叫做 gawk
+
+同sed一样，逐行操作
+
 统计处理数据，支持判断，支持for和while循环
 
 ;  用来分割命令
 
-不加动作命令，默认是打印
+不加动作命令，默认是打印{print $0}
     awk 'NR==1,NR==4' 文件
     awk '/root/' 文件
+
+### 使用方式
+
+有命令行模式和脚本模式
+
+
+### 语法
+    awk 选项 '命令' 文件名      // 当引用变量时，用双引号，同sed
+
+
+### 选项
+
+-F: 字段分隔符, 默认是空格
+
+    多个分隔符的情况
+
+        awk -F'[: ]' '/inet/'
+
+        awk -F'[: ]+' '/inet/'
+
+
+-v: 定义变量并赋值
+    
+    awk -v NUM=3 '{print NUM}' 文件             //不能加$调用变量
+    awk -v NUM="youyou" '{print NUM}' 文件      //不能加$调用变量
+    awk -v NUM="youyou" 'BEGIN{print NUM}' 文件      //只输出一遍
+    awk -v NUM="youyou" '{print NUM}'      //没有输入，则键盘是输入
+
+### 关于空格分隔符
+
+http://www.mamicode.com/info-detail-3043393.html
+
+
+    1. 行中的连续空格不会分隔空字段。当 FS 的值为 " " 时，awk 首先从记录中去除行首和行尾的空白，然后再分割字段。
+
+    1. 如果 FS 是其他字符，比如”，“，连续两次出现将分隔一个空字段。如果字符出现在行首或行尾，也会分隔空字段。空格字符做为默认分隔符，是唯一不遵守这些规则的字符。
+
+    1. 如果通过 -F "[ ]" 指定，执表示通过单个空格分隔，此时，将失去其做为默认分隔符的特性，与其它字符一样，遵守同样的分隔规则。
+
+
+
+### 命令
+
+必须用{}包裹, 多个语句用分号分隔
+
+1. 地址定位
+    
+    正则表达式
+        '/root/{语句}'
+
+    变量
+        'NR==1,NR==5{awk语句}'
+
+        'NR==1{awk语句}'
+
+    多个定位条件
+
+        'NR==1,NR==5;/^root/{动作}'
+
+
+    支持逻辑运算符
+
+        'NR==1 || NR==4{print $0}'
+
+        'NR<=4{print $0}'
+
+        'NR>=1 && NR<=4{print $0}'
+
+        'NR>=1,NR<=4{print $0}'     //这个好像是满足前边那个就可以了，直到最后一行
+
+BEGIN ... END ...
+
+
+1. 命令执行
+    1. 命令执行方式1
+
+        '地址定位{awk语句;awk语句}'
+
+    1. 命令执行方式2
+
+        'BEGIN{awk语句};{处理中};END{awk语句}'
+
+    1. 脚本方式
+
+    ```
+    #!/bin/awk -f
+    BEGIN{FS=':'}                         同sed， 命令不需要使用引号，同一行多个命令用分号隔开
+    NR==1,NR==4{print $1"\t"$NF}
+
+    awk -f awk脚本 文件
+    ```
+
+1. 相关变量
+
+```
+$0: 当前行
+
+$1, $2, $3 ... $n: 以间隔符分隔的列字段(同sed都是从1开始)
+
+    $1, $2...$n 不能写在双引号中
+
+NF: 列的总数
+
+$NF: 最后一列
+
+    awk -F':' '{print $NF, $(NF-1)}' 文件
+
+NR/FNR: 行号
+
+
+FS: 定义分隔符，同选项-F
+    
+    awk 'BEGIN{FS=":";OFS="\t"}{print $1,$2}' 文件   
+
+    awk 'BEGIN{FS=":";OFS="\t"}{print $0}' 文件     // 这个不是以OFS来分隔的
+
+    awk 'BEGIN{FS=":"}{print $1"-------""$2}' 文件  //手写分隔符 
+
+OFS: 输出字段分隔符，默认空格
+RS: 输入记录分隔符，默认换行
+
+    awk -F: 'BEGIN{RS="\t"}{print $1}' 文件         //为什么有的系统换行不是\t, 但是分行了呢???
+
+ORS: 输出记录分隔符，默认换行
+
+
+
+```
+
+
+
 
 
 {} 之间加不加分号都可以
@@ -30,17 +165,27 @@ awk '条件1 {动作1} 条件2 {动作2} ...' 文件
     **制表符、要添加的字符 都要用双引号括起来**
 
     $0: 表示这一行的内容
+
     awk '{ print $X   }' 文件
+
         这里X 只要不为除了零以外的数字，都会全部打印出来,why???
 
 输出结果有时对不齐，此时要借用column命令
+
     例如:
+
     df -h | awk '{printf $1 "\t" $2 "\t" $3 "\t" $4 "\n"}' | column -t
 
     df -h | awk '{print $1 "\t" $2 "\t" $3 "\t" $4 }' | column -t
 
     print  会自动换行 相当于 echo
+
     printf 不会自动换行 相当于 echo -n
+
+        **是格式化输出，同C语言**
+
+        '{printf "%-20s%-20s",$1,$2}'
+
         -n     do not output the trailing newline
 
 
@@ -129,6 +274,7 @@ awk 'BEGIN{FS=":"} {printf "|%-20s| %-15s| %-15s|\n",$1,$2,$3}' passwd
 
 如果是print，不会格式化，不认 %s %d等，会原样输出
 
+
 ### 定义变量
 -v var=val
     --assign var=val
@@ -152,6 +298,7 @@ BEGIN
     awk -F: 'BEGIN{printf "%-20s%20s\n**********************************\n","Login_shell","Login_home"};{printf "%20s%20s\n",$NF,$(NF-1)};END{printf "*********************************\n"}'
 
 
+    awk -F: -v name="LOGIN_NAME" -v value="LOGIN_SHELL" 'BEGIN{printf "%-20s%-20s\n",name,value}{}END{}' 文件
 
 
 
@@ -164,7 +311,7 @@ BEGIN
 >=
 <
 <=
-~       匹配
+~       **匹配**
         awk -F: 'NR>=2 && NR<=5 && $0 ~ /zsh$/ {print $0}' passwd
 
         不匹配的行(匹配也就这个用处多吧)
@@ -185,15 +332,32 @@ BEGIN
 
     It is over
 
+    举例：
+
+    从第一行开始匹配到以lp开头行
+
+        ```
+        awk -F: '1,/^root/{print $0}' 文件
+        ```
+
+
+    第二行到第五行，以zsh结尾的行
+
+        ```
+        awk -F: 'NR>=2 && NR<=5 && /zsh$/ {print $0}' passwd
+        awk -F: 'NR>=2 && NR<=5 && $0 ~ /zsh$/ {print $0}' passwd
+        ```
+
+    以root开头或以lp开头的行
+
+    ```
+    awk -F: '/^root/ || /^lp/{print $0}' 文件
+
 
     awk -F: '/root/;/^lp/{print $0}' 文件
         ; 用来分割命令，没有动作命令，会打印一行，所以，这条命令等价于
         awk -F: '/root/{print $0};/^root/{print $0}' 文件
-
-
-    第二行到第五行，以zsh结尾的行
-        awk -F: 'NR>=2 && NR<=5 && /zsh$/ {print $0}' passwd
-        awk -F: 'NR>=2 && NR<=5 && $0 ~ /zsh$/ {print $0}' passwd
+    ```
 
 
 ### 定位，正则 
@@ -274,4 +438,95 @@ sed -n 'p' ifc | awk -F# '{print $2}'       输出空
 sed -n 'p' ifc | awk -F# '{print $3}'       输出空
 sed -n 'p' ifc | awk -F# '{print $4}'       输出3
 ```
+
+
+
+## 循环判断
+
+### if 
+
+if(){} else {}
+    awk -F" " 'NR==2{ if($1>100) {print"大于100"} }' 文件
+
+    awk 'NR==2{if($1>100){print "大于100"} else {print "小于等于100分"}}' 文件
+
+    awk -F: '{if($3==0){print "You r root"} else { print "You r not root" }}' /etc/passwd
+
+    awk -F: '{if($3==0 && $4 > 0) {print "You r root"} else { print "You r not root" }}' /etc/passwd
+
+
+if(){} else if() {} else {}
+
+    变量可以直接使用, 不用声明
+
+    BEGIN{FS=":"}{if($3==0){i++} else if($3>=1000){j++} else {k++}}END{printf "admin:%-20s\n普通用户:%-20s\n系统用户:%-20s\n",i,j,k}
+
+
+### for 循环
+
+1. {for (i=0;i<10;i++){print i}}
+
+    1. 简单for
+
+    `NR==1{for(i=0;i<10;i++){print i}}
+
+
+    1. 嵌套循环
+
+    `BEGIN{for(i=1;i<6;i++){for(j=1;j<=i;j++){printf "%s",j} print ""} }
+
+
+1. for(i in xxx)
+
+
+### while 循环
+
+NR==1{i=0;while (i<10){print i"h";i++}}
+
+
+awk 可以进行小数运算
+    awk 'NR==1{print 1/3}' 文件
+
+
+## 案例
+
+统计/etc/passwd 文件中的shell类型数量
+
+    BEGIN{FS=":"}{shells[$NF]++} END{for( i in shells  ){printf "%-20s%-20s\n",i,shells[i]}}
+
+    这个会比较常用, 如各种状态信息的统计
+
+
+统计网络链接状态
+
+    脚本: {stat[$2]++}END{for(i in stat){printf "%-20s%-10s\n",i,stat[i]}}
+    ss -an | awk -f 脚本文件
+
+    ss -an | awk -f 脚本文件 | sort -k2 -rn
+
+
+统计网站日志中 PV 量
+    
+    名词解释：
+        网站访问量(PV): Page View, 每打开一个页面变记录为1次PV
+        访问次数(VV): Visit View, 
+
+
+
+    统计Apache/Nginx 日志中某一天的PV量
+
+    ```
+    grep '27/Aug/2017' mysqladmin.cc-access_log | wc -l
+    ```
+
+
+    统计Apache/Nginx 日志中某一天不同IP的访问量
+
+    ```
+    grep '27/Aug/2017' mysqladmin.cc-access_log | awk '{ips[$1]++}; END{for(i in ip){print i,ip[i]}}' | sort -k2 -rn
+
+
+
+    grep '27/Aug/2017' mysqladmin.cc-access_log | awk '{ips[$1]++}; END{for(i in ip){print i,ip[i]}}' | awk '$2>200' | sort -k2 -rn
+    ```
 
