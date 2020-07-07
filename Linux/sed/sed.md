@@ -127,7 +127,7 @@ options
         key1是开始行，在一行中找到就从下一行开始找 key2, 而不在本行找key2
 
     /key/,x             关键字到x行     []
-    /key/,x!            关键字到x行     ()
+    /key/,x!            关键字到x行     [] /key/和x 都不会显示出来
 
     x,/key/             从第x行到匹配关键字行
     x,/key/!            从第x行到匹配关键字行
@@ -188,7 +188,7 @@ world\
 ### 替换整行内容
 sed '5chelloworld' 文件
 
-sed '/^root/5chelloworld' 文件
+sed '/^root/chelloworld' 文件
     sed '/正则/xxx'
 
 注意
@@ -197,11 +197,17 @@ sed '/^root/5chelloworld' 文件
 
 
 ### 删除
+
 sed '5d' 文件
+
 sed '1,5d' 文件
+
 sed '/^root/d' 文件
+
 sed '/[0-9]/d' 文件
+
 sed -r '/([0-9]{1,3}\.){3}[0-9]{1,3}/d' 文件
+
 sed 'd' 文件    
     全部删除
     注意，没有输出
@@ -247,7 +253,7 @@ sed -n '1,10s/\bin/\WORLD/gp' 文件
 
 显示除了注释和空行的行
     sed -n '/^#/!p;/^$/!p' 文件
-    sed -r '/^#|^$/!p'
+    sed -nr '/^#|^$/!p'
 
 sed -r '/^(#|$|;|\t$)/d' 文件
     
@@ -264,12 +270,17 @@ sed -nr '/^lp|^#/p' a.txt
 
 
 练习题
+
 the quick brown fox jumps over the lazy dog.dog
 the quick brown fox jumps over the lazy dog.dog
 the quick brown fox jumps over the lazy dog.dog
 
 第一个dog 换成 cat， 第二个dog 换成T-rex
     sed -n 's/dog/cat/1;s/dog/T-rex/1p' 文件    替换过后就只有一个dog了，从1开始
+
+
+多条命令的话，只在最后一个命令后边加p(打印) 即可，否则，第一条命令后打印，第二条命令后又打印
+
 
 
 ## 文件形式
@@ -297,7 +308,7 @@ the quick brown fox jumps over the lazy dog.dog
 
     ```sed.sh
     #!/bin/sed -f       不要有空格
-    s/dog/cat/1         不要有空格
+    s/dog/cat/1         不要有空格,并且不要有空行
     1,5d                不要有空格
     3i777               不要有空格
     a888                不要有空格
