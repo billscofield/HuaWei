@@ -13,12 +13,27 @@ filtering and transforming text
 **处理时，把当前处理的行存储在临时缓冲区中，称为”模式空间”（ oattern space），接看用sed命令处理缓冲区中的内容，处理成后，把缓冲区的内容送往屏幕显示。**
 
 
+
+
 sed [OPTION]... {script-only-if-no-other-script} [input-file]...
 
 
 两种使用方式
     1. 命令行模式
     2. 写成脚本
+
+### 默认的打印行为
+
+如果不加 -n 选项，是先打印还是先处理呢？
+
+```
+sed '' passwd
+
+我们可以用 sed '=' passwd 得出结论：
+
+先进行我们的动作处理，然后再进行将模式空间中的一行打印出来的默认行为
+```
+
 
 ## 命令行模式
 
@@ -51,21 +66,31 @@ options
 
 
         看文件有多少行
+
             sed  -n '$=' 文件
+
                 要加上-n, 否则内容也打印了
+
             sed '=' dog
+
                 相当于-i, 在内容上一行打印行号
+
     -e script, --expression=script
 
         add the script to the commands to be executed
 
     -n, --quiet, --slient   : 取消默认输出(未经修改的); sed会在输出修改后的内容后，再将缓冲区中的原内容(未经修改的)输出
+
     -E, -r : 使用扩展的正则表达式
 
     -i[SUFFIX], --in-place[=SUFFIX]
+
         edit files in place (makes backup if SUFFIX supplied)
-        不要配合 -n 选项，输出的内容回写进文件
+
+        不要配合 -n 选项，输出的内容回写进文件, 不匹配的行则默认回写回去，匹配的行进行修改
+
         和动作p的作用一样，加了动作p, 会再写一遍,
+
         即，怎么输出，就怎么回写
 
         -i.备份文件   suffix后缀 生成原文件名.后缀
@@ -127,7 +152,7 @@ options
         key1是开始行，在一行中找到就从下一行开始找 key2, 而不在本行找key2
 
     /key/,x             关键字到x行     []
-    /key/,x!            关键字到x行     ()
+    /key/,x!            关键字到x行     [] /key/和x 都不会显示出来
 
     x,/key/             从第x行到匹配关键字行
     x,/key/!            从第x行到匹配关键字行
@@ -150,7 +175,8 @@ sed -n '$p' 文件        打印最后行
 
 关于打印：
     对于缓冲区，执行动作，然后sed默认输出,所以，第一次输出是打印动作，第二次输出是sed的默认输出
-    都是输出修改过后的文件内容
+
+    所以都是输出修改过后的文件内容
 
 ### 正则表达式
 
@@ -188,7 +214,7 @@ world\
 ### 替换整行内容
 sed '5chelloworld' 文件
 
-sed '/^root/5chelloworld' 文件
+sed '/^root/chelloworld' 文件
     sed '/正则/xxx'
 
 注意
@@ -197,11 +223,17 @@ sed '/^root/5chelloworld' 文件
 
 
 ### 删除
+
 sed '5d' 文件
+
 sed '1,5d' 文件
+
 sed '/^root/d' 文件
+
 sed '/[0-9]/d' 文件
+
 sed -r '/([0-9]{1,3}\.){3}[0-9]{1,3}/d' 文件
+
 sed 'd' 文件    
     全部删除
     注意，没有输出
@@ -247,7 +279,7 @@ sed -n '1,10s/\bin/\WORLD/gp' 文件
 
 显示除了注释和空行的行
     sed -n '/^#/!p;/^$/!p' 文件
-    sed -r '/^#|^$/!p'
+    sed -nr '/^#|^$/!p'
 
 sed -r '/^(#|$|;|\t$)/d' 文件
     
@@ -264,12 +296,17 @@ sed -nr '/^lp|^#/p' a.txt
 
 
 练习题
+
 the quick brown fox jumps over the lazy dog.dog
 the quick brown fox jumps over the lazy dog.dog
 the quick brown fox jumps over the lazy dog.dog
 
 第一个dog 换成 cat， 第二个dog 换成T-rex
     sed -n 's/dog/cat/1;s/dog/T-rex/1p' 文件    替换过后就只有一个dog了，从1开始
+
+
+多条命令的话，只在最后一个命令后边加p(打印) 即可，否则，第一条命令后打印，第二条命令后又打印
+
 
 
 ## 文件形式
@@ -297,7 +334,7 @@ the quick brown fox jumps over the lazy dog.dog
 
     ```sed.sh
     #!/bin/sed -f       不要有空格
-    s/dog/cat/1         不要有空格
+    s/dog/cat/1         不要有空格,并且不要有空行
     1,5d                不要有空格
     3i777               不要有空格
     a888                不要有空格
