@@ -17,7 +17,7 @@
 
 source /etc/bash.bashrc
 
-打开远程桌面 的 windows manager
+打开远程桌面 的 设置 -> windows manager(窗口管理器)
     application > settings > windows manager
     xfwm4-settings 将tab键占用的快捷方式更换
 
@@ -33,7 +33,7 @@ apt-get install xrdp
 
 apt-get install vnc4server
 apt-get install xubuntu-desktop
-echo “xfce4-session” >~/.xsession(每个用户)
+echo "xfce4-session" >~/.xsession(每个用户)
     ubuntu18之后的版本，不写这个就是默认的unity界面
 
 service xrdp restart

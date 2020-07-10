@@ -159,7 +159,22 @@ Each of the above is also requirement in security compliance governance bodies, 
 
 
 
+## 挂载 windows 共享文件夹
 
+mount -t cifs //192.168.1.1/共享文件夹名  /挂载目录  -o username=administrator,password=12345,vers=2.0
+
+
+redhat 要求windows主机必须开启:
+
+    SMB 1.0/CIFS 文件共享支持
+
+        SMB 1.0/CIFS 服务器
+
+        SMB 1.0/CIFS 客户端
+
+        SMB 1.0/CIFS 自动删除
+
+    并写上版本, vers=2.0, 否则报错：Host is down
 
 
 

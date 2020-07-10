@@ -83,3 +83,22 @@ echo "serverB"> serverb/index.html
 
 
 curl http://www.servera.com:8000
+
+
+
+
+
+
+
+
+全局
+
+event
+
+http
+
+    http 全局块
+
+    server 块, 虚拟主机
+
+        
