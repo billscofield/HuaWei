@@ -218,7 +218,9 @@ yum install -y 需要的包
 
 
 
+### 克隆源
 
+reposync -p /mnt/centos/6/
 
 
 
@@ -248,7 +250,11 @@ sqlite3 数据库锁定的问题, 添加选项 --no-database 就解决了
 
 
 ```
+格式: createrepo -po 源目录 索引元数据的输出位置目录
+
 createrepo -v /mnt/centos/6/epel/ --update --no-database
+
+但是会报: Could not find valid repo at: /mnt/centos/6/epel/
 
 ```
 

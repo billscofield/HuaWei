@@ -3,33 +3,54 @@
 gdb 是GNU推出的程序调试器
 
 1. 预处理(pre-processing)           
-    -E  只进行预编译，不做其他处理
+
+    -E  只进行预编译，头文件，不做其他处理
+
     .i  预处理后的文件
 
+
 1. 编译(compiling)                  
+
     -S 只编译不汇编，生成汇编代码
+
     .o  编译后的目标文件
 
+
 1. 汇编(assembling)                 
+
     -c 只编译和汇编, 生成目标文件.o, 不链接
+
     .s  汇编语言代码文件
 
 1. 链接(linking)                    
+
     同时链接 _start 启动代码(gcc提供)
 
 
 -o              文件名
+
 -g              在生成的可执行程序中包含标准调试信息
+
 -I dir          头文件路径  /usr/include
+
 -L dir          库文件路径  /usr/lib
+
 -static         链接静态库
+
 -library        链接名为library的库文件
+
 -O、-O2、-O3    将优化状态打开，不能与-g连用
+
 -Wall           将警告看成是错误，发生警告是取消编译
+
 -Werror         将警告看成是错误，发生警告是取消编译
+
 -w              禁止所有报警
+
 -pedantic       以ANSI/ISO C标准列出的所有警告
+
     当GCC在编译不符合ANSI/ISO C语言标准的源代码时，如果在编译指令中加上了-pedantic选项，那么源程序中使用了扩展语法的地方将产生相应的警告信息。
+
 
     ```
     void main(){                    不能是void
@@ -49,17 +70,22 @@ gcc 通过文件后缀名来区别输入文件的类型
 
 
 ---
+
 -E                       Preprocess only; do not compile, assemble or link.
+
 -S                       Compile only; do not assemble or link.
+
 -c                       Compile and assemble, but do not link.
 
 
 1. -E后的.i文件
+
     gcc -E hello.c -o hello.i
 
     hello.i: C source, ASCII text
 
 1. -S后的.s文件
+
     gcc -S hello.i -o hello.s
 
     .s 文件 hello.s: assembler source, ASCII text
