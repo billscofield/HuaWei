@@ -1,13 +1,20 @@
 samba是一套程序，其中最重要的两个是：
+
     smbd：提供SMB / CIFS服务（文件共享和打印），也可以作为Windows域控制器。
+
     nmbd：提供NetBIOS名称服务
 
 早期，不同主机之间传输数据大多通过FTP，但是不能直接修改
 
+
 直接修改的系统
+
     NFS(linux),仅能让Linux机器沟通
+
     CIFS(windows,Common Internet File System) 只能让windows机器沟通
+
         网上老邻居
+
 
 1991年 Andrew Tridgell 手头上有3种电脑，DEC,Sun, DOS
 
@@ -33,12 +40,16 @@ windows里还有 NetBEUI(NetBIOS Extended User Interface)
 samba
 
 samba-client
+
     挂载samba文件格式的mount.cifs, 取得类似网上邻居相关树形图的 smbtree
 
 samba-common
+
     server 和 client都会用到的数据，包括 samba的主要配置文件 smb.conf, 语法检验命令 testparm
 
+
 ## 安装
+
 apt install samba
 
 smbstatus
@@ -57,12 +68,15 @@ systemctl status nmbd
 
 
 ## 配置
+
 /etc/samba/smb.conf
 
 在[全局] [global]部分，确保工作组的值与Windows计算机的工作组设置相同。
+
     主机的信息配置
 
 workgroup = WORKGROUP
+
 向下滚动到文件的底部。 （在nano文本编辑器中，按CTRL + W然后按CTRL + V。）添加新的部分，如下所示。 用您所需的用户名替换红色用户名。
 
 [Home Share]
@@ -90,10 +104,13 @@ smbpasswd -a hr     //如何修改?  说也是这一个命令
     `````
 
 不允许一个用户使用一个以上用户名与一个服务器或共享资源的多重连接。中断与此服务器或共享资源的所有连接，然后再试一次
+
     方法一
+
         在cmd下运行 net use * /del /y 来清除系统记录列表
 
     方法二
+
         services.msc > workstation重启
 
 
