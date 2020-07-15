@@ -191,15 +191,15 @@ passdb backend (G)
     comment = 描述信息
     browseable = no             //no:隐藏共享; 需要手写目录才能访问, 同wifi ssid隐藏
     writable = yes              //所有人, 配置文件和文件系统都有权限才可以
-    valid users = %S            //@组名, 宏变量 ，%S 指代用户本身, 逗号分隔
-    valid users = MYDOMAIN\%S
+    valid users = %S            //@组名, 宏变量 ，%S 指代用户本身, 空格分隔(也可以逗号分隔), 特定用户才能**访问**该共享
+    valid users = MYDOMAIN\%S   //如为空，将允许所有用户
 
 [printers]
     comment = 
     path = /var/spool/samba
-    guest ok = no               //匿名访问,public
+    guest ok = no               //匿名访问, public默认为 no
     writable = no
-    write list =                //writable为no，允许那些人可以写
+    write list =                //writable为no，允许那些人可以写, @组名, +组名, 逗号分隔
     printable = yes             //是否可以打印
 
 [share]
@@ -277,6 +277,9 @@ delete readonly :是否能删除已被定义为只读的文件
     directory mask = 755
 
 
+read only = no 和 writable = yes 等价，如与以上设置冲突，放在后边的设置生效，**这两个没有写，则默认只读**
+
+
 
 配置检查工具 testparm, 语法错误
 
@@ -337,16 +340,28 @@ mount -o username=abc,password=abc -t cifs //192.168.1.1/share /mnt
 fstab文件永久挂载
     //192.168.1.1/share    /mnt    cifs    rw,username=abc,password=abc    0    0
     //192.168.1.1/share    /mnt    cifs    default,username=abc,password=abc    0    0
+    //192.168.1.1/share    /mnt    cifs    username=abc,password=abc    0    0
+    //192.168.1.1/share    /mnt    cifs    credentials=/etc/smb.txt    0    0           //防止密码被别人看到, cred 也可以, 需要安装 cifs-utils 包
+        cat /etc/smb.txt
+        username=alice  或者 user=alice
+        password=alice  或者 pass=alice
+        chmod 600 /etc/smb.txt  别人无法拷贝走
 
 
-    mount -a    //挂在未挂载的
+    mount -a    //挂载未挂载的
 
 
 windows 登录
+
     \\192.168.1.1\share
 
 windows 清空登录缓存
+
     net use * /del
+
+    net use \\192.168.1.1\share /del
+
+    可以在控制面板，凭证里边删掉记住的凭证
 
 
 apt install -y samba-client
@@ -408,3 +423,47 @@ http://ip:901
 使用系统用户登录
 
 
+
+
+
+### 个人配置文件
+
+不同的用户访问同样的共享，看到的不一样的效果
+
+/etc/samba/smb.conf
+
+在workgroup 下边添加一行: 
+config file = /etc/samba/conf.d/%U  (%U表示用户名)
+
+
+    ```/etc/samba/smb.conf
+    [share]
+    path=/data
+
+
+    ```
+
+    alice
+
+    ```/etc/samba/conf.d/alice
+    [share]
+    path=/data1
+
+    ```
+
+    bob
+
+    ```/etc/samba/conf.d/bob
+    [share]
+    path=/data2
+
+    ```
+
+
+#### 挂载 win10 的 samba
+
+    man mount.cifs
+
+    1.0 是defatult
+
+    3.0 win10 是 3.0, 所以要写  vers=3.0
