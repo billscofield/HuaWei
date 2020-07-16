@@ -40,7 +40,7 @@ sed '' passwd
 sed [options] '处理动作(一定要加单引号)' 文件名
 
 options
-    -e  : 进行多项（多次）编辑? 貌似没有什么用, 对第一行编辑，对第二行编辑，..
+    -e  : 对每一行进行多项（多次）编辑 
         sed -ne '/root/p' -ne '/root/=' passwd
 
         ```
@@ -75,7 +75,7 @@ options
 
             sed '=' dog
 
-                相当于-i, 在内容上一行打印行号(先执行动作，后默认输出)
+                相当于动作命令-i, 在内容上一行打印行号(先执行动作，后默认输出)
 
     -e script, --expression=script
 
@@ -98,9 +98,11 @@ options
         -i.备份文件   suffix后缀 生成原文件名.后缀
         
         sed -i.bak 's/dog/cat/1;s/dog/T-rex/1' dog
+
             会先备份dog文件为dog.bak 然后再做修改
 
     -f script-file, --file=script-file
+
         dd the contents of script-file to the commands to be executed
 
 
@@ -119,7 +121,7 @@ options
 
     'd' 删除指定行
 
-        任何时候 d 命令都会结束当前模式空间的处理，读取文本的下一行(针对多命令)
+        **任何时候 d 命令都会结束当前模式空间的处理，读取文本的下一行(针对多命令)**
 
     'r' 从另一个文件读入内容加入到当前文件
 
@@ -211,11 +213,12 @@ sed -n '$p' 文件        打印最后行
 
 
 
-关于打印：
+关于打印命令-p：
 
     对于缓冲区，执行动作，然后sed默认输出,所以，第一次输出是打印动作，第二次输出是sed的默认输出
 
     所以都是输出修改过后的文件内容
+
 
 ### 正则表达式
 
@@ -251,7 +254,7 @@ sed '2ihello\nworld' 文件      也会将整个打印
 
 ```
 sed '3i\
-hello\
+hello\          //这个back slash 必须有哈
 world\
 888' 文件
 ```
@@ -440,9 +443,10 @@ echo 'tom is handsome' | sed 's/tom/bill/1'
 ## 使用shell变量
 
 sed -i "/$LUCK_LINE/d" names
-    发现不使用变量的时候，使用双引号也没有问题
-    而awk 使用双引号不行
 
+    发现不使用变量的时候，使用双引号也没有问题
+
+    而awk 使用双引号不行
 
 
 模式空间

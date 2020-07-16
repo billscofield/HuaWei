@@ -89,6 +89,8 @@ why:
 
     是 -f 被操作的文件 之意?
 
+    看了《Effective awk Programming》 #!/usr/bin/sed -f   => ./awkshell  => /usr/bin/sed -f ./awkshell
+
     ```
     #!/usr/bin/sed -n
 
@@ -133,7 +135,7 @@ why:
 
         sed '/root/{n;d}'
 
-    r: 读取其他文件内容到当前行的下方
+    r: 读取其他文件内容到当前行的下方, 好像不能读取 shell 命令
         
         sed '5r /etc/hosts' passwd
 
@@ -194,7 +196,7 @@ why:
 
 ### 语句块 {}
 
-sed '4{h;d}' passwd
+sed -n '4{h;x;p}' passwd
 
 
 ### 外部变量

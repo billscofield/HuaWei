@@ -2,9 +2,9 @@
 
 awk 是一门语言, 有变量
 
-Alfred Aho
-Brian Kernighan
-Peter Weinberger
+1977年开发出来
+
+Alfred Aho, Brian Kernighan, Peter Weinberger
 
 在 GNU 当中，叫做 gawk
 
@@ -19,6 +19,7 @@ Peter Weinberger
     awk 'NR==1,NR==4' 文件
 
     awk '/root/' 文件
+
 
 ### 使用方式
 
@@ -43,10 +44,14 @@ awk 选项 '命令' 文件名      // 当引用变量时，用双引号，同sed
 
 -v: 定义变量并赋值
     
-    awk -v NUM=3 '{print NUM}' 文件             //不能加$调用变量
-    awk -v NUM="youyou" '{print NUM}' 文件      //不能加$调用变量
-    awk -v NUM="youyou" 'BEGIN{print NUM}' 文件      //只输出一遍
-    awk -v NUM="youyou" '{print NUM}'      //没有输入，则键盘是输入
+    awk -v NUM=3 '{print NUM}' 文件                     //不能加$调用变量
+
+    awk -v NUM="youyou" '{print NUM}' 文件              //不能加$调用变量
+
+    awk -v NUM="youyou" 'BEGIN{print NUM}' 文件         //只输出一遍
+
+    awk -v NUM="youyou" '{print NUM}'                   //没有输入，则键盘是输入
+
 
 ### 关于空格分隔符
 
@@ -55,7 +60,9 @@ http://www.mamicode.com/info-detail-3043393.html
 
 1. 行中的连续空格不会分隔空字段。当 FS 的值为 " " 时，awk 首先从记录中去除行首和行尾的空白，然后再分割字段。
 
-1. 如果 FS 是其他字符，比如”，“，连续两次出现将分隔一个空字段。如果字符出现在行首或行尾，也会分隔空字段。空格字符做为默认分隔符，是唯一不遵守这些规则的字符。
+1. 如果 FS 是其他字符，比如”，“，连续两次出现将分隔一个空字段。如果字符出现在行首或行尾，也会分隔空字段。
+
+   空格字符做为默认分隔符，是唯一不遵守这些规则的字符。
 
 1. 如果通过 -F "[ ]" 指定，执表示通过单个空格分隔，此时，将失去其做为默认分隔符的特性，与其它字符一样，遵守同样的分隔规则。
 
@@ -103,9 +110,11 @@ END:
 1. 地址定位
     
     正则表达式
+
         '/root/{语句}'
 
     变量
+
         'NR==1,NR==5{awk语句}'
 
         'NR==1{awk语句}'
@@ -145,6 +154,7 @@ BEGIN ... END ...
 
 
 1. 命令执行
+
     1. 命令执行方式1
 
         '地址定位{awk语句;awk语句}'
@@ -197,13 +207,24 @@ NR/FNR: 行号
 
     当文件有多个的时候有区别
     
-    awk '{print $0}' /etc/passwd /etc/services
+    awk '{print NR,$0}' /etc/passwd /etc/services
 
     NR
         一个总的行号,total number
 
     FNR
         每一个文件一个行号, current input file
+
+    ???
+        awk '{print $NR,$0}' 123.txt
+
+        ```输出结果,为什么是这个样子呢???
+        1 1
+         2
+         3
+         4
+         5
+        ```
 
 
 FS: 定义分隔符，同选项-F
@@ -243,7 +264,7 @@ RS: 输入记录分隔符，默认换行
         
         RS="" 使源文件的多行变成了1行
 
-    输出结果是： 1 2 3 4 5
+    输出结果是： 1 2 3 4 5                          //为什么呢???
 
     变成空格分隔的了, 因为OFS是空格
 
@@ -251,7 +272,7 @@ RS: 输入记录分隔符，默认换行
 ORS: 输出记录分隔符，默认换行
 
 
-    讲文件的每一行合并为1行
+    将文件的每一行合并为1行
 
     awk 'BEGIN{ORS=" "}{print $0}'      //RS 换成 ORS
 
@@ -358,6 +379,7 @@ BEGIN
 
 
 ### 变量
+
 $0          当前行的所有列
 
     最后一行的内容
