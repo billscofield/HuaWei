@@ -136,6 +136,7 @@ conda config --set show_channel_urls yes
 ### 分享环境
 
 首先通过activate target_env要分享的环境target_env，然后输入下面的命令会在当前工作目录下生成一个environment.yml文件
+
 conda env export > environment.yml
 
 小伙伴拿到environment.yml文件后，将该文件放在工作目录下，可以通过以下命令从该文件创建环境
