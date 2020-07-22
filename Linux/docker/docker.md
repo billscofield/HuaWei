@@ -643,7 +643,7 @@ service docker start
         拉取镜像
             阿里云镜像加速配置, 登录阿里云，控制台,搜索"镜像" , "镜像加速器"
             阿里云上会显示如何配置阿里云的源(根据发行版)
-
+            
             ```
             touch /etc/docker/daemon.json
             {
@@ -651,6 +651,13 @@ service docker start
             }
             systemctl daemon-reload
             systemctl restart docker
+            
+            
+            实际发现不太好用，网易的比较好用
+            {
+              "registry-mirrors": ["http://hub-mirror.c.163.com"]
+              
+            }
             ```
 
             通过 docker info 查看镜像地址(Registry Mirrors)

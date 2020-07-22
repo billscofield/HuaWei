@@ -19,13 +19,17 @@ pyenv install --list
 ## 在安装python之前，要先安装python的一些依赖包：
 
 apt-get install libc6-dev gcc
+
 apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm
+
 apt-get install -y libsasl2-dev python-dev libldap2-dev libssl-dev
+
 apt-get install -y libkrb5-dev
 
 
 
 apt install -y mariadb-server
+
 apt install libmariadb-dev-compat libmariadb-dev
 
 
@@ -41,23 +45,30 @@ pyenv install 3.6.5 -v
 pyenv rehash
 
 查看当前安装的python的版本：
+
 pyenv versions
+
 ```
 * system (set by /home/seisman/.pyenv/version)
 3.6.5
 ```
 
 设置全局的python版本：
-pyenv global 3.6.5
-pyenv versions
-```
-system
-* 3.6.5 (set by /home/seisman/.pyenv/version)
-```
+
+    pyenv global 3.6.5
+
+    pyenv versions
+
+    ```
+    system
+    * 3.6.5 (set by /home/seisman/.pyenv/version)
+    ```
+
 现在python的版本变成3.6.5了，可以使用pyenv local或pyenv shell临时改变python的版本。
 
 
 cd /opt
+
 $ git clone --depth=1 https://github.com/jumpserver/jumpserver.git
 
 cd /opt/jumpserver/requirements
