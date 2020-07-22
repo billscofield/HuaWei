@@ -33,6 +33,7 @@ make && make install
 
 
 ## 信号量
+
 kill -信号量 master进程号
 
 TERM, INT   Quick shutdown
@@ -59,6 +60,7 @@ kill -HUP master进程号
 ## conf
 
 nginx.conf
+
 ```
 worker_processes 1; # 一般设为线程数
 

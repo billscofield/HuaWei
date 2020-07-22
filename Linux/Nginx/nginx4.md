@@ -3,12 +3,15 @@ engine X: 高性能的 Web 和 反向代理服务器
 支持 http, https 和电子邮件代理协议
 
 OpenResty 是基于 Nginx 和 Lua 实现的 Web 应用网关，继承了大量的第三方模块
+
     Nginx的山寨
 
 
 /usr/local/openresty/
 
 cd /usr/local/openresty/nginx/
+
+```
     sbin
         nginx
     conf
@@ -18,7 +21,7 @@ cd /usr/local/openresty/nginx/
         access.log 访问日志
         error.log 
     html
-        
+```
 
 nginx.conf
 ```

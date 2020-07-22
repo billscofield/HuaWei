@@ -33,11 +33,11 @@
 
     小覆盖，大追加
 
-    h: 模式空间  -->  暂存空间
-    H: 模式空间  -->  暂存空间
+    h: 模式空间  -->  暂存空间, 将模式空间内容复制给暂存区, 模式空间内容不变
+    H: 模式空间  -->  暂存空间, 将模式空间内容append给暂存空间, 模式空间内容不变
 
-    g: 暂存空间  -->  模式空间
-    G: 暂存空间  -->  模式空间
+    g: 暂存空间  -->  模式空间, 讲暂存空间内容复制给模式空间，暂存区内容不变
+    G: 暂存空间  -->  模式空间, 讲暂存空间内容append给模式空间，暂存区内容不变
 
 
 ## 语法格式
@@ -139,6 +139,25 @@ why:
         
         sed '5r /etc/hosts' passwd
 
+        通常和匹配配合进行文本替换
+
+        ```cat notice.std
+        Would th following people:
+        LIST
+        Please report to the ship's captain.
+
+
+        sed '/LIST/{
+        r list.txt
+        d
+        }' notice.std
+
+        r和其他命令不能写在一行，需要像上边那样写，脚本中这样写:
+
+        /list/r helloworld.txt
+        /list/d
+        ```
+
     w: 将匹配行另存为
 
         sed '/root/,/nginx/w anotherFile.txt' passwd
@@ -154,7 +173,97 @@ why:
         i: 不区分大小写
 
         N: 动作于第N个匹配项目(当一行中有多个匹配项目时，默认是第一个)
+    
+    y: 字符转换命令, 类似table转换表，一一对应，否则会报错
 
+        'y/123/abc'     //会将1替换为a, 2替换为b, 3替换为c
+
+    l: List out the current line in a 'visually unambiguous' form.
+
+        显示不可见字符
+
+        sed -n 'l' 12345.txt
+
+    l width
+        List out the current line in a ``visually unambiguous'' form, breaking it at width characters.  This is a GNU extension.
+
+    N: 会将下一文本行添加到模式空间中已有的文本后，文本行仍用换行符分隔
+
+    sed '/admin/{N;s/\n/ /}'
+
+    ```
+    ➜  t cat admin.txt
+    hello administrator
+    liu
+    hahahah
+    liu
+    whoami
+    liu
+
+    ➜  t sed  '{N; s/\n/ /}' admin.txt
+    hello administrator liu
+    hahahah liu
+    whoami liu
+
+    不加匹配，会将偶数行添加到上一行当中，原文本中的偶数行消失了
+    ```
+
+---
+
+    b用于无条件的转移（即一碰到b立刻转移）；
+    
+        语法: [address]b [label]
+        
+        address 定义了哪些行的数据会触发分支命令
+        label参数定义了要跳转到的位置
+        如果没有label参数，跳转命令会跳转到脚本的结尾
+
+
+        ```b命令
+        以AA开头的行行末加YES, 其他的加NO
+        #!/usr/bin/sed -f
+        /^AA/b yes
+        s/$/\tNO/
+        b           //这个必须有,用于结束不匹配模式的更改!!!
+        :yes
+        s/$/\tYES/
+        
+        写成一行
+        sed '/^AA/b yes;s/$/ NO/;b;:yes;s/$/ YES/' demo.md
+        ```
+
+        如果分支命令的模式没有匹配，sed编辑器会继续执行脚本中的命令，包括分支标签后的命令(因此，所有的替换命令都会在不匹配分支模式的行上执行)
+
+        ```b命令
+        以AA开头的行行末加YES, 其他的加NO
+        #!/usr/bin/sed -f
+        /^AA/b yes
+        s/$/\tNO/       和上边相比少了b ， 结束不匹配模式的更改!!!
+        :yes
+        s/$/\tYES/
+        ```
+
+
+    t用于有条件转移，只有当替换命令改变当前行时才会执行。 
+
+        语法: [address]t [label]
+
+
+    冒号和标签之间不允许有空格，lable后面如果有空格将被认为是lable的一部分（不建议在lable后面带空格）
+
+    ```t命令
+    #!/usr/bin/sed -f
+    :start
+    s/,/ /p
+    t start
+
+    #!/usr/bin/sed -f
+    s/^aa/MATCHED /
+    t
+    s/^/NO MATCHED /
+
+
+    ```
 
 ### 定位命令
 
@@ -192,6 +301,14 @@ why:
     sed -n '/root/,5p' passwd
 
     sed -n '2,/root/p' passwd
+
+
+注意:
+    
+    d(删除命令): 你指定的第一个模式会打开行删除功能，第二个模式会关闭行删除功能；
+
+    在数据流中匹配到了开始模式，删除功能就会打开，如果没有第二个模式，就会一直删除下去
+
 
 
 ### 语句块 {}
@@ -239,10 +356,26 @@ sed -n '4{h;x;p}' passwd
 
     说明：
 
-    第一行  加入到暂存区    删除
+    第一行  替换暂存区内容    删除
 
-    第二行  模式空间追加    放入暂存区    删除
+    第二行  模式空间追加    替换暂存区    删除
 
-    第三行  模式空间追加    放入暂存区    删除
+    第三行  模式空间追加    替换暂存区    删除
 
     ...
+
+
+1. 每一行打印行号
+
+    sed '=' hellworld.txt | sed '{N;s/\n/ /}'
+
+1. 加倍行间距
+
+    sed 'G' 文件
+
+1. 已有的空行不再增加
+
+    sed -e '^$d' -e '$!G' 文件
+
+
+
