@@ -75,17 +75,18 @@ zeroHash
 ####fourHash
 
 
-awk -F'[#]' '{print $1}'  FILE  为空
+awk -F'[#]' 'NR==1,NR==2{print $1}'  FILE  为空
 # 号之前的^ 为 $1, #之后的为 $2
 
-awk -F'[#]' '{print $2}'  FILE  为空
+awk -F'[#]' 'NR==3{print $2}'  FILE  为空
 第一个 # 号之前的^ 为 $1, 第一二个#号之间的为 $2
 
 ...
 
 awk -F'[#]+' '{print $2}'  FILE  为空
 awk -F'[#]*' '{print $2}'  FILE  为空 //用* 有点说不通，最少为零个做分隔符?所以用+, 但是效果是一样的
-连续的多个#看成一个#
+
+连续的多个#看成一个#, 这里是**贪婪匹配**
 
 
 ip a | grep 'inet '|grep wlp4s0 | awk -F'[ : ]+' '{print $3RS$5RS}'
@@ -148,7 +149,9 @@ END:
         awk '$1 ~ "root"{print $0}' passwd      //模糊匹配
 
 
-    最后一列是NF, 只打印最后一行呢?
+    最后一列是NF, 只打印最后一行呢? 变量会保留直到下一行触发变量改变为止，所以最后一行是:
+
+        awk 'END{print NR}'
 
 BEGIN ... END ...
 
@@ -172,7 +175,7 @@ BEGIN ... END ...
     1. 脚本方式
 
     ```
-    #!/bin/awk -f
+    #!/usr/bin/awk -f
     BEGIN{FS=':'}                         同sed， 命令不需要使用引号，同一行多个命令用分号隔开
     NR==1,NR==4{print $1"\t"$NF}
 
