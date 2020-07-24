@@ -112,6 +112,7 @@ Partition name? []? dp2
 File system type? [ext2]? ext3
 Start? 500GB
 End? 2199GB
+
 (parted) print
 Model: VBOX HARDDISK (ide)
 Disk /dev/hdd: 2199GB
