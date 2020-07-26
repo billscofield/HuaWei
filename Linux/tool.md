@@ -1,3 +1,9 @@
+## screenkey
+
+it’s useful to create screencasts and is also a powerful teaching tool.
+
+apt install screenkey
+
 ## ascii
 
 apt install ascii   //ascii表
@@ -70,3 +76,43 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 
 ## snort - flexible Network Intrusion Detection System
 
+
+
+## screenfetch
+
+screenFetch is a "Bash Screenshot Information Tool". This handy Bash script
+can be used to generate one of those nifty terminal theme information + ASCII
+distribution logos you see in everyone's screenshots nowadays.
+
+It will auto-detect your distribution and display an ASCII version of that
+distribution's logo and some valuable information to the right. There are
+options to specify no ascii art, colors, taking a screenshot upon displaying
+info, and even customizing the screenshot command.
+
+
+
+## to disable Ctrl-s in terminal
+
+https://unix.stackexchange.com/questions/332791/how-to-permanently-disable-ctrl-s-in-terminal#comment586158_332791
+
+stty -ixon
+
+or write it in .bashrc
+
+```
+As others have mentioned, the required fix is adding stty -ixon to your ~/.bashrc file. However, it should be protected from execution by non-interactive shells:
+
+if [[ -t 0 && $- = *i*  ]]
+then
+    stty -ixon
+    fi 
+    This should avoid errors when there is no TTY or interactive session in the first place, so "internal" shell invocations of desktop environments etc. will not cause error messages.
+
+
+
+Adding to telcoM's solution, Arch's default .bashrc has this:
+
+# If not running interactively, don't do anything
+[[ $- != *i*  ]] && return
+It is worth checking if your bashrc already has such checks, therefore avoiding the need for additional ifs.
+```

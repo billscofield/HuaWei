@@ -90,6 +90,15 @@ Homebrew 对于使用 Mac 的开发者来说，是再熟悉不过的了，它可
 
 ```
 
+
+brew 是从下载源码解压然后 ./configure && make install ，同时会包含相关依存库。并自动配置好各种环境变量，而且易于卸载。
+这个对程序员来说简直是福音，简单的指令，就能快速安装和升级本地的各种开发环境。
+
+而 brew cask 是 已经编译好了的应用包 （.dmg/.pkg），仅仅是下载解压，放在统一的目录中（/opt/homebrew-cask/Caskroom），省掉了自己去下载、解压、拖拽（安装）等蛋疼步骤，同样，卸载相当容易与干净。这个对一般用户来说会比较方便，包含很多在 AppStore 里没有的常用软件。
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
+
+
 脚本内容
 
 ```
@@ -515,3 +524,80 @@ fi
     关闭标签页
 
         command + w
+
+1. 屏幕显示按键
+
+    keycastr
+
+    brew cask install keycastr
+
+    ```
+    Could not create keyDown event tap!
+
+    Please grant KeyCastr access to the Accessibility API.
+
+    If KeyCastr already has access, please remove it and add it again.
+
+    按照指引进行设置即可
+
+    ```
+
+1.  Spotlight 
+    
+    Command + Space
+
+1. 切换shell
+
+    chsh -s /bin/bash
+
+1. 安装zsh
+
+    git clone https://gitee.com/billscofield/ohmyzsh.git ~/.oh-my-zsh
+
+    cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
+
+    source ~/.zshrc
+
+    各种主题的效果和名称
+
+        https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
+
+1. iTerm2
+
+    官网上下载压缩包，放到mac上用unzip解压, 然后进入文件夹，将app文件托摘到拖拽到 application
+
+    菜单栏 / iTerm2 / Install Shell Integration
+
+    
+
+
+#### zsh 插件
+
+1. incr 自动补全插件
+
+    mkdir ~/.oh-my-zsh/plugins/incr
+
+    将 incr-0.2.zsh 放入 ~/.oh-my-zsh/plugins/incr/
+
+    vim ~/.zshrc
+
+        source ~/.oh-my-zsh/plugins/incr/incr*.zsh
+
+1. zsh-autosuggestion
+
+
+1. zsh-syntax-highlighting
+    
+    你输入的命令正确与否会有不同的颜色
+
+
+### fzf
+
+brew install fzf
+
+
+### ranger
+
+终端下的文件管理器
+
+brew install ranger
