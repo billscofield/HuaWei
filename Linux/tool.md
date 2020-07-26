@@ -4,9 +4,12 @@ it’s useful to create screencasts and is also a powerful teaching tool.
 
 apt install screenkey
 
+debian 10 默认python2 环境报错???
+
 ## ascii
 
 apt install ascii   //ascii表
+
     od 命令也有类似
 
 

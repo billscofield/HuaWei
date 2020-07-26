@@ -15,7 +15,9 @@ dpkg软件包相关文件介绍
     /var/lib/dpkg/info          记安装软件包控制目录的控制信息文件
 
 下面几个命令用于对软件包进行查询
+
     dpkg -I filename 查看软件说明(直接使用dpkg -l 查询所有安装的软件包，filename可以使用正则，我通常用```dpkg -l | grep "filename"因为会存在软件名记不住的情况)
+
     dpkg -L filename 查看package-name对应的软件包安装的文件及目录
     dpkg -s filename 查看package-name对应的软件包信息
     dpkg -S filename-pattern 从**已经安装的软件包中**查找包含filename的软件包名称
