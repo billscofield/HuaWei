@@ -91,6 +91,9 @@ dpkg --listfiles compton
     这样每次打开i3wm都会后台运行compton。关闭compton可以输入pkill compton。
 
 
+compton 如何重载配置文件???
+
+
 ### 快捷键
 
 垂直方向上创建窗口      mod + v         
@@ -198,3 +201,55 @@ bindsym $mod+F3 exec amixer set Master 5%+
 bindsym $mod+F2 exec amixer set Master 5%-
 bindsym $mod+F1 exec amixer set Master toggle
 ```
+
+
+### 亮度
+
+cat /sys/class/backlight/intel_backlight
+
+#### 功能脚本
+
+```
+bright_file=/sys/class/backlight/intel_backlight
+
+step=$1
+
+step=$(( $step + $(cat $bright_file) ))
+
+if [ step -gt 100 ];then
+    echo step > $bright_file
+fi
+```
+
+chmod +x 脚本
+
+
+#### 加入 i3wm 快捷键
+
+vi ~/.i3/config
+
+bindcode 键码 exec 脚本路径
+
+或
+
+bindsym 键码 exec 脚本路径
+
+
+#### 重新加载 i3wm 配置
+
+$mod + shift + c
+
+
+### 开机自动启动
+
+debian buster 使用的是 gdm3 
+
+
+### i3 /etc/i3status.conf
+
+man i3status
+
+
+
+
+
