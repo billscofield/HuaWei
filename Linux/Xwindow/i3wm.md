@@ -100,6 +100,7 @@ compton 如何重载配置文件???
 水平方向上创建窗口      mod + h
 
 激活窗口                mod + 方向键    
+
 创建工作区workspace     mod + 数字键
 
 switch between different layout
@@ -253,3 +254,16 @@ man i3status
 
 
 
+### 关于 mod 键
+
+!一下配置的目的是为了更好地使用i3wm, i3wm 默认是 win 键 或者 alt 键，但是在 ~/.config/i3/config 中配置了 Mod = lock 后提示错误，只好如此先用着，待以后找原因
+
+vi ~/.xmodmap
+```
+clear lock
+clear mod4
+keycode 133 = Caps_Lock
+keycode 66 = Super_L
+add lock = Caps_Lock
+add mod4 = Super_L
+```
