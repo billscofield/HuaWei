@@ -1,9 +1,13 @@
 
 ## i3
 
+i3 requires an X-server and is not supported by Wayland. It is available as a metapackage that includes i3-wm, i3lock, i3status, dunst, and suckless-tools.(https://wiki.debian.org/i3)
+
 i3 是一种动态的平铺式窗口管理器，其灵感来自于面向开发者与资深用户的 wmii。
 
 i3 的既定目标包括清晰可读的文档，完善的多显示器支持，基于树形结构的窗口管理，提供 vim 式的多种操作模式。
+
+i3这类窗口管理器与Xfce,KDE,Gnome，Cinnamon这类桌面软件专注于华丽的界面不同的是，更加专注于键盘控制，和效率提升，定制化。
 
 i3 软件包组, 其中包含:
 
@@ -19,6 +23,21 @@ lightdm         ??
 启动方式
 
     从 xinitrc 启动
+
+
+exit i3
+
+    $mod + Shift + E 
+
+重启i3
+
+    $mod + shift + r    
+
+    或者  
+
+    i3 restart
+
+    i3 must be restarted for the changes to take effect. This will not cause any applications to close, but may occasionally cause them to move.
 
 
 ### 安装
@@ -43,6 +62,26 @@ exec --no-staretup-id xcompmgr &
 exec_always --no-startup-id feh --bg-scale "/home/bill/Pictures/super.jpg"
 
 
+### 修改默认桌面管理器为 i3
+
+vi /etc/X11/default-display-manager
+
+    /usr/sbin/gdm3 -> /usr/bin/i3       这个不管用啊
+
+update-alternatives --configure x-window-manager    这个也不管用啊
+
+
+### feh 壁纸工具
+
+feh --bg-fill 文件
+    --bg-scale
+    --bg-center
+    --bg-tiled
+    --bg-seamless
+
+feh --randomize --bg-fill  ~/Pictures/Wallpapers/
+
+
 ### 窗口透明度
 
 #### 方法1：transset
@@ -64,6 +103,7 @@ Compton 是一个独立的合成管理器，可以给不带合成功能的窗口
 
 Compton 是 xcompmgr-dana 的分支，而后者又是 xcompmgr 的分支。
 
+类似的还有: conky
 
 dpkg --listfiles compton
     
@@ -161,9 +201,17 @@ $ nmcli radio wifi off
 
 primitive command line interface to RandR extension
 
+类似的有: arandr
+
+
 查看当前显示器接口
 
     xrandr
+
+--output:指定显示器。 
+--mode:指定一种有效的分辨率。 
+--rate:指定刷新率。
+
 
 同步模式可以输入
 
@@ -182,6 +230,99 @@ primitive command line interface to RandR extension
     --above 谁在谁的上面
 
     --below 谁在谁的下面
+
+1. 将视频输出发送到某个接口设备:
+
+    $ xrandr --output DFP1 --auto
+
+2. 设置分辨率时需要指定设置的output及mode，如将LVDS-1的分辨率改为1920×1080，命令就是：
+
+xrandr --output eDP1 --mode 1920x1080 
+--output:指定显示器。 
+--mode:指定一种有效的分辨率。 
+--rate:指定刷新率。
+
+3. 添加有效分辨率
+
+如果xrandr查询结果中没有合适的分辨率，则可以通过newmode来
+
+添加，下面将给出eDP1添加1280x1024x60的分辨率方法。
+
+3.1 使用cvt生成一个modeline，命令如下：
+
+    ```
+    $cvt 1280  1024  60
+    #1280x1024 59.89 Hz (CVT 1.31M4) hsync: 63.67 kHz; pclk: 109.00 MHz
+    Modeline "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+    ```
+
+3.2 使用newmode创建一个mode，参数就是上面的modeline后的内容:
+
+    ```
+    $xrandr --newmode "1280x1024_60.00"  109.00  1280 1368 1496 1712  1024 1027 1034 1063 -hsync +vsync
+    ```
+
+3.3 新建模式，将新模式添加至当前输出设备,如果出错，则说明不支持此模式
+
+```
+$xrandr --addmode eDP1 1280x1024_60.00
+```
+
+3.4 设置newmode为当前分辨率
+
+```
+$xrandr --output eDP1 --mode 1280x1024_60.00
+```
+
+4 . 关闭某个接口设备的视频输出。
+
+```
+$ xrandr --output LVDS --off
+```
+
+5.设置双屏幕显示：
+
+(1)打开外接显示器，双屏幕显示相同的内容--克隆，（auto为最高分辨率）
+
+```
+xrandr --output VGA-0 --same-as DVI-D-0 --auto
+```
+
+(2）若要指定外接显示器的分辨率可以使用下面的命令（1280x1024）：
+
+```
+xrandr --output VGA-0 --same-as DVI-D-0 --mode 1280x1024
+```
+
+(3）打开外接显示器，设置为右侧扩展
+
+```
+xrandr --output VGA-0 --right-of DVI-D-0 --auto
+```
+
+（4）关闭显示器
+
+```
+xrandr --output VGA-0 --off
+```
+
+（5）打开VGA-0接口显示器，关闭DVI-D-0接口显示器
+
+```
+xrandr --output VGA-0 --auto --output DVI-D-0 --off
+```
+
+（6）设置HDMI2为主屏幕
+
+```
+$ xrandr --output HDMI2 --auto --primary
+```
+
+(7) 设置eDp1在HDMI2的右面
+
+```
+$ xrandr --output eDP1 --right-of HDMI2 --auto
+```
 
 
 
@@ -248,10 +389,41 @@ debian buster 使用的是 gdm3
 
 ### i3 /etc/i3status.conf
 
-man i3status
+man i3status 上边有写配置文件路径在哪里
+
+
+mkdir ~/.config/i3status/
+cp /etc/i3status.conf ~/.config/i3status/
+
+
+下面的显示顺序
+
+vi ~/.config/i3status/config
+
+    order += "ipv6"
+    order += "disk /"
+    order += "wireless _first_"
+    order += "ethernet _first_"
+    order += "battery all"
+    order += "load"
+    order += "tztime local"
 
 
 
+
+显示网速, 好像不太好用，再看吧
+
+https://github.com/i3/i3status/blob/master/contrib/net-speed.sh
+
+下载 net-speed.sh, chmod +x
+
+
+如何重新加载配置呢?
+
+
+i3status可选方案
+
+    https://wiki.archlinux.org/index.php/I3
 
 
 ### 关于 mod 键
@@ -267,3 +439,43 @@ keycode 66 = Super_L
 add lock = Caps_Lock
 add mod4 = Super_L
 ```
+
+
+
+
+### 锁屏 i3lock 
+
+默认的是 i3lock
+    
+    锁屏状态没有背景图像, 没有提示
+
+i3lock-fancy 虚化背景，文字提示
+
+    apt install i3lock-fancy
+
+自动锁屏
+
+    vim ~/.i3/config
+    exec --no-startup-id xautolock -time 1 -locker blurlock
+
+
+### 自动休眠 xautolock
+
+一段时间后自动锁屏工具，好像不管用啊???
+
+---
+
+可以用 DPMS 实现黑屏，或是睡眠／关掉显示器。在 ~/.i3/config 添加以下，效果是显示器闲置十分钟后就会自动睡眠。
+
+    exec —no-startup-id xset dmps 600
+
+    https://www.zhihu.com/question/344543356/answer/818710052
+
+    https://wiki.archlinux.org/index.php/Display_Power_Management_Signaling
+
+
+
+
+
+
+

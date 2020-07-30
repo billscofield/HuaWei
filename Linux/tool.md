@@ -119,3 +119,47 @@ Adding to telcoM's solution, Arch's default .bashrc has this:
 [[ $- != *i*  ]] && return
 It is worth checking if your bashrc already has such checks, therefore avoiding the need for additional ifs.
 ```
+
+
+## xdotool
+
+是一个模拟鼠标键盘操作的工具，比如用加盘模拟鼠标滚轮的滑动。
+
+
+
+## 截图
+
+shutter 不是官方的软件包，需要添加ppa
+
+ksnapshot 好大，190MB
+
+scrot
+
+
+## 流量监测
+
+1. Nethogs - Net top tool grouping bandwidth per process
+
+hogs: n, 猪; v,独占
+
+NetHogs是一个开源的命令行工具（类似于Linux的top命令），用来按进程或程序实时统计网络带宽使用率。
+
+NetHogs是一个小型的net top工具，不像大多数工具那样拖慢每个协议或者是每个子网的速度而是按照进程进行带宽分组。NetHogs不需要依赖载入某个特殊的内核模块。如果发生了网络阻塞你可以启动NetHogs立即看到哪个PID造成的这种状况。这样就很容易找出哪个程序跑飞了然后突然占用你的带宽。
+
+apt install nethogs
+
+
+INTERACTIVE CONTROL
+    m      cycle between display modes (kb/s, kb, b, mb)
+
+    r      sort by 'received'
+
+    s      sort by 'sent'
+
+    q      quit
+
+
+
+1. nload
+
+回车键在多个网卡间切换
