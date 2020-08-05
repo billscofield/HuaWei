@@ -1,12 +1,50 @@
+
+认证库: 文本文件, MySQL, NIS, LDAP等
+
+SUN 公司于1995年开发的一种与认证相关的通用框架机制
+
+PAM 是关于如何为服务验证用户的 API， 通过提供一些动态链接库和一套统一的API, 将系统提供的服务和该服务的认证方式分开
+
+一种认证框架，本身不做认证
+
+
+服务的配置文件路径
+    /etc/pam.d/     和应用程序同名
+    一般没有 /etc/pam.conf 了
+
+模块路径
+    /lib/x86_64-linux-gnu/security/*.so
+
+
+模块的配置文件路径
+    /etc/security/
+
+
+
+
+
+### pam 认证过程
+
+1. 执行 /usr/bin/passwd
+
+1. passwd 开始呼叫 PAM 模块, PAM 模块会搜索 passwd 程序的 PAM 相关设定文件, 这个设定文件一般是在 /etc/pam.d/ 里边的与成语同名的文件, 即 PAM 会搜索 /etc/pam.d/passwd 这个配置文件
+
+1. 根据 /etc/pam.d/passwd, 取用 PAM 所提供的的相关模块来进行验证
+
+1. 将验证结果回传给 passwd 这个程序, 而 passwd 这个程序会根据 PAM 回传的结果决定下一个动作
+
+
 每行对应一个登记项, 每一行又分为五列
 
-man 5 pam.d
+man 5 pam.d (/etc/pam.conf 中的写法)
 
-service    type    control    module-path    module-arguments_
+service    type    control    module-path    module-arguments 
 
 ### 第一栏 The service
 
-service表示使用PAM的应用程序，比如login、passwd、rlogin等。这一栏中的OTHER表示所有没在该文件中显式列出的应用。也就是说，如果所有程序具有相同的需求，整个配置文件只需要一行即可，并且该行的第一栏为OTHER。本例中，因为所有应用程序使用相同的会话模块,所以实际上可以用单行，即
+service表示使用PAM的应用程序，比如login、passwd、rlogin等。这一栏中的OTHER表示所有没在该文件中显式列出的应用。
+也就是说，如果所有程序具有相同的需求，整个配置文件只需要一行即可，并且该行的第一栏为OTHER。
+本例中，因为所有应用程序使用相同的会话模块,所以实际上可以用单行，即
 
 OTHER   auth        required     pam_unix_auth.so"
 
