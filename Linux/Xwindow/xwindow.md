@@ -17,3 +17,33 @@ gdm(the GNOME display manager)
 applet 小程序
 
 ext2(The second Extended File System)
+
+
+
+## desktop metaphor
+
+metaphor 隐喻
+
+桌面比拟（Desktop metaphor）在图形用户界面（Graphical user interface）中，是一个将“人们在实际生活中的操作与计算机操作”合一的概念，帮助使用者容易地与计算机交互。
+
+桌面比拟将计算机（computer）的监视器（monitor）比拟成使用者的桌面，其上可以放置文件与文件夹。文件可以开一个窗口体现，代表一份文本的拷贝放在桌上。也有称为办公桌配件（像是桌面计算机之类）的小程序可以使用。
+
+The computer interface is a conceptual metaphor of a writing desk.
+
+gdm 应该就是 desktop metaphor 的缩写
+
+
+
+
+## mutter
+
+Mutter is a window manager initially designed and implemented for the X Window System, but then evolved to be a Wayland compositor. 
+
+It became the default window manager in GNOME 3, replacing Metacity[5] which used GTK+ for rendering.
+
+Mutter uses a graphics library called Clutter giving it OpenGL capability. Mutter is a portmanteau of Metacity and Clutter. Mutter can function as a standalone window manager for GNOME-like desktops, and serves as the primary window manager for the GNOME Shell,[6] which is an integral part of GNOME 3. Mutter is extensible with plug-ins, and supports numerous visual effects. GNOME Shell is written as a plug-in to Mutter.
+
+debian 10 默认的
+
+
+
