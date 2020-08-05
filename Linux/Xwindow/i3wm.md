@@ -170,7 +170,7 @@ primitive command line interface to RandR extension
 
 扩展模式则可以输入
 
-    xrandr --output eDP --left-of HDMI-A-0 --auto
+    xrandr --output eDP-1 --left-of HDMI-A-0 --auto
 
     --left-of 就是eDP在HDMI的左面，对应的命令还有
 

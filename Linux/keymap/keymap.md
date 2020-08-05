@@ -64,7 +64,7 @@ keycode 23 = Tab ISO_Left_Tab Tab ISO_Left_Tab 和 keycode 49 = grave asciitilde
 
 如果你的xmodmap没有Tab的定义，也没关系，用xev也能找到keycode
 
-然后创建一个 ~/.Xmodmaprc 文件
+然后创建一个 ~/.Xmodmaprc 文件(请注意是大写X)
 
 内容为
 
