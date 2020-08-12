@@ -1,7 +1,9 @@
 # DNS Domain Name Service
+
 https://www.bilibili.com/video/av40331948/?p=70
 
 ## 什么叫域名
+
 www.magedu.com 这是主机名,主机名也叫 FQDN:Full Qualified Domain Name 完全限定域名，完全合格域名
 
 域是一个范围
