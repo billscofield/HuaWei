@@ -20,6 +20,14 @@ apt install ascii   //ascii表
 apt install fim
 
 
+## cmus
+
+lightweight ncurses audio player
+
+You can add keybindings for just about anything - including seeking (forward/backwards 1 minute, for example) which isn't supported by all music players.
+
+
+
 
 ## wondershaper
 

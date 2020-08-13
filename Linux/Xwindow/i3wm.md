@@ -1,5 +1,10 @@
+What are the best tiling window managers for Linux?
+
+https://www.slant.co/topics/1902/~tiling-window-managers-for-linux
+
 
 ## i3
+
 
 i3 requires an X-server and is not supported by Wayland. It is available as a metapackage that includes i3-wm, i3lock, i3status, dunst, and suckless-tools.(https://wiki.debian.org/i3)
 
