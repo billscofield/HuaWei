@@ -10,7 +10,11 @@ PAM 是关于如何为服务验证用户的 API， 通过提供一些动态链�
 
 服务的配置文件路径
     /etc/pam.d/     和应用程序同名
+
     一般没有 /etc/pam.conf 了
+    NOTE: Most program use a file under the /etc/pam.d/ directory to setup their
+    PAM service modules. This file is used only if that directory does not exist.
+
 
 模块路径
     /lib/x86_64-linux-gnu/security/*.so
@@ -34,11 +38,141 @@ PAM 是关于如何为服务验证用户的 API， 通过提供一些动态链�
 1. 将验证结果回传给 passwd 这个程序, 而 passwd 这个程序会根据 PAM 回传的结果决定下一个动作
 
 
+### 格式
+
+修改 pam 配置文件将马上生效
+
+建议: 编辑 pam 配置文件时，保持至少一个root会话，以防止 root 身份验证错误
+
+#### pam.conf 格式
+
 每行对应一个登记项, 每一行又分为五列
 
 man 5 pam.d (/etc/pam.conf 中的写法)
 
 service    type    control    module-path    module-arguments 
+
+#### pam.d 格式
+
+type control module-path module-arguments
+
+#### 说明
+
+service : 服务名
+
+type : 模块类型
+
+    auth        : 账号认证，密码验证
+    account     : 账号非认证类的功能，如有效期,可以从哪里登录等各种与账号相关的属性
+    session     : 一些附加操作
+    password    : 用户修改密码时密码复杂度检查机制等功能
+    -开头的     : 因缺失而不能加载的模块，不记录到系统日志
+                如 -session
+
+control
+    PAM库如何处理与该服务相关的PAM模块成功或失败的情况
+    比如两个 auth, 是 and 还是 or
+
+    两种机制
+        复杂
+            使用一个或多个 "status=action"
+            status: 检查结果的返回值
+            action: 采取的行为 ok, done, die, bad, ignore, reset
+                ok      : 模块通过，继续检查
+                done    : 模块通过，返回最后结果给应用
+                bad     : 结果失败，继续检查
+                die     : 记过失败，立即返回
+                ignore  : 忽略结果，不影响最后结果
+                reset   : 忽略已经得到的结果
+            
+        简单
+            required : 一票否决,不是一票通过; 这一个必须满足, 否决后还会向下执行
+                #auth   required    pam_succeed_if.so user != root quiet_success    (/etc/pam.d/gdm-password)
+            
+            requisite: 一票否决，否决后立即返回结果给程序
+            
+            sufficient: 一票通过
+            
+            optional: 可选的，成功与否不会起到什么作用，其返回值一般被忽略
+            
+            include: 调用其他的配置文件中定义的配置信息
+                auth        include     su  (/etc/pam.d/su-l)
+
+
+module-path
+    /lib/x86_64-linux-gnu/security
+
+arguments
+    
+
+#### 模块的帮助
+
+man 模块名
+
+#### 常用模块
+
+pam_shells.so
+    login   本地登录服务??? telnet 不是远程吗
+    ssh     ssh登录服务
+
+
+    pam_shells is a PAM module that only allows access to the system
+    if the user's shell is listed in /etc/shells.
+
+    It also checks if /etc/shells is a plain file and not world
+    writable.
+
+
+pam_securetty.so
+
+    pam_securetty is a PAM module that allows root logins only if the
+    user is logging in on a "secure" tty, as defined by the listing
+    in /etc/securetty. pam_securetty also checks to make sure that
+    /etc/securetty is a plain file and not world writable. It will
+    also allow root logins on the tty specified with console= switch
+    on the kernel command line and on ttys from the
+    /sys/class/tty/console/active.
+
+
+pam_nologin.so
+
+    pam_nologin is a PAM module that prevents users from logging into
+    the system when /var/run/nologin or /etc/nologin exists. The
+    contents of the file are displayed to the user. The pam_nologin
+    module has no effect on the root user's ability to log in.
+
+
+pam_limits.so
+
+    PAM module to limit resources
+
+    The pam_limits PAM module sets limits on the system resources
+    that can be obtained in a user-session. Users of uid=0 are
+    affected by this limits, too.
+
+    By default limits are taken from the /etc/security/limits.conf
+    config file. Then individual *.conf files from the
+    /etc/security/limits.d/ directory are read. The files are parsed
+    one after another in the order of "C" locale. The effect of the
+    individual files is the same as if all the files were
+    concatenated together in the order of parsing. If a config file
+    is explicitly specified with a module option then the files in
+    the above directory are not parsed.
+
+    The module must not be called by a multithreaded application.
+
+    If Linux PAM is compiled with audit support the module will
+    report when it denies access based on limit of maximum number of
+    concurrent login sessions.
+
+
+    Linux 有一条这样的命令: ulimit
+        help ulimit
+            -a        all current limits are reported
+            -n        the maximum number of open file descriptors
+
+
+
 
 ### 第一栏 The service
 
