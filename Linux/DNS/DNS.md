@@ -36,6 +36,9 @@ nsswitch 中有这么一行定义
         files 就是靠 libnss_files.so 找的 /etc/hosts, 通过这个文件找FQDN和IP的对应关系
         dns 就是dns服务
 
+    debian 上实际上是这个，有很多项
+    hosts:          files mdns4_minimal [NOTFOUND=return] dns myhostname
+
 当访问一个域名，没有IP对应关系的时候，调用库文件,完成从主机名到IP地址的转换，这个机制叫 stub resolver,姑且叫它名称解析器
 
 这个名称解析器会通过某个库调用，找nsswitch中的配置，先找 files(host: files dns),如果没有则找 dns(hosts: files dns)

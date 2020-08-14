@@ -150,7 +150,7 @@ include "/etc/bind/named.conf.local";           //我们自定义的zone
               604800     ; Refresh
                86400     ; Retry
              2419200     ; Expire
-             604800 )    ; Negative Cache TTL
+             604800 )    ; Negative Cache TTL   如果这个数据库zone中，每笔RR记录都没有写TTL的话，就以这个SOA中设置的值为准
         ;
         @   IN  NS  localhost.
         @   IN  A   127.0.0.1
