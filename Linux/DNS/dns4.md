@@ -202,23 +202,17 @@ secondary for, will be written to the /var filesystem, where they belong.
 
 
 
+## 日志
+
+/var/log/syslog
 
 
+## /etc/default/bind9
 
+```
+# run resolvconf?
+RESOLVCONF=no
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# startup options for the server
+OPTIONS="-u bind"
+```

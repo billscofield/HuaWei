@@ -171,3 +171,14 @@ INTERACTIVE CONTROL
 1. nload
 
 回车键在多个网卡间切换
+
+
+
+## graphviz
+
+apt install graphviz
+
+rich set of graph drawing tools, 代替 Viso 等画图工具
+
+graphviz包含3中元素，图，节点和边
+
