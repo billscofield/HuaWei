@@ -40,13 +40,17 @@
     apt update && apt dist-upgrade #如需升级pve，则执行该命令
 
 ## PVE命令行管理虚拟机启动和停止
+
 1. 查看集群资源状况
+
     pvesh get /cluster/resources
 
 1. 取得虚拟机当前状态
+
     pvesh get /nodes/<节点id>/qemu/<虚拟机id>/status/current
 
 1. 关闭虚拟机
+
     pvesh create /nodes/<节点id>/qemu/<虚拟机id>/status/stop
 
 
@@ -91,7 +95,7 @@ PVE虚拟出来的vm系统的cpu,默认不支持vmx，即不支持嵌套虚拟�
 
 这样系统重启会自动加载netsted，支持嵌套虚拟了。
 
-3. 设置虚拟系统vm的cpu类型为host
+3. 设置虚拟系统 vm 的 cpu 类型为host
 
     qm set <vmid> --cpu cputype=host
     例：qm set 101 --cpu cputype=host
