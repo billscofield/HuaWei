@@ -7,6 +7,10 @@ apt install xclip
 
     echo "helo" | xclip
 
+    xclip -i /etc/passwd
+
+    xclip /etc/passwd
+
 ### xclip 中内容输出
 
     xclip -o
