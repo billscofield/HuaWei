@@ -182,3 +182,9 @@ rich set of graph drawing tools, 代替 Viso 等画图工具
 
 graphviz包含3中元素，图，节点和边
 
+
+## 打字练习
+
+apt install typespeed
+
+/usr/games/typespeed

@@ -112,3 +112,52 @@ PVE虚拟出来的vm系统的cpu,默认不支持vmx，即不支持嵌套虚拟�
 
 备份路径
     /var/lib/vz/dump/
+
+
+
+## 硬件直通
+
+### 硬盘/usb硬盘
+
+查看你现在的存储设备的序列号:
+
+ls /dev/disk/by-id
+
+然后就能看到所有存储设备的序列号
+
+记住这个序列号
+
+然后输入以下代码(请把硬盘序列号换成你硬盘的,100换成你LEDE的虚拟机ID)
+
+qm set 100 -sata1 /dev/disk/by-id/ata-WDC_WDXXXX_XXXX_XXXX
+
+如果返回以下信息,说明已成功挂载
+
+update VM 100: -sata1 /dev/disk/by-id/ata-WDC_WDXXXX_XXXX_XXXX
+
+然后可以进入PVE管理网页,查看当前虚拟机的硬件中是否真的挂载成功.如果看到虚拟机硬件设备里有这个,就说明成功.
+
+
+!!! 这个不是真正完全的直通，真正的直通是直通sata控制器，这样就能休眠，能看到smart信息，硬盘型号等等。
+
+
+
+
+
+
+
+shell里面输入命令： nano /etc/default/grub
+
+在里面找到：GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+
+然后修改为：GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on"
+
+如果是amd cpu请改为：GRUB_CMDLINE_LINUX_DEFAULT="quiet amd_iommu=on"
+
+在更新一下：update-grub
+
+到这里先不要重启。
+
+在PVE的shell中输入：nano /etc/modules  ，查看modules中是否有vfio、vfio_iommu_type1、vfio_pci、vfio_virqfd ，如果没有请添加。修改好就可以重启系统了。
+
+虚拟机 -> 硬件 -> 添加 PCI 设备

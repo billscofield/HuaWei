@@ -2968,6 +2968,13 @@ buffer 缓冲
     在写入数据时，先把分散的写入操作保存到内存中，当到达一定程度时再集中写入硬盘，加速了数据的写入过程
 
 
+free 是真正尚未被使用的物理内存数量。
+
+available 是应用程序认为可用内存数量，available = free + buffer + cache (注：只是大概的计算方法)
+
+share 是进程间的共享内存
+
+
 增加swap
 
     两种方法:
@@ -3014,7 +3021,7 @@ buffer 缓冲
 
     查看 free
 
-    自动挂在
+    自动挂载 /etc/fstab
         UUID=b52ad353-391f-43b7-9319-a72ad0ec3880 none            swap    sw              0       0
 
 
@@ -3033,6 +3040,68 @@ buffer 缓冲
 写入 /etc/fstab
 
     /swapfile  swap  swap  defaults  0  0(开机自检，针对ext2,ext3)
+
+
+```https://tldp.org/HOWTO/Partition/setting_up_swap.html
+
+9. Setting Up Swap Space
+9.1. Swap Files
+Normally, there are only two steps to setting up swap space, creating the partition and adding it to /etc/fstab. A typical fstab entry for a swap partition at /dev/hda6 would look like this:
+
+
+/dev/hda6   swap    swap    defaults    0   0
+The next time you reboot, the initialization scripts will activate it automatically and there's nothing more to be done.
+
+However, if you want to make use of it right away, you'll need to activate it maually. As root, type:
+
+
+mkswap -f /dev/hda6
+swapon /dev/hda6
+9.2. Swap Files
+There might be times when you've run out of swap space and it is not practical to repartition a drive or add a new one. In this case, you can use a regular file in an ordinary partition. All you have to do is create a file of the size you want
+
+dd if=/dev/zero of=/var/my_swap bs=1024 count=131072
+
+and activate it
+
+
+    mkswap -f /var/my_swap
+        swapon /var/my_swap
+        This invocation creates a file called my_swap in /var. It is 128 Mb long (128 x 1024 = 131072). Initially, it is filled with zeros. However, mkswap marks it as swap space and swapon tells the kernel to start using it as swap space. When you are done with it,
+
+
+        swapoff /var/my_swap
+        rm /var/my_swap
+        9.3. Multiple Swap Areas
+        More than one swap partition can be used on the same system. Consider an example fstab where there is a single swap partition:
+
+
+        /dev/hda5   /        ext3   defaults        1   1
+        /dev/hda1   /boot    ext2   defaults        1   2
+        none        /dev/pts devpts gid=5,mode=620  0   0
+        none        /proc    proc   defaults        0   0
+        /dev/hda7   /usr     ext3   defaults        1   2
+        /dev/hda6   swap     swap   defaults        0   0
+        Imagine replacing the entry for the swap partition with these three lines:
+
+
+        /dev/hda6   none    swap    sw,pri=3    0   0
+        /dev/hdb2   none    swap    sw,pri=2    0   0
+        /dev/hdc2   none    swap    sw,pri=1    0   0
+        This configuration would cause the kernel to use /dev/hda6 first. it has the highest priority assigned to it (pri=3). The maximum priority can be 32767 and the lowest 0. If that space were to max out, the kernel would start using /dev/hdb2, and on to /dev/hdc2 after that. Why such a configuration? Imagine that the newest (fastest) drives are given the highest priority. This will minimize speed loss as swap space usage grows.
+
+        It is possible to write to all three simulataneously. If each has the same priority, the kernel will write to them much like a RAID, with commensurate speed increases.
+
+
+        /dev/hda6   none   swap   sw,pri=3   0   0
+        /dev/hdb2   none   swap   sw,pri=3   0   0
+        /dev/hdc2   none   swap   sw,pri=3   0   0
+        Notice that these three partitions are on separate drives, which is ideal in terms of speed enhancement.
+
+```
+
+更改分区类型后需要重启
+
 
 #### raid
 
