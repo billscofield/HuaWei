@@ -19,6 +19,7 @@ https://blog.csdn.net/hbcbgcx/article/details/85090700
 
 
 ## 首先认识下 host adapter 主控
+
 In computer hardware, a host controller, host adapter, or host bus adapter (HBA) connects a computer, which acts as the host system, to other network and storage devices.[1] The terms are primarily used to refer to devices for connecting SCSI, Fibre Channel and SATA devices.[2] Devices for connecting to IDE, Ethernet, FireWire, USB and other systems may also be called host adapters.
 
 Host adapters can be integrated in the motherboard or be on a separate expansion card.[3]

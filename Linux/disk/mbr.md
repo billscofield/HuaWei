@@ -1,19 +1,25 @@
 备份MBR：
-dd if=/dev/sda1 of=/root/mbr bs=512 count=1
+
+    dd if=/dev/sda1 of=/root/mbr bs=512 count=1
 
 恢复MBR：
-dd if=/root/mbr of=/dev/sda1 bs=512 count=1
+
+    dd if=/root/mbr of=/dev/sda1 bs=512 count=1
 
 恢复分区表：
-dd if=/root/mbr of=/dev/sda1 bs=512 skip=446 count=66
+
+    dd if=/root/mbr of=/dev/sda1 bs=512 skip=446 count=66
 
 注：mbr大小512 所以bs=512 count=1
+
 bs=512 skip=446 count=66 用来确定分区表在备份文件中的位置
+
 
 55AA
 
 
-分区的时候 0,2048, 不能选，这个是系统的 loader 所在
+
+分区的时候 0,2048, 不能选，是因为这个是系统的 loader 所在
 
 
 grub1版本
