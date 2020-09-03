@@ -1,9 +1,13 @@
 工作于主机或网络的边界,对于进出主机或网络的的报文根据实现制定的规则进行检查匹配，对匹配到的报文进行相应处理的软件或硬件组件
-    主机防火墙
-    网络防火墙
-        forward
 
-在内核空间中TCP/IP协议栈中得以实现
+    主机防火墙
+
+    网络防火墙
+
+        forward (/proc/sys/net/ipv4/ip_forward)
+
+
+在内核空间中 TCP/IP 协议栈中得以实现
 
 一个网卡可以配多个ip
 
@@ -39,6 +43,7 @@ netfilter/iptables
 
 
 ## 相关概念
+
 1. 容器：包含与属于的
 1. Netfilter/iptables 是表的容器，iptables 包含的各个表
     raw
@@ -86,9 +91,11 @@ netfilter/iptables
         1. nat的补充，关闭nat表上启用的**连接追踪机制**
         1. prerouting
         1. output
+        1. 状态跟踪,
+
     1. mangle
         1. 拆解报文，做出修改，封装报文
-        1. 用在修改数据包内容上，用来做流量整形的，给数据包打个标识，默认的规则链有:
+        1. 用在修改数据包内容上，用来做流量整形的，给数据包打个标识，比如 TTL+1 默认的规则链有: 
             1. prerouting
             1. forward
             1. postrouting
@@ -99,6 +106,7 @@ netfilter/iptables
             1. prerouting
             1. postrouting
             1. output
+
     1. filter
         1. 负责过滤数据包，防火墙的主体职责
             1. input
@@ -106,6 +114,10 @@ netfilter/iptables
             1. forward
 
 表 -> 链 -> 规则
+
+
+表名不写默认是 filter, 链名不写默认全部
+
 
 5个钩子
 hooks function
@@ -160,6 +172,10 @@ Netfilter/IPTable
     1. 
 
 
+默认只能是 ACCEPT 或 DROP， 不能是其他
+
+
+## Options
 
 -t --table
 
@@ -168,16 +184,14 @@ Netfilter/IPTable
 -C --check chain rule-specification
 
 -D --delete chain 
-     1. rule-specification
-     1. rulenum
+    1. rule-specification
+    1. rulenum
 
 -E --rename-chain old-chain new-chain
 
--F --flush [chain]
-
 -I --insert chain [rulenum] rule-specification
 
--L --list [chain]
+    iptables -t filter -I input 2 -p tcp --dport 22 -j DROP
 
 -N --new-chain chain
 
@@ -187,9 +201,37 @@ Netfilter/IPTable
 
 -S --list-rules [chain]
 
+---
+
+-L --list [chain]
+
+-n, --numeric
+    Numeric output.  IP addresses and port numbers will be printed in numeric format.  By default, the program will try to display them 
+    as host names, network names, or services (whenever applicable).
+
+--line-numbers
+    When listing rules, add line numbers to the beginning of each rule, corresponding to that rule's position in the chain.
+
+
+
+---
+
+-F --flush [chain]
+    Flush the selected chain (all the chains in the table if none is given).  This is equivalent to deleting all the rules one by one.
+
+
 -X --delete-chain [chain]
+    Delete  the optional user-defined chain specified.  There must be no references to the chain.  
+    If there are, you must delete or replace the referring rules before the chain can be deleted.  The chain must be empty,
+    i.e. not contain any rules.  If no argument is given, it will attempt to delete every non-builtin chain in the table.
+
 
 -Z --zero [chain [rulenum]]
+   Zero the packet and byte counters in all chains, or only the given chain, or only the given rule in a chain. 
+    It is legal to specify the -L, --list (list) option as well, to see the counters immediately before  they
+    are cleared. (See above.)
+
+
 
 
 netfilter控制点
@@ -205,3 +247,40 @@ netfilter控制点
 iptables -t filter(default)
 
 
+## -j 
+
+ACCEPT
+DROP
+REJECT
+LOG
+SNAT
+DNAT
+REDIRECT
+
+
+
+
+## 匹配
+
+### 通用匹配
+
+协议: -p
+地址: -s  -d
+接口: -i  -o
+
+    iptables -A FORWARD -p !icmp -j ACCEPT
+
+### 隐含匹配
+
+端口匹配: --sport   --dport
+ICMP类型: --icmp_type echo_request
+        : --icmp_type echo_reply
+
+
+### 显式匹配
+
+-m multiport 1,2,3,4,5 -j DROP
+
+-m state --state NEW,ESTABLISHED,RELATED
+    NEW
+    ESTABLISHED

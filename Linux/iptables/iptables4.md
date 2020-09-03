@@ -1,4 +1,5 @@
-/var/log/messages 出现 nf_conntrack: table full, dropping packet
+
+    /var/log/messages 出现 nf_conntrack: table full, dropping packet
 
 
 查看netfilter 相关的内核参数：
@@ -22,10 +23,10 @@ sysctl net.netfilter.nf_conntrack_tcp_timeout_fin_wait      //120
 重新编译内核的话也可以支持7层控制   
 
 
-(squid代理+iptables)
+(squid代理 + iptables)
 
 
-iptables    不支持区域划分
+iptables    不支持区域划分, 但是可以通过多网卡实现
 firewalld   支持区域划分
 
 
