@@ -79,3 +79,19 @@ ssh 第一次登录会提示你
 
 
 ssh-keygen -R IP
+
+
+## 禁止登陆 sftp 
+
+//override default of no subsystems, 注释掉下边这个命令即可禁止登陆 sftp
+Subsystem   sftp    /usr/lib/openssh/sftp-server
+
+
+禁止在本机使用 scp 命令
+    卸载 openssh-clients ???
+
+禁止用户user1登陆，多个空格分隔
+    DenyUsers user1
+
+禁止用户组group1的所有用户登录，多个空格分隔
+    DenyGroups group1

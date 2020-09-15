@@ -8,6 +8,8 @@ angularjs 是第一版本， 第二版本 叫 angular
 
     你可以将 Vue 作为你应用的一部分嵌入其中
 
+    声明式渲染 -> 组件系统 -> 客户端路由 -> 集中式状态管理 -> 项目构建
+
 Vue 全家桶
     
     core
@@ -51,7 +53,24 @@ Vue 全家桶
     npm install vue
 
 
+## Python开启HTTP服务
+
+Python <= 2.3
+
+    python -c "import SimpleHTTPServer as s; s.test();" 8000
+
+Python >= 2.4
+
+    python -m SimpleHTTPServer 8000
+
+Python 3.x
+
+    python -m http.server 8000
+
+
 ## 
+
+{{}} js 的表达式一般都可以放在里边
 
 响应式: 做了一些修改后页面会自动响应
 
@@ -60,8 +79,14 @@ Vue 全家桶
 特点: 数据和页面完全分离
 
 
-    el: 要管理哪些元素
+    el: 要管理哪些元素, 元素的挂载位置
 
-    data: 数据
+    data: 模型数据
+
+    模板 + 数据 = 前端渲染
+
+
+
+
 
 
