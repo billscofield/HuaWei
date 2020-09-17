@@ -4,6 +4,42 @@
 
 redhat 6.7 这个版本默认不支持 ntfs,exfat 硬盘格式
 
+烧录到U盘的时候使用 rufus 工具, ultraiso 不行
+
+为什么使用 rufus
+
+``` 
+The problem that you are having with Centos (Fedora & RHEL) are that they install from a kickstart (ks.cfg) file and not directly from the image/iso/CD/DVD.
+
+Running a live CD/DVD is a different animal. Many ISO to USB tools are based on using a Live CD image and not a install image. On many Linux distros there is no difference in Live to Install, but the Centos/RHEL, Fedora distros do have different ISO's for a reason (good or not is debatable).
+
+So far I have only found that iso2usb, unetbootin and Xboot handle this task somewhat correctly. The underlying problem is that the kickstart file contents have more information that needs changing to work correctly. There are also differences in Centos/RHEL versions 6.2 to 6.3 that change the kickstart file so that the method that I worked out for 6.2 doesn't work for 6.3.
+
+Basically these distros install almost everything from RPM files and not binaries contained in the ISO. This RPM method works for install, upgrade, modification, updates from CD or Network or local file, but makes installing from USB tough.
+
+Change #1, The USB stick can look like a local drive and not a CD, then that mounting location can change depending on the type/brand of USB stick you have. Some are recognized as hard drives behind a USB Hub, others are seen as a harddrive (no USB) others are not recognized at all by the BIOS and some are recognized by the BIOS and when the install process gets handed off to the Centos installer for completion then that no longer works because the USB stick changes mount point and can not be found (change #2).
+
+I have found that different brands/types/formats of USB sticks change mounting locations during the install process and that causes two kinds of failures.
+
+Your hard drive changes mount point, or
+the USB changes mount point. (that is the 6.3 problem)
+You can take the easier path and install from a LiveCD or LiveDVD image on a USB stick. Just boot the live image and the perform the install from the desktop or do the init 6 thing. I believe that performing an install using the net install ISO file from a USB stick should work because the point where the installer looks for the RPM files is going to be looking on the NET and not on the USB drive that has moved mount points, but I have not tried that yet.k
+
+链接:
+    https://unix.stackexchange.com/questions/29154/how-to-install-centos-6-via-usb-mass-storage-device
+```
+
+
+遇到的错误:
+
+Unable to read package metadata. This may be due to missing repodata directory. Please ensure that your install tree has been correctly generated
+
+```stackoverflow 上说的解决方法
+The files under the /repodata folder are missing their file extensions and are not matching their full names in the "TRANS.TBL" file, under this same dir.
+
+Rename all the files to match what is in the "TRANS.TBL" file, then try the install over again.
+```
+
 ## 更改yum源为 centos 163
 
 1. 检查yum包 rpm -qa |grep yum

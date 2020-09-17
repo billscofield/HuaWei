@@ -131,6 +131,13 @@ v- 开头的指令
 
 ```
 
+事件:
+    v-on:click
+    v-on:dbclick
+    v-on:mousemove  鼠标移动 
+        event.offsetX
+        event.offsetY
+
 
 ### 显示切换，属性绑定
 
@@ -267,6 +274,27 @@ v-bind:属性名=表达式
     https://cn.vuejs.org/v2/api/#v-on
 
 
+    stop
+        v-on:click.stop='stopMoving'
+    prevent
+    capture
+    self
+    once
+
+    使用修饰符时，顺序很重要
+
+
+
+键盘事件和键值修饰符
+    <input type='text' v-on:keyup='logName'>
+    v-on:keydown
+    v-on:keypress
+    v-on:keyup.enter            //并触发 回车键 后才触发
+    v-on:keyup.alt.enter        //链式赋值， alt + enter
+
+
+
+
 #### v-model: 获取和设置**表单元素**的值（双向数据绑定）
 
 ```
@@ -324,6 +352,13 @@ v-bind:属性名=表达式
 
 
 ```
+### 计算属性 computed:{}
+
+
+
+
+
+## 时间修饰符
 
 
 
@@ -343,4 +378,7 @@ axios.get(地址?查询字符串).then(function(response){},function(err){})
 
 axios.post(地址,参数对象).then(function(){},function(err){})
     axios.post(地址,{key:value,key2:value2}).then(function(){},function(err){})
+
+
+
 
