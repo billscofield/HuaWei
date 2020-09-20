@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title></title>
+        <style>
+[v-cloak]{
+    display:none;
+}
+        </style>
+    </head>
+    <body>
+
+        <div id="app">
+            <input type="text" name='numa' v-model='numa'>
+            <br>
+
+            <input type="text" name='numb' v-model='numb'>
+            <br>
+    
+            <button @click='add'>计算add</button>
+            <h2>{{result}}</h2>
+
+            <a :href="url">baidu</a>
+            <button @click='changeUrl("https://z.cn")'>change url</button>
+        </div>
+
+        <script src='../js/vue.js'></script>
+        <script>
+            let app = new Vue({
+                el:'#app',
+                data:{
+                    numa:0,
+                    numb:0,
+                    result:0,
+                    url:'https://www.baidu.com'
+                },
+                methods:{
+                    add: function(){
+                        this.result=Number(this.numa)+Number(this.numb)
+                    },
+                    changeUrl: function(url){
+                        this.url=url
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>

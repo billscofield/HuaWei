@@ -1,5 +1,7 @@
 G:\v.视频教程\19.frontEnd\vue\4个小时带你快速入门vue
 
+响应式: 数据来驱动页面的显示，更改了数据，前端页面自动刷新
+
 ## 
 
 el: 挂载点
@@ -32,6 +34,14 @@ data:数据对象
 v- 开头的指令
 
 ### 内容绑定，事件绑定
+
+#### v-cloak
+
+cloak [kləʊk] 遮盖物, 斗篷
+
+和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。这样就不会出现 {{}} 闪现的问题
+
+
 
 #### v-text: 设置标签的文本值()textContent
     
@@ -69,6 +79,24 @@ v- 开头的指令
 ```
 
 #### v-html: 设置标签的 innerHTML
+
+容易导致 xss 攻击
+
+
+### v-pre: 原意,跳过编译过程
+
+跳过这个元素和它的子元素的编译过程。可以用来显示原始 Mustache 标签。跳过大量没有指令的节点会加快编译。
+
+示例：
+
+<span v-pre>{{ this will not be compiled }}</span>
+
+
+### v-once 
+
+只编译一次, 不再响应后续 model 修改, 可以提高性能
+
+
 
 
 #### v-on: 为元素绑定事件
@@ -265,6 +293,26 @@ v-bind:属性名=表达式
 ```
 
 
+获取按键 ascii
+
+<input type="text" @keyup='outKeycode'>
+methods:{
+    outKeycode: function(event){
+        console.log(event.keyCode);
+    }
+}
+
+自定义按键修饰符
+
+<input type="text" @keyup.aaa='outKeycode'>
+<input type="text" @keyup.keyCodes.65='outKeycode'>     //如果不用下边的全局alias声明的话
+
+
+<script>
+    Vue.config.keyCodes.aaa=65      //自定义别名aaa 为 按键a
+</script>
+
+
 事件修饰符
 
     @keyup='func'
@@ -272,6 +320,18 @@ v-bind:属性名=表达式
     @keyup.enter='func'
 
     https://cn.vuejs.org/v2/api/#v-on
+
+
+    @keyup.delete       退格键
+    <input type='text' @keyup.delete='clearContent'>
+        data:{
+            name:'用户名'
+        }
+        methods:{
+            clearContent:function(){
+            this.name=''
+            }
+        }
 
 
     stop
@@ -300,6 +360,7 @@ v-bind:属性名=表达式
 ```
 <div id="app">
     <input type='text' v-model='message'>
+    <input type='text' v-once v-model='message'>    //v-once 失效
 </div>
 
 
@@ -313,6 +374,34 @@ v-bind:属性名=表达式
 
 </script>
 ```
+
+底层原理 
+    input 事件
+
+    <input type="text" :value='msg' @input='handle'>
+
+    handle: function(event){
+        this.msg = event.target.value
+    }
+
+    或者将函数直接卸载标签内
+    <input type="text" :value='msg' @input='msg=$event.target.value'>
+
+#### 样式绑定
+
+<div v-bind:class='{active:isActive}'></div>
+
+
+data:{
+    isActive:true,
+},
+methods:{
+change:function(){
+    this.isActive = !this.isActive
+   }
+}
+
+
 
 #### 综合案例
 
@@ -349,18 +438,79 @@ v-bind:属性名=表达式
 </script>
 
 
+2. 计算器
+<div id="app">
+    <input type="text" v-model='numa'>
+    <br>
+    <input type="text" v-model='numa'>
+    <br>
+    <button @click='add'></button>
+</div>
+
+<script>
+let app = new Vue({
+    el: '#app',
+    data: {
+        numa: '',
+        numa: '',
+        result: '',
+    },
+    methods: {
+        add: function(){
+            this.result=parseInt(this.numa)+parseInt(this.numb);
+            this.result=Number(this.numa)+Number(this.numb);
+        }
+    }
+})
+</script>
 
 
 ```
+### 带有事件对象的函数
+
+<button @click='handle(1,2,$event)'></button>
+<button @click='handle'></button>                   //默认传递事件对象为第一个参数
+
+handle: function(a,b,event){
+    console.log(event.target.innerHTML)
+}
+
+handle2: function(event){
+    console.log(event.target.innerHTML)
+         }
+
+如果事件直接绑定函数名称，那么默认会传递事件对象作为事件函数的第一个参数
+
+
+事件修饰符
+
+    .stop 阻止冒泡
+
+    .prevent 阻止默认行为
+        <a href="z.cn" @click.prevent=''></a>
+
 ### 计算属性 computed:{}
 
 
 
 
 
-## 时间修饰符
 
 
+
+
+## MVVM 设计思想
+
+M  :model
+VM :View-Model
+V  :view
+
+            +-------------------+
++----+ -----|  DOM Listeners----|----->  +-----+
+|view|      |                   |        |Model|
++----+ <----|---Data Bindings---|------  +-----+
+            +-------------------+
+DOM             Vue                      Data
 
 ## 网络应用 axios
 
