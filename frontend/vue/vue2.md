@@ -2,6 +2,10 @@ G:\v.视频教程\19.frontEnd\vue\4个小时带你快速入门vue
 
 响应式: 数据来驱动页面的显示，更改了数据，前端页面自动刷新
 
+mustache  [ˈmʌstæʃ; məˈstɑːʃ] 胡子 语法
+
+一般是两个空格缩进
+
 ## 
 
 el: 挂载点
@@ -41,6 +45,18 @@ cloak [kləʊk] 遮盖物, 斗篷
 
 和 CSS 规则如 [v-cloak] { display: none } 一起用时，这个指令可以隐藏未编译的 Mustache 标签直到实例准备完毕。这样就不会出现 {{}} 闪现的问题
 
+
+<script>
+
+setTimeout(function(){
+    let app = new Vue({
+        el: '#app',
+        data: {
+            message: 'morning'
+        }
+    })
+},1000)
+</script>
 
 
 #### v-text: 设置标签的文本值()textContent
@@ -246,7 +262,8 @@ v-bind:属性名=表达式
 
 <div id="app">
     <img v-bind:class="isActive:active:''">
-    <img v-bind:class="{active:isActive}">      //对象的形式，active 是否生效取决于它的值
+    <img v-bind:class="{active:isActive}">              //对象的形式，active 是否生效取决于它的值
+    <img v-bind:class="{类名1:值1,类名2:值2,...}">      //对象的形式，active 是否生效取决于它的值
 </div>
 ```
 
@@ -511,6 +528,53 @@ V  :view
 +----+ <----|---Data Bindings---|------  +-----+
             +-------------------+
 DOM             Vue                      Data
+
+
+<script>
+
+const obj = {
+    num:0
+}
+
+let app = new Vue({
+    el: '#app',
+    data: obj,
+    methods :{
+    add : function(){
+        this.num++          // Vue 做了代理，this, 所以还能用 this
+    }
+    }
+})
+</script>
+
+
+创建 Vue 实例传入的 options
+    选项，声明周期(官网上的这个 item下)
+
+    el
+        document.elementQuerry
+    data   Object | function(组件的时候只能用函数)
+        
+    methods
+    
+    生命周期
+        
+        源码中执行到一定阶段会执行调用特定的你的代码
+
+        beforeCreate
+
+        created
+
+        beforeMount
+
+        mounted
+            beforeUpdate
+            updated
+
+        beforeDestroy
+
+        destroyed
+
 
 ## 网络应用 axios
 

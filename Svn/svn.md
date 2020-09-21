@@ -3,6 +3,7 @@
 仓库 / 项目
 
 subversion的每次commit都会导致整个仓库版本号增加一个，会使得多个项目的版本号出现断层。而且如果多个项目参与人不同，就必须使用apache2进行细粒度的权限控制，不是太方便。一个仓库一个项目，显得更优雅一些。
+
     他这个也是一个仓库下多个项目，authz && passwd 放到仓库目录
     https://blog.csdn.net/webnoties/article/details/17219589
     https://www.cnblogs.com/howhy/p/6867130.html
