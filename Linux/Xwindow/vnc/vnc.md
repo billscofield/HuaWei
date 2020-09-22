@@ -1,4 +1,6 @@
 
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04
+
 ## Virtual Network Computing (VNC)
 
 VNC is extended from the RFB protocol
@@ -32,8 +34,34 @@ full advantage of its enhancements.
 
 ## tightvnc server
 
+Step 1 — Installing the Desktop Environment and VNC Server
+    apt install xfce4 xfce4-goodies
+    apt install tightvncserver
 
-apt install tightvncserver
+    vncserver                                       // use the vncserver command to set up a secure password and create the initial configuration files
+    
+
+Step 2 — Configuring the VNC Server
+
+    When VNC is first set up, it launches a default server instance on port 5901. This port is called a display port, and is referred to by VNC as :1. VNC can launch
+    multiple instances on other display ports, like :2, :3, and so on.
+
+    Because we are going to be changing how the VNC server is configured, first stop the VNC server instance that is running on port 5901 with the following command:
+
+    vncserver -kill :1
+
+    Before you modify the xstartup file, back up the original:
+
+    Modify ~/.vnc/xstartup
+    ```
+    #!/bin/bash 
+    xrdb $HOME/.Xresources 
+    startxfce4 & 
+    ```
+
+Step 3 — Connecting the VNC Desktop Securely 
+
+     ssh -L 5901:127.0.0.1:5901 -C -N -l sammy your_server_ip
 
 
 注意:

@@ -67,6 +67,60 @@ Welcome to the home of musl, a new standard library to power a new generation of
 
     setterm
 
+## /etc/issue & /etc/issue.net & /etc/motd
+
+/etc/issue 和 /etc/issue.net ：这2个文件是你在登录之前显示的，区别一个负责本地登录前显示，一个负责网络登录前显示。
+也即 /etc/issue 是显示在TTY控制台登录前（非图形界面），而 /etc/issue.net 是显示在 Telnet (SSH默认不开启，请看文章最后面说明)远程登录前，另外 /etc/issue.net 不支持转义字符
+
+
+/etc/motd ：这个文件是在你登录之后显示的，不管你是 TTY 还是 PTS 登录，也不管是  Telnet 或 SSH 都显示这个文件里面的信息。
+在较新的Linux发行版中，这个功能被扩展了，有了动态motd和静态motd的区别，在Ubuntu 16.04.01 LTS中，仅仅启用了动态motd，而未启用静态motd
+
+动态文件: /run/motd.dynamic
+
+它是由 /etc/update-motd.d/ 下的几个脚本文件来动态生成的。所以你可以通过/etc/update-motd.d/ 下的脚本来控制信息的生成。那么如何禁用该动态motd功能呢？方法是将/etc/update-motd.d/ 下的脚本移除或者去掉可执行权限。
+
+在关闭动态motd之后，发现登录之后还有会一行：Last login: Thu May 25 15:39:48 CST 2017 from 192.168.2.122 on pts/1
+
+这是由/etc/pam.d/login配置文件中pam_lastlog.so这一行控制的，相应地注释即可。
+
+
+如果需要静态motd消息，那么在/etc/目录下，新建或者修改配置文件motd，在其中定制你需要的登录后信息即可。
+
+
+默认情况下/etc/issue.net 文件的内容不会在ssh登录前显示，要显示这个信息可以修改/etc/ssh/sshd_config 文件中的 Banner /etc/issue.net ，配置更改后，需要重启SSH服务。
+
+
+/etc/issue.net 文件记录了操作系统的名称和版本号，这些登录提示很明显的泄漏了系统信息，为了安全起见，建议将系统相关信息去除。
+
+```
+108 # no default banner path
+109 #Banner none
+```
+
+https://www.cnblogs.com/pluse/p/5531523.html
+
+---
+
+
+```
+/etc/issue
+Debian GNU/Linux 10 \n \l
+
+
+/etc/issue.net
+Debian GNU/Linux 10
+
+
+/etc/motd
+The programs included with the Debian GNU/Linux system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+permitted by applicable law.
+```
+
 
 
 ## bash 自动补全
