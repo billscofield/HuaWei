@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div id="app">
+        <template v-show='ok'>
+            <h1>title</h1>
+            <p>paragraph 1</p>
+            <p>paragraph 2</p>
+        </template>
+
+        <input type="text" v-model="numa">
+        <input type="text" v-model="numb">
+        <button @click='add'>add</button>
+        <br>
+        {{numa}}
+        <br>
+        {{result}}
+    </div>
+
+
+    <script src='../js/vue.js'></script>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                ok: false,
+                numa: '',
+                numb: '',
+                result: ''
+            },
+            methods: {
+                add: function(){
+                    this.result = Number(this.numa) + Number(this.numb);
+                }
+            }
+        })
+    </script>
+</body>
+</html>
