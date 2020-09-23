@@ -83,3 +83,47 @@ vi /etc/xrdp/sesman.ini
 apt install xrdp
 
 用户在系统上远程登录，将无法在本地登录，反之，在本地登录将不能远程登录。
+
+
+
+
+## xrdp 常见问题
+
+
+### security level is 2 (1=none, 2=standard)
+
+connecting to sesman ip 127.0.0.1 port 3350
+sesman connect ok
+seding login info to session manager, please wait...
+xrdp_mm_process_login_response: login successful for display
+started connecting
+connecting to 127.0.0.1 5916
+tcp connected
+**security level is 2 (1=none, 2=standard)**
+password failed
+error - problem connecting
+
+
+Solution:
+
+Downgrade xrdp:
+
+sudo apt-get install xrdp=0.6.1-2
+
+Or:
+
+disable vnc password check：
+
+sudo vi /etc/xrdp/sesman.ini
+add to the bottom of [Xvnc]
+
+param8=-SecurityTypes
+param9=None
+sudo service xrdp restart
+
+第二种方法貌似还挺管用
+
+
+
+### 
+
