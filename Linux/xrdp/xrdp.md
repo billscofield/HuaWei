@@ -124,6 +124,7 @@ sudo service xrdp restart
 第二种方法貌似还挺管用
 
 
+http://www.likecs.com/show-47801.html
 
 ### 
 
