@@ -188,3 +188,16 @@ graphviz包含3中元素，图，节点和边
 apt install typespeed
 
 /usr/games/typespeed
+
+
+## chrome --no-sandbox
+
+问题
+    https://unix.stackexchange.com/questions/68832/what-does-the-chromium-option-no-sandbox-mean
+
+
+    the sandbox removes unnecessary privileges from the processes that don't need them in Chrome, for security purposes. 
+    Disabling the sandbox makes your PC more vulnerable to exploits via webpages, so Google don't recommend it 
+
+google的说明
+    https://www.google.com/googlebooks/chrome/med_26.html

@@ -69,11 +69,18 @@ exec_always --no-startup-id feh --bg-scale "/home/bill/Pictures/super.jpg"
 
 ### 修改默认桌面管理器为 i3
 
+这个是不对的，i3 是窗口管理器，而不是 display manager/login manager
+
 vi /etc/X11/default-display-manager
 
     /usr/sbin/gdm3 -> /usr/bin/i3       这个不管用啊
 
 update-alternatives --configure x-window-manager    这个也不管用啊
+
+Installing a new display manager should prompt the dpkg-reconfigure tool to launch. If not, run it manually:
+    Linux git:(master) ✗ dpkg-reconfigure gdm3
+    WARNING: /lib/systemd/system/i3.service is the selected default display manager but does not exist
+
 
 
 ### feh 壁纸工具

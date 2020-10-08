@@ -17,7 +17,13 @@ be fed back to xmodmap.
   
 ### xev - print contents of X events
 
+### showkey
+
+xev 和 showkey 中的 keycode 不一样是什么情况???
+
 ### setxkbmap - set the keyboard using the X Keyboard Extension
+
+执行这条命令 xmodmap 中的配置会被冲掉
 
 
 ### 查看
@@ -40,10 +46,15 @@ xmodmap -e 'add mod4 = Caps_Lock'
 
 ### 交换 win 和 Caps_Lock
 
-!一下配置的目的是为了更好地使用i3wm, i3wm 默认是 win 键 或者 alt 键，但是在 ~/.config/i3/config 中配置了 Mod = lock 后提示错误，只好如此先用着，待以>后找原因
+vi ~/.Xmodmap
+
+```
+!以下配置的目的是为了更好地使用i3wm, i3wm 默认是 win 键 或者 alt 键，但是在 ~/.config/i3/config 中配置了 Mod = lock 后提示错误，只好如此先用着，待以后找原因
+
 clear lock
 clear mod4
 keycode 133 = Caps_Lock
 keycode 66 = Super_L
 add lock = Caps_Lock
 add mod4 = Super_L
+```
