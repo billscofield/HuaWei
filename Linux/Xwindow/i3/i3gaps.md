@@ -43,7 +43,7 @@
 
     ```
     跳到最后，倒数第5行: 
-        twn &
+        twm &
         xclock ...
         xterm ...
         xterm ...
@@ -58,14 +58,6 @@
     exec i3
 
 
-    #启动rofi的快捷键
-    #-show run 指定为运行程序, 也可以设置为 -show window 显示打开的窗口
-    bindsym $mod+d exec rofi -show run
-
-    注释掉默认的 $mod+d
-    bindsym $mod+d exec dmenu_run
-
-    修改完毕后 mod shift r 刷新下
     ```
 
     接着输入 startx 看是否可以启动，否则 reboot
@@ -82,6 +74,15 @@
     font pango:ttf-liberation sans 14           //Pango 是设置文本布局并呈现国际化文本的库。使用 Unicode 作为其编码，可支持世界上大多数语言的输出
 
 
+    启动rofi的快捷键
+    -show run 指定为运行程序, 也可以设置为 -show window 显示打开的窗口
+    bindsym $mod+d exec rofi -show run
+
+    注释掉默认的 $mod+d
+    bindsym $mod+d exec dmenu_run
+
+    修改完毕后 mod shift r 刷新下
+
 1. feh 设置壁纸
 
     feh --bg-center 壁纸文件
@@ -90,6 +91,9 @@
         exec feh --bg-center 壁纸文件 &
 
 1. polybar
+
+    yaourt 是需要安装的
+        首先 pacman -S base-devel     因为没安装 fakeroot、binutils 等打包基本工具, 否则报错: Cannot find the fakeroot binary
 
     yaourt -S polybar   //AUR上安装，也可以从github下载编译安装
 
