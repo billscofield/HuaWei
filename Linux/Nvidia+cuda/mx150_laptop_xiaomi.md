@@ -18,6 +18,12 @@ run文件权限更改, 添加可执行权限
 
 ## 安装 nvidia 驱动
 
+如何查看显卡型号
+    lspci -Ei '(vga|display|nvidia)'
+
+Kernel mode setting(KMS)
+
+
 ### 禁用nouveau
 vi /etc/modprobe.d/blacklist.conf
 

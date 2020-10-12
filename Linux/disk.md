@@ -1,5 +1,6 @@
 
 ## 查看 uuid
+
 UUID (globally unique identifier)，唯一的身份识别
 
 ll -a /dev/disk/by-uuid
