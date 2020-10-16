@@ -7,3 +7,7 @@ CPU超频设置，“DOCP”英文原意是 Allows you to select a DRAM O.C.prof
 打开这个选项后 就不用看 CPU 上标的最大支持内存频率了，最大支持内存频率是不做任何设置时所支持的最高频率
 
 Intel 上是 XMP
+
+
+这个介绍内存的知乎很棒
+    https://zhuanlan.zhihu.com/p/26327347

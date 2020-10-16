@@ -211,6 +211,8 @@ $ nmcli radio wifi off
 
 ### 多屏显示 xrandr
 
+arandr: xrandr 的图形化软件
+
 primitive command line interface to RandR extension
 
 类似的有: arandr
@@ -355,6 +357,9 @@ bindsym $mod+F3 exec amixer set Master 5%+
 bindsym $mod+F2 exec amixer set Master 5%-
 bindsym $mod+F1 exec amixer set Master toggle
 ```
+
+
+alsamixer: amixer 的图形化软件
 
 
 ### 亮度
