@@ -79,37 +79,37 @@ Alias for docker image rm.
     
 
 ### 查找镜像
-    1. 方法1 docker hub 
-        1. 注册
-        1. 查找 ubuntu
-        1. 网址 hub.docker.com
+1. 方法1 docker hub 
+    1. 注册
+    1. 查找 ubuntu
+    1. 网址 hub.docker.com
 
-    1. 方法2 命令行
-        1. docker search [option] TERM
-            1. --no-trunc   //不截断,do not truncate output(主要针对description)
+1. 方法2 命令行
+    1. docker search [option] TERM
+        1. --no-trunc   //不截断,do not truncate output(主要针对description)
+        
+        1. --limit [数字] //一次返回多少个results  默认25
+            Max number of search results
             
-            1. --limit [数字] //一次返回多少个results  默认25
-                Max number of search results
-                
-            1. --filter
-                1. --filter=stars=<numberOfStar> 这里是min值, 是>=
-                
-                1. --filter=is-automated=true|false
-                
-                1. --filter=is-official=true|flase
+        1. --filter
+            1. --filter=stars=<numberOfStar> 这里是min值, 是>=
+            
+            1. --filter=is-automated=true|false
+            
+            1. --filter=is-official=true|flase
 
 
-            ```
-            1. docker search kali
+        ```
+        1. docker search kali
 
-            NAME                                                     DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
-            kalilinux/kali-rolling                                   Official Kali Linux image (weekly snapshot o…   76
-            linuxkonsult/kali-metasploit                             Kali base image with metasploit                 69                                      [OK]
-            ```
+        NAME                                                     DESCRIPTION                                     STARS               OFFICIAL            AUTOMATED
+        kalilinux/kali-rolling                                   Official Kali Linux image (weekly snapshot o…   76
+        linuxkonsult/kali-metasploit                             Kali base image with metasploit                 69                                      [OK]
+        ```
 
-    1. problems
-        为什么docker search ubuntu 的返回结果中有的有repository,有的没有，repository还不一样;而hub.docker.com中搜索时只是tag不同
-        网页搜索时输入的是 repository? 所以这样: ?
+1. problems
+    为什么docker search ubuntu 的返回结果中有的有repository,有的没有，repository还不一样;而hub.docker.com中搜索时只是tag不同
+    网页搜索时输入的是 repository? 所以这样: ?
 
 
 

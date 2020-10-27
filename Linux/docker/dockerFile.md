@@ -22,6 +22,7 @@ docker run -it -name dc02 --volumes-from dc01 liujiao/centos
 
 ```
 每条保留字指令都必须为大写，并且后面要跟随只少一个参数
+
 指令从上到下顺序执行
 # 表示注释
 每条指令都会创建一个新的镜像层，并对镜像进行提交
@@ -73,6 +74,8 @@ ENTERPOINT
 ONBUILD
     当构建一个被继承的Dockerfile时运行命令，赴京向在被子继承后父镜像的的 onbuild 被触发
     类似于触发器
+
+.dockignore
 
 
 
