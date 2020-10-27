@@ -1005,6 +1005,8 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
     出于可移植和分享的考虑，用 -v 主机目录:容器目录  这种方法不能够直接在 Dockerfile 中实现
     由于宿主机目录是依赖于特定主机的，并不能保证在所有的宿主机上都存在这样的特定目录
 
+    如何在宿主机中挂载呢???
+
 1. File 构建
     vim dockerfile
 
@@ -1021,6 +1023,7 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
 
         就是在容器内生成两个volume文件夹，在主机上没有生成
     ```
+
 1. build 生成镜像
     
 
