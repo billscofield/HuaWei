@@ -2028,6 +2028,19 @@ usermod -a -G groupA user
 
 
 
+### 更改用户名和组名
+
+usermod -l NewUser -d /home/NewUser -m OldUser
+-l 修改用户名
+-d 修改登录后使用的路径
+-m 修改登录名称的同时将目录名称一同修改
+
+修改组名称：
+继上面操作后，继续执行下列命令
+groupmod -n NewUser OldName
+-n 修改组的名称
+
+
 
 ## /etc/shadow
 1. 用户名
