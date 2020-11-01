@@ -1,10 +1,14 @@
 ## 网站
+
 https://github.com/docker
 https://www.docker.com
 https://hub.docker.com
 docker-cn.com
 
+docker.com/tryit/
+
 ## Docker 背景知识
+
 用户空间
 
 内核空间
@@ -12,20 +16,120 @@ docker-cn.com
 使用的镜像有alpine
 
 
+Namespaces  命名空间
+    编程语言
+        封装->代码隔离
+    操作系统
+        系统资源的隔离
+        进程、网络、文件系统...
+
+    有5种隔离
+        1. PID (Process ID) 进程隔离
+            容器有自己独立的进程表和1号进程
+        1. NET (Network)    管理网络接口
+            容器有自己独立的网络信息
+        1. IPC (InterProcess Communication) 管理跨进程通信的访问
+            在ipc通信时，需要加入额外信息来标示进程
+        1. MNT (Mount)      管理挂载点
+        1. UTS (Unix Timesharing System)    隔离内核和版本标识
+            独立的 hostname 和 domain
+
+Control Groups(cgroups) 控制组
+    管理命名空间隔离的资源
+
+    资源限制
+    优先级设定
+    资源计量
+    资源控制
+    资源使用记录
+
+    /sys/fs/cgroup
+
+Chroot
+    文件系统的隔离
+
+传统linux启动时，将rootfs设置为readonly并检查完整性，然后设置为read-write
+
+Docker 在启动 container 的时候，也是将rootfs设置为readonly,然后通过 aufs 把一个 readwrite 的文件系统挂载到 rootfs 之上，并且把下层文件系统设置成 readonly,这样构成一个完整的操作系统
+
+对于每一层的 readonly 的 FS，在docker中成为 image
+对于顶上 read-write 的FS，在 docker 中成为 container
+对于readonly 中内容的修改(比如nginx), 采用的是 COW(copy on write)的技术，把文件复制到 read-write 层并改写，实际用户看到的是当前container层中的文件，image中的文件不会被影响
+
+因此container 可以共享image层的 FS, 提高了存储的效率
+
+
+Docker hub
+    Automated Builds Image, 通过和 github 的集成，自动监控 github 项目中变化，构建新的image,然后自动发布到 docker hub 中
+
+    [namespace]/[repository name]:[tag]
+        liujiao/ubuntu:1.1
+        liujiao/nginx:1.1
+
+        [namespace]/[repository name]:[tag]  整个称之为registry
+
+        docker push [registry_url]/namespace/repository_name:tag_name
+        
+        tag 默认是latest
+
+        docker search repository-name
+
+
+        对image重命名
+            docker tag liujiao/test 192.168.10.1:5000/liujiao/test:1.1
+    
+
 使用go语言编写
+
+2013年 dotCloud 公司
+
+### 文件系统
+
+传统linux文件系统
+    boot file system(bootfs)
+        包括 bootloader 和 kernel,在启动完成后，kernel 在内存中，bootloader解除挂载
+
+    root file system(rootfs)
+        包括 /usr, /bin 等目录，这些和 kernel 无关, 和不同的发行版本相关
 
 
 ### 网络
-172.17.xxx.xxx
 
-dotClout公司
+172.17.xxx.xxx
 
 SandBox(沙盒)
 
+### Docker 组成
 
+Docker Client 客户端
+Docker Daemon 守护进程
+Docker Image 镜像
+    层叠的只读文件系统
 
+    +-------------+
+    |add nginx    |
+    +-------------+
+    |add vim      |
+    +-------------+
+    |rootfs  例如ubuntu
+    +-------------+
+    |bootfs       |
+    +-------------+
 
-常用操作
+Docker Container 容器
+    +-------------+
+    |可写层       |
+    +-------------+
+    |add nginx    |
+    +-------------+
+    |add vim      |
+    +-------------+
+    |rootfs  例如ubuntu
+    +-------------+
+    |bootfs       |
+    +-------------+
+
+Docker Registry 仓库
 
 ### 列出镜像
 
@@ -37,27 +141,49 @@ SandBox(沙盒)
 
     docker image --help
 
-    docker image ls | docker images
+    docker image ls 或者 docker images
         -a, --all             Show all images (default hides intermediate images)
             --digests         Show digests(文摘；摘要)
         -f, --filter filter   Filter output based on conditions provided
+            - stars=<numberOfStar>
+            - is-automated=(true|false)
+            - is-official=(true|false)
+            (man docker-search ; /filter)
+
             --format string   Pretty-print images using a Go template
             --no-trunc        Don't truncate output(显示完整的image ID)
         -q, --quiet           Only show numeric IDs(image id)     //用于script处理
 
 1. 列出运行的镜像
-    docker ps   |   docker container ls
+    docker ps   或者   docker container ls
 
 1. 列出运行的镜像
-    docker ps -a    |   docker container ls -a
+    docker ps -a    或者   docker container ls -a
 
 1. docker pull [镜像]
+    
+    -a, --all-tags[=false]
+        Download all tagged images in the repository
+
+    --disable-content-trust[=true]
+        Skip image verification
+
+    -h, --help[=false]
+        help for pull
+
+    --platform=""
+        Set platform if server is multi-platform capable
+
+    -q, --quiet[=false]
+        Suppress verbose output
+
 
 1. 附加后台镜像实例
     docker container attach [实例名]
 
 
 ### 删除镜像
+
 docker rmi  默认latest
 
 Alias for docker image rm.
@@ -79,6 +205,7 @@ Alias for docker image rm.
     
 
 ### 查找镜像
+
 1. 方法1 docker hub 
     1. 注册
     1. 查找 ubuntu
@@ -86,6 +213,8 @@ Alias for docker image rm.
 
 1. 方法2 命令行
     1. docker search [option] TERM
+        默认是从 docker hub 中搜索
+
         1. --no-trunc   //不截断,do not truncate output(主要针对description)
         
         1. --limit [数字] //一次返回多少个results  默认25
@@ -107,42 +236,43 @@ Alias for docker image rm.
         linuxkonsult/kali-metasploit                             Kali base image with metasploit                 69                                      [OK]
         ```
 
-1. problems
-    为什么docker search ubuntu 的返回结果中有的有repository,有的没有，repository还不一样;而hub.docker.com中搜索时只是tag不同
-    网页搜索时输入的是 repository? 所以这样: ?
+### 上传镜像
 
+docker login 登录到 docker hub中
+把docker image push 到 docker hub 中
+
+docker tag [ID] liujiao/test
 
 
 ### 容器
 
-启动服务，安装镜像完成后 ifconfig, 多了个 docker0 的网卡
+启动服务，安装镜像完成后在 host 上运行 ifconfig, 多了个 docker0 的网卡
 
 Commands:
     commit      Create a new image from a container's changes
-    cp          Copy files/folders between a container and the local filesystem
-
     exec        Run a command in a running container
-    export      Export a container's filesystem as a tar archive
-
-    inspect     Display detailed information on one or more containers
     logs        Fetch the logs of a container
     ls          List containers
     top         Display the running processes of a container
-    diff        Inspect changes to files or directories on a container's filesystem
-
-    port        List port mappings or a specific mapping for the container
-    rename      Rename a container
-
-    create      Create a new container
     run         Run a command in a new container
     start       Start one or more stopped containers
     restart     Restart one or more containers
     pause       Pause all processes within one or more containers
     attach      Attach local standard input, output, and error streams to a running container
-
+    port        List port mappings or a specific mapping for the container
     stats       Display a live stream of container(s) resource usage statistics
     stop        Stop one or more running containers 正常关闭
     kill        Kill one or more running containers 拔电源
+
+    cp          Copy files/folders between a container and the local filesystem
+
+    export      Export a container's filesystem as a tar archive
+
+    inspect     Display detailed information on one or more containers
+    diff        Inspect changes to files or directories on a container's filesystem
+
+    rename      Rename a container
+    create      Create a new container
 
     rm          Remove one or more containers
     prune       Remove all stopped containers
@@ -151,12 +281,70 @@ Commands:
     update      Update configuration of one or more containers
     wait        Block until one or more containers stop, then print their exit codes
 
+##### 启动单次容器
+
+docker run IMAGE COMMAND
+    docker run ubuntu echo "hello world"
+
+    -e, --env=[]
+        Set environment variables
+
+        This option allows you to specify arbitrary environment variables that are available for the process that will be launched inside of the container.
+        mysql 容器需要输入密码，就用这个
+
+        docker run -it --name liumysql -p 9000:3306 -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql bash
+        
+
+    docker run -d ubuntu /bin/bash -c "while true;do echo 'helo';sleep 1;done"
+
+
+    --rm true|false
+        Automatically remove the container when it exits. The default is false.
+        --rm flag can work together with -d, and auto-removal will be done on daemon side. Note that it's incompatible with any restart policy other than none.
+
+        docker run -it --name mysql -p 8888:3306 --rm -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql
+        docker run -it --name mysql -p 8888:3306 --rm -e MYSQL_ROOT_PASSWORD=111 mysql
+        docker run -it --name mysql -p 8888:3306 --rm -e MYSQL_RANDOM_PASSWORD=111 mysql
+
+
+    -m 内存限制
+
+    --cpuset-cpus=  //CPUs in which to allow execution (0-3, 0,1)
+
+##### 启动交互式容器
+
+docker run -it IMAGE COMMAND
+    -i --interactive=true   始终打开一个标准输入
+    -t --tty=true   
+
+
+##### 进入容器
+
+1. sshd
+
+1. nsenter(namespace enter)
+    包含在util-linux中, 用来进入一个进程的 namespace
+
+    获取一个进程的pid
+        方法一: docker inspect [container] | grep Pid
+        方法二: 
+            docker inspect --format "{{.State.Pid}}" [container]
+            nsenter --target [container Pid] --mount --uts --ipc --net --pid
+            不好用啊，我的debian 报错
+                nsenter: failed to execute /usr/bin/zsh: No such file or directory
+        方法三:
+            docker exec -it [container] /bin/bash
+1. exec
+
+1. attach
 
 #### 查看容器
 
 1. docker ps
 
 List containers
+
+不加参数是正在运行的容器
 
 Options:
     -a, --all             Show all containers (default shows just running)
@@ -167,6 +355,7 @@ Options:
     --format string       Pretty-print containers using a Go template
     --no-trunc            Don't truncate output
     -q, --quiet           Only display numeric IDs
+
     -s, --size            Display total file sizes
 
     ```
@@ -180,7 +369,8 @@ Options:
 
 1. 详细查看容器
 
-docker container inspect [id或name]   | dcoker inspect 
+docker container inspect [id或name]   
+dcoker inspect 
     
     Return low-level information on Docker objects
 
@@ -191,9 +381,8 @@ docker container inspect [id或name]   | dcoker inspect
     Display the running processes of a container
 
 
-
-
 #### 创建容器
+
 1. 创建一个交互式镜像实例
 
     docker container run --name [实例名1] -it [镜像名或ID号]  //一个镜像可以有多个实例，实例的名字
@@ -209,7 +398,12 @@ docker container inspect [id或name]   | dcoker inspect
     docker run | docker container run    are the same, docker --help | grep run  && docker container --help | grep run
         有网友说docker container run 是新的命令，而docker run是旧命令
         https://forums.docker.com/t/docker-run-and-docker-container-run/30526
-    这样说的话，docker ps 是旧命令；docker container ls 是新命令
+
+
+    man docker-container-run    =>      Alias for docker run.
+    man docker-ps               =>      Alias for docker container ls.
+    man docker-exec             =>      Alias for docker container exec.
+
 
 
 1. 创建一个守护式容器
@@ -224,6 +418,10 @@ docker container inspect [id或name]   | dcoker inspect
         -t : --tty
 
     docker run -it ubuntu       //每个镜像都有默认的shell,比如Ubuntu是/bin/bash, busybox 是sh
+
+    ctrl p q 方式退出
+
+    docker attache  
     
     1. 方式2 
         docker run -d 镜像名
@@ -232,15 +430,46 @@ docker container inspect [id或name]   | dcoker inspect
         docker run --name one -d ubuntu /bin/sh -c "while true;do echo helloworld;sleep1;done"
 
 
+
+/usr/lib/systemd/system/docker.service
+    -H, --host=[unix:///var/run/docker.sock]: tcp://[host]:[port][path] to bind or unix://[/path/to/socket] to use.
+
+    默认: ExecStart=/usr/bin/dockerd -H fd:// --containerd=/run/containerd/containerd.sock --icc=false --iptables=true
+
+    docker -H 192.168.1.1 info  //如果server是用TCP,在别的机器上
+
+
+
 #### 停止容器
 
 1. 停止一个镜像实例
 docker stop [实例名]
 
+docker kill 
+
 #### 启动容器
 
 1. 开启一个镜像实例
 docker start [实例名]
+    Alias for docker container start.
+
+-a, --attach[=false]
+    Attach STDOUT/STDERR and forward signals
+
+-i, --interactive[=false]
+    Attach container's STDIN
+
+--checkpoint=""
+    Restore from this checkpoint
+
+--checkpoint-dir=""
+    Use a custom checkpoint storage directory
+
+--detach-keys=""
+    Override the key sequence for detaching a container
+
+-h, --help[=false]
+    help for start
 
 
 1. 重命名容器名
@@ -248,13 +477,29 @@ docker start [实例名]
 
 
 1. 重新启动停止的容器
-docker container start [-i] [容器名]
-        -i : 交互式
-        这里没有 -t, -t 是 docker run 时的
+
+docker container start  [容器名]
+        这里没有 -i -t, 它们是 docker run 时的
+
+        -t, --time=10
+            Seconds to wait for stop before killing the container
+
 
 #### 删除已经停止的容器
 
 docker rm [容器名]  //不能删除正在运行的容器
+    -f, --force[=false]
+        Force the removal of a running container (uses SIGKILL)
+
+    -h, --help[=false]
+        help for rm
+
+    -l, --link[=false]
+        Remove the specified link
+
+    -v, --volumes[=false]
+        Remove anonymous volumes associated with the container
+
 
 
 删除多个容器
@@ -277,6 +522,12 @@ docker container exec [实例名] ifconfig
 
 docker container exec -t [实例名] ifconfig
 
+docker container exec -it [实例名] ifconfig
+
+docker container exec -it [实例名] bash
+    创建了一个新的bash, exit 退出不会exit container
+    不是所有容器都有bash，但一般都有sh,所以 start 不起来换shell
+
     ```
     docker container exec -t [实例名] ls -l //不要用引号将命令包起来
     结果直接反映出来
@@ -298,6 +549,7 @@ Options:
 docker container inspect [实例名]
 
 docker attach [实例名]
+    如果两个或以上的地方同时使用这种方式登录，同步显示，和vnc一样的效果
 
 #### 退出容器
 
@@ -310,7 +562,10 @@ docker attach [实例名]
 
 
 #### 日志
+
 docker log 
+
+可以看到 container 中 command 所指向进程的STDOUT,STDERR数据
 
 **Fetch the logs of a container**
 
@@ -328,6 +583,7 @@ Options:
     docker logs -f -t <ubuntu-id>
 
     是因为后台运行着一个shell程序，所以docker认为这个容器有事在做
+    没有进程的容器会被销毁
     ```
 
 #### 将数据从docker中拷贝到主机
@@ -369,18 +625,25 @@ haproxy
 /etc/docker/daemon.json //初始状况没有这个文件
 
     { 
-"registry-mirrors": 
-        [ 
-    "https://kfwkfulq.mirror.aliyuncs.com", 
-    "https://2lqq34jg.mirror.aliyuncs.com", 
-    "https://pee6w651.mirror.aliyuncs.com",
-    "https://registry.docker-cn.com",
-        "http://hub-mirror.c.163.com" 
-        ], 
+        "registry-mirrors": 
+                [ 
+            "https://kfwkfulq.mirror.aliyuncs.com", 
+            "https://2lqq34jg.mirror.aliyuncs.com", 
+            "https://pee6w651.mirror.aliyuncs.com",
+            "https://registry.docker-cn.com",
+            "http://hub-mirror.c.163.com" 
+                ], 
 
-"dns": ["8.8.8.8","8.8.4.4"] 
+        "dns": ["8.8.8.8","8.8.4.4"],
+        "data-root": "/data/docker"                     //docker info | grep "Docker Root Dir: /var/lib/docker"
     }
     ```
+
+    这个文件格式如果不对的话，会报错:
+    Failed to start Docker Application Container Engine.
+
+    systemctl daemon-reload
+    systemctl restart docker
 
 ---
 
@@ -388,6 +651,7 @@ haproxy
 2013年dotCloud公司(现已改名为Docker Inc)发布Docker容器技术
 
 ### docker是什么
+
 容器虚拟化技术 三要素
     容器:就是模板的实例, 容器是用镜像创建的运行实例
     镜像:就是模板, 每个镜像有不同的标签(tag)
@@ -550,48 +814,37 @@ oracle 不适合使用docker,oracle太大了
     保存用户构建的镜像
 
 
-docker image镜像
-   
-    add Apache
-    add emacs
-    rootfs(root fs root文件系统,比如ubuntu,centos,只读)
-    bootfs(boot fs boot文件系统)
-
-    一个镜像可以放到另一个镜像
-    镜像分层
-
-容器
-    
-    可写层
-    add Apache
-    add emacs
-    rootfs(root fs root文件系统,比如ubuntu,centos,只读)
-    bootfs(boot fs boot文件系统)
-
-
 the docker engine consists of two parts:
     a daemon:a server process that manages all the containers
     a client:which acts as a remote control for the daemon
 
 ## 安装
 
-docker-io
+docker-io       早期 ubuntu 维护的版本
 docker-engine
 上面两个是什么，有什么区别?
 
 docker-ce(community edition)
 docker-ee(enterprise edition)
 
+### Windows and MAC
+
+基于 virtualBox, 类似于华为模拟器
+boot2docker
+
+
+### linux
 
 安装方式
     检查
         1. 内核 uname -r
-        1. ls -l /sys/class/misc/device-mapper
+        1. 存储驱动 ls -l /sys/class/misc/device-mapper
 
     1. 方法1 Ubuntu 的apt
         sudo apt install docker.io
         //source /etc/bash_completion.d/docker.io  //没有 docker.io 这个文件啊,也不用检查这个吧，哪个教程说要检查这个来的?
 
+        docker.io version
 
         **安装完成后，将当前用户添加到docker组，service docker restart  后docker ps不行,提示权限不足(权限的配置问题?)，重启可以了**
 
@@ -614,6 +867,11 @@ docker-ee(enterprise edition)
         sudo groupadd docker
         sudo gpasswd -a ${USER} docker
         sudo service docker restart
+        注销重新登录
+
+        groups (1)           - print the groups a user is in
+        users (1)            - print the user names of users currently logged in to the current host
+
 
 systemctl start docker
 service docker start
@@ -680,6 +938,9 @@ service docker start
         导出容器
             docker export -o cheng.tar confident_hopper
                               新名字     容器名字
+                -o, --output=""
+                    Write to a file, instead of STDOUT
+
 
         导入容器
             docker import cheng.tar cheng
@@ -692,6 +953,9 @@ service docker start
 
 查看容器日志(容器内部运行情况)
     docker logs [-f] [-t] [--tail]
+        --details[=false]
+            Show extra details provided to logs
+
         -f 一直跟踪 --follows , 一直更新
         -t 时间 --timestamps
         --tail 10
@@ -714,14 +978,15 @@ service docker start
         
 停止守护式容器
     docker stop 容器名
-        让docker容器自己停止
+        让 docker 容器自己停止
+
     docker kill 容器名
-        杀死docker容器
+        杀死 docker 容器
 
 
 
 man docker-run
-man docker-log
+man docker-logs
 man docker-top
 man docker-exec
 man docker-search
@@ -731,8 +996,28 @@ man docker-search
 
 在容器中部署网站
     端口映射，格式为：主机(宿主)端口:容器端口
-        -P[upcase] , --publish=[]
-        -p
+        -P, --publish-all=true|false
+            Publish all exposed ports to random ports on the host interfaces. The default is false.
+            暴露 dockerfile 中所有 EXPLOSE 的端口
+
+        -p, --publish ip:[hostPort]:containerPort | [hostPort:]containerPort
+            Publish a container's port, or range of ports, to the host.
+
+    docker run -p 80 --name nginxtest -it ubuntu
+        主机随机一个端口, 可以使用
+            docker ps
+            docker port CONTAINER
+        查看具体主机端口
+            containerPort
+                docker run -p 80 --name nginxtest -it ubuntu
+            hostPort:containerPort
+                docker run -p 8080:80 --name nginxtest -it ubuntu
+            ip::containerPort
+                docker run -p 0.0.0.0:80 --name nginxtest -it ubuntu
+            ip:hostPort:containerPort
+                docker run -p 0.0.0.0:8080:80 --name nginxtest -it ubuntu
+
+            [49000,49900]
     
     1. 创建映射80端口的交互式容器
     1. 安装Nginx
@@ -741,6 +1026,7 @@ man docker-search
     1. 修改Nginx配置文件
     1. 运行Nginx
     1. 验证网站访问
+
 
 docker run -p 80 --name web -it ubuntu /bin/bash
 apt install -y nginx
@@ -772,8 +1058,11 @@ docker top web
 curl http://127.0.0.1:端口
 
 docker inspect //容器的ip地址
+    docker inspect | grep IPAddress
+
 curl http://容器的ip地址
     可以通过 docker inspect [容器名] 来查看ip地址，端口等情况，查看 NetworkSettings
+    不用添加端口号
 
 
 docker stop web
@@ -785,8 +1074,7 @@ curl http://127.0.0.1:端口 并不能访问
 
 
 镜像的位置
-    docker info 
-        查看image位置
+    docker info 查看image位置   Root Dir
         /var/lib/docker/
         find ./ -name respositories.json
             respositories.json 也存了些信息
@@ -804,14 +1092,45 @@ curl http://127.0.0.1:端口 并不能访问
 查看镜像
     支持容器的查看
     支持镜像的查看
-    
-    docker inspect ubunt
+
+    docker inspect 镜像或者容器
         返回json格式信息
+
+    repository 仓库 比如 liujiao/ubuntu中的liujiao
+    registry 仓库
+
+    registry 仓库 包含 repository 仓库, repository 仓库包含一个个的镜像
+
+    -a, --all[=false]
+        Show all images (default hides intermediate images)
+
+    --digests[=false]
+        Show digests
+
+    -f, --filter=
+        Filter output based on conditions provided
+
+    --format=""
+        Pretty-print images using a Go template
+
+    -h, --help[=false]
+        help for images
+
+    --no-trunc[=false]
+        Don't truncate output
+
+    -q, --quiet[=false]
+        Only show numeric IDs
+
+    
 
 删除镜像
     docker rmi  镜像1 镜像2 ...
         -f , --force
-        --no-prune  //do not delete untagged parents   不移除该镜像的过程镜像,默认移除
+        --no-prune  //do not delete untagged parents   不移除该镜像的未打标签的父镜像
+
+        docker rmi $(docker images -q ubuntu)
+        docker rmi $(docker images -q)
         
 镜像标签
 
@@ -822,8 +1141,11 @@ curl http://127.0.0.1:端口 并不能访问
 
         全名：用户名/镜像名
 
-    --registry-mirror   //修改为国内的???
-        /etc/default/docker 添加  DOCKER
+    --registry-mirror
+        /etc/default/docker 添加  DOCKER-OPTS="--registry-mirror=http://"
+
+        systemctl restart docker
+        可以看到后面有了 --registry-mirror 选项
 
     docker pull hub.c.163.com/library/ubuntu
         hub.c.163.com/library/      //网易docker registry
@@ -831,9 +1153,9 @@ curl http://127.0.0.1:端口 并不能访问
 
     DAUCLOUD
     
-    busybox是一个集成了一百多个最常用linux命令和工具的软件,同时它也是一个最小的Linux系统，它提供了该系统的主要功能，例如grep、find、mount以及telnet等但不包含一些与GNU相关的功能和选项。
+    busybox 是一个集成了一百多个最常用linux命令和工具的软件,同时它也是一个最小的Linux系统，它提供了该系统的主要功能，例如grep、find、mount以及telnet等但不包含一些与GNU相关的功能和选项。
 
-    配置Docker中国区官方镜像
+    配置 Docker 中国区官方镜像
 
         ```
         vim /etc/docker/daemon.json
@@ -862,11 +1184,16 @@ curl http://127.0.0.1:端口 并不能访问
             -m --message    [string]
                 docker inspect 时看不到，里面没有???
             -p --pause  //pause container during commit(default true)
+                默认会暂停容器
 
             docker commit [numeric id] 镜像名
+
     1. 方法2 docker build //通过dockerfile文件构建
         docker build 
-            --tags " "
+            -t --tags=" "
+            -q, --quiet               Suppress the build output and print image ID on success
+            --rm                      Remove intermediate containers after a successful build (default true)
+
 
 
 
@@ -912,19 +1239,34 @@ docker的网络
         网桥管理工具 bridge-utils(ubuntu 默认没有安装)
             brctl show
 
+
+    host 上一个veth{id}的虚拟网卡和一个container里面的eth网卡一一映射
+    host 上的bridge负责把数据流veth间转发实现网络的IO
+    bridge 使用RFC1918 给每一个container分配私有ip
+
+    docker run --net host ...
+        --net host  直接使用host的网络，网卡, 同样的IP
+        --net none  不适用网络
+
+
     docer 容器 在stop start后 ip可能会改变，不可靠
     docker 使用了别名的机制解决此问题
 
+
+    默认使用host上的DNS配置
+        --dns
+
 ### 帮助命令
+
 1. docker version
 1. docker info
 1. docker --help
-    为什么我的只显示那么几个options???//网上那些不知道是什么玩意儿，乱写，shit
     docker run --help
     docker exec --help
 
 
 ## 安装软件
+
 1. net-tools, the collection of base networking utilities for Linux.
     Includes: 
         arp
@@ -947,6 +1289,7 @@ docker的网络
 
 
 ## 
+
 docker 
 dns - bind9
 nginx
@@ -970,23 +1313,27 @@ Mirror site(镜像站点)
 
 
 ## nvidia-docker
-Docker容器的本地实现不支持NVIDIA GPU，这就是为什么我们开发了nvidia-docker插件。
 
-使用Nvidia Docker，可以无缝地配置一个GPU设备可见的容器，并准备好执行基于GPU的应用程序
+Docker 容器的本地实现不支持 NVIDIA GPU，这就是为什么我们开发了nvidia-docker插件。
 
-Nvidia关于nvidia-docker的博客强调了使用便携式GPU容器的两个关键点
-    1. 与驱动程序无关的CUDA镜像
-    1. Docker命令行包装器，在启动时将驱动程序的用户模式组件和GPU（字符设备）装载到容器中。
+使用 Nvidia Docker，可以无缝地配置一个GPU设备可见的容器，并准备好执行基于GPU的应用程序
 
-在安装nvidia-docker之前更新系统的NVIDIA驱动程序。另外，确保Docker安装在系统上。
+Nvidia 关于 nvidia-docker 的博客强调了使用便携式GPU容器的两个关键点
 
-CUDA（Compute Unified Device Architecture），是显卡厂商NVIDIA推出的运算平台。 CUDA?是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
+    1. 与驱动程序无关的 CUDA 镜像
+
+    1. Docker 命令行包装器，在启动时将驱动程序的用户模式组件和GPU（字符设备）装载到容器中。
+
+在安装 nvidia-docker 之前更新系统的NVIDIA驱动程序。另外，确保 Docker 安装在系统上。
+
+CUDA（Compute Unified Device Architecture），是显卡厂商 NVIDIA 推出的运算平台。 CUDA 是一种由 NVIDIA 推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
 
 https://www.sohu.com/a/209301090_609513
 
 
 
 ## docker 搭建 git server
+
 https://blog.csdn.net/xxkalychen/article/details/82219821
 
 
@@ -994,6 +1341,8 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
 
 
 ## docker file
+
+1. 大小写不敏感，建议使用大写
 
 1. 在根目录下新建 mydocker 文件夹并进入
     mkdir /mydocker && cd /mydocker
@@ -1016,6 +1365,8 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
     VOLUME ["/dataVolumeContainer1","/dataVolumeContainer2"]
     CMD echo "Finished,---success1"
     CMD /bin/bash
+    
+    **在container中实际运行的首进程**
 
 
     大致等价于下边这条命令
@@ -1031,7 +1382,7 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
 
 
 
-## 解决普通用户无法使用docker命令的问题
+## 解决普通用户无法使用 docker 命令的问题
 
 1.如果普通用户运行docker，是会报错的。
     Cannot connect to the Docker daemon. Is the docker daemon running on this host?
@@ -1046,6 +1397,46 @@ https://blog.csdn.net/xxkalychen/article/details/82219821
 3.usermod修改用户组。
     usermod -a -G docker 用户
 
-
 重启docker
     service docker restart
+
+
+
+## Orchestration as a service(OaaS)
+
+[ˌɔːrkɪˈstreɪʃn] 管弦乐
+
+协调在不同 host 上的 container, 把他们组成一个有机的统一体, 容器编排
+
+
+### 解决方案
+
+1. Fig
+    python所写
+
+1. Kubernetes
+
+
+
+## graphdriver and volume
+
+graphdriver 是用来存储镜像和容器的
+
+volume 是用来存储数据的
+
+graphdriver
+    aufs(ubuntu)
+    btrfs(CoreOS)
+    devicemapper(Redhat,CentOS)
+    overlayfs(CoreOS)
+
+graph 镜像的管理者
+    json        镜像信息
+    layersize   镜像的大小信息
+
+
+aufs
+    another Union File System
+
+    挂载点: /var/lib/docker/aufs/mnt/$CONTAINER_ID
+

@@ -12,6 +12,26 @@ apt install ascii   //ascii表
 
     od 命令也有类似
 
+## vim-youcompleteme
+
+YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine
+for Vim. It has several completion engines: an identifier-based engine
+that works with every programming language, a semantic, Clang-based
+engine that provides native semantic code completion for
+C/C++/Objective-C/Objective-C++ and an omnifunc-based completer that uses data
+from Vim's omnicomplete system to provide semantic completions for many
+other languages (Ruby, PHP etc.).
+
+
+## neofetch
+
+Shows Linux System Information with Distribution Logo
+Neoftech is a cross-platform and easy-to-use system information
+command line script that collects your Linux system information
+and display it on the terminal next to an image, it could be your
+distributions logo or any ascii art of your choice.
+
+
 
 ## fim
 
@@ -26,8 +46,9 @@ lightweight ncurses audio player
 
 You can add keybindings for just about anything - including seeking (forward/backwards 1 minute, for example) which isn't supported by all music players.
 
+## iputils-ping
 
-
+ping
 
 ## wondershaper
 
@@ -201,3 +222,8 @@ apt install typespeed
 
 google的说明
     https://www.google.com/googlebooks/chrome/med_26.html
+
+
+## supervisor
+
+守护进程
