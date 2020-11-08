@@ -26,6 +26,7 @@ magedu.com 这个域下有很多主机，
 web服务 端口80 这也是名称解析
 
 nsswitch:为多种需要实现名称解析的机制 提供名称解析的平台,类似淘宝，提供一个平台，主体是各个卖家
+        : GNU Name Service Switch functionality.
 
 nsswitch 配置文件 /etc/nsswitch.conf
 
@@ -33,13 +34,13 @@ nsswitch 是一个平台，里边有库文件  libnss_files.so   libnss_dns.so
 
 nsswitch 中有这么一行定义
     hosts:  files   dns
-        files 就是靠 libnss_files.so 找的 /etc/hosts, 通过这个文件找FQDN和IP的对应关系
-        dns 就是dns服务
+        files 就是靠 libnss_files.so 找的 /etc/hosts, 通过这个文件找 FQDN 和 IP 的对应关系
+        dns 就是 dns 服务
 
     debian 上实际上是这个，有很多项
     hosts:          files mdns4_minimal [NOTFOUND=return] dns myhostname
 
-当访问一个域名，没有IP对应关系的时候，调用库文件,完成从主机名到IP地址的转换，这个机制叫 stub resolver,姑且叫它名称解析器
+当访问一个域名，没有 IP 对应关系的时候，调用库文件,完成从主机名到 IP 地址的转换，这个机制叫 stub resolver,姑且叫它名称解析器
 
 这个名称解析器会通过某个库调用，找nsswitch中的配置，先找 files(host: files dns),如果没有则找 dns(hosts: files dns)
 
@@ -96,7 +97,7 @@ nsswitch 中有这么一行定义
 
         对客户端来说是递归的，客户端只发一次请求；对DNS服务器来说是迭代的,可能会有n次请求
 
-        只有目标主机的直接上级返回的才是权威答案,否则是非权威答案
+        只有目标主机的直接上级返回的才是权威答案,否则是非权威答案,这个直接上级就是这个域的域名管理者,家长
 
         缓存时间是由这个域服务器决定的
 
@@ -107,14 +108,14 @@ nsswitch 中有这么一行定义
         一台服务器可以给多个域,多维护几个数据库即可
 
         A 去访问www.magedu.com  根服务器内的数据库存储着这样的条目：
-            .com    管理者的ns  ip 192.168.xxx.xxx
+            .com    管理者的 ns  ip 192.168.xxx.xxx
             去问上边这个人吧
-            .magedu 这个域的管理者ns  ip 172.16.xxx.xxx
+            .magedu 这个域的管理者 ns  ip 172.16.xxx.xxx
             去问上边这个人吧
         
         一个ip可以对应多个FQDN
         一个FQDN可以对应多个IP
-            虽然有多个IP，但是也只返回一个，负载均衡，第一个访问，返回ipA,第二个访问，返回ipB
+            虽然有多个IP，但是也只返回一个，负载均衡，第一个访问，返回 ipA,第二个访问，返回 ipB
         
 
         请求一个不存在的域名，返回一个否定答案，否定答案也有缓存时间
@@ -122,9 +123,9 @@ nsswitch 中有这么一行定义
 
         外部客户端的请求
             1. 返回权威答案 (递归客户端)
-                比如客户端请求A公司下的一个FQDN
+                比如客户端请求 A 公司下的一个FQDN
             1. 返回非权威答案 (非递归客户端) 
-                比如Z公司客户端请求A公司下的一个FQDN
+                比如 Z 公司客户端请求 A 公司下的一个FQDN
                 同意请求给返回的，说明这两个公司是兄弟公司; 不同意，不给返回的是竞争对手，或没有关系
          
         
@@ -143,7 +144,16 @@ nsswitch 中有这么一行定义
         13台服务器的内容完全一致
 
 
+TLDs are split into two basic types:
+    • Generic Top-Level Domains (gTLDs): For example, .com, .edu, .net, .org, .mil, and so on
+    • Country Code Top-Level Domains (ccTLDs): For example, .us, .ca, .tv, .uk, and so on
+
+Country Code TLDs use a standard two-letter sequence defined by ISO 3166.
+
+
+
 ## DNS服务器类型
+
     1. 主DNS服务器
 
     1. 备份DNS服务器
@@ -211,6 +221,7 @@ www.magedu.com.                                                      IN         
 
 
 ## 实战 BIND
+
 BIND 现在是由 ISC 负责维护，DHCP目前也是由 ISC 负责维护，所以可以去www.isc.org/downloads 不过貌似被和谐了
 
 

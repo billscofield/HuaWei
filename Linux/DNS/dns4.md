@@ -11,7 +11,7 @@ baidu.com mail is handled by 20 mx50.baidu.com.
 
 
 host www.baidu.com
-www.baidu.com is an alias for www.a.shifen.com.             //别名
+www.baidu.com is an alias for www.a.shifen.com.             //别名, baidu.com 是别名???
 www.a.shifen.com has address 61.135.169.125
 www.a.shifen.com has address 61.135.169.121
 www.a.shifen.com has IPv6 address 2408:80f0:410c:1c:0:ff:b00e:347f

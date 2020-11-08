@@ -201,12 +201,6 @@ yum install telnet
 
 ## 配置本地源服务器
 
-
-
-
-
-
-
 repodata是一个目bai录，里面包含了一个以 .xml结尾的文件，du这个文件是yum索引文件，包zhi含了rpm包的一些信dao息，比如依赖关系这些的。通过它用yum安装才能在自动解决依赖关系。一般光盘里面会自带有repodata目录。如果没有就手动生成了。方法：
 1. 安装createrepo包，这个你用rpm方式安装。
 2. 成功后你执行createrepo -v /mnt/cdrom 来重建索引文件
@@ -257,9 +251,6 @@ yum install -y 需要的包
 ### 克隆源
 
 reposync -p /mnt/centos/6/
-
-
-
 
 ### createrepo 报错问题
 
