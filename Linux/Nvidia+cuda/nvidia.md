@@ -48,14 +48,20 @@ nvidia-smi是用来查看GPU使用情况的。我常用这个命令判断哪几�
 Fan                     有的设备不会返回转速，因为它不依赖风扇冷却而是通过其他外设保持低温
 Temp                    是温度，单位摄氏度
 Pwr                     是能耗，上方的Persistence-M：是持续模式的状态，持续模式虽然耗能大，但是在新的GPU应用启动时，花费的时间更少，这里显示的是off的状态。 
+
 Bus-Id                  是涉及GPU总线的东西，domain:bus:device.function 
-Disp.A                  是Display Active，表示GPU的显示是否初始化。
+
+Disp.A                  是 Display Active，表示GPU的显示是否初始化。
 Memory Usage            是显存使用率
 GPU-Util                GPU利用率
 Volatile Uncorr. ECC    是否开启错误检查和纠正技术，0/DISABLED, 1/ENABLED
 Compute M               是计算模式, 0/DEFAULT, 1/EXCLUSIVE_PROCESS, 2/PROHIBITED
 
 显存占用和GPU占用是两个不一样的东西，显卡是由GPU和显存等组成的，显存和GPU的关系有点类似于内存和CPU的关系。我跑caffe代码的时候显存占得少，GPU占得多，师弟跑TensorFlow代码的时候，显存占得多，GPU占得少。
+
+
+
+
 
 
 1. nvidia-smi -L       查询所有 GPU 的 id

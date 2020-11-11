@@ -304,7 +304,9 @@ input()
     name = input("ur name")
 
 int()
+    没有long(python2)
 float()
+    没有double
 bool()
 
 ## 格式化输出
@@ -436,6 +438,7 @@ pyc c:compiled 编译过
     我 __pycache__的virtualenv 是在 import 文件夹下
 
 ## list 列表
+
 其他语言中叫数组
 
 .sort()  升序
