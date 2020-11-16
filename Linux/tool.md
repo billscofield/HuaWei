@@ -32,6 +32,18 @@ and display it on the terminal next to an image, it could be your
 distributions logo or any ascii art of your choice.
 
 
+## libimage-exiftool-perl 
+
+library and program to read and write meta information in multimedia files
+
+修改图片 exif 信息
+
+exif: Exchangeable image file format
+
+是专门为数码相机的照片设定的，可以记录数码照片的属性信息和拍摄数据。
+
+JPEG（发音为jay-peg,IPA：[ˈdʒeɪpɛg]）
+
 
 ## fim
 
