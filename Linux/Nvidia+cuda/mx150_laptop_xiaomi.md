@@ -72,6 +72,15 @@ nvidia-smi      若列出GPU的信息列表，表示驱动安装成功
 nvidia-settings 若弹出设置对话框，亦表示驱动安装成功, 这个在服务器和小米笔记本上均没有成功?
 
 
+### 安装过程中可能遇到的问题
+
+1. Unable to find the kernel source tree for the currently running kernel. Please make sure you have installed the kernel source files for your kernel and that they are properly configured; on Red Hat Linux systems, for example, be sure you have the 'kernel-source' or 'kernel-devel' RPM installed. If you know the correct kernel source files are installed, you may specify the kernel source path with the '--kernel-source-path' command line option.
+
+    解决方案: 
+
+    kernel－devel是rpm的东西。在ubuntu下，安装的不一样，打开终端，输入sudo apt-get install linux-headers-generic
+
+
 ## 安装CUDA
 ### 下载cuda
 
