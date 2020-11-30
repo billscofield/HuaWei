@@ -95,3 +95,7 @@ Subsystem   sftp    /usr/lib/openssh/sftp-server
 
 禁止用户组group1的所有用户登录，多个空格分隔
     DenyGroups group1
+
+
+
+## 

@@ -32,8 +32,10 @@ seconds ] [ -W seconds  ] [ -V vlan  ] [ -Q priority  ] [ -g group  ] <host | -B
 
 
 
-The arping utility sends ARP and/or ICMP requests to the specified host and displays the replies. The host
-may be specified by its hostname, its IP address, or its MAC address.
+The arping utility sends ARP and/or ICMP requests to the specified host and displays the replies. 
+The host may be specified by its hostname, its IP address, or its MAC address.
+
+同时返回 ip 和 mac 
 
 One request is sent each second.
 

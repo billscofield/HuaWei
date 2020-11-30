@@ -176,6 +176,8 @@ redhat 要求windows主机必须开启:
 
     并写上版本, vers=2.0, 否则报错：Host is down
 
+    必要时关闭防火墙
+
 
 
 
