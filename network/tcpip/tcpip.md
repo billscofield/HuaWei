@@ -23,6 +23,16 @@ icmp header 是 8Bytes
 
 
 
+### 路由跟踪 
+
+linux
+    ping -R <目标>
+
+Cisco 路由器
+    ping 
+    根据提示进行设置
+
+
 
 ## telnet route-server.ip.att.net
 
