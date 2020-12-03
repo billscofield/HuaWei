@@ -88,3 +88,15 @@ Starting applications specified in /root/.vnc/xstartup
 Log file is /root/.vnc/hjimi-System-Product-Name:1.log
 
 ```
+
+
+
+
+## 修改分辨率
+
+vi /usr/bin/vncserver
+
+
+## 使用
+
+用户ssh登录后, vncserver 查看是多少, 然后执行vnc远程登录
