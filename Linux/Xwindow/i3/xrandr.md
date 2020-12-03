@@ -22,4 +22,4 @@
 
     xrandr --output HDMI1 --primary --auto --output VGA1 --auto --left-of HDMI1
 
-     
+图形化工具 arandr

@@ -239,3 +239,7 @@ google的说明
 ## supervisor
 
 守护进程
+
+
+
+## smartmontools
