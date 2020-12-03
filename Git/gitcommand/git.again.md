@@ -81,6 +81,8 @@ git rm --cached 文件  : 都可以
 git commit --amend -m "修正过的提交信息"
 
 
+git commit --amend --reset-auther   // gitconfig user.xxx 后运行
+
 
 ## git log
 
@@ -160,10 +162,41 @@ build/      build 目录下的所有文件
 对于空目录，忽略
 
 
+## git config 
+
+git config push.default 
+    simple
+    matching
+
+
+•   simple - in centralized workflow, work like upstream with an added safety to refuse to push if the
+    upstream branch’s name is different from the local one.
+
+    When pushing to a remote that is different from the remote you normally pull from, work as
+    current. This is the safest option and is suited for beginners.
+
+    This mode has become the default in Git 2.0.
+
+•   matching - push all branches having the same name on both ends. This makes the repository you are
+    pushing to remember the set of branches that will be pushed out (e.g. if you always push maint and
+    master there and no other branches, the repository you push to will have these two branches, and
+    your local maint and master will be pushed there).
+
+    To use this mode effectively, you have to make sure all the branches you would push out are ready
+    to be pushed out before running git push, as the whole point of this mode is to allow you to push
+    all of the branches in one go. If you usually finish work on only one branch and push out the
+    result, while other branches are unfinished, this mode is not for you. Also this mode is not
+    suitable for pushing into a shared central repository, as other people may add new branches there,
+    or update the tip of existing branches outside your control.
+
+    This used to be the default, but not since Git 2.0 (simple is the new default).
+
+
+
 ## 分支 branch
 
 显示所有分支
-    git branch
+    git branch -a
 
 创建分支
     git branch <branch-name>
@@ -212,12 +245,12 @@ build/      build 目录下的所有文件
     1. 支分支删除了文件
         Fast-forward
 
-撤销merge
+撤销 merge
     git merge --abort
 
 
 查看所有分支的最后一次提交
-    git branch -v
+    git branch -av
 
 
 HEAD 指向当前分支
@@ -229,5 +262,225 @@ HEAD 指向当前分支
     git checkout dev
     cat .git/HEAD
     ref: refs/heads/dev
+
+## git diff
+
+工作区和暂存区文件的 diff
+    git diff
+    git diff <file>
+
+暂存区和 commit 文件的 diff
+
+    git diff --cached <file>                //默认 commit-id HEAD
+    git diff --cached  <commit-id> <file>
+
+
+## git push 
+
+    git push -u origin master       // u 表示本地的master和远程的master进行关联
+
+    -u, --set-upstream
+        For every branch that is up to date or successfully pushed, **add upstream (tracking) reference**, used by
+        argument-less git-pull(1) and other commands. For more information, see branch.<name>.merge in git-config(1).
+
+## git remote 
+
+git remote show
+
+git remote show origin      // 会去仓库抓取信息
+
+    ```
+    ➜  console git:(master) ✗ git remote show origin
+    * remote origin
+    Fetch URL: https://github.com/billscofield/huawei.git
+    Push  URL: https://github.com/billscofield/huawei.git
+    HEAD branch: master
+    Remote branch:
+    master tracked
+    Local branch configured for 'git pull':
+    master merges with remote master
+    Local ref configured for 'git push':
+    master pushes to master (up to date)        // 如果落后了，会显示 local out of date
+
+    ```
+
+
+## 冲突合并
+
+    修改了同一份文件，一定会产生冲突，一定需要 merge
+
+
+
+    张三和李四同时 pull 远程仓库，对同一个文件同一行进行编辑, 造成冲突
+
+    张三首先提交commit 到远程仓库
+
+    李四提交commit, 并 pull 远程仓库, 提示进行人工合并
+
+
+
+
+    ``` 张三提交commit, push 到远程仓库
+    commit 4f2232cfdf698134dc34ce5a132739834c9585e2 (HEAD -> master, origin/master)
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 21:00:23 2020 +0800
+
+    append by zhangsan
+
+    commit 0dbdac5f422efcb9535b75848165b581f4dc34e8
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 20:56:29 2020 +0800
+
+    initial
+    ```
+
+
+    ``` 李四提交commit, 
+    commit 4c3524f859fc76eab1dc391d9cb2030547dd434b (HEAD -> master)
+    Author: lisi <lisi@b.com>
+    Date:   Thu Dec 3 20:59:20 2020 +0800
+
+    append by lisi
+
+    commit 0dbdac5f422efcb9535b75848165b581f4dc34e8
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 20:56:29 2020 +0800
+
+    initial
+    ```
+
+
+
+    ```李四 pull 远程仓库
+    * master                5c3524f [ahead 1, behind 1] append by lisi
+    remotes/origin/HEAD   -> origin/master
+    remotes/origin/master 4f2232c append by zhangsan
+
+    ```
+
+
+    ```李四合并commit后
+    commit d57b21042adb4df1841cd8c75ae981abbe268401 (HEAD -> master)
+    Merge: 4c3524f 4f2232c
+    Author: lisi <lisi@b.com>
+    Date:   Thu Dec 3 21:10:58 2020 +0800
+
+    merge conf
+
+    commit 4f2232cfdf698134dc34ce5a132739834c9585e2 (origin/master, origin/HEAD)
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 21:00:23 2020 +0800
+
+    append by zhangsan
+
+    commit 4c3524f859fc76eab1dc391d9cb2030547dd434b
+    Author: lisi <lisi@b.com>
+    Date:   Thu Dec 3 20:59:20 2020 +0800
+
+    append by lisi
+
+    commit 0dbdac5f422efcb9535b75848165b581f4dc34e8
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 20:56:29 2020 +0800
+
+    initial
+
+    ---
+
+    ➜  two git:(master) git status
+    On branch master
+    Your branch is ahead of 'origin/master' by 2 commits.
+      (use "git push" to publish your local commits)
+
+      nothing to commit, working tree clean
+
+    ```
+
+      a(1 < -a)
+       /    \
+      /      \
+     /        \
+    a          \
+     \          \
+      \          \
+       \          \
+      b(1 <- b)   1<-b<-a --------- 1 <- b <- a <- merge
+
+    origin/master 指向的是 a, 本地多了 b 和 merge 两个 commit, 这就是 "Your branch is ahead of 'origin/master' by 2 commits." 的含义吧
+
+
+
+
+
+#### 
+
+张三创建 zhangsan.txt 
+
+张三提交commit， 并 push 到远程仓库
+
+    ```
+    commit da7d89ae655af84ceb1c894daa9e439bd956c255 (HEAD -> main, origin/main, origin/HEAD)
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 21:49:22 2020 +0800
+
+        zhangsan
+
+    commit ccb22724e84f49a3f2b2a77e27ccb6682de88939
+    Author: Bill <billscofield@users.noreply.github.com>
+    Date:   Thu Dec 3 21:47:12 2020 +0800
+
+        Initial commit
+
+    ```
+
+李四创建 lisi.txt, 并提交 commit
+
+李四 pull 远程仓库, 直接就进到 commit 文本
+
+    ```
+    commit e4ccc803e861c9151c476f0431012939e7e6aebc (HEAD -> main)
+    Merge: 88d4ebd da7d89a
+    Author: lisi <lisi@a.com>
+    Date:   Thu Dec 3 21:50:08 2020 +0800
+
+        Merge branch 'main' of https://github.com/billscofield/test into main
+
+    commit 88d4ebd1a9a01fc6b12cf467bfbc3f9dfa8ba205
+    Author: lisi <lisi@a.com>
+    Date:   Thu Dec 3 21:49:31 2020 +0800
+
+        lisi
+
+    commit da7d89ae655af84ceb1c894daa9e439bd956c255 (origin/main, origin/HEAD)
+    Author: zhangsan <zhangsan@a.com>
+    Date:   Thu Dec 3 21:49:22 2020 +0800
+
+        zhangsan
+
+    commit ccb22724e84f49a3f2b2a77e27ccb6682de88939
+    Author: Bill <billscofield@users.noreply.github.com>
+    Date:   Thu Dec 3 21:47:12 2020 +0800
+
+        Initial commit
+
+
+
+    ---
+
+    ➜  two git:(main) git status
+    On branch main
+    Your branch is ahead of 'origin/main' by 2 commits.
+      (use "git push" to publish your local commits)
+
+    nothing to commit, working tree clean
+
+    ```
+
+
+
+
+
+
+
 
 
