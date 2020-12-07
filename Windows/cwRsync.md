@@ -4,6 +4,7 @@
 
 
 ## 软件下载地址
+
 https://linux.linuxidc.com/index.php?folder=MjAxNMTq18rBzy8x1MIvMjTI1S9jd1JzeW5jIDQuMC41LVJzeW5jIGZvciBXaW5kb3dzIM/C1Ng=
 包含一份 客户端 软件
 包含一份 服务端 软件
@@ -15,10 +16,12 @@ https://www.itefix.net/cwrsync
 
 
 ## csRsync 客户端
+
 解压后直接管理员方式安装
 
 
-## csRsync 服务端
+## cwRsync 服务端
+
 安装过程中提示输入服务运行时的用户名，密码, 也可以自定义
 默认的用户名是: SvCCWRSYNC
 默认的密码是：  2p1X0ZGV4kuzq6
@@ -30,6 +33,7 @@ net start rsyncserver
 net stop rsyncserver
 
 ### 配置文件
+
 C:\Program Files (x86)\ICW\rsyncd.conf
 
 ```
@@ -78,6 +82,7 @@ exit
 
 
 ## 参考过的网址
+
 https://www.cnblogs.com/hanxiaohui/p/9481640.html
 https://blog.csdn.net/ujm097/article/details/81475649
 https://www.cnblogs.com/hllnj2008/p/4103761.html

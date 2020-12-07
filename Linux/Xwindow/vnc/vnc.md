@@ -100,3 +100,9 @@ vi /usr/bin/vncserver
 ## 使用
 
 用户ssh登录后, vncserver 查看是多少, 然后执行vnc远程登录
+
+
+## tab补全
+
+xfwm4-settings
+
