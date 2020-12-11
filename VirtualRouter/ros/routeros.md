@@ -21,6 +21,7 @@ password      : 空
 /system reboot
 
 ## UPGRADE
+
 winBox 连接上后标题栏上有版本号
 
 官网下载升级包

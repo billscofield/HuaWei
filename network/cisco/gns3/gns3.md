@@ -8,7 +8,9 @@ edit / preference / Dynamips / IOS routers / New ...
 
 打开 gns3 软件后需要等一会儿，应该是还没有初始化好，最好新建一个项目，项目创建完毕之后，大概率就可以导入镜像了
 
-##
+## 安装
+
+https://blog.51cto.com/wenzhongxiang/1232290
 
 ## 
 

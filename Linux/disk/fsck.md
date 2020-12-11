@@ -1,5 +1,7 @@
 
 
+## linux 开机进入initramfs无法开机
+
 使用光盘进入 secure 模式
 
 umount /

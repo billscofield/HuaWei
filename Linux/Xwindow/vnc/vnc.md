@@ -1,6 +1,8 @@
 
 https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vnc-on-ubuntu-18-04
 
+https://www.fosslinux.com/17674/how-to-install-vnc-server-on-ubuntu.htm#:~:text=Configure%20VNC%20Server%20On%20Ubuntu%201%20Before%20starting,VNC%20server%20configuration%20file.%20...%20More%20items...%20
+
 ## Virtual Network Computing (VNC)
 
 VNC is extended from the RFB protocol
@@ -106,3 +108,10 @@ vi /usr/bin/vncserver
 
 xfwm4-settings
 
+
+
+
+
+## xstartup 文件
+
+startkde表示启动kde图形界面；twm表示启动文本界面
