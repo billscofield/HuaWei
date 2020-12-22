@@ -55,6 +55,8 @@ SNMP v1是SNMP协议的最初版本，不过依然是众多厂家实现SNMP基�
 SNMP v2通常被指是基于community的SNMP V2。Community实质上就是密码。
 
 SNMP v3 是最新版本的SNMP。它对网络管理最大的贡献在于其安全性。增加了对认证和密文传输的支持。
+    SNMPv1和SNMPv2c协议都是使用团体名进行认证的，配置方式类似。
+    SNMPv3协议使用用户名、密码进行认证，更加安全。
 
 
 
