@@ -431,6 +431,15 @@ Closed/Unfiltered
 
 
 
+    SYN Stealth Scan Timing: About 96.38% done; ETC: 15:38 (0:04:01 remaining)
+
+    stealth [stelθ]
+        n.  偷偷摸摸; 不声张的活动; 秘密行动;
+        adj.    隐形的;
+
+
+
+
 
 -e <iface>: Use specified interface
 

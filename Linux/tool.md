@@ -243,3 +243,46 @@ google的说明
 
 
 ## smartmontools
+
+
+
+## pv 
+
+apt-cache show pv
+apt-get install pv
+
+PV 由Andrew Wood 开发，是 Pipe Viewer 的简称，意思是通过管道显示数据处理进度的信息。这些信息包括已经耗费的时间，完成的百分比（通过进度条显示），当前的速度，全部传输的数据，以及估计剩余的时间。
+
+"要使用 PV，需要配合合适的选项，把它放置在两个进程之间的管道。命令的标准输入将会通过标准输出传进来的，而进度会被输出到标准错误输出。”"
+
+
+
+从左到右，显示的信息是：
+
+1. The data transferred so far.                        数据传输到此为止。
+
+2. The time elapsed fo far.                            时间已经过去了。
+
+3. The data transfer rate (throughput).                数据传输速率(吞吐量)。
+
+4. A progress bar and a percentage completed figure.   进度条和完成百分比。
+
+5. The estimated time left before completion (ETA).    完成之前预计剩余的时间(ETA)。
+
+### 例子
+
+pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso | zip > gparted.zip
+
+1. 复制单个文件
+    pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso > gparted.iso
+
+1. 要使用pv复制多个文件和文件夹，我们需要使用一些技巧。 我们使用tar为我们移动文件。
+
+    tar -c help-files/ | pv | tar -x -C Documents/
+
+1. 使用pv和tar创建档案 (Using pv and tar to Create an Archive)
+    tar -czf - ./help-files/ | pv > help-files.tgz
+
+
+
+##
