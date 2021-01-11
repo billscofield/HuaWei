@@ -19,22 +19,40 @@ run文件权限更改, 添加可执行权限
 ## 安装 nvidia 驱动
 
 如何查看显卡型号
+
     lspci -Ei '(vga|display|nvidia)'
 
 Kernel mode setting(KMS)
 
 
 ### 禁用nouveau
+
 vi /etc/modprobe.d/blacklist.conf
 
 blacklist nouveau
 options nouveau modeset=0
 
+blacklist vga16fb
+blacklist rivafb
+blacklist nvidiafb
+blacklist rivatv
+
 杀掉所有 GPU 进程
+
     ```
     fuser -v /dev/nvidia*
     ```
 查看 nvidia-smi
+
+
+``` 这个不一定需要
+"sudo update-initramfs -u"
+
+now reboot
+and install 
+sh NV....run
+```
+
 
 ### 删除原有NVIDIA驱动
 
@@ -44,6 +62,7 @@ sudo apt-get --purge remove xserver-xorg-video-nouveau
 ```
 
 重启电脑，按Ctrl + Alt +F1到第一控制台（+F7是回到桌面），首先登录账号，然后结束图形化界面
+
     service lightdm stop
 
 ./NVIDIA-Linux-x86_64-390.77.run --no-x-check --no-nouveau-check --no-opengl-files
@@ -57,6 +76,7 @@ sudo apt-get --purge remove xserver-xorg-video-nouveau
 
 
 ### 安装过程
+
 1. 可能会出现提示The distribution-provided pre-install script failed are you sure you want to continue，没关系，继续进行
 
 1. Would you like to register the kernel module sources with DKMS?This will allow DKMS to auomatically build a new module,if you install a different kernel later，选择No
@@ -68,6 +88,7 @@ sudo apt-get --purge remove xserver-xorg-video-nouveau
 sudo service lightdm start
 
 ### 验证驱动
+
 nvidia-smi      若列出GPU的信息列表，表示驱动安装成功
 nvidia-settings 若弹出设置对话框，亦表示驱动安装成功, 这个在服务器和小米笔记本上均没有成功?
 
