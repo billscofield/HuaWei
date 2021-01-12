@@ -66,3 +66,22 @@ int vlanif 数字
 ip address 192.168.99.23 255.255.255.0
 
 display this
+
+
+
+
+
+## 屏蔽 MAC
+
+mac-address blackhole f439-092c-f0b4 10.1.0.253 vlan 10
+
+
+## arp
+
+1. 清空动态 arp
+
+```
+reset arp dynamic
+```
+
+https://support.huawei.com/enterprise/zh/doc/EDOC1000178148/e48ffbd2
