@@ -1,6 +1,6 @@
 debian：
 1）修改文件：
-/etc/console-setup/cached.kmap.gz
+/etc/console-setup/cached.kmap.gz   // /etc/console-setup/cached_UTF-8_del.kmap.gz
 
 2）首先备份文件：
 cd /etc/console-setup/

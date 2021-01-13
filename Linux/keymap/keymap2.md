@@ -21,6 +21,20 @@ be fed back to xmodmap.
 
 xev 和 showkey 中的 keycode 不一样是什么情况???
 
+```
+➜  keymap git:(master) showkey
+kb mode was UNICODE
+[ if you are trying this under X, it might not work
+since the X server is also reading /dev/console ]
+
+press any key (program terminates 10s after last keypress)...
+
+```
+
+showkey 应该是用在 console 环境下的
+
+
+
 ### setxkbmap - set the keyboard using the X Keyboard Extension
 
 执行这条命令 xmodmap 中的配置会被冲掉
