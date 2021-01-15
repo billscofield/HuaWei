@@ -1,5 +1,7 @@
 # windows
 
+
+
 ## win10 版本
 
 1. win10的版本
@@ -27,16 +29,25 @@
 
 
 
+以前是两位数年份+两位数月份。现在后两位改为H1（上半年）或H2（下半年）
+
+微软每年都会给win10两次大更新，而2004是20h1，所以20h2就2004下一个版本
+
+
+
 
 ## win10商店版本Ubuntu访问window资源
+
 cd /mnt/
 
 ## win10访问 商店版本Ubuntu资源
+
 C:\Users\Administrator\AppData\Local\Packages\CanonicalGroupLimited.Ubuntu16.04onWindows_79rhkp1fndgsc\LocalState\rootfs
 
 
 
 ## 链接
+
 1. https://msdn.itellyou.cn
 
 

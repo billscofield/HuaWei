@@ -42,6 +42,8 @@ gzip -d cached.kmap.gz
 
 https://wiki.archlinux.org/index.php/Keyboard_input
 
+https://wiki.archlinux.org/index.php/Map_scancodes_to_keycodes
+
 
 ### scancode
 

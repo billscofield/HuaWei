@@ -236,6 +236,14 @@ google的说明
     https://www.google.com/googlebooks/chrome/med_26.html
 
 
+### edge 
+
+https://www.microsoftedgeinsider.com/zh-cn/download/?platform=linux
+
+下载 deb安装包
+
+
+
 ## supervisor
 
 守护进程
