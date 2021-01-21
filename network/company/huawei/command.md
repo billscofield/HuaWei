@@ -73,7 +73,7 @@ display this
 
 ## 屏蔽 MAC
 
-mac-address blackhole f439-092c-f0b4 10.1.0.253 vlan 10
+mac-address blackhole f439-092c-f0b4 vlan 101
 
 
 ## arp
