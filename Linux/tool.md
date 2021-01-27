@@ -293,4 +293,43 @@ pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso | zip > gparted.zip
 
 
 
-##
+## autojump
+
+git clone https://gitee.com/billscofield/autojump.git
+
+python install.py   // Python v2.6+ or Python v3.3+
+
+
+
+## tmux
+
+mkdir ~/.tmux 
+cd ~/.tmux
+git clone https://github.com/tmux-plugins/tmux-resurrect.git
+
+tmux source-file ~/.tmux.conf
+
+### 保存会话
+
+先按下【ctrl+b】前缀，再按下【ctrl+s】就可以保存，可以看到终端最下面有提示:
+Tmux environment saved!
+
+按下【ctrl+d】退出tmux
+此时输入tmux a，会通知没有会话
+
+### 恢复会话
+
+先打开tmux
+先按下前缀，再按下【ctrl+r】就可以恢复之前的会话啦
+
+
+
+## net-tools
+
+
+## dnsutils
+
+dig - query the DNS in various ways
+nslookup - the older way to do it
+nsupdate - perform dynamic updates (See RFC2136)
+
