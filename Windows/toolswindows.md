@@ -28,3 +28,24 @@ windows server(2006以上)
 特定版本号的 windows 和 Mac 版本
 
     https://www.microsoft.com/zh-cn/edge/business/download
+
+
+### CPUID
+
+#### CPU-Z
+
+link: https://www.cpuid.com/
+
+Desc: CPU-Z is a freeware that gathers information on some of the main devices of your system.
+
+
+#### HWMONITOR PRO
+
+Extended version of the hardware monitoring program HWMonitor
+
+
+#### POWERMAX
+
+CPU and GPU burn-in test
+
+Test your CPU and GPU stability and cooling at maximum power and temperature.
