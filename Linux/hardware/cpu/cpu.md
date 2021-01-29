@@ -109,3 +109,10 @@ CPU超频设置，“DOCP”英文原意是 Allows you to select a DRAM O.C.prof
 
 允许你选择一个内存超频档，同时与之相关的参数比如时序、电压什么都会被自动调整。类似智能超频。
 
+
+
+## Intel 
+
+### Xeon
+
+

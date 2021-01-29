@@ -38,6 +38,10 @@ mii-tool) and advanced aspects of IP configuration (iptunnel, ipmaddr).
     the same out‐put.
 
 
+Recv-Q / Send-Q
+    接收数量，发送数量
+
+
 ### 修改 MAC 地址
 
 方法一: 

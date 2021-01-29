@@ -164,6 +164,19 @@ pyenv local test
 临时使用3.6.2的虚拟环境
 $ pyenv activate env362
 
+报错：
+Failed to activate virtualenv.
+
+Perhaps pyenv-virtualenv has not been loaded into your shell properly.
+Please restart current shell and try again.
+
+
+终端执行如下操作临时生效
+
+$ eval "$(pyenv init -)"
+$ eval "$(pyenv virtualenv-init -)"
+将以上内容添加到 ~/.bashrc，并通过 source ~/.bashrc 生效环境变量
+
 
 关闭3.6.2的虚拟环境
 $ pyenv deactivate
