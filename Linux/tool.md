@@ -333,3 +333,19 @@ dig - query the DNS in various ways
 nslookup - the older way to do it
 nsupdate - perform dynamic updates (See RFC2136)
 
+
+## rdesktop
+
+RDP client for Windows NT/2000 Terminal Server and Windows Servers
+rdesktop is an open source client for Windows NT/2000 Terminal Server and
+Windows Server 2003/2008. Capable of natively speaking its Remote Desktop
+Protocol (RDP) in order to present the user's Windows desktop. Unlike Citrix
+ICA, no server extensions are required.
+
+
+## lshw
+
+lshw - information about hardware configuration
+
+lshw | grep \*
+lshw -C 上边的关键字

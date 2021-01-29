@@ -103,9 +103,10 @@ tcpdump -n udp port 53 -r 文件.pcat
 
 
 
-
+## 读取抓包文件
 
 -r file
+
 Read packets from file (which was created with the -w option or by other tools that  write  pcap  or pcap-ng files).  
 Standard input is used if file is ``-''.
 

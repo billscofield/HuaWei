@@ -18,6 +18,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 
 
 ### 方法2
+
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
 
 同样是做环境变量
@@ -31,19 +32,23 @@ echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 source ~/.bashrc
 
 重启shell
+
     exec "$SHELL"
 
 
 ## 安装python的不同版本
 
 安装 Python 的依赖包
+
 在编译 Python 过程中会依赖一些其他库文件，因而需要首先安装这些库文件，已知的一些需要预先安装的库如下。在 Ubuntu下：
+
 sudo apt-get update
 sudo apt-get install make build-essential libssl-dev zlib1g-dev
 sudo apt-get install libbz2-dev libreadline-dev libsqlite3-dev wget curl
 sudo apt-get install llvm libncurses5-dev libncursesw5-dev
 
 另一个给出的
+
 apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
 
 
@@ -57,8 +62,13 @@ pyenv uninstall 3.6.7   卸载python
     在使用pyenv install安装python，可能会比较慢，甚至下载安装不成功
 
     <1>.这时最好使用是下载好python源码包，然后通过pyenv进行安装（可以下载到境外云服务器）
+
+        http://npm.taobao.org/mirrors/python/
+
     <2>.将python源码包放置在~/.pyenv/cache/目录中（不要解压 ; 如没有cache就创建一个）
+
     <3>.执行pyenv install 3.6.4
+
 
     以本文说的情况为例：
         执行 pyenv install anaconda3-4.1.0 -v 获取下载链接
@@ -68,8 +78,11 @@ pyenv uninstall 3.6.7   卸载python
         安装过程中，若出现编译错误，通常是由于依赖包未满足，需要在安装依赖包后重新执行该命令
 
 更新数据库
+
     在安装 Python 或者其他带有可执行文件的模块之后，需要对数据库进行更新：
+
     pyenv rehash
+
 
 设置全局的 python 版本
 $ pyenv global anaconda3-4.1.0
