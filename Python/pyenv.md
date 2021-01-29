@@ -18,6 +18,7 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 
 
 ### 方法2
+
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
 
 同样是做环境变量
@@ -52,6 +53,11 @@ pyenv install --list    查看可以安装的python版本
 pyenv install -v 3.6.7  安装python
 
 pyenv uninstall 3.6.7   卸载python
+
+
+华为Python源
+    https://mirrors.huaweicloud.com/python
+
 
 注意
     在使用pyenv install安装python，可能会比较慢，甚至下载安装不成功
