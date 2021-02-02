@@ -77,6 +77,8 @@ zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbi
     vim /etc/zabbix/apache.conf
     php_value date.timezone Africa/Kampala
 
+    (/etc/php/7.3/apache2/php.ini) https://blog.csdn.net/jing875480512/article/details/79002404
+
 通过所有完美的环境设置，您现在可以启动Zabbix服务器和代理程序进程，使它们能够在系统引导时自动启动
     systemctl start zabbix-server zabbix-agent
     systemctl enable zabbix-server zabbix-agent
@@ -102,6 +104,8 @@ PHP mbstring extension missing (PHP configuration parameter --enable-mbstring).
 
 zabbix 登录账号密码	admin:zabbix
 
+update  users set passwd=md5("woshitiancai") where userid='1';// 更改 Admin 登录密码
+
 
 
 ### Zabbix修改为中文界面
@@ -122,6 +126,19 @@ vi include/defines.inc.php
 还是不行的话是因为 Debian10 没有安装中文支持
 
 #### Debian10 添加中文支持
+
+links:https://www.cmsky.com/debian-zabbix-language/
+
+Debian下安装好Zabbix后想选择语言的时候发现中文选项是灰色的。
+
+于是查找解决办法，修改站点根目录下include/locales.inc.php文件，确保zh_CN.utf8这一行是true
+
+可是我改过后发现语言选项还是灰的，于是继续查找发现原来我用的debian系统没有添加中文语言环境。于是乎执行命令
+dpkg-reconfigure locales把zh_CN.utf8这一行选中保存，然后使用locale -a查看里面有zh_CN.utf8就行了。
+最后重启一下web服务，service apache2 restart就可以选择中文了。
+
+
+---
 
 1. Setup locales
     dpkg-reconfigure locales
