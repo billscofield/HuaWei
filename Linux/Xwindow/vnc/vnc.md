@@ -3,6 +3,11 @@ https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-vn
 
 https://www.fosslinux.com/17674/how-to-install-vnc-server-on-ubuntu.htm#:~:text=Configure%20VNC%20Server%20On%20Ubuntu%201%20Before%20starting,VNC%20server%20configuration%20file.%20...%20More%20items...%20
 
+
+https://andyx.net/how_to_install_graphical_desktop_browser_vnc_in_rhel_centos_ubuntu/
+
+    可以单独看下这个
+
 ## Virtual Network Computing (VNC)
 
 VNC is extended from the RFB protocol
