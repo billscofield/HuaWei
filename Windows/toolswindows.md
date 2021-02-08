@@ -49,3 +49,8 @@ Extended version of the hardware monitoring program HWMonitor
 CPU and GPU burn-in test
 
 Test your CPU and GPU stability and cooling at maximum power and temperature.
+
+
+## 截屏录屏
+
+Snipaste: 免费的桌面截图软件
