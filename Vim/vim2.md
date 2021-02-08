@@ -1,4 +1,5 @@
 ## 无法使用系统剪贴板
+
 当打开一个文件后，:reg 没有 :+ 
 vim --version | egrep clipboard 返回的结果中，clipboard 和 xterm_clipboard 是 - 
 

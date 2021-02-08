@@ -1,20 +1,31 @@
 debian：
+
 1）修改文件：
+
 /etc/console-setup/cached.kmap.gz   // /etc/console-setup/cached_UTF-8_del.kmap.gz
 
 2）首先备份文件：
+
 cd /etc/console-setup/
+
 sudo cp cached.kmap.gz cached.kmap.gz.bak
 
+
 3）解压文件：
+
 sudo gzip -d cached.kmap.gz
 
 在这个文件中可以看到：
+
 keycode 29 = Caps_Lock …
+
 keycode 58 = Control …
+
 将这两个数字互换一下，… 表示后面还有很多字符
 
+
 4）再压缩：
+
 gzip cached.kmap
 
 然后重启机器就好了。注意在这修改也会影响到图形界面。
