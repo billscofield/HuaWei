@@ -1,3 +1,36 @@
+
+
+硬件监控
+    通过远程控制卡，Dell的iDRAC, HP的ILO 和 IBM 的 IMM 等
+    使用 IPMI 来完成物理设备的监控工作，温度，硬盘故障等
+    路由器，交换机(端口，光衰，日志), 打印机，Windows等
+
+系统监控
+    CPU，内存，硬盘使用率，系统负载，进程数
+
+服务监控
+    apache,nginx,php,mysql,memcache,redis,tomcat,JVM,TCP连接数
+
+性能监控
+    网站性能，服务器性能，数据库性能，存储性能
+
+日志监控
+    ELK
+
+安全监控
+    用户登录数，passwd文件变化，本地文件改动
+    不同攻击类型的统计
+
+网络监控
+    端口，web(URL), DB, ping, IDC贷款网络流量，网络流入流出速率, SMTP, POP3
+
+
+
+
+
+
+
+
 ## centos 系统下载地址
 
 http://mirrors.163.com/
@@ -30,25 +63,46 @@ deb https://mirrors.tuna.tsinghua.edu.cn/debian-security buster/updates main con
 
 ## zabbix server 的安装配置
 
-### 第1步：安装Apache Web服务器和PHP包
+查看 requirements
 
+    4.Installation 章节
+    
+    https://www.zabbix.com/documentation/5.0/manual/installation/requirements
+
+
+### 系统初始化
+
+apt 源
+
+### 第1步：安装 Apache Web 服务器和 PHP 包
+
+```
 apt install apache2 php php-mysql php-mysqlnd php-ldap php-bcmath php-mbstring php-gd php-pdo php-xml libapache2-mod-php
 apt install php-bcmath php-mbstring(上边已经安装了，没有安装上？)
+```
 
 ### 第2步：安装MariaDB服务器
 
+```
 apt install mariadb-server
 
+```
+
 您需要保护MariaDB服务器数据库安装。 已安装的软件包附带了您需要运行的脚本并遵循安全建议。
+
     mysql_secure_installation
 
-create database zabbix character set utf8mb4 collate utf8mb4_generial_ci;
-grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+    ```
+    create database zabbix character set utf8mb4 collate utf8mb4_generial_ci;
+    grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+    flush privileges
+    ```
 
 
-建议修改mariadb配置文件 my.cnf
+建议修改 mariadb 配置文件 my.cnf
 
 ```修改配置文档my.cnf
+
 [mysqld]
 
 innodb_large_prefix=1
@@ -59,10 +113,12 @@ innodb_file_format = Barracuda
 ### 第3步，安装和配置Zabbix服务器
 
 wget https://repo.zabbix.com/zabbix/4.0/debian/pool/main/z/zabbix-release/zabbix-release_4.0-3+buster_all.deb
+
 dpkg -i zabbix-release_4.0-3+buster_all.deb
+
 apt update
 
-Install Zabbix server, frontend, agent
+### Install Zabbix server, frontend, agent
 
 apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-agent
 
@@ -71,17 +127,28 @@ zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbi
 接下来，通过编辑文件/etc/zabbix/zabbix_server.conf ，将Zabbix服务器守护程序配置为使用您为其创建的数据库。
 
     vim /etc/zabbix/zabbix_server.conf
-        DBPassword
+
+        DBPassword=
 
 您还应该通过在/etc/zabbix/apache.conf文件中定义时区来设置PHP以便与Zabbix前端一起正常工作。
+
+    ```
     vim /etc/zabbix/apache.conf
+
     php_value date.timezone Africa/Kampala
 
     (/etc/php/7.3/apache2/php.ini) https://blog.csdn.net/jing875480512/article/details/79002404
 
+    ```
+
 通过所有完美的环境设置，您现在可以启动Zabbix服务器和代理程序进程，使它们能够在系统引导时自动启动
+
+    ```
     systemctl start zabbix-server zabbix-agent
     systemctl enable zabbix-server zabbix-agent
+    systemctl restart apache2
+    重启 php?
+    ```
 
 
 如果是安装官方的写法 utf8 collate utf8_ci
@@ -92,7 +159,9 @@ zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbi
 
 
 ---
+
 PHP bcmath extension missing (PHP configuration parameter --enable-bcmath
+
 	apt install php-bcmath
 
 PHP mbstring extension missing (PHP configuration parameter --enable-mbstring).
@@ -102,7 +171,7 @@ PHP mbstring extension missing (PHP configuration parameter --enable-mbstring).
 
 
 
-zabbix 登录账号密码	admin:zabbix
+zabbix 登录账号密码	Admin:zabbix
 
 update  users set passwd=md5("woshitiancai") where userid='1';// 更改 Admin 登录密码
 
@@ -151,15 +220,25 @@ dpkg-reconfigure locales把zh_CN.utf8这一行选中保存，然后使用locale 
 
 
 2. Install font
+
     apt-get install ttf-arphic-uming  xfonts-intl-chinese xfonts-wqy
 
 3. 安装debian中文输入法
+
     apt-get install scim scim-chinese scim-pinyin
 
-    2 和 3 可以省略
 
 中文字体
-/usr/share/zabbix/include
+
+    /usr/share/zabbix/include
+
+    /usr/share/zabbix/fonts??? 不是复制到这里???
+        
+        cp /usr/share/fonts/wqy-microhei.ttc /usr/share/zabbix/
+        
+        ➜  share find . -iname DejaVuSans.ttf
+        ./matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf
+        ./fonts/truetype/dejavu/DejaVuSans.ttf                  覆盖这个
 
 
 
@@ -168,27 +247,43 @@ dpkg-reconfigure locales把zh_CN.utf8这一行选中保存，然后使用locale 
 apt install zabbix-agent
 
 /etc/zabbix/zabbix_agentd.conf
+
     Server= 被动
+
     ServerActive= 主
+
     Hostname= 需要和前端中设置一致
 
+
 验证
+
 方法一:可以在 agent 端查看服务状态 和 日志(tail /var/log/zabbix/zabbix_agentd.log)
+
 方法二:也可在 server 端 telnet agent-IP 10050
+
 方法三:前端当中 配置/主机/可用性 ZBX更新为绿色
 
 再查看 监控/最新数据 是否有监控数据
 
 
 windows 添加 agent 方法
+
     1. 下载agent
+
     1. 修改配置文件
+        
         注意配置文件位置默认在c盘根目录
+        
         注意添加防火墙端口
+        
     1. powershell
+
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --install
+
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --uninstall
+
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --start
+
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --stop
 
 
@@ -198,7 +293,7 @@ windows 添加 agent 方法
 问题:
 1. systemctl status zabbix-agent.service
     Can't open PID file /run/zabbix/zabbix_agentd.pid (yet?) after start: No such file or directory
-    这个agent报这个错误不影响server收集信息
+    这个 agent 报这个错误不影响server收集信息
 
 2. 查看zabbix_agent 日志出现failed to accept an incoming connection: connection from "28.44.20.129" rejected, allowed hosts: "192.168.1.17"
 
@@ -208,31 +303,95 @@ windows 添加 agent 方法
 
 
 
-debian 10 系统 需要安装nmap
+debian 10 系统需要安装nmap???
+
     apt install nmap
 
 
 debian 10 需要安装snmp
+
     apt install snmp
 
 安装 sudo 软件
+
     apt install sudo 
 
-    为 zabbix 用户授权
+    为 zabbix 用户授权???
+        
         vi /etc/sudoers
+        
         zabbix ALL=(ALL) NOPASSWD:ALL
 
 
+
+#### agent2
+
+links:
+    https://www.zabbix.com/documentation/5.0/manual/concepts/agent2
+
+Zabbix agent 2 is a new generation of Zabbix agent and may be used in place of Zabbix agent. 
+
+Agent 2 is written in Go (with some C code of Zabbix agent reused). A configured Go version 1.13+ environment is required for building Zabbix agent 2.
+
+Agent 2 does not support daemonization on Linux; since Zabbix 5.0.4 it can be run as a Windows service.
+
+Passive checks work similarly to Zabbix agent. Active checks support scheduled/flexible intervals and check concurrency within one active server.
+
+Zabbix agent 2 is available in pre-compiled Zabbix packages. To compile Zabbix agent 2 from sources you have to specify the --enable-agent2 configure option.
+
+
+
+做好时间同步
+
+    ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+    apt-cache show ntpdate
+
+/usr/sbin/zabbix_agent2
+
+systemctl enable --now zabbix_agent2
+
+
+
+cat /lib/systemd/system/zabbix-agent2.service
+
+
+### 在服务器上测试数据接收
+
+apt install zabbix-get
+
+zabbix-get -s 10.0.0.1 -p 10050 -k 'system.hostname'
+
+
 ## snmp 监控 RouterOS
+
 https://techexpert.tips/zabbix/monitor-mikrotik-zabbix/
 
 模板: Template Net Mikrotik SNMPv2
 
 
 
+## 术语
+
+Host            服务器
+Hosts           主机组
+Applications    应用
+Events          事件
+Media           发送通知的通道
+Remote Command  
+Item            一个指标的监控
+Trigger         触发器
+Action          动作
 
 
-
+zabbix-server
+zabbix-agent
+zabbix-proxy
+zabbix database
+zabbix web
+zabbix get
+zabbix sender
+zabbix java gateway
 
 
 
@@ -298,34 +457,38 @@ zabbix - monitor anything
 ### 架构
 
 ```
-                            Zabbix Web
-                               ▲
-                               |
-zabbix agent ------            |
-                  |            |
-                  |            ▼
-zabbix agent ----------▶ zabbix server ◀---------▶ Database
-                  |            ▲
-                  |            |
-zabbix agent ------            |
-                               |
-                               |
-                  ---------------------------
-                  |                         |
-                  |                         |
-                  |                         |
-                  ▼                         ▼
-           Java Gateway                 Zabbix Proxy  ◀---------▶ Database
-负责通过JMX监控手机Java应用性能数据         ▲
-                                            |
-                                            |
-                                            |
-                                            |
-                                   ----------------------
-                                   |                    |
-                                   |                    |
-                             zabbix agent           zabbix agent
-
++--------------------------------------------------------------------------------+
+|                                                                                |
+|                               Zabbix Web                                       |
+|                                  ▲                                             |
+|                                  |                                             |
+|   zabbix agent ------            |                                             |
+|                     |            |                                             |
+|                     |            ▼                                             |
+|   zabbix agent ----------▶ zabbix server ◀---------▶ Database                  |
+|                     |            ▲                                             |
+|                     |            |                                             |
+|   zabbix agent ------            |                                             |
+|                                  |                                             |
+|                                  |                                             |
+|                     ---------------------------                                |
+|                     |                         |                                |
+|                     |                         |                                |
+|                     |                         |                                |
+|                     ▼                         ▼                                |
+|              Java Gateway                 Zabbix Proxy  ◀---------▶ Database   |
+|   负责通过JMX监控手机Java应用性能数据         ▲                                |
+|                                               |                                |
+|                                               |                                |
+|                                               |                                |
+|                                               |                                |
+|                                      ----------------------                    |
+|                                      |                    |                    |
+|                                      |                    |                    |
+|                                zabbix agent           zabbix agent             |
+|                                                                                |
++--------------------------------------------------------------------------------+ 
+    
 
 ```
 
@@ -419,5 +582,62 @@ User                                用户
 User Group                          用户组, 比如运维组，研发组
 permission                          权限
 User Type                           用户类型, 三种: 普通用户，管理员，超级管理员
-                                    
+
+
+
+## 自定义监控模板
+
+模板
+
+应用集 application(相当于文件夹)
+
+监控项 item
+
+Trigger
+
+图形
+
+主机和该模板关联
+
+
+群组
+
+
+只在一台 agent 上创建了 UserParameter , 其他主机上没有这个，模板应用在其他主机上之后如何监控该item???  上传给了 zabbix-server
+
+
+
+## 邮件报警
+
+SMTP HELO  这个怎么写，代表啥意思???
+
+
+
+## 添加大量主机
+
+克隆监控模板
+
+自动注册和自动发现
+
+使用 zabbix 的 api 接口，利用 curl 语言，或者开发自己的编程脚本入 Python 等
+
+
+
+## 自动发现，自动注册
+
+自动发现: server 主动去发现所有的客户端，然后将客户端的信息进行记录
+    
+    server 端压力会比较大, 耗时
+
+    被动模式
+
+自动注册: agent 主动上报自己的信息, 发给 server
+
+    主动模式
+
+    /etc/zabbix/zabbix/zabbix_agent.conf    -> HostnameItem=system.hostname
+
+
+
+
 
