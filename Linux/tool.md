@@ -349,3 +349,8 @@ lshw - information about hardware configuration
 
 lshw | grep \*
 lshw -C 上边的关键字
+
+
+## glances
+
+apt-cache show glances
