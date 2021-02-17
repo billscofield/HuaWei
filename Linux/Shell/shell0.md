@@ -26,6 +26,7 @@
 
 
 ## zsh
+
 cat /etc/shells
 apt install zsh
 
@@ -38,26 +39,36 @@ cp ~/.zshrc ~/.zshrc.bak    备份已有的zshrc
 cp ./oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc
 
 ### 主题
+
 oh-my-zsh集成了大量的主题, 位于oh-my-zsh/theme
 
 配置主题, 可以通过修改~/.zshrc中的环境变量ZSH_THEME来完成
 
 
 ### 配置插件
+
 修改～/.zshrc中plugins
+
     plugins=(git bundler osx rake ruby)
     
 ### 更新 oh-my-zsh
+
 默认情况下, 您将被提示检查每几周的升级. 如果你想我ZSH自动升级本身没有提示你, 修改`~/.zshrc
+
     disable_update_prompt = true
 
 禁用自动升级, 修改~/.zshrc
+
     disable_auto_update = true
 
 如果你想在任何时间点升级,你只需要运行：
-    upgrade_oh_my_zsh
+
+    upgrade_oh_my_zsh(这个不再被推荐使用)
+
+    omz update
 
 卸载oh-my-zsh
+
     uninstall_oh_my_zsh zsh
 
 
@@ -84,27 +95,35 @@ endfunc
 ```
 
 ## 脚本中的错误
+
 1. syntax error 会立刻停止执行
+
 1. command not found  不会影响下面的命令的执行
+
     1. 后续的操作可能就是错误的
 
 1. 检查错误
+
     1. 语法错误    bash -n a.sh
         1. **-n，不会运行命令,仅检查语法错误**
-
+        
         1. bash -v file //打印输出这个脚本的内容, 然后输出结果
-
+        
         1. **bash -x file** 
+            
              **runs the script <file> with tracing of each command executed**
-
+                
             脚本的执行过程，每一步都会输出（有输出的情况下），
                 1. bash -x a.sh
                 1. + 一个加号代表外层输出
                 1. ++ 两个加号代表再进一层的输出
 
 ## bash
+
 1. -i  interactive
+
 1. -r  restricted shell
+
 1. --  
      -- **signals the end of options and disables further option processing.** Any arguments after the -- are treated as filenames and arguments. An argument of - is equivalent to --
 
@@ -134,6 +153,7 @@ endfunc
 
     https://unix.stackexchange.com/questions/423501/what-does-sh-mean
 
+
 ## 变量    
 
 = 左右不能有空格
@@ -144,11 +164,13 @@ name="BILL"
 
 
 ### 双引号保留格式
+
 name=`cat /etc/fstab`
-echo $name  //没有换行的格式
+echo $name      //没有换行的格式
 echo "$name"    // /etc/fstab 中是什么格式就按照什么格式输出, 保留格式
 
 ### 关于赋值
+
 重新赋值  会重新找一个空间放，原来的还在
 
 name1=1
@@ -161,6 +183,7 @@ name1=11
 echo $name1 还是1
 
 ### 变量类型
+
 弱类型
 
 i=100 被当成了字符串
@@ -173,38 +196,47 @@ i=100 被当成了字符串
     都可以,注意要统一
 
 #### 变量种类
+
 1. 局部变量，标准变量，普通变量
     1. 只在当前session中有效
     1. 子进程也不能使用父进程的变量
     1. 不能向上传递，也不能向下传递
 
 1. 全局变量
+
     1. bash 是后台执行
+
     1. 全局变量定义
         export name="Xian"
-
+        
         或者
-
+        
         name="xian"
         export name
-
+        
         如果之前定义了局部变量a,export a 可以将其升级为全局变量
+        
     1. 可以向下传递
         1. 子进程可以改，但是不能向上传递
-    
+        
     1. declare -x 也可以声明全局变量
-
+        
     **加不加双引号的原则：这个命令能否识别它**
-
+        
     set 可以显示所有变量，和一些函数
-
+    
 1. 查所有环境变量
+
     1. env
+
     1. printenv
+
     1. export
+
     1. declare -x
 
 1. 变量的删除
+
     1. unset name
 
 1. 系统内置变量
@@ -221,19 +253,29 @@ lscpu
 lsblk   硬盘大小
 `date +%F`
 
-echo -e "\e[031;31m内容\e[0m"
+echo -e "\e[031;31m内容\e[0m"   // 必须有引号
+
     -e : enable interpretation of backslash escapes
 
 1. bash 嵌套
+
     1. echo $$  //当前进程的进程编号
+
     1. echo $PPID   //父进程的进程编号
+
     1. pstree  直观的看进程编号
+
         1. pstree -p
 
 
 SHLVL   当前shell 深度，第一个为1
 
-`$_`  前一个命令的最后一个参数
+    echo $SHLVL
+
+$_  前一个命令的最后一个参数
+
+    echo $_
+
 
 只读变量（常量）
 readonly name="bcd"
@@ -242,11 +284,15 @@ declare -r
 
 显示所有常量
     1. declare -r 
+
         UID
+        
         父进程
-    1. readonly -p
+
+    1. readonly -p???
     
 ### 小括号
+
 umask 026;touch /data/f1    640
 umask 026;touch /data/f2    640
 
@@ -258,7 +304,9 @@ umask 026;touch /data/f2    640
 x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$x
 
 **小括号这种subshell 和普通的 subshell 不同**
+
     1. 它的进程ID 和父进程ID一样
+
     1. 父进程的变量会向子shell传递
     
     共同点
@@ -267,12 +315,16 @@ x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$
 
 
 ### 大括号
-{;} //最后一个命令是有分号的
+
+{;}         //最后一个命令是有分号的
+
 {name="aaa";echo $name;}
+
 就是在本shell中执行，类似于数学运算中的优先级吧
 
 
 ### 位置变量
+
 1. $1 $2 $3 
 
 baskup.sh a b c
@@ -282,10 +334,14 @@ $3 就是c
 ...
 
 1. $#   参数个数
+
 1. $0   脚本名称（完整路径名字） 
+
     1. 软连接 的话显示 软连接的名字
+
 1. $@   所有参数,**每个参数为独立字符串**
-1. `$*` 传递给脚本的所有参数，**全部参数合为一个字符串**
+
+1. $* 传递给脚本的所有参数，**全部参数合为一个字符串**
 
 
 
@@ -405,10 +461,11 @@ done
 
 
 ## hash
+
 1. 简介
     1. linux系统下会有一个hash表，当你刚开机时这个hash表为空，每当你执行过一条命令时，hash表会记录下这条命令的路径，就相当于缓存一样。
 
-    1. 第一次执行命令shell解释器默认的会从PATH路径下寻找该命令的路径，当你第二次使用该命令时，shell解释器首先会查看hash表，没有该命令才会去PATH路径下寻找。
+    1. 第一次执行命令shell解释器默认会从PATH路径下寻找该命令的路径，当你第二次使用该命令时，shell解释器首先会查看hash表，没有该命令才会去PATH路径下寻找。
     1. hash表的作用：
         1. 大大提高命令的调用速率。
 
@@ -416,21 +473,31 @@ done
     1. help hash
     1.  hash -l             //--long
         1. 查看hash表中的内容
-
+        
     1. hash -p /bin/ls bb
         1. 把ls命令重新写了一遍，改名为bb
-
+        
     1. hash -t ls　　//-t参数可以查看hash表中命令的路径
         1. hash表中没有记录这个命令的话，就是not found
-
+        
     1. hash -r
         1. 清空hash表
+        
     1. hash -d bb
         1. 清除某一条
+
+    -d	forget the remembered location of each NAME
+    -l	display in a format that may be reused as input
+    -p pathname	use PATHNAME as the full pathname of NAME
+    -r	forget all remembered locations
+    -t	print the remembered location of each NAME, preceding each location with the corresponding NAME if multiple NAMEs are given
+
+
 
 
 
 ## 算数运算
+
 x=10
 y=20
 
@@ -455,12 +522,14 @@ var=$(expr 1 \* 2)
 
 
 ##  短路
+
 false && cmd2;cmd3
 true || cmd2;cmd3
 
 鸡蛋里边挑骨头
 
 ### XOR 异或
+
 0^1 -> 1
 0^0 -> 0
 1^1 -> 0
@@ -468,7 +537,15 @@ true || cmd2;cmd3
 
 declare -i x=10 //声明为数字
 
-
+    -a	to make NAMEs indexed arrays (if supported)
+    -A	to make NAMEs associative arrays (if supported)
+    -i	to make NAMEs have the `integer' attribute
+    -l	to convert the value of each NAME to lower case on assignment
+    -n	make NAME a reference to the variable named by its value
+    -r	to make NAMEs readonly
+    -t	to make NAMEs have the `trace' attribute
+    -u	to convert the value of each NAME to upper case on assignment
+    -x	to make NAMEs export
 
 
 
@@ -483,22 +560,30 @@ COLOR=$[RANDOM%7+31]
 ## to review
 
 远程桌面  xrdp
+
     https://blog.csdn.net/sinolover/article/details/78673625
 
 
 
 unzip 用法
+
     https://blog.csdn.net/qq_35399846/article/details/70168002
 
 
 
 # 吴光科
+
 echo "!!!"  //! 在shell中有什么特殊用处吗?
 
 echo $UID
+
     $PWD
 
 $0 也可以这样理解，bash 的第一个参数 即文件本身
+    
+    如果是直接在 tty 中执行该命令，则输出当前shell的文件名，如 /bin/zsh
+
+    raspbian 中没有 /usr/bin/zsh, 而都是 /bin/zsh
 
 
 ## if 语句

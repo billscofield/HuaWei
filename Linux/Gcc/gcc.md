@@ -35,7 +35,7 @@ gdb 是GNU推出的程序调试器
 
 -L dir          库文件路径  /usr/lib
 
--static         链接静态库
+-static         链接静态库(centos 需要安装 glibc-static)
 
 -library        链接名为library的库文件
 
@@ -91,11 +91,21 @@ gcc 通过文件后缀名来区别输入文件的类型
     .s 文件 hello.s: assembler source, ASCII text
 
 1. -c后的.o文件
+
     gcc -c hello.s -o hello.o
 
     hello.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
 
+    elf(executable linkage format)
+
+    man elf
+
+        elf - format of Executable and Linking Format (ELF) files
+
+    objdump 
+
 1. gcc hello.o -o hello
+
     链接所有目标文件, 
 
 
