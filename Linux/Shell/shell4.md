@@ -1,4 +1,5 @@
 ## yes
+
 output a string repeatedly until killed
 
 感觉很没用？其实它是很有用的,安装程序的时候，有的程序需要你不断地按y和回车，安装进程才能继续工作。yes命令可以解救你！它帮你输入y和回车
@@ -14,9 +15,13 @@ http://www.sohu.com/a/199363999_470018
 
 
 ## shell 选项标志
+
 ${-}
+
     当前shell的选项标志, 具体什么意思???
+
         569JNRXZghiklms
+
         i 代表交互式shell
 
         ```

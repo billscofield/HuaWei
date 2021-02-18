@@ -1,17 +1,43 @@
+
+1. 系统初始化
+
+2. 自动化安装程序
+
+3. 自动化调整配置文件
+
+4. 自动化部署业务
+
+5. 定期备份恢复程序
+
+6. 自动化信息采集(zabbix + shell)
+
+7. 自动化日志收集(ELK)
+    
+    1. 收集 -> 存储 -> 展示
+
+8. 自动化扩容/缩荣(zabbix + shell)
+
+
 ## SHELL
+
 离不开逻辑判断 和 循环遍历
 
 正则表达式三剑客：grep sed awd 无处不在
 
 查看环境变量
+
     echo $PATH
 
 查看Shell
+
     echo $SHELL
 
 查看linux支持的shell
+
     cat /etc/shells  
+
     输sh就进入到sh了
+
     不同的shell切换是有父子关系的,一层一层下去的
 
 history => ~/.bash_history文件
@@ -26,6 +52,7 @@ history => ~/.bash_history文件
     !word 倒叙第一个 word 开头的命令
 
 ### 命令补全及别名
+
 sudo apt-get install bash-completion(ubuntu 默认安装了)
 
     一次，两次 tab
@@ -81,6 +108,17 @@ sleep:sleep 秒数
 sleep 100 & ：直接丢到后台运行，但是jobs 看不到这个进程
 
 ### 变量
+
+自定义变量
+系统环境变量
+预先定义变量
+位置参数变量
+内置变量
+    continue、break、exit
+
+    强引用
+    弱引用
+
 #### 变量=值
 
 = 两边不能有空格
@@ -99,6 +137,14 @@ c="a$b" -> a2
 c="a$bc" -> a //$bc当做一个变量
 c= "a$b"c -> a2c
 echo ${STR}s is greate
+
+---
+
+a=1
+b=2
+c=$a+$b
+echo $c | bc
+
 ```
 
 unset
@@ -121,7 +167,32 @@ set \| grep a
 ```
 w   
 echo $SSH_TTY   
+echo $TTY
 pstree   
+```
+
+
+
+
+
+#### 系统环境变量
+
+
+#### 预先定义变量
+
+```
+$0
+$*  所有参数
+$@  单独每一个参数
+$#  个数
+$?
+$$  当前进程的PID
+$!  上一个后台进程的PID
+$_  上一个命令的最后一个参数
+
+$UID
+$HOME
+
 ```
 
 #### 全局变量
@@ -182,6 +253,97 @@ source <==> .
  cut 截取
 
 
+### 默认变量(变量替代)
+
+```方式一
+echo ${url-www.baidu.com}
+如果没有设置url, 则输出 www.baidu.com
+```
+
+
+a=
+echo ${a-z.cn} 输出空
+
+
+```方式二
+echo ${url:-z.cn}
+```
+
+变量没有值或者为空值，都会使用新的变量
+
+a=
+echo ${a:-z.cn} 输出z.cn
+
+
+没有被赋值，即没有使用a=, 表现都一样
+主要区别
+    a=
+    ${a-z.cn}  输出空
+    ${a:-z.cn} 输出z.cn
+
+
+
+
+## 数学运算
+
+### 整数运算
+
+1. expr
+
+expr $a + $b
+expr $a + 2
+
+
+2. $(())
+
+```
+$((3+2))
+$(( 3+2 ))
+$(( 3 + 2))
+$(( 3 ** 2))
+
+```
+
+3. $[]
+
+```
+echo $[3*4]
+echo $[ 3*4 ]
+echo $[ 3* 4 ]
+echo $[ 3 * 4 ]
+```
+
+4. let
+
+```
+let a=3*22
+let a='3 * 22'
+
+i=1
+let i++
+let i+=2
+let ++i
+```
+
+### 小数运算用 bc
+
+echo "3/2" | bc
+
+echo 'scale=2;3/2' | bc
+
+echo "scale=2;3/2" | bc
+
+
+
+## 文件测试
+
+test
+
+```
+test -d /backup || mdkir -p /backup
+```
+
+
 
 ## Unix BSD Linux
 ### unix操作系统 
@@ -197,3 +359,10 @@ BSD (Berkeley Software Distribution，伯克利软件套件)是Unix的衍生系�
 Linux操作系统是基于UNIX操作系统发展而来的一种克隆系统，它诞生于1991 年的 [Linux桌面] 10 月5 日（这是第一次正式向外公布的时间）。以后借助于Internet网络，并通过全世界各地计算机爱好者的共同努力，已成为今天世界上使用最多的一种UNIX 类操作系统，并且使用人数还在迅猛增长。
 
 
+## 脚本的执行
+
+1. sh 脚本
+
+2. ./ 脚本
+
+3. chmod +x 

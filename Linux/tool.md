@@ -22,7 +22,6 @@ C/C++/Objective-C/Objective-C++ and an omnifunc-based completer that uses data
 from Vim's omnicomplete system to provide semantic completions for many
 other languages (Ruby, PHP etc.).
 
-
 ## neofetch
 
 Shows Linux System Information with Distribution Logo
@@ -354,3 +353,43 @@ lshw -C 上边的关键字
 ## glances
 
 apt-cache show glances
+
+
+## tcptraceroute
+
+traceroute implementation using TCP packets
+The more traditional traceroute(8) sends out either UDP or ICMP ECHO packets
+with a TTL of one, and increments the TTL until the destination has been
+reached. By printing the gateways that generate ICMP time exceeded messages
+along the way, it is able to determine the path packets are taking to reach the
+destination.
+.
+The problem is that with the widespread use of firewalls on the modern
+Internet, many of the packets that traceroute(8) sends out end up being
+filtered, making it impossible to completely trace the path to the destination.
+However, in many cases, these firewalls will permit inbound TCP packets to
+specific ports that hosts sitting behind the firewall are listening for
+connections on. By sending out TCP SYN packets instead of UDP or ICMP ECHO
+packets, tcptraceroute is able to bypass the most common firewall filters.
+
+
+## tcpping
+
+cd /usr/bin
+
+wget http://www.vdberg.org/~richard/tcpping
+
+chmod +x tcpping
+
+
+依赖 bc 和 tcptraceroute
+
+
+
+## ccal
+
+Colorised calendar utility
+CCAL is a drop in replacement for the standard unix calendar program. It
+includes support for color and daily, weekly, and yearly
+reminders/appointments.
+

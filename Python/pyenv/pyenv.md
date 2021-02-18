@@ -21,6 +21,8 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
 
+cd ~/.pyenv && src/configure && make -C src
+
 同样是做环境变量
 
 ```
@@ -146,11 +148,18 @@ Some useful pyenv commands are:
 创建虚拟的python环境需要pyenv-virtualenv的插件，试着pyenv virtual补全一下，如果存在无需安装
 
 如果不存在，执行如下操作
+
 git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+ 
+git clone git@gitee.com:billscofield/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+
 echo ‘eval “$(pyenv virtualenv-init -)”’ >> ~/.bash_profile
+
 source ~/.bash_profile
 
+
 2.创建虚拟环境
+
 pyenv virtualenv 2.7.13 env2713
 
 这是创建了一个名为env2713的python虚拟环境，这个环境的目录位于：~/.pyenv/versions/
