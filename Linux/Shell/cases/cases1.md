@@ -1,3 +1,6 @@
+links:
+
+    https://www.bilibili.com/video/BV1f5411E7Vy?p=20&t=13
 
 ### && || 
 
@@ -185,5 +188,60 @@ fi
 
 
 
+安装Apache/nginx
 
+1. 网络
+1. yum
+1. 安装、启动
+
+```
+
+ping -W5 -c1 z.cn
+
+if [ $? -ne 0 ];then
+    echo "network error"
+fi
+
+yum_repo=$(yum repolist | grep nginx | wc -l)
+
+if [ $yum_repo -eq 0 ];then
+    cat > /etc/yum.repos.d/nginx.repo <<-EOF
+    [nginx]
+    name=nginx repo
+    baseurl=http://ngxin.org/packages/centos/7/\$basearch/
+    gpgcheck=0
+    enabled=1
+    EOF
+    yum makecache
+else
+    echo "不知道什么错误"
+fi
+
+
+if [ $yum_repo -eq 1 ];then
+    yum install nginx -y &>/dev/null
+    Install_nginx=$(rpm -q nginx | wc -l)
+    if [ $Install_nginx -eq 1 ];then
+        echo "安装成功"   
+fi
+
+systemctl start nginx &>/dev/null
+if [ $? -eq 0 ];then
+    echo "Nginx 启动完毕"
+    Nginx_status=$(systemctl status nginx | grep Active | awk '{print $1 $2}')
+    echo "Nginx 当前状态 ${Nginx_status}"
+else
+    pkill -9 httpd &>/dev/null
+    pkill -9 nginx &>/dev/null
+    systemctl restart nginx
+    if [ $? -eq 0 ];then
+        echo "重启成功"
+    else
+        echo "重启失败"
+    fi
+fi
+
+
+
+```
 
