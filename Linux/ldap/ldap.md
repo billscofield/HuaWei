@@ -37,5 +37,3 @@ yum install openldap openldap-clients openldap-servers
 service slapd start
 
 
-
-
