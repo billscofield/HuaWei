@@ -1,3 +1,8 @@
+links:
+
+    https://www.bilibili.com/video/BV1xA411i7wU?p=3&spm_id_from=pageDriver
+
+
 
 
 硬件监控
@@ -26,7 +31,156 @@
 
 
 
+## 监控工具
 
+1. Cacti
+
+早期产品
+
+    使用轮询的方式由主服务器向设备发送数据请求来获取设备上状态数据信息, 如果设备很多, 这个轮询的过程就非常的耗时，轮询的结果就不能及时的反应设备的状态
+
+    关注的是对数据的展示，而不是异常反馈, 缺乏报警机制
+
+值夜班
+
+
+1. Nagios
+
+开源免费
+
+插件机制
+
+    无法将多个相同应用集群的数据及合起来，也不能监控到集群中特殊节点的迁移和恢复
+
+    看不到历史数据，只能看到报警事件，很难追查故障原因
+
+    配置复杂
+
+
+1. Ganglia
+
+UC Berkeley 发起
+
+主要监控系统性能, 主要用于 hoodop 
+
+
+1. zabbix
+
+支持主动轮询 和 被动捕获
+
+server 对设备性能要求低，并发监控，对 CPU 的要求更高
+
+**被动模式**
+
+    从 agent 的角度来说的, ** server 向 agent 发送一份监控项请求，agent 接收请求，获取数据并想应该 server **, 相当于老师向学渣要作业, 学渣做完后发给老师
+
+**主动模式**
+
+    从 agent 的角度来说的, ** agent 向server 请求与自己相关监控项配置，主动地将server配置的监控项相关数据发送给server ** 相当于学霸主动问老师有什么作业，做完后主动发给老师
+
+    能极大的节约监控 server 的资源
+
+支持自动发现功能
+
+---
+
+缺点
+
+    被监控主机都需要安装 agent
+
+    数据都在数据库中，瓶颈主要在数据库
+
+    项目批量修改不方便
+
+    入门容易，但是深层次需求需要非常熟悉zabbix，并进行大量的二次定制开发，难度较大
+
+    系统级别报警设置相对较多，如果不筛选的话报警右键会很多；并且自定义的项目报警需要自己设置，过程比较繁琐
+
+    缺少数据汇总功能，如无法查看一组服务器平均值，需要进行二次开发
+
+
+---
+
+监控对象
+
+    数据库      MySQL  MariaDB  Oracle  SQLServer       |   agent
+    应用软件    Nginx  Apache   PHP     Tomcat          |   agent
+
+    ---
+
+    集群        LVS  Keepalived  HAproxy   RHCS  F5     |   agent
+    虚拟化      VMware   KVM   XEN    docker    k8s     |   agent
+    操作系统    Linux    Unix   Windows                 |   agent
+
+    ---
+
+    硬件        服务器    存储    网络设备              |   IPMI 卡，需要IPMI硬件
+    网络        网络环境(内网环境 外网环境)             |   SNMP
+
+
+硬件 系统 程序
+
+
+
+
+
+
+|                                        heart beat
+|                       zabbix server <---------------- server backup
+|                           /|\
+|                            |
+|        proxy1--------------+-----------------proxy2
+|           |                |                   |
+|           |                |                   |
+|           |                |                   |
+|           |            Database                |
+|           |                                    |
+|    +------+------+                        +----+------+
+|    |             |                        |           |
+|  agentd1      agentd2                 agentd3     agentd4
+|
+|
+
+
+|   主机(host) --->  监控项(item) --->  触发器(trigger)  --->  动作(action)   --->  媒介(media)  --->  用户
+|                       /|\   
+|                        |
+|                        |
+|                        |
+|                      图形   
+|   
+
+
+主机组(host group)
+    
+    主机的逻辑组；它包含主机和模板。 一个主机组里的主机和模板之间并没有任何直接的关联
+   
+事件(event)
+    单次发生的需要注意的事情，例如触发器状态改变 或 发现有监控代理自动注册
+
+升级(escalation)
+    一个在动作内执行操作的自定义场景; 发送通知、执行远程命令的序列
+
+远程命令(remote command)
+    一个预定义好的，在满足一定条件的情况下，可以在被监控主机上自动执行的命令
+
+模板(template)
+    一组可以被应用到一个或多个主机上的实体(监控项，触发器，图形，局和图形，应用，LLD，Web场景) 的集合
+    模板的任务就是加快对主机监控任务的实施，也可以是监控任务的批量修改更简单
+    模板是直接关联到每台单独的主机上
+
+应用(application)
+    一组监控项组成的逻辑分组
+    
+web场景(web scenario)
+    利用一个或多个 HTTP 请求来检查网站的可用性
+
+前端(frontend)
+    前段web界面
+
+Zabbix API
+    使用 JSON RPC 协议
+    
 
 
 
@@ -34,6 +188,16 @@
 ## centos 系统下载地址
 
 http://mirrors.163.com/
+
+
+setenforce 0
+sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+systemctl stop firewalld.service
+
+
+weget 这个文件安装(mirrors.aliyun.com/zabbix/zabbix/4.4/rhel/7/x86_64/zabbix-release...)
+
+还需要配置好 epel 源, 有一些依赖
 
 
 ## 更新apt源
@@ -108,6 +272,16 @@ apt install mariadb-server
 innodb_large_prefix=1
 innodb_file_per_table = 1
 innodb_file_format = Barracuda
+
+---优化???---
+
+skip_name_resolve = ON              # 跳过主机名解析
+innodb_file_per_table = ON          # 开启独立表空间
+innodb_buffer_pool_size = 256M      # 缓存池大小
+max_connections = 2000              # 最大连接数
+log-bin = master-log                # 开启二进制日志
+
+
 ```
 
 ### 第3步，安装和配置Zabbix服务器
@@ -120,7 +294,16 @@ apt update
 
 ### Install Zabbix server, frontend, agent
 
-apt -y install zabbix-server-mysql zabbix-frontend-php zabbix-agent
+apt install -y zabbix-server-mysql zabbix-frontend-php zabbix-apache-conf zabbix-agent
+
+```
+zabbix-server-mysql
+
+zabbix-frontend-php
+
+zabbix-apache-conf
+
+```
 
 zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbix
 
@@ -128,7 +311,55 @@ zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbi
 
     vim /etc/zabbix/zabbix_server.conf
 
+    ```
+        ### Option: DBHost
+        DBHost=localhost
         DBPassword=
+        DBUser=zabbix
+        DBPassword=
+        DBPort=3306
+        
+        ---
+        
+        ListenPort=10051
+        SourceIP=           // 发采样数据请求IP (应该是老师的角色, 老师向学渣要作业的, 那应该是被动模式了)
+        
+        ---
+       
+        ### Option: PidFile
+        PidFile=/var/run/zabbix/zabbix_server.pid
+        
+        ---
+        
+        ### Option: Timeout
+        Timeout=4
+        
+        ---
+        
+        ### Option: AlertScriptsPath
+        AlertScriptsPath=/usr/lib/zabbix/alertscripts
+        
+        ---
+        ExternalScripts=/usr/lib/zabbix/externalscripts
+        
+        ---
+         LogSlowQueries=3000
+        StatsAllowedIP=127.0.0.1    // comma separated, Stats request will be accepted only from the addresses listed here.
+        ---
+        
+        SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
+        LogFile=/var/log/zabbix/zabbix_server.log
+        LogFileSize=0       // 日志的滚动，默认值为1,表示滚动。设为零表示不滚动，当数据很多的时候，我们也可以设置为1， 
+                            // 0 - disable automatic log rotation
+                            // 然后在 Maximum size of log file in MB 设置数据文件最大到多少时会自动滚动
+        
+        ### Option: DebugLevel 日志级别 
+            [0,5] 5是最详细的, 默认为3(warnings)  
+
+    ```
+
+
+
 
 您还应该通过在/etc/zabbix/apache.conf文件中定义时区来设置PHP以便与Zabbix前端一起正常工作。
 
@@ -184,6 +415,15 @@ update  users set passwd=md5("woshitiancai") where userid='1';// 更改 Admin �
 修改语言配置文件 locales.inc.php
 vi include/locales.inc.php  (/usr/share/zabbix/include/locales.inc.php)
 找到 zh_CN，将 flase 改为 true
+
+```
+ll 
+
+/usr/share/zabbix/assets/fonts/graphfont.ttf -> /etc/alternatives/zabbix-frontend-font
+
+lrwxrwxrwx 1 root root  47 Feb  2 14:25 zabbix-frontend-font -> /usr/share/fonts/truetype/dejavu/DejaVuSans.ttf
+
+```
 
 上传 ttf 中文字体文件到 /usr/share/zabbix/assets/fonts 目录，如“楷体”（simkai.ttf），如果字体文件是 *.ttc，可以改为 *.ttf
 
@@ -248,11 +488,22 @@ apt install zabbix-agent
 
 /etc/zabbix/zabbix_agentd.conf
 
-    Server= 被动
+    ```
+    Hostname= 自己能被server端识别的名称
+        zabbix_agent.conf 和 前端设置的不一样，会在日志中体现
+        697:20210221:074232.177 cannot send list of active checks to "10.0.2.10": host [Zabbix server] not found
 
+    ##### Active checks related
     ServerActive= 主
 
-    Hostname= 需要和前端中设置一致
+    ##### Passive checks related
+    Server=serverip
+
+    ListenIP=0.0.0.0
+    ListenPort=10050
+    ```
+
+systemctl restart zabbix-agent
 
 
 验证
@@ -539,6 +790,10 @@ item                                监控项
 value preprocessing                 预处理, 数据存入数据库前按照指定的规则预处理, 比如单位换算
 
 template                            模板, 可以应用到多个监控设备的监控集合，包含监控项，触发器，图形，LLD, web监控等
+
+
+
+
 application                         应用, 一组监控项的逻辑分组, 比如Nginx的监控项统一分到Nginx应用中
 
 web scenario                        web场景, 是监控web的一个或多个http请求，一个场景中可以是单个URL,也可以是多个URL
@@ -552,8 +807,18 @@ Macros                              宏, 可以认为是一个变量，可应用
 graph                               图表, 可以将一个或多个监控项的监控数据放入到同一张图表中，
                                     比如将CPU的用户使用率，系统使用率，空闲率都放入CPU监控监控图表中
 
+    1. 线状图(normal)
+
+    1. 堆叠面积图(stacked)
+
+    1. 饼图(pie)
+
+    1. 分离型饼图(爆发的)(exploded)
+
 screen                              聚合图表, 将多个 graph 聚在一张监控大屏中
                                     比如将CPU, 网卡, 内存, IO 这些图表放在一起，就组成了主机的聚合图表
+    监控 ---> 聚合图形
+
 maps                                拓扑图
 
 Slide shows                         幻灯片演示, 轮流播放 聚合图表, 可以实现将 主机, 网络, 存储, 缓存, 数据库的各个聚合图表
@@ -568,7 +833,40 @@ event                               事件, 比如告警状态的变化，客户
 
 problem                             异常状态
 OK                                  正常状态
+
 action                              操作, 根据事件以及条件定义的一系列动作
+    configuration / Actions
+    举例
+    ```
+    apt install redis
+    vi /etc/redis/redis.conf
+    bind 0.0.0.0                    //默认端口 6379
+
+    添加监控项 net.tcp.listen[6379]
+
+    配置--->动作
+
+        先添加“操作” 然后才能添加动作
+
+        操作
+            操作类型:
+                发送消息
+                远程命令
+                    sudo /usr/bin/systemctl restart redis.service
+                    
+                    vi /etc/sudoers
+                    
+                    zabbix  ALL=(ALL)   NOPASSWD: /usr/bin/systemctl
+                    
+                agent.conf 中允许接收远程命令
+                    EnableRemoteCommands=1  // 允许接收远程命令
+                    LogRemoteCommands=1     // 把接受的远程命令记入日志
+
+    ```
+
+
+
+
 escalation                          升级
 media                               媒介, 告警的方式，短信，邮件
 notification                        通知, 关于事件的消息，通过指定的媒体发送给用户
@@ -593,7 +891,61 @@ User Type                           用户类型, 三种: 普通用户，管理�
 
 监控项 item
 
+    进程--> 变更 --> 每秒更改   ??? 这是啥意思
+
+    但是port端口不要设置 每秒更改, 否则 0 1
+
+    删除的步骤
+        
+        1. 清除历史和趋势
+        1. 删除
+
+    Show Value (值展示)
+        As is   原始值
+        Delta   (simple change) (变化) 本次采样减去前一次采样的值的结果
+        Delta   (speed per second)(速率) 本次采样减去前一次采样的值，再除以经过的时间
+
 Trigger
+
+    nodata()            // 是否采集到数据，采集不到为异常
+    last()              // 最近几次
+    date()              // 时间，返回当前的时间 YYYYMMDD
+    time()              // 返回当前的时间 HHMMSS
+    now()               // 返回 Epoch(1970年1月1日00:00:00UTC)时间的秒数
+    dayofmonth()        // 当前是本月的第几天
+
+    触发器表达式
+
+        {<server>:<key>.<function>(<parameter>)}<operator><constant>
+        
+        函数有: avg count change date dayofweek delta diff iregexp last max min nodata now sum 
+
+        参数: 大多数数值函数可以接受秒数为其参数，而如果在数值参数之前使用 '#' 作为前缀，则表示为最近几次的取值, 如 sum(300)
+              表示300秒内所有取值纸盒，而 sum(#300) 则表示最近 300 次取值之和
+                
+              avg coun last min max 还支持第二个参数，用于完成时间限定，如 max(1h,7d) 将返回一周之内的最大值???
+            
+        运算符:
+            '/'
+            '*'
+            '+'
+            '-'
+            '<' : less than  A<B 等价于  A<=B-0.000001
+            '>' : more than  A>B 等价于  A>=B+0.000001
+            '#' : Not equal  A#B 等价于  (A<=B-0.000001) | (A>=B+0.000001)
+            '=' : equal      A=B 等价于  (A>B-0.000001) & (A<B+0.000001)
+            '&' : AND
+            '|' : OR
+
+        {Zabbix Server:net.if.in[enp0s3].last(#1,5)}>10240
+
+        灾难 严重 一般严重 警告 信息 未分类
+
+    恢复表达式: 何时恢复正常,并自定从 Dashboard 中删除该 Problem, 但是在 监测 --> 问题, 根据条件搜索 仍然可以看到
+
+    依赖项: 为了找到真正的问题源
+            例如 网络，CPU, 内存等都要基于该主机开机
+
 
 图形
 
@@ -603,14 +955,48 @@ Trigger
 群组
 
 
+## UserParameter
+
 只在一台 agent 上创建了 UserParameter , 其他主机上没有这个，模板应用在其他主机上之后如何监控该item???  上传给了 zabbix-server
 
+用法格式
+
+    UserParameter=<key>,<command>
+
+    /etc/zabbix/zabbix_agentd.d/
+
+    vim memory_free.conf
+
+    UserParameter=memory.free, free | awk '/^Mem/{print $4}'
+
+    systemctl restart zabbix_agent
+
+    zabbix-get -s 10.0.2.10 -p 10050 -key 'memory.free'
 
 
-## 邮件报警
+    如果有很多自定义参数呢?
+
+    ```
+    UserParameter=memory.stats[*], cat /proc/meminfo | awk '/^$1/{print $$2}'
+
+    ```
+
+
+
+## 报警媒介
+
+Adminiation(管理) / Media types(报警媒介类型)
+
+邮件报警
 
 SMTP HELO  这个怎么写，代表啥意思???
 
+
+## 添加主机
+
+(必填项)主机名称: 这个应该同 agent 中设置的 hostname 相同
+
+可见的名称: 这个可以不一样
 
 
 ## 添加大量主机
@@ -636,6 +1022,33 @@ SMTP HELO  这个怎么写，代表啥意思???
     主动模式
 
     /etc/zabbix/zabbix/zabbix_agent.conf    -> HostnameItem=system.hostname
+
+
+
+
+
+## 宏 (macro)
+
+就是变量
+
+zabbix 有许多内置的宏，
+    {HOST.NAME}
+    {HOST.IP}
+    {TRIGGER.DESCRIPTION}
+    {TRIGGER.NAME}
+    {TRIGGER.EVENTS.ACK}
+
+
+系统内建宏
+    {HOST.NAME}
+
+用户宏可以在全局、模板和主机级别进行定义。这些宏具有一个特殊的语法：
+    {$MACRO}
+
+
+    全局宏
+    模板宏
+    主机宏
 
 
 

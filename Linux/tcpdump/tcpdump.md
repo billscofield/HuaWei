@@ -1,3 +1,10 @@
+links:
+
+    https://www.cnblogs.com/createyuan/archive/2014/03/31/3636098.html
+
+    
+
+promiscuous [prəˈmɪskjuəs]  adj. 混杂的；杂乱的
 
 
 -i interface
@@ -94,6 +101,89 @@ tcpdump -n udp port 53 -r 文件.pcat
 
 
 
+-n     不把网络地址转换成名字；
+-nn    不进行端口名称的转换。
+-t 　  在输出的每一行不打印时间戳
+-vv    输出详细的报文信息；
+-c     在收到指定的包的数目后，tcpdump就会停止
+-e     在输出行打印出数据链路层的头部信息
+-r     从指定的文件中读取包(这些包一般通过-w选项产生)
+-w     直接将包写入文件中，并不分析和打印出来
+
+-X     直接解包内容
+
+使用-A选项，则tcpdump只会显示ASCII形式的数据包内容，不会再以十六进制形式显示；
+
+使用-XX选项，则tcpdump会从以太网部分就开始显示网络包内容，而不是仅从网络层协议开始显示。
+
+使用-D选项，则tcpdump会列出所有可以选择的抓包对象。--list-interfaces
+
+    tcpdump -D
+
+-e选项的输出中，会发现有oui Unknown的字样，这oui是什么东东呢？在这里顺便科普一下咯：
+OUI，即Organizationally unique identifier，是“组织唯一标识符”，在任何一块网卡（NIC）中烧录的6字节MAC地址中，前3个字节体现了OUI，其表明了NIC的制造组织。通常情况下，该标识符是唯一的。
+
+
+-l 选项的作用就是将tcpdump的输出变为“行缓冲”方式，这样可以确保tcpdump遇到的内容一旦是换行符即将缓冲的内容输出到标准输出，以便于利用管道或重定向方式来进行后续处理。
+
+    --immediate-mode
+        
+        Capture in "immediate mode".  In this mode, packets are delivered to tcpdump as soon as they arrive, rather than being buffered for efficiency.  
+        This is the default when printing packets rather than saving packets to a ``savefile'' if the packets are being printed to a terminal rather than to a file or pipe.
+
+众所周知，Linux/UNIX的标准I/O提供了
+
+    全缓冲
+
+    行缓冲
+
+    无缓冲
+
+三种缓冲方式。
+
+标准错误是不带缓冲的，终端设备常为行缓冲，而其他情况默认都是全缓冲的。
+
+大家在使用tcpdump时，有时会有这样的需求：“对于tcpdump输出的内容，提取每一行的第一个域，即”时间域”，并输出出来，为后续统计所用”，
+
+这种场景下，我们就需要使用到-l来将默认的全缓冲变为行缓冲了。
+
+如果不加-l选项，那么只有全缓冲区满，才会输出一次，这样不仅会导致输出是间隔不顺畅的，而且当你ctrl-c时，很可能会断到一行的半截，损坏统计数据的完整性。
+
+
+
+做过网络流量分析的同学，或许都有一个共同的需求，那就是“流量保存”和“流量回放”，这就恰好对应了今天要讲解的-w选项和-r选项。
+
+
+    “流量保存”就是把抓到的网络包能存储到磁盘上，保存下来，为后续使用。
+
+    “流量回放”就是把历史上的某一时间段的流量，重新模拟回放出来，用于流量分析。
+
+---
+
+表达式中的关键字
+
+1. 关于类型的关键字
+
+    主要包括host(默认)，net，port
+
+2. 确定传输方向的关键字
+    
+    主要包括src，dst ,dst or src(默认), dst and src
+
+3. 协议关键字
+    
+    主要包括fddi,ip,arp,rarp,tcp,udp等类型，默认是监听所有协议，Fddi指明是在FDDI(分布式光纤数据接口网络)上的特定的网络协议，实际上
+    它是"ether"的别名，fddi和ether具有类似的源地址和目的地址，所以可以将fddi协议包当作ether的包进行处理和分析。
+
+4. 三种逻辑运算
+    
+    取非运算是 'not ' '! ';与运算是'and','&&';或运算是'or' ,'||'；
+
+5. 除了这三种类型的关键字之外，其他重要的关键字如下：
+
+    gateway, broadcast,less, greater,
+    
+
 
 
 
@@ -110,7 +200,13 @@ tcpdump -n udp port 53 -r 文件.pcat
 Read packets from file (which was created with the -w option or by other tools that  write  pcap  or pcap-ng files).  
 Standard input is used if file is ``-''.
 
-A     Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
+-A      Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
+
+-X      When parsing and printing, in addition to printing the headers of each packet, 
+        print the data of each packet (minus its link level header) in hex and ASCII.  This is very handy for analysing new protocols.
+
+-XX     When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex and ASCII.
+
 
 
 
@@ -137,4 +233,33 @@ tcp报文 flags 为24(push + ack)
 
 
 
+表达式
 
+可以通过手册页来详细阅读 #man  pcap-filter
+
+你会发现，过滤表达式大体可以分成三种过滤条件，“类型”、“方向”和“协议”，这三种条件的搭配组合就构成了我们的过滤表达式。
+
+
+tcpdump 'tcp[tcpflags] & tcp-syn != 0 and not dst host qiyi.com'
+tcpdump 'ip[2:2] > 576'
+tcpdump 'ether[0] & 1 = 0 and ip[16] >= 224'
+
+即 proto [expr : size]语法
+
+expr用来指定数据报偏移量，表示从某个协议的数据报的第多少位开始提取内容，默认的起始位置是0；而size表示从偏移量的位置开始提取多少个字节，可以设置为1、2、4。
+
+如果只设置了expr，而没有设置size，则默认提取1个字节。比如ip[2:2]，就表示提取出第3、4个字节；而ip[0]则表示提取ip协议头的第一个字节。
+
+在我们提取了特定内容之后，我们就需要设置我们的过滤条件了，我们可用的“比较操作符”包括：>，<，>=，<=，=，!=，总共有6个。
+
+ip[0] & 0xf != 5
+
+IP协议的第0-4位，表示IP版本号，可以是IPv4（值为0100）或者IPv6（0110）；第5-8位表示首部长度，单位是“4字节”，如果首部长度为默认的20字节的话，此值应为5，即”0101″。
+
+ip[0]则是取这两个域的合体。0xf中的0x表示十六进制，f是十六进制数，转换成8位的二进制数是“0000 1111”。而5是一个十进制数，它转换成8位二进制数为”0000 0101″。
+
+有了上面这些分析，大家应该可以很清楚的知道，这个语句中!=的左侧部分就是提取IP包首部长度域，如果首部长度不等于5，就满足过滤条件。言下之意也就是说，要求IP包的首部中含有可选字段。
+大家可能已经有所体会，在写过滤表达式时，你需要把协议格式完全背在脑子里，才能把表达式写对。可这对大多数人来说，可能有些困难。为了让tcpdump工具更人性化一些，有一些常用的偏移量，可以通过一些名称来代替，比如icmptype表示ICMP协议的类型域、icmpcode表示ICMP的code域，tcpflags则表示TCP协议的标志字段域。
+更进一步的，对于ICMP的类型域，可以用这些名称具体指代：icmp-echoreply, icmp-unreach, icmp-sourcequench, icmp-redirect, icmp-echo, icmp-routeradvert, icmp-routersolicit, icmp-timxceed, icmp-paramprob, icmp-tstamp, icmp-tstampreply, icmp-ireq, icmp-ireqreply, icmp-maskreq, icmp-maskreply。
+而对于TCP协议的标志字段域，则可以细分为tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg。
+如果一个过滤表达式有多个过滤条件，那么就需要使用逻辑符了，其中，!或not都可以表示“否定”，&&与and都可以表示“与”，而||与or都可以表示“或”。
