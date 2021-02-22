@@ -979,6 +979,40 @@ Trigger
     ```
     UserParameter=memory.stats[*], cat /proc/meminfo | awk '/^$1/{print $$2}'
 
+    1. 如果需要使用命令行里面出现2这种变量，那么你要使用两个$2，例如awk ’{ print $$2 }’，为了防止和参数冲突，所以zabbix做了这个规定。
+
+    2. zabbix禁止使用一些不安全的参数，如下：
+        
+        \ ' ” ` * ? [ ] { } ~ $ ! & ; ( ) < > | # @
+
+    3. 从zabbix 2.0开始，zabbix返回文本数据可以是空格。
+    示例1
+        
+        UserParameter=ping[*],echo $1
+        ping[0] - 将一直返回0
+        ping[aaa] - 将一直返回 'aaa'
+
+    示例2
+        
+        UserParameter=mysql.ping[*],mysqladmin -u1−p2 ping | grep -c alive
+
+    如下参数用于监控MYSQL，并且可以传递用户名和密码。
+
+        mysql.ping[zabbix,our_password]
+        
+    示例3
+
+        统计一个文件中有多少行被匹配?
+
+        UserParameter=wc[*],grep -c "2"1
+
+    如下方法将会返回文件中出现指定字符的行数
+
+        wc[/etc/passwd,root]
+        wc[/etc/services,zabbix]
+
+    links:
+        https://www.cnblogs.com/xu360/articles/6629559.html
     ```
 
 
