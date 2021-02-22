@@ -80,6 +80,27 @@ server 对设备性能要求低，并发监控，对 CPU 的要求更高
 
     能极大的节约监控 server 的资源
 
+    zabbix_sender
+        -z zabbix_server_ip
+        -p zabbix_server_port
+        -s zabbix_agent_hostname
+        -k key
+        -o value
+     
+        zabbix_sender -z 10.0.0.1 -s 10.0.0.10 -p 10051 -k 'zbx-send' -o 20     //需要多发送一些，然后
+            
+            需要使用 zabbix采集器, 因为 主动agent并没有这个key, 服务器不会接受这个key
+
+    agent端基本配置
+        
+        ServerActive=10.0.0.1
+        Hostname=node1.q.com    //自己的主机名，假设主机定死了，不设置下一项
+        #HostnameItem           //如果自己的主机名易变动，这一项相当于key一样去匹配???
+            若后边两个同时启用，下边一个选择生效
+
+
+
+
 支持自动发现功能
 
 ---
@@ -1058,6 +1079,41 @@ SMTP HELO  这个怎么写，代表啥意思???
     /etc/zabbix/zabbix/zabbix_agent.conf    -> HostnameItem=system.hostname
 
 
+1. 发现方式
+
+    ip地址范围
+
+    可用服务(ftp,ssh,http,...)
+
+    zabbix agent 的响应
+
+    snmp agent 的响应
+
+1. 发现过程
+
+    1. discovery 发现
+
+        zabbix 定期扫描网络发现规则中定义的IP范围; 检查的频率对于每个规则都是可配置的，每个规则都有一组用于IP范围执行的服务检查
+        
+        由网络发现模块执行的服务和主机(IP)的每个检查都会生成一个发现事件
+        
+        8种响应事件
+            
+            service up
+            service down
+            
+            host up
+            host down
+            
+            service discovered
+            service lost
+            
+            host discovered
+            host lost
+
+    1. actions 动作
+
+
 
 
 
@@ -1088,3 +1144,55 @@ zabbix 有许多内置的宏，
 
 
 
+## web 监控
+
+监控制定的站点的资源下载速度，页面响应事件，响应代码
+
+1. 术语
+
+    web scenario: web 场景（站点）
+
+    web page : web 页面, 一个场景有多个页面
+
+    内建key : 要测一个页面，要测三个步骤(下边三个内建key)
+
+1. 内建 key
+
+    web.test.in[Scenario,Step,bps]: 传输速率
+
+    web.test.time[Scenario,Step]: 响应时长
+
+    web.test.rspcode[Scenario,Step]: 响应码
+
+
+
+## snmp
+
+三种通信方式：读(get getnext), 写(set), 陷阱(trap)
+
+端口
+    
+
+yum install net-snmp net-snmp-utils
+
+vi /etc/snmp/snmpd.conf
+
+systemctl restart snmpd         // 被监控端开启的服务
+systemctl restart snmptrapd     // 监控端开启的服务(如果允许被监控端启动主动监控时启用)
+
+
+步骤
+
+    1. 定义认证符, 将社区名称 public 映射为 安全名称
+
+    2. 将安全名称映射到一个组名
+
+    3. 为我们创建一个视图，让我们团队有权利
+
+
+
+
+snmpget -v 2c -c public 192.168.1.1 snmp码
+
+
+## JMX
