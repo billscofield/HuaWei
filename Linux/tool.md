@@ -400,3 +400,11 @@ CCAL is a drop in replacement for the standard unix calendar program. It
 includes support for color and daily, weekly, and yearly
 reminders/appointments.
 
+
+
+## genisoimage
+
+debian打包工具: 是 mkisofs 的变身 genisoimage 工具
+
+genisoimage -o 输出文件.iso 源文件/文件夹
+
