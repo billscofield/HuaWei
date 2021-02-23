@@ -44,11 +44,18 @@ exif: Exchangeable image file format
 JPEG（发音为jay-peg,IPA：[ˈdʒeɪpɛg]）
 
 
-## fim
+## 看图
 
-用终端打开图片
+1. fim
 
-apt install fim
+    用终端打开图片
+
+    apt install fim
+
+1.  feh
+
+1.  gpicview
+
 
 
 ## cmus

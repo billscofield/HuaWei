@@ -70,11 +70,11 @@ UC Berkeley 发起
 
 server 对设备性能要求低，并发监控，对 CPU 的要求更高
 
-**被动模式**
+被动模式
 
     从 agent 的角度来说的, ** server 向 agent 发送一份监控项请求，agent 接收请求，获取数据并想应该 server **, 相当于老师向学渣要作业, 学渣做完后发给老师
 
-**主动模式**
+**主动模式
 
     从 agent 的角度来说的, ** agent 向server 请求与自己相关监控项配置，主动地将server配置的监控项相关数据发送给server ** 相当于学霸主动问老师有什么作业，做完后主动发给老师
 
@@ -124,7 +124,7 @@ server 对设备性能要求低，并发监控，对 CPU 的要求更高
 
 
 
-
+|
 |                                        heart beat
 |                       zabbix server <---------------- server backup
 |                           /|\
@@ -258,7 +258,9 @@ apt install mariadb-server
 
     ```
     create database zabbix character set utf8mb4 collate utf8mb4_generial_ci;
-    grant all privileges on zabbix.* to zabbix@localhost identified by 'password';
+    create database zabbix character set utf8mb4 collate utf8mb4_bin;
+    create user zabbix@localhost identified by 'zabbix';
+    grant all privileges on zabbix.* to zabbix@localhost identified by 'zabbix';
     flush privileges
     ```
 
@@ -305,7 +307,11 @@ zabbix-apache-conf
 
 ```
 
-zcat /usr/share/doc/zabbix-server-mysql/create.sql.gz | mysql -u zabbix -p zabbix
+zcat /usr/share/zabbix-server-mysql/{schema,images,data}.sql.gz | mysql -uzabbix -pSECRETPASSWORD zabbix
+    find . -iname "*create*"
+    官网上的那个不对，下载安装后的 README
+ 
+
 
 接下来，通过编辑文件/etc/zabbix/zabbix_server.conf ，将Zabbix服务器守护程序配置为使用您为其创建的数据库。
 
