@@ -408,3 +408,25 @@ debian打包工具: 是 mkisofs 的变身 genisoimage 工具
 
 genisoimage -o 输出文件.iso 源文件/文件夹
 
+
+
+## ncdu
+
+ncdu - NCurses Disk Usage
+
+ncdu [options] dir
+
+DESCRIPTION
+    ncdu (NCurses Disk Usage) is a curses-based version of the well-known 'du', and provides a fast way to see what directories are
+    using your disk space.
+
+
+## fping 
+
+fping is a program like ping which uses the Internet Control Message Protocol (ICMP) echo request to determine if a target host
+is responding.  fping differs from ping in that you can specify any number of targets on the command line, or specify a file
+containing the lists of targets to ping.  Instead of sending to one target until it times out or replies, fping will send out a
+ping packet and move on to the next target in a round-robin fashion.  In the default mode, if a target replies, it is noted and
+removed from the list of targets to check; if a target does not respond within a certain time limit and/or retry limit it is
+designated as unreachable. fping also supports sending a specified number of pings to a target, or looping indefinitely (as in
+ping ). Unlike ping, fping is meant to be used in scripts, so its output is designed to be easy to parse.

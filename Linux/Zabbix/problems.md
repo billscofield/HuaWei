@@ -70,3 +70,36 @@ users 表中的密码应该是md5加密的
 
 
 tar --list -f tar文件
+
+
+
+## 关于 triggers 中last 函数的疑惑
+
+Function: last()-last(most recent) T value
+{Zabbix server:System.users.num.last(#3,5)}>3
+
+Last of (T) 3 Count  是什么意思?
+
+Time Shift 是什么意思?
+
+```
+https://www.zabbix.com/forum/zabbix-help/11976-problems-with-trigger-last-num-function
+
+Yes, i know about the "old" behaviour of .last() that it will return only the last polled value.
+
+But i was really happy by reading the documentation Rev. 017 (for v1.6.2) where page 126 tells me:
+
+last: Last (most recent) value. Parameter:
+#num – Nth value
+For example,
+last(0) is always equal to last(#1)
+last(#3) – third most recent value
+
+Parameter #num is supported
+starting from ZABBIX 1.6.2.
+
+So where's the problem - wrong documentation / wrong trigger-definition / wrong understanding of mine / ?
+
+Re: PS: The trigger isn't based on a simple check, its item is "Zabbix Agent" with net.tcp.port (which indeed is a simple port check, yes...)
+
+```
