@@ -79,3 +79,10 @@ SATA 1.0        1.5Gb/s 150MB/s     8b/10b
 2、scsi本质上还是为服务器准备的磁盘系统，它非常强调所有的控制可以由scsi体系自己完成，不需要cpu控制，所以scsi非常省资源，而sata需要cpu介入控制传输过程。
 
 
+
+## dm-0
+
+centos 中
+
+https://qastack.cn/superuser/131519/what-is-this-dm-0-device
+
