@@ -6,6 +6,8 @@ vim --version | egrep clipboard 返回的结果中，clipboard 和 xterm_clipboa
 则可以这么操作
     sudo apt install vim-gui-common
 
+    或者 apt install vim-gtk
+
 但是在win10 中的ubuntu中这么做却不可以将win10中内容复制到ubuntu
 
 

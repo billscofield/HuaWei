@@ -430,3 +430,7 @@ ping packet and move on to the next target in a round-robin fashion.  In the def
 removed from the list of targets to check; if a target does not respond within a certain time limit and/or retry limit it is
 designated as unreachable. fping also supports sending a specified number of pings to a target, or looping indefinitely (as in
 ping ). Unlike ping, fping is meant to be used in scripts, so its output is designed to be easy to parse.
+
+## remote control
+
+remmina

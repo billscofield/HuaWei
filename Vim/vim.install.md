@@ -10,6 +10,7 @@
 	--enable-luainterp \
 	--enable-perlinterp \
 	--enable-multibyte \
+    --with-x\
 	--prefix=/usr/local/vim82
 
 
@@ -25,12 +26,14 @@ option explains
     --enable-gui=gtk2：gtk2支持,也可以使用gnome，表示生成gvim
     --with-python-config-dir=/usr/lib/python2.7/config-i386-linux-gnu/ 指定 python 路径
     --prefix=/usr：编译安装路径
+    --with-x    clipboard & -xterm_clipboard 还是减号
 
 
 
 ## python3: to only support python3
 
-/configure --with-features=huge \
+./configure --with-features=huge \
+   --with-x \
    --enable-rubyinterp \
    --enable-python3interp \
    --with-python3-config-dir=/usr/lib/python3.7/config-aarch64-linu-gun/ \
@@ -40,7 +43,66 @@ option explains
    --enable-luainterp \
    --enable-perlinterp \
    --enable-multibyte \
+   --enable-gui=auto \
    --prefix=/usr/local/vim82python3
+
+
+./configure --help  查看了所有关于gui的选项，都加上了，也是不行...
+
+
+./configure --with-features=huge \
+   --with-x \
+   --enable-rubyinterp \
+   --enable-python3interp \
+   --with-python3-config-dir=/usr/lib/python3.7/config-aarch64-linu-gun/ \
+   --enable-perlinterp \
+   --enable-gui=auto \
+   --enable-gtk2-check \
+   --enable-gtk3-check \
+   --enable-gnome-check \
+   --enable-gui=gtk2 \
+   --enable-cscope \
+   --enable-luainterp \
+   --enable-perlinterp \
+   --enable-multibyte \
+   --prefix=/usr/local/vim82python3
+
+
+
+when compiling the source code, it is import to run 
+
+```
+make clean 
+
+find . -iname 'configure.cache' -ok rm {} \;
+```
+
+
+
+
+加上 --with-x 重新在上次编译过的目录中重新编译,报错
+
+```
+if X11 header files can be found... no
+```
+
+links:
+    https://www.phpfans.net/ask/fansa1/4882882130.html
+
+加上--with-x也没有用，结果完全一样。
+关键在那个(cached)。因为在其它系统中编译过一次，把X的路径记录到config.cache中了。
+删掉这个文件就好了。本来以为有了make clean就完全“干净”了呢，没想到还是有要人工清除的地方
+
+
+it doesn't work even I replace "--enable-gui=gtk2" with "--enable-gui=auto"
+
+
+
+generaly speaking, if you are using the vim installed by apt install, you'll get "+clipboard" and "+xterm-clipboard" 
+after you install vim-gtk(Debian Series), but for the vim installed from source, it failed...
+
+
+
 
 ### The reason why you cannot suppport python2 and python3 at the same time
 
@@ -119,4 +181,16 @@ youcompleteme-demo
 ### 五、个性化配置 YouCompleteMe
 
 YouCompleteMe 是基于 Vim 的 omnifunc 机制来实现自动补全功能，所以需要为你想要支持的语言安装一个提供 omnifunc 接口的Vim插件。可以根据自己的需要，对 YouCompleteMe 插件进行个性化配置，包括针对特定编程语言类型进行配置。具体细节本文不做介绍，如有需要，将另开文章进行整理。
+
+
+
+### 系统交互
+
+lipboard 和 xterm_clipboard
+
+关于源代码编译安装vim, clipboard 的文章
+
+https://vim.fandom.com/wiki/Accessing_the_system_clipboard
+
+https://advancedweb.hu/working-with-the-system-clipboard-in-vim/#:~:text=Check%20the%20clipboard%20support%20of,you%20are%20good%20to%20go.
 

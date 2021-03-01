@@ -55,5 +55,9 @@ apt install 的版本有点老啊，才1.几的版本，最新的都2.0了，考
 mutt -v 会显示出默认的 configure 选项，这个比较好, 可以参照进行编译
 
 
+apt install mutt
+mutt
+会提示时候建立  /$home/Mail  文件夹
+
 
 
