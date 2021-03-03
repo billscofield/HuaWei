@@ -46,6 +46,7 @@ anonymous_enable
 anon_root
     This option represents a directory which vsftpd will try to change into after an anonymous login. Failure is silently ignored.
     Default: (none)
+    /var/ftp
 
 
 no_anon_password
@@ -60,6 +61,7 @@ anon_world_readable_only
     world readable: 是其他人有读的权限???
     anon_world_readable_only的意思是，当他为YES时候，文件的其他人必须有读的权限才允许下载，单单文件所有人为ftp且有读权限是无法下载的，必须其他人也有读权限，才允许下载；
     若为NO则只要ftp用户对文件有读权限即可下载
+    是系统的那个ftp用户?
 
     https://blog.csdn.net/wzt888_/article/details/100763045
 

@@ -27,7 +27,19 @@ vmstat命令, 输出歪歪扭扭的, 强迫症简直不能忍啊
     vmstat | column -t
 
 
+-t --timestamp
+
+
 vmstat支持列模式, -s可以按照列输出, -Sm修改输出的单位为m
+
+-S, --unit character
+    -SM
+    -Sm
+    Switches  outputs  between  1000  (k),  1024  (K),  1000000 (m), or 1048576 (M) bytes.  Note this does not change the swap
+    (si/so) or block (bi/bo) fields.
+
+    应该用大的 -K(默认) -M
+
 
 ```
 |    8170480 K total memory
