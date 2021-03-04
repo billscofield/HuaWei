@@ -30,6 +30,8 @@
 
 1. 60年代初, MIT 兼容分时操作系统
 
+1. 1962年，第一个分时系统CTSS, 由MIT开发出来
+
 1. 1963.1.1 IEEE(Institute of Electrical and Electronics Engineers)
 
     IEEE的两个前身AIEE（美国电气工程师协会）成立于1884年，IRE（无线电工程师协会）成立于1912年
@@ -115,6 +117,8 @@
 1. 1989 Cygnus （Cygnus, your GNU support)
 
     1. CY GUN S
+
+1. 1990年地一个GNU核心 Hurd 完成开发
 
 1. 1991.10 Linus Torvalds 发布Linux 内核
 
