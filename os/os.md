@@ -520,6 +520,29 @@ GNU/Linux
         等待队列
 
 
+    |   ```
+    |   #include <stdio.h>
+    |   #include <sys/types.h>          // /usr/include/x86_64-linux-gnu/sys/types.h
+    |   #include <unistd.h>             // 是C和C++程序设计语言中提供对  POSIX 操作系统API的访问功能的头文件的名称。
+    |                                   // 对于类 Unix 系统，unistd.h 中所定义的接口通常都是大量针对系统调用的封装（英语：wrapper functions），如 fork、pipe 以及各种 I/O 原语（read、write、close 等等）。
+    |                                   // 此处是调用 fork 函数
+    |
+    |   int main(int argc, char const *argv[]){
+    |       pid_t pid;                  // pid_t定义的类型都是进程号类型
+    |       pid_t cid;
+    |       
+    |       printf("Before fork Process id: %d\n", getpid());
+    |
+    |       fork();                     // fork: 分叉
+    |
+    |       printf("After fork Process id: %d\n", getpid());
+    |
+    |       pause();
+    |
+    |       return 0;
+    |   }
+
+        ```
 
 
 ### 
