@@ -422,18 +422,20 @@ GNU/Linux
         系统调用
 
 
+    | mode switch
+    |
     |   +-------+                   |                                 +-----------+
     |   |process|   exception       |interrupt                        | Process   |
     |   |execu  |------------+      |                        +---->---| executing |
     |   +-------+            |      |                        |        +-----------+
     |                       \|/    \|/                       |                                  user mod
     |                   +-------------------+        +------------------------------------------------+                    
-    |  -----------------| saving the context|        | 1. select a process to restarot and resume     |
-    |                   | of the executing  |        | 2. restore the context of the selected process |             |                                   
+    |  -----------------| saving the context|--------| 1. select a process to restarot and resume     |------------------
+    |          Trap     | of the executing  |        | 2. restore the context of the selected process |
     |                   |                   |        | 3. resume excution of the selected process     |
     |                   +-------------------+        +------------------------------------------------+
-    |                           |                            |                                  kernel mod
-    |                          \|/                          \|/
+    |                           |                           /|\ LPSW (内核模式回到用户模式指令)        kernel mod
+    |                          \|/                           |
     |                       +------------------------------------------------------+
     |                       | 1. Determing the cause of the exception or interrupt |
     |                       | 2. handle the exception/interrupt                    |
@@ -481,7 +483,7 @@ GNU/Linux
         | ...                |
         +--------------------+
 
-    一个完整的进程, 进程的上下文
+    一个完整的进程, 进程上下文
         +---------------
         | PCB
         +---------------
@@ -494,7 +496,7 @@ GNU/Linux
         | text
         +---------------
 
-        是交叉离散存放的
+        进程队列，是交叉离散存放的
         +---------------
         | PCB 1
         +---------------
@@ -533,7 +535,7 @@ GNU/Linux
     |       
     |       printf("Before fork Process id: %d\n", getpid());
     |
-    |       fork();                     // fork: 分叉
+    |       fork();                     // fork: 分叉, fork 下边的代码会执行两边，父进程和子进程都会执行，并发地执行
     |
     |       printf("After fork Process id: %d\n", getpid());
     |
@@ -544,5 +546,35 @@ GNU/Linux
 
         ```
 
+    进程调度
 
-### 
+    ready queue ------------->------------------CPU----->--     
+    |                                              ----->-+
+    |                                                     |
+    IO ---- < IO queue       <      IO request  --------<-+
+    |                                                     |
+    |                                                     |
+   /|\ ----------------------<     time slice expired --<-+
+    |                                                     |
+    |                                                     |
+    |  <   child executes    <     fork a child  -------<-+
+    |                                                     |
+    |                                                     |
+    +  <   interrupt occurs  <     wait for an interrupt<-+
+
+
+
+
+
+### Trhead 线程
+
+
+
+
+
+
+
+
+
+
+
