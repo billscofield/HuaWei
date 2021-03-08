@@ -231,6 +231,10 @@ vi /usr/share/javascript/proxmox-widget-toolkit/proxmoxlib.js
 
 搜索：data.status !== 'Active' 将其注释掉
 
+if (这里改为false)
+
+systemctl stop pveproxy.service
+systemctl start pveproxy.service
 
 
 ## 添加设备

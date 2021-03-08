@@ -1,3 +1,17 @@
+links:
+
+    https://www.bilibili.com/video/BV1bf4y147PZ?p=12&t=2024
+
+    1. 该课程的所有课程讲义pdf文档均上传至Github，请移步至 github.com#youngyt/LinuxOS_Course
+
+    2. 课程所使用的教材是 Operating System Concepts 9th Edition, Abraham Silberschatz. (有中文版，机械工业出版社出版) 
+
+    3. 课件资料中原创部分在转载时请注明出处，谢谢！ 
+
+    4. 有任何问题可以留言或发邮件至：youngyt@gmail.com 
+    作者：Y4NGY
+    https://www.bilibili.com/read/cv5786137
+    出处： bilibili
 
 ## 操作系统
 
@@ -280,8 +294,8 @@ Multiprocessor/Multicore System
 |                          (trap) \             /(return)                               kernel mode(mode bit=0)
 |                                  \           /
 |                                   +------>--+
-|   模式切换
-
+|   模式切换                   |----|         |----|
+|                               开销           开销
 
 系统调用的实现机制
     
@@ -543,8 +557,8 @@ GNU/Linux
     |
     |       return 0;
     |   }
-
-        ```
+    |
+    |   ```
 
     进程调度
 
@@ -569,6 +583,619 @@ GNU/Linux
 ### Trhead 线程
 
 
+    +-----------+       +-----------+
+    |   stack   |       |   stack   |
+    +-----------+       +-----------+
+    |   heap    |       |   heap    |
+    +-----------+       +-----------+
+    |   data    |       |   data    |
+    +-----------+       +-----------+
+    |  执行流1  |       |  执行流2  |
+    +-----------+       +-----------+
+
+
+    好处: 得到两个执行流[并发的]
+    略势：浪费资源，一个很小的任务，都要完全复制
+
+    所以引入线程的概念
+
+    
+    +-----------+
+    |   stack   |
+    +-----------+
+    |   heap    |
+    +-----------+
+    |   data    |
+    +-----------+
+    |执行流1 & 2|   在同一个进程中实现两个并发的执行流, 叫做线程
+    +-----------+
+
+    线程: 进程当中的执行流
+
+
+
+    拷贝数据的例子
+
+
+|   +--------+-----------+  用户发出取消拷贝指令，线程2进入就绪队列等待执行，以便取消线程1
+|   |        |           |  4               3
+|   | 线程1  | 线程2     |------>  CPU   cpu 去执行其他任务
+|   | copy   | waitAbort |         /|\
+|   +--------+-----------+          |
+|       |                     1     |
+|       +---------------------------+ 
+|       | 2, 然后线程1 进入 wait 状态
+|      \|/
+|    Disk Copy
+
+
+    也可一开一个子进程，但是
+        线程更加省资源
+        线程间通信也更省资源
+
+
+    动机:
+
+        一个应用通常需要同时处理很多工作，比如web浏览器,可能需要同时处理文字、图片、视频,
+        这些同时执行的任务可称为“执行流”， 我们不希望他们是顺序执行的
+        
+        早期，每个执行流都要创建一个进程来实现，的那是进程的创建需要消耗大量的时间和资源
+        
+        还需要硬件的支持，如多个CPU，或者1个CPU多个核心
+        
+        现在, 和一个应用相关的所有执行任务都装在一个进程里，这些进程内部的执行任务就是
+        "线程"(Thread)
+
+
+
+    +------------------------+
+    |  code |   data | files |  
+    +------------------------+
+    |register|stach|heap |...|
+    +------------------------+          单线程
+    |                        |
+    |       thread   \|/     |
+    |                        |
+    +------------------------+
+
+
+
+    +------------------------+
+    |  code |   data | files |  共享的 data:全局变量,静态变量; code:代码; files: 打开的文件 
+    +------------------------+
+    | stack    |  stack      |  非共享的, 局部变量，函数返回值
+    +----------+-------------+          
+    |          |             |
+    | thread1  | thread2 |...|  多线程
+    |          |             |
+    +------------------------+
+
+    
+    多线程的优点:
+        响应性: 响应速度快, 不需要重新开辟内存，复制
+        资源共享
+        经济: 避免浪费资源，进程切换
+        可伸缩性: 多核, 可以实现并行
+
+    A thread is a basic unit of CUP utilization(利用); 
+    it comprises a thread id, a program counter, a register set, and a stack
+    
+    It shares with other threads belonging to the same process its 
+    code section,  data section, and other operating-system resources,such as open files and signals
+
+    A traditional (or heavyweight) process has a single thread of control. 
+    If a process has multiple threads of control, it can perform more than one task at a time
+        heavyweight 重量级
+        lightweight 轻量级
+
+
+
+
+
+
+多线程模型
+    links:
+        http://c.biancheng.net/view/1220.html
+    
+    多核编程
+        在多处理器系统中，多核心编程机制让应用程序可以更有效地将自身的多个执行任务(并发的线程)
+        分散到不同的处理器上运行，以实现并行计算
+        
+        
+        single core:        T1  T2  T3  T4  T1  T2  T3  T4  T1  T2  ...
+        
+        --------->-------Time------------->-------
+        
+        core 1              T1  T3  T1  T3  ...
+        
+        core 2              T2  T4  T2  T4  ...
+        
+        
+        用户线程ULT(User Level Thread)
+        内核线程KLT(Kernel Level Thread)
+
+
+
+
+    Many:1 模型
+
+    |   userThread1 userThread2 userThread3 ...             线程1、2、3 可能是多个进程的线程
+    |           \       |       /
+    |            \      |      /
+    |             \     |     /
+    |            kernel thread 1                            单核CPU
+
+
+    1:1 模型
+        每一个用户线程和一个核心线程一一对应
+        
+        好处：带来真正的并行运算
+        缺点：内核开销(时间和空间上)
+            建一个用户线程就要创建一个相应的内核线程。由于创建内核线程的开销会影响应用程序的性能，
+            所以这种模型的大多数实现限制了系统支持的线程数量。
+
+    M:M 模型
+
+        KLT 的数量肯定是小于 CPU 的数量, KLT 去争夺CPU的时间，KLT 相当于用户线程的代理人
+        
+        
+        多路复用多个用户级线程到同样数量或更少数量的内核线程。内核线程的数量可能与特定应用程序
+        或特定机器有关（应用程序在多处理器上比在单处理器上可能分配到更多数量的线程）。
+        
+        现在我们考虑一下这些设计对并发性的影响。虽然多对一模型允许开发人员创建任意多的用户线程，
+        但是由于内核只能一次调度一个线程，所以并未增加并发性。虽然一对一模型提供了更大的并发性，
+        但是开发人员应小心，不要在应用程序内创建太多线程（有时系统可能会限制创建线程的数量）。
+     
+        多对多模型没有这两个缺点：开发人员可以创建任意多的用户线程，并且相应内核线程能在多处理
+        器系统上并发执行。而且，当一个线程执行阻塞系统调用时，内核可以调度另一个线程来执行。
+     
+        多对多模型的一种变种仍然多路复用多个用户级线程到同样数量或更少数量的内核线程，但也允许
+        绑定某个用户线程到一个内核线程。这个变种，有时称为双层模型
+
+    |
+    |   ULT1 ULT2 ULT3      ULT4            用户线程
+    |    \    |    /         |
+    |     \   |   /          |
+    |      \  |  /           |
+    |       \ | /            |
+    |         +              |              多了一层管理层，实现起来较为复杂
+    |        / \             |
+    |    KLT1   KLT2       KLT3             内核线程
+
+        M:M 模型历史上叫做  NGPT(Netxt Generation POSIX Threads)
+        1:1 模型历史上叫做  NPTL(Native POSIX Thread Library) 原生
+            可以看wiki
+                The NGPT project was subsequently abandoned in mid-2003 after merging its best feature into NPTL;
+                所以现在是1：1模型
+
+
+线程库    
+    
+    Thread Library 为程序员提供创建和管理线程的API
+        POSIX Pthreads: POSIX用户线程库和内核线程库(POSIX threads)
+        Windows Threads: windows 内核线程库
+        Java Threads: 依据所依赖的操作系统而定
+
+    Pthreads 是 POSIX 标准定义的线程创建与同步API。不同的操作系统对该标准的实现不禁相同
+    
+
+实验1
+    使用Pthreads库创建多个线程，并观察线程的并发执行现象以及数据共享关系
+
+实验2
+    Monte Carlo 技术计算Pi值(多线程)
+        Pi = 4 x 圆内点数/总的点数
+
+    主线程结束，会回收所有的资源，所以如果没有 pthread_join(等待子线程执行完毕), 子线程的输出就没有去执行了
+        a.c 是正常的情况
+        b.c 是主线程没有等待子线程执行的情况
+
+    <stdlib.h>      rand() 随机数
+    <time.h>
+
+
+## CPU Scheduling (CPU 调度)
+
+    burst: 突发，迸发
+
+    load store      |
+    add store       |--> CPU burst
+    read from file  |
+
+
+
+    +------------+
+    |wait for I/O|      I/O burst
+    +------------+
+
+
+
+
+    长进程: 占用CPU时间长的
+    短进程: 占用CPU时间短的
+
+
+    |       <CPU-BURST Duration>
+
+   /|\ frequency
+    |
+    |
+    |  
+    | .
+    |..
+    |...
+    |...
+    |...
+    |...
+    |...................
+    |........................................
+    +------------------------------------------------>  
+        8   16  24  32  40
+        burst duration(millionseconds)
+
+    很少部分程序所需CUP时长8ms之内，叫做CPU-bound program cpu密集型程序
+    8ms之外的一些程序叫做 I/O-bound program, I/O 密集型程序
+
+
+    CPU-bound program: 
+    I/O-bound program: 
+
+    
+
+
+
+
+
+CPU 调度程序
+
+    Whenever the CUP becomes idle, the operating system must select one of the processes in the ready queue
+    to be excuted. The selection proess is carried out by the CPU schedule.(基于单处理器)
+
+    抢占调度 
+
+    非抢占调度 
+        一旦某个进程的到CPU，就会一直占用到终止或等待(比如自己要I/O)状态。调度程序不会把它赶出去
+
+
+
+
+CPU调度准则
+    
+    一个调度程序
+
+
+
+
+调度算法性能的衡量
+
+    CUP利用率
+    响应时间: 从提交任务到第一次响应的时间。(交互系统)
+    等待时间(Waiting time)    : 进程**累计在就绪队列**中等待的时间
+    周转时间(Turn Around Time): 从提交到完成的时间
+
+    吞吐率  : 每个时钟单位处理的任务数
+    公平性  : 以合理的方式让各个进程共享CPU. 避免某些进程的不到CPU，导致饥饿现象
+
+
+
+    --->---------->------>------>------->terminated
+    提交   等待1    CPU1   等待2   CPU2
+
+
+    作业(job) == 进程(process)
+    假设作业i提交给系统的时刻是Ts, 完成的时刻是Tf, 所需运行时间是Tk, 那么:
+        周转时间 Ti = Tf - Ts 
+       
+        平均作业周转时间T(假设并发了n个job)
+        T = 并发的作业的平均值 
+
+
+### 调度算法
+
+FCFS(First-Come, First-Served) 先来先服务, 先进先出
+    
+    早期系统里，FCFS意味着一个程序会一直运行到结束(即使出现等待IO的情况,也会一直占用CPU)
+    如今，当一个程序阻塞时，会让出CPU，进入等待/阻塞队列
+
+    是**非抢占式**调度算法
+
+    例题:
+    
+    3个Job所需CPU时间
+    Process     Time
+    P1          28
+    P2          9
+    P3          3
+    
+    如果三个进程的到达顺序是: P1, P2, P3
+    
+    +-------------+---------+-----+
+    | P1          | P2      | P3  |
+    +-------------+---------+-----+
+    0            28        37    40
+    
+    
+    等待时间分别是: P1=0; P2=28; P3=37
+   
+    平均等待时间是: (0+28+37)/3 = 22
+    平均作业周转时间: (28+37+40)/3 = 35
+
+
+    如果三个进程的到达顺序是: P1, P2, P3
+    
+    +-----+--------+-------------+
+    | P3  |   P2   |         P3  |
+    +-----+--------+-------------+
+    0     3        12            40
+    
+    
+    等待时间分别是: P3=0; P2=3; P1=12
+   
+    平均等待时间是: (0+3+12)/3 = 5
+    平均作业周转时间: (3+12+40)/3 = 18
+
+
+    显然第二种排列方式比第一种好，平均作业周转时间缩短为18
+    
+    FCFS的优缺点:
+        系统默认的调度算法
+        简单易行
+        如果短作业处在长作业的后面将导致**周围时间变长**。如同超市排队结算
+
+
+
+时间片轮转(Round robin), 简写为 RR
+    robin n. 知更鸟
+
+    针对分时系统(Time Sharing System) 
+
+    每个进程都可以的到相同的CPU时间(CPU时间片，time slice), 当时间片到达，进程将
+    被剥夺 CPU 并加入到就绪队列的尾部
+
+    是抢占式调度算法
+
+        假设就绪队列中有n个进程，时间片为q
+        
+        每个进程获得 1/n 的CPU时间，大约是q个时间单位
+        
+        没有进程等待时间会超过(n-1)q
+
+    例题(时间片=20)
+        
+        Process         CPU Time
+        P1              68
+        P2              53
+        P3              24
+        P4              8
+        
+        +---------------------------------------------------+
+        | P1 | P2 | P3 | P4| P1 | P2 | P3 | P1 |   P2|  P1  |
+        +---------------------------------------------------+
+        0   20   40   60   68  88   108  112  132   145     153
+        
+        等待时间：
+            P1=(68-20)+(112-88)+(145-132)=85
+            P2=20 + (88-40) + (132-108) = 92
+            P3=40 + (108-60) = 88
+            P4=60
+        平均等待时间 = (85+92+88+60)/4=81.25
+        平均周转时间 = (153 + 145 + 112 + 68)/4 = 119.5
+
+
+    RR算法分析
+        时间片(time slice)选取
+            取值太小: 进程切换开销显著增大(不能小于进程切换的时间)
+            取值太大: 响应速度下降(取值无穷大将退化成FCFS)
+            一般的时间片取值范围:10ms-100ms
+            上下文切换的时间大概是0.1ms-1ms(1%的CPU时间片开销)
+        RR算法优点
+            公平
+        RR算法缺点
+            对长作业带来额外的切换开销
+
+    比较FCFS和RR
+
+        10 个进程，每个花费100个CPU时间
+            假设RR时间片为1
+            所有进程同时在就绪队列中
+            
+        结束时间
+            +--------+--------+-----+
+            | 进程号 |  FCFS  | RR  |
+            +--------+--------+-----+
+            | 1      |  100   | 901 |
+            +--------+--------+-----+
+            | 2      |  200   | 902 |
+            +--------+--------+-----+
+            | ...    |  ...   | ... |
+            +--------+--------+-----+
+            | 99     |  900   | 999 |
+            +--------+--------+-----+
+            | 100    |  1000  | 1000|
+            +--------+--------+-----+
+            
+            RR 的周转时间更加糟糕
+
+
+
+
+最短作业优先(SJF)   Shortest Job First
+
+    下一次调度总是选择所需要CPU时间最短的那个作业(进程).
+
+    假设非抢占式
+
+        到达系统时间        所需CUP时间
+    P1     0                8
+    P2     1                4
+    P3     2                9
+    P4     3                5
+        
+        +----------------------------------+
+        | P1    | p2 |  P4    |     P3     |
+        +----------------------------------+
+        0       8   12       17            26
+
+    也可以改造成抢占式SRTF
+
+
+    SJF/SRTF 算法分析
+        该算法总是将短进程移到长进程之前执行，因此平均的等待时间最小
+        
+        饥饿现象: 长进程可能长时间无法获得CU
+        
+        预测技术
+            该算法需要事先知道进程所需的CPU时间
+            预测一个进程的CPU时间并非易事
+            
+        优点:
+            优化了响应时间
+        缺点:
+            难以预测作业CPU时间(很难实现)
+            不公平算法
+    
+
+
+优先级调度(Priority)
+
+    优先级通常为固定区间的数字，如[0,10]
+
+        数字的大小与优先级高低的关系在不同的系统中实现不一样，
+        Linux中，0为最高优先级, 数字越小，优先级越高
+
+    调度策略
+        下一次调度总是选择优先级最高的进程
+        
+        SJF 是优先级调度的一个特例，CPU时间越短越优先
+
+    优先级调度可以是抢占式，也可以是非抢占式
+
+
+    优先级的定义
+        静态优先级
+            优先级保持不变，但会出现不公平(饥饿)现象
+            
+        动态优先级(退化Aging)
+            根据进程占用CPU时间：当进程占有CPU时间愈长，则慢慢降低它的优先级
+            根据进程占用CPU时间：当进程在就绪队列中等待时间愈长，则慢慢提升它的优先级
+
+
+没有最好的算法，只有最合适的算法
+
+
+
+长程调度
+    将硬盘上的程序调度到内存
+
+CPU调度(短程调度)
+    将内存上的程序和CPU之间互相调度
+    
+中程调度
+    和swap有关
+
+
+
+### 线程调度
+
+
+thread 
+
+ps -eLf
+    -L     Show threads, possibly with LWP and NLWP columns.
+
+
+### 并发进程之间的关系
+
+独立关系
+    并发进程分别在自己的变量集合上运行,如 chrome 和 music
+
+交互关系
+    并发进程执行过程中需要共享或交换数据
+    交互的并发进程之间存在[竞争]和[协作]的关系
+
+
+需要交互的进程
+    竞争(race)
+        critical section 临界区
+        Race Condition 竞争条件
+
+    协作(cooperation)
+    
+
+异步 Asynchronous means RANDOM(随机，随行)
+    
+    竞争条件(race condition,翻译成竞争情况会更好): 多个进程并发操作同一个数据
+    导致执行结果依赖于特定的进程执行顺序。
+
+    交互的进程不能让其随意进行，需要同步协作
+
+同步
+    Process Synchronization means a mechanism to maintain the cosistency of data(数据一致性)
+    shared in cooperative process.
+    
+    
+    同步工具
+        Mutex lock  互斥锁
+        Semaphore   信号量
+
+
+
+
+#### 临界区问题 Critical(关键的)-section problem
+
+
+each concurrent process has a segment of code, called a critical section, in which the process
+may be changing common variables, updating a table, writing a file, and so on.
+访问公共区域的一段代码, 
+
+the important feature of the system is that, when one process is executing in its critical
+section, no other process is allowed to execute in its critical section. That is, no two 
+processes are executing in their critical sections at the same time.
+
+
+The critical-section problem is to design a protocol that the processes can use to cooperate
+
+
+进程进出临界区协议
+
+```
+do {
+    entry section           // 进程进入临界区前要在 entry section 请求许可
+        critical section
+    exit section
+        remainder section   // 离开临界区后在 exit section 要归还许可
+}
+```
+
+临界区管理准则
+    
+    Mutual相互的 exclusion排斥 (Mutex): 互斥
+    Progress: 前进,进步, 如果临界区没有程序，就一定能放一个进程进去
+    Bounded waiting: 有限等待(等待时间不能是无限的)
+
+    有空让进
+    择一而入
+    无空等待
+    有限等待
+    让权等待(临界区中的进程不能无限使用)
+
+
+    喂金鱼
+        撑死
+        饿死
+
+    对于计算机而言，饿死更好一些
+
+
+    软件解决临界区管理
+        需要较高的编程技巧
+        连个进程的实现代码是不对称的
+        两个住梦的软件爱你方案
+            Peterson
+            Dekker
+
+
+    13 60:00
 
 
 
@@ -576,5 +1203,4 @@ GNU/Linux
 
 
 
-
-
+#### 互斥锁
