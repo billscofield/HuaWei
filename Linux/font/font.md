@@ -72,3 +72,41 @@ Ubuntu Mono
 
 
 
+
+
+## 中文字体支持
+
+```
+1. apt-get install xfonts-intl-chinese wqy*
+2. apt-get install locales
+3. dpkg-reconfigure locales
+
+4. 在稍后弹出的语言列表中选择：
+    zh_CN GB2312
+    zh_CN.GBK GBK
+    zh_CN.UTF-8 UTF-8
+
+5. 默认编码选用：zh_CN.UTF-8 UTF-8  或者使用 export LC_ALL=C
+
+```
+
+
+
+
+apt-cache search xfonts-intl
+    emacs-intl-fonts - fonts to allow multilingual PostScript printing from Emacs
+    xfonts-intl-arabic - international fonts for X - Arabic
+    xfonts-intl-asian - international fonts for X - (south-east) Asian
+    xfonts-intl-chinese - international fonts for X - Chinese
+    xfonts-intl-chinese-big - international fonts for X - large Chinese
+    xfonts-intl-european - international fonts for X - European
+    xfonts-intl-japanese - international fonts for X - Japanese
+    xfonts-intl-japanese-big - international fonts for X - large Japanese
+    xfonts-intl-phonetic - international fonts for X - International Phonetic Alphabet
+    langdrill - language drills to test vocabulary
+
+
+    xfonts-intl-chinese
+        这个软件包包括了一些 GB2312、GB8565-88、BIG5 (ETen)、和 SiSheng 中文字体。 
+        如果您要用中文浏览、打印或创作文档和使用以上几种编码方式，将需要使用这些字体。
+        这些字体用于 X Window 系统。
