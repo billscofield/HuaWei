@@ -1195,12 +1195,88 @@ do {
             Dekker
 
 
-    13 60:00
 
 
 
 
+#### 互斥锁 MUTEX LOCKS
+
+Operating-systems designers build software tools to solve the critical-section proble.
+This simplest of these tools is the mutex lock.
+
+    A process must acquire the lock before entering a critical section
+
+    It must release the lock when it exits the critical section
+
+    
+
+
+Alice               Tom
+
+lock()              lock()                上锁:等待锁至打开状态；获得锁并上锁
+if (no feed){       if(no feed){        |
+    feed fish       feed fish           | 临界区
+}                   }                   |
+
+leave lock()        leave lock()
 
 
 
-#### 互斥锁
+原子操作(原语) atomic operations
+    mean the operation can NOT be interrupted while it's running
+
+原子操作(原语)是操作系统重要的组成部分，下面2条硬件指令都是原子操作，他们可以被用来
+实现对临界区的管理(也就是锁)
+    
+    test_and_set()
+    compare_and_swap()
+
+
+    ```
+    bool ts(bool* target){              就是 test_and_set()
+        bool result = *target
+        *target = false;
+        return result;                  总是返回传进去的那个值，传进去的那个值总是被置为false
+    }
+    完成了两个操作，test和set， 这个是不会被打断的
+
+
+
+
+    bool availabel = true;  // unclocked
+
+
+
+    第一第二个进程分别来执行这段语句, 试着分析
+    lock(){
+        while(!ts(&available))                      // 是占用cpu的，忙式等待
+            do nothing;
+    }
+
+    unlock(){
+        available = true;
+    }
+    ```
+
+
+
+    忙式等待(Busy Waiting) 
+        占用CPU执行空循环实现等待
+       
+    这种类型的互斥锁也被称为"自旋锁(spin lock)"
+        缺点: 浪费CPU周期，可以将进程插入等待队列以让出CPU的使用权
+        
+        优点: 进程在等待时没有上下文切换，对于使用锁时间不长的进程，自旋锁还是可以接受的;在
+        多处理器系统中，自旋锁的优势更加明显。
+        
+        自旋锁的时间可能比进程切换更少
+
+
+    进程锁和线程锁是不一样的
+
+    ```
+    pthread_mutex_t lock=PTHREAD_MUTEX_INITIALIZER;             // 创建一个锁
+
+    pthread_mutex_lock(&lock);                                  // 上锁
+    pthread_mutex_unlock(&lock);                                // 开锁
+    ```

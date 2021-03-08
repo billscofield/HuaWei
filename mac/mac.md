@@ -12,22 +12,23 @@ CMIIT ID：2013AJ7630，其中bai cmiit id是无线电du发射设备型号核准
 
 ## 系统
 
-dmg是MAC苹果机上的压缩bai镜像文件，du相当于在Windows上常见的iso文件，DMG在苹果机上可以直接运行加载。
-dmg，全bai称为disk image，即磁盘影像，是Mac osx中的du一种文件格式。使用 ultraiso
+dmg是MAC苹果机上的压缩镜像文件，相当于在Windows上常见的iso文件，DMG在苹果机上可以直接运行加载。
+dmg，全称为disk image，即磁盘影像，是Mac osx中的du一种文件格式。使用 ultraiso
     “工具”/“格式转换...”
 
 
 
 镜像方面有2种：
 
-一种是带引导的原版镜像（本站镜像），支持工具一键写入U盘(https://xitongtiankong.com/archives/61536)
+    一种是带引导的原版镜像（本站镜像），支持工具一键写入U盘(https://xitongtiankong.com/archives/61536)
 
-一种是不带引导的原版镜像（官方商店下载），需要在macOS系统下使用终端写入U盘
+    一种是不带引导的原版镜像（官方商店下载），需要在macOS系统下使用终端写入U盘
 
 
 
 
 升级包: https://support.apple.com/downloads/macos
+
 
 ### 10
 
@@ -51,6 +52,11 @@ Big Sur
 
 
 
+windows 下应该是只能使用 带引导的镜像来制作启动盘
+
+mac 下可以直接下载原版镜像，用命令行加参数制作启动盘
+
+
 ### windows 下 U盘安装盘制作
 
 使用软件 TransMac
@@ -70,6 +76,7 @@ TransMac还拥有写入十分稳定的特点，不容易出错，balenaEtcher则
     一种是带引导的原版镜像（本站镜像），支持工具一键写入U盘
 
     一种是不带引导的原版镜像（官方商店下载），需要在macOS系统下使用终端写入U盘
+
 
 
 
