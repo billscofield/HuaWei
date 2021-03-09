@@ -44,6 +44,8 @@
 
     1. Bell Lab, GE, 麻省理工学院
 
+    1. 控制数据公司(Control Data Corporation)研制除了CDC 6600计算机，世界上首台超级计算机
+
 1. 1966 Ken Tompson 加入贝尔实验室
 
     1942 生
