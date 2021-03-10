@@ -1163,13 +1163,13 @@ do {
     entry section           // 进程进入临界区前要在 entry section 请求许可
         critical section
     exit section
-        remainder section   // 离开临界区后在 exit section 要归还许可
+    remainder section       // 离开临界区后在 exit section 要归还许可
 }
 ```
 
 临界区管理准则
     
-    Mutual相互的 exclusion排斥 (Mutex): 互斥
+    Mutual 相互的 exclusion 排斥 (Mutex): 互斥
     Progress: 前进,进步, 如果临界区没有程序，就一定能放一个进程进去
     Bounded waiting: 有限等待(等待时间不能是无限的)
 
@@ -1223,7 +1223,7 @@ leave lock()        leave lock()
 
 
 原子操作(原语) atomic operations
-    mean the operation can NOT be interrupted while it's running
+    Mean the operation can NOT be interrupted while it's running
 
 原子操作(原语)是操作系统重要的组成部分，下面2条硬件指令都是原子操作，他们可以被用来
 实现对临界区的管理(也就是锁)
@@ -1280,3 +1280,72 @@ leave lock()        leave lock()
     pthread_mutex_lock(&lock);                                  // 上锁
     pthread_mutex_unlock(&lock);                                // 开锁
     ```
+
+
+### 信号量
+
+竞争是特殊的协作关系
+
+信号量主要用来解决协作关系, 特殊情况下也可以解决竞争关系
+
+信号量(Semaphore)是一种比互斥锁更强大的同步工具，他可以提供更高级的方法来同步并发操作
+    1965年由荷兰Dijkstra提出
+
+A semaphore S is an integer variable that, apart from initialization, is accessed only through two
+standard atomic operations: 除了初始化你可以操作外，其他时候只能被这两个原子操作来操作
+    P(proberen in Dutch)  荷兰语:测试
+    V(verhogen in Dutch)  荷兰语:增加
+
+P: wait()   operation
+V: signal() operation
+
+PV操作是原子操作
+    
+
+
+信号量的实现
+
+    ```
+    P(s信号量){                 测试和0的关系，小于零，等待;大于零，减去1
+        while(s<=0)             减去1, 表示关灯，对别人不可用, 同上节
+            do nothing;
+        s--;
+    }
+
+
+    V(s信号量){                 增加1, 表示可用
+        s++;
+    }
+    ```
+
+    s value     |        s<=0       |       s=1     |    s>1
+    P(s)        |    busy waiting   |       s=0     |   s=s-1
+    V(s)        |       s=s+1       |       s=2     |   s=s+1
+
+
+信号量的使用
+    Binary Semaphore 二值信号量
+
+        二值信号量的值只能是0或1,通常将其初始化为1,用于实现互斥锁的功能
+        
+        semaphore mutex = 1;
+        process Pi{
+            P(mutex);
+            critical sectiion
+            V(mutex);
+        }
+
+    Counting Semaphore 一般信号量
+        可以取值任何值，用于控制并发进程对共享资源的访问
+        
+        semaphore road = 2;         只能有两个人来访问使用资源
+        process CARi{
+            P(road);
+            
+            pass the fork
+            in the road
+            
+            V(road);
+        }
+
+    PV 操作必须是成对出现的，否则信号量的值不能回到初始值
