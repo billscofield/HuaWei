@@ -1,5 +1,10 @@
 ## 7za - A file archiver with highest compression ratio
 
+
+
+7za <command> [<switches>... ] <archive_name> [<file_names>... ] [<@listfiles>... ]
+
+
 apt-cache search 7za
 
 p7zip - 7zr file archiver with high compression ratio
@@ -7,6 +12,25 @@ p7zip-full - 7z and 7za file archivers with high compression ratio
 zipper.app - Archive manager for GNUstep
 
 apt install p7zip-full
+
+---
+
+COMMANDS
+|   a      Add files to archive
+|   d      Delete files from archive
+|   e      Extract files from archive (without using directory names)
+|   x      eXtract files with full paths
+
+|   b      Benchmark 基准，标准检查程序; 测试 CPU 运行速度及检查内存错误
+|           7za b
+
+|   h      Calculate hash values for files
+|   i      Show information about supported formats
+|   l      List contents of archive
+|   rn     Rename files in archive
+|   t      Test integrity of archive
+|   u      Update files to archive
+
 
 
 
@@ -194,4 +218,167 @@ u 在压缩档案文件中使用较新的文件替换掉较旧的文件。???
 
 
 
+SWITCHES
+--     Stop switches parsing
+-ai[r[-|0]]{@listfile|!wildcard}
+    Include archives
 
+-ax[r[-|0]]{@listfile|!wildcard}
+    Exclude archives
+
+-ao{a|s|t|u}
+    Set Overwrite mode
+
+-an    Disable archive_name field
+
+-bb[0-3]
+    Set output log level
+
+-bd    Disable progress indicator
+
+-bs{o|e|p}{0|1|2}
+    Set output stream for output/error/progress line
+
+-bt    Show execution time statistics
+
+-i[r[-|0]]{@listfile|!wildcard}
+    Include filenames
+
+-m{Parameters}
+    Set Compression Method (see /usr/share/doc/p7zip/DOC/MANUAL/cmdline/switches/method.htm from the p7zip-full package for a list of methods)
+
+-o{Directory}
+    Set Output directory
+
+-p{Password}
+    Set Password (NOTE: this flag does not work with 7zr)
+
+-r[-|0]
+    Recurse subdirectories (CAUTION: this flag does not do what you think, avoid using it)
+
+-sa{a|e|s}
+    Set archive name mode
+
+-scc{UTF-8|WIN|DOS}
+        Set charset for for console input/output
+
+-scs{UTF-8|UTF-16LE|UTF-16BE|WIN|DOS|{id}}
+    Set charset for list files
+
+-scrc[CRC32|CRC64|SHA1|SHA256|*]
+    Set hash function for x, e, h commands
+
+-sdel  Delete files after compression
+
+-seml[.]
+    Send archive by email
+
+-sfx[{name}]
+    Create SFX archive
+
+-si[{name}]
+    Read data from stdin (e.g. tar cf - directory | 7za a -si directory.tar.7z)
+
+-slp   Set Large Pages mode
+
+-slt   Show technical information for l (List) command
+
+-snh   Store hard links as links
+
+-snl   Store symbolic links as links
+
+-sni   Store NT security information
+
+-sns[-]
+    Store NTFS alternate streams
+
+-sfx[{name}]
+    Create SFX archive
+
+-so    Write data to stdout (e.g. 7za x -so directory.tar.7z | tar xf -)
+
+-spd   Disable wildcard matching for file names
+
+-spe   Eliminate duplication of root folder for extract command
+
+-spf   Use fully qualified file paths
+
+-ssc[-]
+    Set sensitive case mode
+
+-ssw   Compress shared files
+
+-stl   Set archive timestamp from the most recently modified file
+
+-stm{HexMask}
+    Set CPU thread affinity mask (hexadecimal number)
+
+-stx{Type}
+    Exclude archive type
+
+-t{Type}
+    Set type of archive
+
+-u[-][p#][q#][r#][x#][y#][z#][!newArchiveName]
+    Update options
+
+-v{Size}[b|k|m|g]
+    Create volumes
+
+-w[path]
+    Set working directory. Empty path means a temporary directory
+
+-x[r[-|0]]]{@listfile|!wildcard}
+    Exclude filenames
+
+-y     Assume Yes on all queries
+
+
+
+---
+
+
+Backup and limitations
+DO NOT USE the 7-zip format for backup purpose on Linux/Unix because :
+    - 7-zip does not store the owner/group of the file.
+
+On Linux/Unix, in order to backup directories you must use tar :
+    - to backup a directory  : tar cf - directory | 7za a -si directory.tar.7z
+    - to restore your backup : 7za x -so directory.tar.7z | tar xf -
+
+If you want to send files and directories (not the owner of file) to others Unix/MacOS/Windows users, you can use the 7-zip format.
+
+example : 7za a directory.7z  directory
+
+Do not use "-r" because this flag does not do what you think.
+
+
+```
+Do not use directory/* because of ".*" files (example : "directory/*" does not match "directory/.profile")
+
+7-Zip 支持和 Windows 相类似的通配符：
+“*”可以使用星号代替零个或多个字符。 
+“?”可以用问号代替名称中的单个字符。
+如果只用*，7-Zip 会将其视为任何扩展名的全部文件
+```
+
+
+
+
+
+LZMA，（Lempel-Ziv-Markov chain-Algorithm的缩写），是一个Deflate和LZ77算法改良和优化后的压缩算法
+
+
+
+
+
+
+
+
+hash 有很多算法, 如:
+    CRC32, CRC64, MD5, SHA1, SHA256
+
+
+
+
+    
