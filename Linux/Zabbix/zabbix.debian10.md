@@ -619,6 +619,15 @@ Zabbix agent 2 is available in pre-compiled Zabbix packages. To compile Zabbix a
 
 
 
+
+对于centos, 请先关闭防火墙和selinux
+    systemctl disable firewalld
+    systemctl stop firewalld
+    setenforce 0
+否则报错
+    zabbix_get [19475]: Get value error: cannot connect to [[192.168.61.101]:10050]: [113] No route to host
+
+
 做好时间同步
 
     ln -s /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
