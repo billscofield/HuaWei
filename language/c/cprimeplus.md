@@ -23,7 +23,8 @@ C 不像 Pascal 和 C++ 那么严格，C 很灵活
 CPU 能理解的指令有限(这些指令的集合叫做指令集), 而且这些指令相当具体
 
 
-1978年，布莱恩 柯林汉(Brian Kernighan) 和 丹尼斯 里奇(Dennis Ritchie) 合著 The C Programming Language(《C语言程序设计》)
+1978年，布莱恩·柯林汉(Brian Kernighan) 和 丹尼斯·里奇(Dennis Ritchie) 合著 The C Programming Language(《C语言程序设计》)
+    K&R
 
 C 语言比其他语言更依赖库, 由于缺乏官方标准，UNIX实现提供的库已成为了标准库
 
@@ -177,7 +178,12 @@ main() 的返回值返回给系统
 
     C语言建议，要为程序中用到的所有函数提供函数原型。
     标准include文件为标准库函数提供了函数原型
+        ```raspbian
+        find /usr/include -iname "stdio.h"
+        /usr/include/stdio.h
+        /usr/include/c++/8/tr1/stdio.h
         /usr/include/aarch64-linux-gnu/bits/stdio.h
+        ```
 
 
 
@@ -246,10 +252,11 @@ long 常量和 long long 常量
 
 
 
+
+    ```
 _Bool
     C99 添加了 _Bool 类型
 
-    ```
     在C99标准被支持之前，我们常常自己模仿定义布尔型，方式有很多种，常见的有下面两种：
 
     /* 第一种方法 */
@@ -329,5 +336,93 @@ sizeof
 
 
 
-
 main 不是关键字
+
+
+
+
+## 第四章 字符串和格式化输入/输出
+
+include <string.h>  //提供 strlen()函数的原型???
+
+    ```
+    find /usr/include -iname "string.h"
+    /usr/include/linux/string.h
+    /usr/include/string.h
+
+    ```
+
+
+%s 字符串
+
+单引号用于标识单个字符，而双引号用于标识一个字符串
+
+用数组(array)存储字符串(character string)
+C语言没有专门用于存储字符串的变量类型
+
+字符串数组末尾位置的字符\0(空字符 null character, ASCII码值等于零), C语言用它标识字符串的结束
+这个空字符是包含在我们定义的字符个数中的，比如
+    char name[40] 我们可以输入39个字符，第40个字符是空字符\0
+    不用自己把空字符放入字符串末尾，scanf 会自动完成
+
+    stren() 的计算并不包含空字符，返回的是我们实实在在能看到的字符个数
+    sizeof 返回的结果包含\0
+
+    ```
+    char name[]="hello";
+    printf("strlen is %zd",strlen(name));   // 返回5
+    printf("sizeof is %zd",sizeof(name));   // 返回6
+
+
+
+    char name[40];
+    scanf("%s",name);                       // 还是输入 hello
+    printf("strlen is %zd",strlen(name));   // 返回5
+    printf("sizeof is %zd",sizeof(name));   // 返回40
+    ```
+
+数组是同类型数据元素的有序排序
+
+
+scanf 
+    它在遇到第1个空白(空格、制表符或换行符)时就不再读取输入
+    根据%s转换说明，scanf() 只会读取字符串中的地一个单词，而不是一整句
+    fgets() 用于读取一般字符串
+
+
+字符串和字符
+    字符串常量"x" 和字符常量'x'是不同的，前者是派生类型(数组),占据两个字节，后者是基本类型，占一个字节
+
+
+通过C预处理器定义[符号常量(明示常量manifest constant)]
+
+    ```
+    #define PI 3.1415926
+
+    没有等于号
+    没有分号
+    一般用 c_ , k_ 前缀表示常量
+
+    ```
+
+
+const 限定符
+    用于限定一个变量为[只读]
+
+    ```
+    const int MONTHS = 12;
+    ```
+
+    include limits.h 
+
+
+
+
+
+
+转换说明的意义
+    转换说明把以二进制格式存储在计算机中的值转换成一系列字符(字符串)以便于显示.
+    可能会误导人们认为原始值被替换成转换后的值
+    同样的一个二进制格式数据，可以翻译成很多字符: %d, %x, %c
+
+    转换说明 和 带打印的值 一定要匹配, 这很重要

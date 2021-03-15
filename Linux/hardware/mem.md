@@ -9,5 +9,11 @@ CPU超频设置，“DOCP”英文原意是 Allows you to select a DRAM O.C.prof
 Intel 上是 XMP
 
 
+
+
 这个介绍内存的知乎很棒
     https://zhuanlan.zhihu.com/p/26327347
+
+    https://www.chiphell.com/thread-1686202-1-1.html
+
+    https://baike.so.com/doc/6840381-7057656.html
