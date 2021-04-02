@@ -72,3 +72,30 @@ sudo update-alternatives --config gcc
 ```
 
 From the above, choose the gcc version which you want to set as the default version.
+
+
+
+
+
+## Why can't I fetch the gcc-doc package on Debian?
+
+https://unix.stackexchange.com/questions/287075/why-cant-i-fetch-the-gcc-doc-package-on-debian
+
+
+Why is gcc-doc non-free?
+Because of issues between the GFDL (GNU Free Documentation License) and the DFSG (Debian Free Software Guidelines), yup, more blessed legalities.
+
+Here's two core incompatibilities:
+
+GFDL licensed documents are prohibited to be used on any project that uses DRM (Digital Rights Management), Debian don't allow such restrictive behavior in software/documents to consider them free.
+
+Documents licenced as GFDL are allowed to contain invariant sections. To Debian, that is simply not an example of free content, whether this content is software or documentation.
+
+
+For Debian 10 buster, we can get gcc-doc and cpp-doc from backports: 
+    deb http://ftp.debian.org/debian buster-backports main contrib non-free
+
+
+
+
+
