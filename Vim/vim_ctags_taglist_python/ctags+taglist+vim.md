@@ -18,6 +18,19 @@ which ctags
 cp doc/taglist.txt /usr/share/vim/vim74/doc/
 cp plugin/taglist.vim /usr/share/vim/vim74/plugin/plugin
 
+    ```
+    用vim打开任何文件开始报错
+    line   89: E488: Trailing characters
+
+    发现是写错了
+    let Tlist_Ctags Cmd = 'exctags'
+
+    应该该写成下面这样
+    let Tlist_Ctags_Cmd = 'exctags'
+
+    ```
+
+
 改动vim配置文件
 
 sudo vim /etc/vim/vimrc
