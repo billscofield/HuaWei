@@ -361,7 +361,7 @@ GNU/Linux
     |           |
     |     /|\   |
     +-----------+
-    |   heap    |       堆内存: 用于程序**运行时(runtime)**的动态内存分配
+    |   heap    |       堆内存: 用于程序**运行时(runtime)**的动态内存分配, 用malloc函数申请内存
     +-----------+
     |   data    |       全局和静态变量数据
     +-----------+
@@ -1349,3 +1349,118 @@ PV操作是原子操作
         }
 
     PV 操作必须是成对出现的，否则信号量的值不能回到初始值
+
+
+
+## P20 进程和内存空间
+
+
+交替执行的是指令，而不是程序
+
+```
+cat a.c
+#include <stdio.h>
+
+int sum(int x, int y){
+  3     return x * y;
+  4 
+
+
+int main(void){
+  7     sum(2,3);
+  8     return 0;
+  9 
+}
+
+gcc -g -c a.c
+    -g  用于调试
+
+objdump -d a.o
+
+
+a.o:     file format elf64-x86-64
+
+反汇编代码如下:
+Disassembly of section .text:
+
+0000000000000000 <sum>:                                 起始地址
+ 0:   55                      push   %rbp                   
+ 1:   48 89 e5                mov    %rsp,%rbp
+ 4:   89 7d fc                mov    %edi,-0x4(%rbp)
+ 7:   89 75 f8                mov    %esi,-0x8(%rbp)
+ a:   8b 45 fc                mov    -0x4(%rbp),%eax
+ d:   0f af 45 f8             imul   -0x8(%rbp),%eax
+11:   5d                      pop    %rbp
+12:   c3                      retq
+
+0000000000000013 <main>:                                起始地址
+13:   55                      push   %rbp
+14:   48 89 e5                mov    %rsp,%rbp
+17:   be 03 00 00 00          mov    $0x3,%esi          参数
+1c:   bf 02 00 00 00          mov    $0x2,%edi          参数
+21:   e8 00 00 00 00          callq  26 <main+0x13>     调用
+26:   b8 00 00 00 00          mov    $0x0,%eax          主函数的return
+2b:   5d                      pop    %rbp               主函数的return
+2c:   c3                      retq                      主函数的return
+
+```
+
+$1 最左边的0:,1:,... 都是16进制逻辑地址(虚拟地址)
+    都是从0开始
+    
+$4 列是汇编指令
+$2 列是汇编指令对应的机器代码
+    一个16进制占用 1 Byte
+
+
+
+gcc a.c
+
+objdump -d a.out
+
+
+物理地址是内存单元看到的地址
+    CPU 在执行指令的时候，比如上面的 call 660, 会先将逻辑地址经过一个 MMU(Memory Management Unit)
+    进行计算得出物理地址
+
+    物理地址 = 基址 + 逻辑地址
+
+
+进程的内存映射
+    以32位机器为例，地址总线32位，寻址空间4GB
+    每一个进程都可以获得一个4GB 的逻辑空间(虚拟空间)
+    内核空间和用户空间
+
+|   0xFFFFFFFF  +---------------+
+|               | Kernel Space  |
+|    1GB        | Virtual add   |
+|   0xC0000000  +---------------+
+|               |               |
+|               |               |
+|               | User Space    |
+|    1GB        | Virtual add   |
+|               |               |
+|               +---------------+
+
+|               +---------------+
+|               | Stack 
+|               |   \|/
+|               |   
+|               +---------------+
+
+
+cat /proc/PID号/status
+cat /proc/PID号/maps
+
+➜  liu cat /proc/2139/maps
+56379fe7a000-56379fe7b000 r--p 00000000 08:01 4196955                    /root/liu/a.out
+...
+7ff5b399c000-7ff5b39e8000 r--p 0016a000 08:01 1182550                    /usr/lib/x86_64-linux-gnu/libc-2.28.so
+...
+7ffd353b3000-7ffd353d4000 rw-p 00000000 00:00 0                          [stack]
+7ffd353dd000-7ffd353e0000 r--p 00000000 00:00 0                          [vvar]
+7ffd353e0000-7ffd353e2000 r-xp 00000000 00:00 0                          [vdso]
+
+地址范围                  权限  偏移量  设备号  inode                    相关的文件
+
+

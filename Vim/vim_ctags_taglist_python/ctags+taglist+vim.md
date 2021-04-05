@@ -2,12 +2,14 @@
 taglist依赖于ctags，所以要先装ctags
 
 ## ctags
+
 apt install ctags
 或者 apt install exuberant-ctags [ɪg'z(j)uːb(ə)r(ə)nt; eg-],繁茂的
 
 
 
 ## taglist 安装
+
 aria2c http://vim.sourceforge.net/scripts/download_script.php?src_id=6416
 unzip [文件]
 which vim
@@ -63,16 +65,20 @@ let g:tagbar_vertical = 25
 
 
 ## 珠联璧合
+
 此时ctags和taglist还没有联系起来。为此，我们需要修改/usr/share/vim/vim74/plugin/taglist.vim文件，找到if !exitsts(loaded_taglist)这一行，并在其前面添加let Tlist_Ctags_Cmd="/usr/bin/ctags"
 
 
 ## vim+taglist+ctags阅读代码
+
 ctags -R *      //生成了tags文件
 vim 输入:TlistToggle 或 :Tlist  或 :TlistOpen 打开侧面窗口
 
 ctrl w w 在侧窗口和主窗口之间切换
 
+
 ### ptags.py
+
 因为ctags 是C专用,所以我们用ptags 
 
 
@@ -133,7 +139,9 @@ cp ptags.py /usr/bin/
 
 愉快的使用 tags 进行 python 开发吧
 
+
 ### ctags 使用
+
 ctags识别很多语言，可以用如下命令来查看：
     ctags --list-languages
 
@@ -154,6 +162,7 @@ ctags可以识别和记录哪些语法元素
     ctags -R --c++-kinds=+px
 
 熟练的使用ctags仅需记住下面七条命令：
+
 1. :$ ctags -R *    
 2. :$ vi -t tag     请把tag替换为您欲查找的变量或函数名
 3. :ts              ts 助记字：tags list, “:”开头的命令为VI中命令行模式命令
@@ -164,6 +173,33 @@ ctags可以识别和记录哪些语法元素
                         
 6. Ctrl + ]         to jump to function defination
 7. Ctrl + T         to jump back
+
+
+Install ctags
+    e.g. aptitude install exuberant-ctags
+
+Configure ctags.
+    Add to ~/.ctags the following, one option per line:
+    –python-kinds=-i
+    optional: –exclude=<partial names of bad files/directories>. e.g. –exclude=*/build/*to exclude all files inside ‘build/’ directories
+
+Add a cron to rebuild tags, for instance:
+    1 * * * * ctags -R -o ~/mytags ~/src
+
+Configure vim:
+    add to ~/.vimrc: :set tags=~/mytags
+
+Use Vim:
+    vim -t <tag name> to open vim straight on the tag
+    Ctrl+] to jump to tag when over a word
+    Ctrl+T to pop back
+    :tselect or :stselect to open
+    :tnext, :tprev to go to next/prev tag finding
+    :help tags for more
+
+    https://weicode.wordpress.com/2018/05/01/configuring-ctags-for-python-and-vim/comment-page-1/
+
+
 
 ### vim自动更新ctags与taglist
 
@@ -204,6 +240,7 @@ https://jingyan.baidu.com/article/a24b33cddf9b3419fe002b98.html
     值  : 0-65535
 
 ### Python 代码折叠插件
+
 目录: ~/.vim/bundle/
 
 Bundle 'tmhedberg/SimpylFold'
@@ -227,6 +264,7 @@ Bundle 'tell-k/autopep8'
 
 
 ### winmanager
+
 这个有bug，并且8年没有更新了，先不要用了
 进入vim自动打开winmanager
 这个功能作为可选功能，我们可以在vimrc中设置：
