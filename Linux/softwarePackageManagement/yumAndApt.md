@@ -1,7 +1,7 @@
 Task                                                                Red Hat/Fedora                                          Ubuntu/Debian
 
 Adding, Removing and Upgrading Packages				
-Refresh list of available packages                                  Yum refreshes each time it’s used apt-get update
+Refresh list of available packages                                  Yum refreshes each time it’s used                       apt-get update
 Install a package from a repository                                 yum install package_name                                apt-get install package_name
 Install a package file                                              yum install package.rpmrpm -i package.rpm               dpkg --install package.deb
 Remove a package                                                    rpm -e package_name                                     apt-get remove package_name
