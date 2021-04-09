@@ -245,6 +245,82 @@ rpm 组成
 
 不要对内核进行升级(以免系统无法启动), 而是安装一个新的内核
 在升级软件的时候，旧软件的配置文件修改过，不会直接覆盖，而是创建重命名的配置文件 name.rpmnew
+
+
+### 查询
+
+rpm -q 软件名
+
+    ---
+
+    对已经安装的软进行查询 
+
+    使用软件名
+
+    -a, -all 所有已安装的
+        rpm -qa | grep "openssh"
+    -f 显示一个文件是由那个软件生成的
+        rpm -qf /etc/ssh/sshd_config
+            
+    --whatprovides  查看指定的能力是由哪个软件生成的，库文件，头文件，配置文件   
+        rpm -qf /bin/cat
+        rpm -q --whatprovides /bin/cat
+            
+        在大多数情况下 --whatpprovides 和 -f 一样
+     
+    --whatrequires  查看指定的能力是被谁需要的
+        rpm -q --whatrequires /bin/ls
+        rpm -q --whatrequires /etc/ssh/sshd_config
+        
+    --changelog 软件名
+        rpm包的更新日志，而不是源码的更新日志
+        
+        rpm -q --changelog xinetd
+
+
+
+    -c 显示软件安装后的配置文件位置
+        rpm -qc xinetd
+
+    -d 显示帮助手册的位置
+        rpm -qd xinetd
+
+    -l 显示软件的全部文件列表
+        目录和文件
+        rpm -ql xinetd
+
+    -i, --info 显示软件包的描述信息
+        rpm -qi xinetd
+        
+        Version:
+        Release:
+        Group： 软件包组
+        Signature:
+        Packager: 制作者
+
+    -L 仅仅显示 license 信息
+
+    --scripts
+        rpm -q --scripts xinted
+
+
+    ---
+
+    对未安装的软件进行查询
+
+    使用软件包名
+
+    -p， --packagea
+
+        rpm -qpi /mnt/Packages/xinted-2.3...
+
+
+### 卸载
+
+    -e, --erase [--test] [--noscripts] [--nodeps] 软件名
+
+    
+
     
 
 
