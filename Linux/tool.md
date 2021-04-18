@@ -176,11 +176,62 @@ It is worth checking if your bashrc already has such checks, therefore avoiding 
 
 ## 截图
 
+绝大部分的 Linux 发行版和桌面环境都支持以下这些快捷键：
+
+PrtSc – 获取整个屏幕的截图并保存到 Pictures 目录。
+Shift + PrtSc – 获取屏幕的某个区域截图并保存到 Pictures 目录。
+Alt + PrtSc –获取当前窗口的截图并保存到 Pictures 目录。
+Ctrl + PrtSc – 获取整个屏幕的截图并存放到剪贴板。
+Shift + Ctrl + PrtSc – 获取屏幕的某个区域截图并存放到剪贴板。
+Ctrl + Alt + PrtSc – 获取当前窗口的 截图并存放到剪贴板。
+
+
+
+Flameshot
+
+
 shutter 不是官方的软件包，需要添加ppa
+    类似 Flameshot，你可以通过搜索 Shutter 手动启动它，也可以按照相似的方式设置自定义快捷方式以 PrtSc 键唤起 Shutter。
+    如果要指定自定义键盘快捷键，只需要执行以下命令：
+
+    shutter -f
 
 ksnapshot 好大，190MB
 
 scrot
+
+
+
+gnome-screenshot
+    GNOME 截图工具是使用 GNOME 桌面的 Linux 发行版中都自带的一个默认工具。如果需要延时获取屏幕截图，可以执行以下命令（这里的 5 是需要延迟的秒数）：
+    gnome-screenshot -d -5
+
+
+ImageMagick
+    如果你的操作系统是 Ubuntu、Mint 或其它流行的 Linux 发行版，一般会自带ImageMagick 这个工具。如果没有这个工具，也可以按照官方安装说明使用安装源来安装。你也可以在终端中执行这个命令：
+
+    sudo apt-get install imagemagick
+    安装完成后，执行下面的命令就可以获取到屏幕截图（截取整个屏幕）：
+
+    import -window root image.png
+    这里的 “image.png” 就是屏幕截图文件保存的名称。
+    要获取屏幕一个区域的截图，可以执行以下命令:
+
+    import image.png
+
+
+Deepin Scrot
+    Deepin Scrot 是基于终端的一个较新的截图工具。和前面两个工具类似，一般自带于 Linux 发行版中。如果需要自行安装，可以执行以下命令：
+
+    sudo apt-get install scrot
+    安装完成后，使用下面这些命令可以获取屏幕截图。
+    获取整个屏幕的截图：
+
+    scrot myimage.png
+    获取屏幕某一区域的截图：
+
+    scrot -s myimage.png
+
 
 
 ## 流量监测
