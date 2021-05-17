@@ -54,3 +54,14 @@ Test your CPU and GPU stability and cooling at maximum power and temperature.
 ## 截屏录屏
 
 Snipaste: 免费的桌面截图软件
+
+
+## VLC
+
+快捷键
+
+    VLC windows调倍速快捷键是   [ ]
+    1.0 速度                    =
+    全屏                        f
+    停止                        s
+    下一项/上一项               n/p

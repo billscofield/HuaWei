@@ -82,6 +82,7 @@ API & ABI
         output is the following:
         
         显示某个程序所依赖的库, 要使用命令的绝对路径
+            
             ldd /bin/cat
 
 
@@ -102,7 +103,9 @@ API & ABI
 
 
 windows安装软件
+
     注册表
+        
         记录了每个软件生成的文件的所在位置
         卸载软件: 扫描注册表, 将软件的文件全部找出来，并删除
 
@@ -145,36 +148,46 @@ rpm (redhat package manager)
 ## 软件安装方式
 
 1. 使用包管理器 rpm
+
     缺点
-        软件更新不及时
-        不是所有的软件都有二进制格式
-        可定制化较差，例如目录
-        软件来源不一定安全
-        **存在依赖关系问题**
-    
 
-1. 使用源码方式安装
+        1. 软件更新不及时
+        1. 不是所有的软件都有二进制格式
+        1. 可定制化较差，例如目录
+        1. 软件来源不一定安全
+            如何验证的?
+        1. **存在依赖关系问题**
+
+
+2. 使用源码方式安装
+
     优点
-        安装过程完全可控
-        编译过程较慢
-        容易出错
-        存在依赖关系问题
 
-1. 使用yum方式
+        1. 安装过程完全可控
+        1. 编译过程较慢
+        1. 容易出错
+        1. 存在依赖关系问题
+
+
+3. 使用yum方式
+
     其实也是调用 rpm 进行安装，会自动解决软件的依赖问题
 
-1. 使用简单二进制格式(类似于绿色安装)
+
+4. 使用简单二进制格式(类似于绿色安装)
 
 
 
 rpm 组成
     主包
         软件名-version.rpm
+
     支包
         软件包-扩展名-version.rpm
 
 
     一个程序依赖另一个程序，其实就是依赖那个程序的头、库文件
+
     通常程序的头文件和库文件位于程序的一个支包，通常是  软件名-devel-version.rpm
 
 
@@ -201,12 +214,19 @@ rpm 组成
     如果程序的某个文件进行过修改，覆盖安装的时候，不会覆盖被修改过的文件(centos6)
     如果文件发生过修改，重新生成的文件会被重新命名，格式 name.rpmnew
 
+--replacefiles 
+--force 
 --ignoreos      忽略系统的版本号, 默认 el6 只能安装在 el6 上
+--ignorearch    
+--ignoresize    Don't check mount file systems for sufficient disk space before installing this package.
+
 
 --nosignature   不检查软件包来源的可靠性
 --nodigest      不检查软件包的完整性, 内容是否被修改过
 --noscripts     安装软件的时候，不执行脚本
+
     安装卸载软件前后的步骤
+        
         安装前脚本
         安装后脚本
         卸载前脚本: 关闭服务
@@ -214,10 +234,18 @@ rpm 组成
 
 
 
+
 安装过程
     preparing...阶段
     安装阶段
 
+    ```
+    [root@localhost ~]# rpm -ivh linux_logo-5.11-7.el7.x86_64.rpm
+    Preparing...                          ################################# [100%]
+    Updating / installing...
+       1:linux_logo-5.11-7.el7            ################################# [100%]
+
+    ```
 
 
 
@@ -237,13 +265,14 @@ rpm 组成
 
     -Fvh
 
---oldpackage    将软件降低到指定的版本
+--oldpackage    将软件降低到指定的版本      Allow an upgrade to replace a newer package with an older one.
 
 --force         强制升级
 
 
 
 不要对内核进行升级(以免系统无法启动), 而是安装一个新的内核
+
 在升级软件的时候，旧软件的配置文件修改过，不会直接覆盖，而是创建重命名的配置文件 name.rpmnew
 
 
@@ -277,6 +306,16 @@ rpm -q 软件名
         
         rpm -q --changelog xinetd
 
+    --provides  ???
+        List capabilities this package provides.
+         查看软件包提供的 capabilities （即输出给其他软件包的依赖）
+
+        [root@localhost temp]# rpm -q --provides openssh-server
+        config(openssh-server) = 7.4p1-21.el7
+        openssh-server = 7.4p1-21.el7
+        openssh-server(x86-64) = 7.4p1-21.el7
+
+
 
 
     -c 显示软件安装后的配置文件位置
@@ -303,7 +342,36 @@ rpm -q 软件名
     --scripts
         rpm -q --scripts xinted
 
+    ```
+    [root@localhost temp]# rpm -q --scripts openssh-server
 
+    preinstall scriptlet (using /bin/sh):
+    getent group sshd >/dev/null || groupadd -g 74 -r sshd || :
+    getent passwd sshd >/dev/null || \
+    useradd -c "Privilege-separated SSH" -u 74 -g sshd \
+    -s /sbin/nologin -r -d /var/empty/sshd sshd 2> /dev/null || :
+    postinstall scriptlet (using /bin/sh):
+
+    if [ $1 -eq 1  ] ; then
+        # Initial installation
+        systemctl preset sshd.service sshd.socket >/dev/null 2>&1 || :
+    fi
+    preuninstall scriptlet (using /bin/sh):
+
+    if [ $1 -eq 0  ] ; then
+        # Package removal, not upgrade
+        systemctl --no-reload disable sshd.service sshd.socket > /dev/null 2>&1 || :
+        systemctl stop sshd.service sshd.socket > /dev/null 2>&1 || :
+    fi
+    postuninstall scriptlet (using /bin/sh):
+
+    systemctl daemon-reload >/dev/null 2>&1 || :
+        if [ $1 -ge 1  ] ; then
+        # Package upgrade, not uninstall
+        systemctl try-restart sshd.service >/dev/null 2>&1 || :
+    fi
+
+    ```
     ---
 
     对未安装的软件进行查询

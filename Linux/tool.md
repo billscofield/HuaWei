@@ -14,21 +14,19 @@ apt install ascii   //ascii表
 
 ## vim-youcompleteme
 
-YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine
-for Vim. It has several completion engines: an identifier-based engine
-that works with every programming language, a semantic, Clang-based
-engine that provides native semantic code completion for
-C/C++/Objective-C/Objective-C++ and an omnifunc-based completer that uses data
-from Vim's omnicomplete system to provide semantic completions for many
-other languages (Ruby, PHP etc.).
+YouCompleteMe is a fast, as-you-type, fuzzy-search code completion engine for
+Vim. It has several completion engines: an identifier-based engine that works
+with every programming language, a semantic, Clang-based engine that provides
+native semantic code completion for C/C++/Objective-C/Objective-C++ and an
+omnifunc-based completer that uses data from Vim's omnicomplete system to
+provide semantic completions for many other languages (Ruby, PHP etc.).
 
 ## neofetch
 
-Shows Linux System Information with Distribution Logo
-Neoftech is a cross-platform and easy-to-use system information
-command line script that collects your Linux system information
-and display it on the terminal next to an image, it could be your
-distributions logo or any ascii art of your choice.
+Shows Linux System Information with Distribution Logo Neoftech is a
+cross-platform and easy-to-use system information command line script that
+collects your Linux system information and display it on the terminal next to
+an image, it could be your distributions logo or any ascii art of your choice.
 
 
 ## libimage-exiftool-perl 
@@ -62,7 +60,9 @@ JPEG（发音为jay-peg,IPA：[ˈdʒeɪpɛg]）
 
 lightweight ncurses audio player
 
-You can add keybindings for just about anything - including seeking (forward/backwards 1 minute, for example) which isn't supported by all music players.
+You can add keybindings for just about anything - including seeking
+(forward/backwards 1 minute, for example) which isn't supported by all music
+players.
 
 ## iputils-ping
 
@@ -70,23 +70,22 @@ ping
 
 ## wondershaper
 
-对网卡进行限速
-wondershaper - simple traffic shaping script
+对网卡进行限速wondershaper - simple traffic shaping script
 
 wondershaper其实是tc的一个封装
 
 apt install wondershaper
 
-SYNOPSIS
-    wondershaper [ interface  ]
-        Shows the status of traffic shaping on that interface.
+SYNOPSIS wondershaper [ interface  ] Shows the status of traffic shaping on
+that interface.
 
-    wondershaper clear [ interface  ]
-        Removes all traffic shaping from that interface.
+    wondershaper clear [ interface  ] Removes all traffic shaping from that
+    interface.
 
-    wondershaper [ interface  ] [ downlink  ] [ uplink  ]
-        Configures the wondershaper on the specified interface, given the specified downlink speed in kilo‐
-        bits per second, and the specified uplink speed in kilobits per second.
+    wondershaper [ interface  ] [ downlink  ] [ uplink  ] Configures the
+    wondershaper on the specified interface, given the specified downlink speed
+    in kilo‐bits per second, and the specified uplink speed in kilobits per
+    second.
 
 
 ## ethstatus
@@ -102,25 +101,29 @@ ethstatus可以监控实时的网卡带宽占用。
 
 ## GhostScript
 
-gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
+gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE
+-dQUIET -dBATCH -sOutputFile=output.pdf input.pdf
 
-如果-dPDFSERRINGS=/screen这个选项转换的PDF效果太差可以考虑更换为-dPDFSETTINGS=/ebook来获取更好的效果，如果直接去掉这个选项就是相当于默认使用-dPDFSETTINGS=/prepress
+如果-dPDFSERRINGS=/screen这个选项转换的PDF效果太差可以考虑更换为
+-dPDFSETTINGS=/ebook来获取更好的效果，如果直接去掉这个选项就是相当于默认使用
+-dPDFSETTINGS=/prepress
 
--sDEVICE=device
-    Selects an alternate initial output device, as described above.
+-sDEVICE=device Selects an alternate initial output device, as described above.
 
--sOutputFile=filename
-    Selects an alternate output file (or pipe) for the initial output device, as described above.
+-sOutputFile=filename Selects an alternate output file (or pipe) for the
+initial output device, as described above.
 
--dNOPAUSE
-    Disables the prompt and pause at the end of each page.  This may be desirable for applications where another program is driving Ghostscript.
+-dNOPAUSE Disables the prompt and pause at the end of each page.  This may be
+desirable for applications where another program is driving Ghostscript.
 
--q     Quiet startup: suppress normal startup messages, and also do the equivalent of -dQUIET.
+-q     Quiet startup: suppress normal startup messages, and also do the
+equivalent of -dQUIET.
 
 
 -dBATCH  exit after last file
 
--sOutputFile=<file> select output file: - for stdout, |command for pipe, embed %d or %ld for page #
+-sOutputFile=<file> select output file: - for stdout, |command for pipe, embed
+%d or %ld for page #
 
 
 
@@ -130,8 +133,8 @@ gs -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 -dPDFSETTINGS=/screen -dNOPAUSE -d
 
 ## screenfetch
 
-screenFetch is a "Bash Screenshot Information Tool". This handy Bash script
-can be used to generate one of those nifty terminal theme information + ASCII
+screenFetch is a "Bash Screenshot Information Tool". This handy Bash script can
+be used to generate one of those nifty terminal theme information + ASCII
 distribution logos you see in everyone's screenshots nowadays.
 
 It will auto-detect your distribution and display an ASCII version of that
@@ -149,23 +152,21 @@ stty -ixon
 
 or write it in .bashrc
 
-```
-As others have mentioned, the required fix is adding stty -ixon to your ~/.bashrc file. However, it should be protected from execution by non-interactive shells:
+``` As others have mentioned, the required fix is adding stty -ixon to your
+~/.bashrc file. However, it should be protected from execution by
+non-interactive shells:
 
-if [[ -t 0 && $- = *i*  ]]
-then
-    stty -ixon
-    fi 
-    This should avoid errors when there is no TTY or interactive session in the first place, so "internal" shell invocations of desktop environments etc. will not cause error messages.
+if [[ -t 0 && $- = *i*  ]] then stty -ixon fi This should avoid errors when
+there is no TTY or interactive session in the first place, so "internal" shell
+invocations of desktop environments etc. will not cause error messages.
 
 
 
 Adding to telcoM's solution, Arch's default .bashrc has this:
 
-# If not running interactively, don't do anything
-[[ $- != *i*  ]] && return
-It is worth checking if your bashrc already has such checks, therefore avoiding the need for additional ifs.
-```
+# If not running interactively, don't do anything [[ $- != *i*  ]] && return It
+is worth checking if your bashrc already has such checks, therefore avoiding
+the need for additional ifs.  ```
 
 
 ## xdotool
@@ -189,15 +190,18 @@ scrot
 
 hogs: n, 猪; v,独占
 
-NetHogs是一个开源的命令行工具（类似于Linux的top命令），用来按进程或程序实时统计网络带宽使用率。
+NetHogs是一个开源的命令行工具（类似于Linux的top命令），用来按进程或程序实时统计
+网络带宽使用率。
 
-NetHogs是一个小型的net top工具，不像大多数工具那样拖慢每个协议或者是每个子网的速度而是按照进程进行带宽分组。NetHogs不需要依赖载入某个特殊的内核模块。如果发生了网络阻塞你可以启动NetHogs立即看到哪个PID造成的这种状况。这样就很容易找出哪个程序跑飞了然后突然占用你的带宽。
+NetHogs是一个小型的net top工具，不像大多数工具那样拖慢每个协议或者是每个子网的
+速度而是按照进程进行带宽分组。NetHogs不需要依赖载入某个特殊的内核模块。如果发生
+了网络阻塞你可以启动NetHogs立即看到哪个PID造成的这种状况。这样就很容易找出哪个
+程序跑飞了然后突然占用你的带宽。
 
 apt install nethogs
 
 
-INTERACTIVE CONTROL
-    m      cycle between display modes (kb/s, kb, b, mb)
+INTERACTIVE CONTROL m      cycle between display modes (kb/s, kb, b, mb)
 
     r      sort by 'received'
 
@@ -232,14 +236,15 @@ apt install typespeed
 ## chrome --no-sandbox
 
 问题
-    https://unix.stackexchange.com/questions/68832/what-does-the-chromium-option-no-sandbox-mean
+https://unix.stackexchange.com/questions/68832/what-does-the-chromium-option-no-sandbox-mean
 
 
-    the sandbox removes unnecessary privileges from the processes that don't need them in Chrome, for security purposes. 
-    Disabling the sandbox makes your PC more vulnerable to exploits via webpages, so Google don't recommend it 
+    the sandbox removes unnecessary privileges from the processes that don't
+    need them in Chrome, for security purposes.  Disabling the sandbox makes
+    your PC more vulnerable to exploits via webpages, so Google don't recommend
+    it 
 
-google的说明
-    https://www.google.com/googlebooks/chrome/med_26.html
+google的说明https://www.google.com/googlebooks/chrome/med_26.html
 
 
 ### edge 
@@ -262,12 +267,14 @@ https://www.microsoftedgeinsider.com/zh-cn/download/?platform=linux
 
 ## pv 
 
-apt-cache show pv
-apt-get install pv
+apt-cache show pv apt-get install pv
 
-PV 由Andrew Wood 开发，是 Pipe Viewer 的简称，意思是通过管道显示数据处理进度的信息。这些信息包括已经耗费的时间，完成的百分比（通过进度条显示），当前的速度，全部传输的数据，以及估计剩余的时间。
+PV 由Andrew Wood 开发，是 Pipe Viewer 的简称，意思是通过管道显示数据处理进度的
+信息。这些信息包括已经耗费的时间，完成的百分比（通过进度条显示），当前的速度，
+全部传输的数据，以及估计剩余的时间。
 
-"要使用 PV，需要配合合适的选项，把它放置在两个进程之间的管道。命令的标准输入将会通过标准输出传进来的，而进度会被输出到标准错误输出。”"
+"要使用 PV，需要配合合适的选项，把它放置在两个进程之间的管道。命令的标准输入将
+会通过标准输出传进来的，而进度会被输出到标准错误输出。”"
 
 
 
@@ -281,21 +288,23 @@ PV 由Andrew Wood 开发，是 Pipe Viewer 的简称，意思是通过管道显�
 
 4. A progress bar and a percentage completed figure.   进度条和完成百分比。
 
-5. The estimated time left before completion (ETA).    完成之前预计剩余的时间(ETA)。
+5. The estimated time left before completion (ETA).    完成之前预计剩余的时间
+   (ETA)。
 
 ### 例子
 
 pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso | zip > gparted.zip
 
-1. 复制单个文件
-    pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso > gparted.iso
+1. 复制单个文件pv /media/dave/SILVERXHD/gparted-live-1.0.0-1-amd64.iso >
+   gparted.iso
 
-1. 要使用pv复制多个文件和文件夹，我们需要使用一些技巧。 我们使用tar为我们移动文件。
+1. 要使用pv复制多个文件和文件夹，我们需要使用一些技巧。 我们使用tar为我们移动文
+   件。
 
     tar -c help-files/ | pv | tar -x -C Documents/
 
-1. 使用pv和tar创建档案 (Using pv and tar to Create an Archive)
-    tar -czf - ./help-files/ | pv > help-files.tgz
+1. 使用pv和tar创建档案 (Using pv and tar to Create an Archive) tar -czf -
+   ./help-files/ | pv > help-files.tgz
 
 
 
@@ -309,9 +318,8 @@ python install.py   // Python v2.6+ or Python v3.3+
 
 ## tmux
 
-mkdir ~/.tmux 
-cd ~/.tmux
-git clone https://github.com/tmux-plugins/tmux-resurrect.git
+mkdir ~/.tmux cd ~/.tmux git clone
+https://github.com/tmux-plugins/tmux-resurrect.git
 
 tmux source-file ~/.tmux.conf
 
@@ -320,13 +328,11 @@ tmux source-file ~/.tmux.conf
 先按下【ctrl+b】前缀，再按下【ctrl+s】就可以保存，可以看到终端最下面有提示:
 Tmux environment saved!
 
-按下【ctrl+d】退出tmux
-此时输入tmux a，会通知没有会话
+按下【ctrl+d】退出tmux此时输入tmux a，会通知没有会话
 
 ### 恢复会话
 
-先打开tmux
-先按下前缀，再按下【ctrl+r】就可以恢复之前的会话啦
+先打开tmux先按下前缀，再按下【ctrl+r】就可以恢复之前的会话啦
 
 
 
@@ -335,26 +341,24 @@ Tmux environment saved!
 
 ## dnsutils
 
-dig - query the DNS in various ways
-nslookup - the older way to do it
-nsupdate - perform dynamic updates (See RFC2136)
+dig - query the DNS in various ways nslookup - the older way to do it nsupdate
+- perform dynamic updates (See RFC2136)
 
 
 ## rdesktop
 
-RDP client for Windows NT/2000 Terminal Server and Windows Servers
-rdesktop is an open source client for Windows NT/2000 Terminal Server and
-Windows Server 2003/2008. Capable of natively speaking its Remote Desktop
-Protocol (RDP) in order to present the user's Windows desktop. Unlike Citrix
-ICA, no server extensions are required.
+RDP client for Windows NT/2000 Terminal Server and Windows Servers rdesktop is
+an open source client for Windows NT/2000 Terminal Server and Windows Server
+2003/2008. Capable of natively speaking its Remote Desktop Protocol (RDP) in
+order to present the user's Windows desktop. Unlike Citrix ICA, no server
+extensions are required.
 
 
 ## lshw
 
 lshw - information about hardware configuration
 
-lshw | grep \*
-lshw -C 上边的关键字
+lshw | grep \* lshw -C 上边的关键字
 
 
 ## glances
@@ -364,20 +368,18 @@ apt-cache show glances
 
 ## tcptraceroute
 
-traceroute implementation using TCP packets
-The more traditional traceroute(8) sends out either UDP or ICMP ECHO packets
-with a TTL of one, and increments the TTL until the destination has been
-reached. By printing the gateways that generate ICMP time exceeded messages
-along the way, it is able to determine the path packets are taking to reach the
-destination.
-.
-The problem is that with the widespread use of firewalls on the modern
-Internet, many of the packets that traceroute(8) sends out end up being
-filtered, making it impossible to completely trace the path to the destination.
-However, in many cases, these firewalls will permit inbound TCP packets to
-specific ports that hosts sitting behind the firewall are listening for
-connections on. By sending out TCP SYN packets instead of UDP or ICMP ECHO
-packets, tcptraceroute is able to bypass the most common firewall filters.
+traceroute implementation using TCP packets The more traditional traceroute(8)
+sends out either UDP or ICMP ECHO packets with a TTL of one, and increments the
+TTL until the destination has been reached. By printing the gateways that
+generate ICMP time exceeded messages along the way, it is able to determine the
+path packets are taking to reach the destination.  .  The problem is that with
+the widespread use of firewalls on the modern Internet, many of the packets
+that traceroute(8) sends out end up being filtered, making it impossible to
+completely trace the path to the destination.  However, in many cases, these
+firewalls will permit inbound TCP packets to specific ports that hosts sitting
+behind the firewall are listening for connections on. By sending out TCP SYN
+packets instead of UDP or ICMP ECHO packets, tcptraceroute is able to bypass
+the most common firewall filters.
 
 
 ## tcpping
@@ -395,9 +397,8 @@ chmod +x tcpping
 
 ## ccal
 
-Colorised calendar utility
-CCAL is a drop in replacement for the standard unix calendar program. It
-includes support for color and daily, weekly, and yearly
+Colorised calendar utility CCAL is a drop in replacement for the standard unix
+calendar program. It includes support for color and daily, weekly, and yearly
 reminders/appointments.
 
 
@@ -416,21 +417,61 @@ ncdu - NCurses Disk Usage
 
 ncdu [options] dir
 
-DESCRIPTION
-    ncdu (NCurses Disk Usage) is a curses-based version of the well-known 'du', and provides a fast way to see what directories are
-    using your disk space.
+DESCRIPTION ncdu (NCurses Disk Usage) is a curses-based version of the
+well-known 'du', and provides a fast way to see what directories are using your
+disk space.
 
 
 ## fping 
 
-fping is a program like ping which uses the Internet Control Message Protocol (ICMP) echo request to determine if a target host
-is responding.  fping differs from ping in that you can specify any number of targets on the command line, or specify a file
-containing the lists of targets to ping.  Instead of sending to one target until it times out or replies, fping will send out a
-ping packet and move on to the next target in a round-robin fashion.  In the default mode, if a target replies, it is noted and
-removed from the list of targets to check; if a target does not respond within a certain time limit and/or retry limit it is
-designated as unreachable. fping also supports sending a specified number of pings to a target, or looping indefinitely (as in
-ping ). Unlike ping, fping is meant to be used in scripts, so its output is designed to be easy to parse.
+fping is a program like ping which uses the Internet Control Message Protocol
+(ICMP) echo request to determine if a target host is responding.  fping differs
+from ping in that you can specify any number of targets on the command line, or
+specify a file containing the lists of targets to ping.  Instead of sending to
+one target until it times out or replies, fping will send out a ping packet and
+move on to the next target in a round-robin fashion.  In the default mode, if a
+target replies, it is noted and removed from the list of targets to check; if a
+target does not respond within a certain time limit and/or retry limit it is
+designated as unreachable. fping also supports sending a specified number of
+pings to a target, or looping indefinitely (as in ping ). Unlike ping, fping is
+meant to be used in scripts, so its output is designed to be easy to parse.
 
 ## remote control
 
 remmina
+
+
+
+## neofetch
+
+Shows Linux System Information with Distribution Logo Neoftech is a
+cross-platform and easy-to-use system information command line script that
+collects your Linux system information and display it on the terminal next to
+an image, it could be your distributions logo or any ascii art of your choice.
+
+
+screenfetch
+
+
+
+
+## linux_logo
+
+Linux logo shows a logo, a colorful penguin by default, with some optional
+system info on the console. It's typically used to generate issue and motd
+files or executed upon login.
+
+The -L command line option is used to choose which logo to use.
+
+·   "-L list" will list all of the logos available
+
+·   "-L NAME" will display the logo with name NAME.
+
+·   "-L NUM" will display logo with number NUM (deprecated)
+
+·   "-L random_xy" will pick a logo at random, with criteria xy.
+
+
+linux_logo -f -L list
+linux_logo -f -L 9
+

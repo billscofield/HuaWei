@@ -3,13 +3,13 @@ Task                                                                Red Hat/Fedo
 Adding, Removing and Upgrading Packages				
 Refresh list of available packages                                  Yum refreshes each time it’s used                       apt-get update
 Install a package from a repository                                 yum install package_name                                apt-get install package_name
-Install a package file                                              yum install package.rpmrpm -i package.rpm               dpkg --install package.deb
+Install a package file                                              rpm -i package.rpm                                      dpkg --install package.deb
 Remove a package                                                    rpm -e package_name                                     apt-get remove package_name
-Check for package upgrades                                          yum check-update                                        apt-get -s upgradeapt-get -s dist-upgrade
-Upgrade packages                                                    yum updaterpm -Uvh [args]                               apt-get dist-upgrade
+Check for package upgrades                                          yum check-update                                        apt-get -s upgrade  apt-get -s dist-upgrade
+Upgrade packages                                                    yum update  rpm -Uvh [args]                             apt-get dist-upgrade
 Upgrade the entire system                                           yum upgrade                                             apt-get dist-upgrade
 
-Package Information				
+Package Information
 Get information about an available package                          yum search package_name                                 apt-cache search package_name
 Show available packages                                             yum list available                                      apt-cache dumpavail
 List all installed packages                                         yum list installedrpm -qa                               dpkg --list
@@ -24,11 +24,11 @@ Show other packages that depend on agiven package                   rpm -q -what
 
 Package File Information				
 Get information about a package file                                rpm -qpi package.rpm                                    dpkg –info package.deb
-List files in a package file rpm -qpl package.rpm                   dpkg –contents package.deb
+List files in a package file                                        rpm -qpl package.rpm                                    dpkg –contents package.deb
 List documentation files in a package file                          rpm -qpd package.rpm                                    -
 List configuration files in a package file                          rpm -qpc package.rpm -
-Extract files in a package rpm2cpio package.rpm | cpio -vid         dpkg-deb –extract package.deb dir-to-extract-to
-Find package that installed a file rpm -qf filename                 dpkg –search filename
+Extract files in a package                                          rpm2cpio package.rpm | cpio -vid                        dpkg-deb –extract package.deb dir-to-extract-to
+Find package that installed a file                                  rpm -qf filename                                        dpkg –search filename
 Find package that provides a particular file                        yum provides filename                                   apt-file search filename
 
 Misc. Packaging System Tools				

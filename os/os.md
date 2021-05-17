@@ -13,6 +13,7 @@ links:
     https://www.bilibili.com/read/cv5786137
     出处： bilibili
 
+
 ## 操作系统
 
 各种操作系统, 简单的复杂的，计算机操作系统是一个复杂的操作系统
@@ -32,6 +33,18 @@ Interface(接口，界面)
         Instruction(指令集)
     软件-软件
         API(application Programming Interface) 如 stdio.h
+
+
+    ABI: application binary interface
+
+        和硬件相关, 编译后
+
+    
+    跨平台:
+
+        编译前 + 编译后 都要可以跨平台
+
+
 
 
 Virtual Machine
