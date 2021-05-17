@@ -30,6 +30,10 @@ windows server(2006以上)
     https://www.microsoft.com/zh-cn/edge/business/download
 
 
+全平台下载地址
+    https://www.microsoftedgeinsider.com/zh-cn/download/?platform=linux
+
+
 ### CPUID
 
 #### CPU-Z
