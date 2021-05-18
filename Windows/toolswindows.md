@@ -58,3 +58,19 @@ Test your CPU and GPU stability and cooling at maximum power and temperature.
 ## 截屏录屏
 
 Snipaste: 免费的桌面截图软件
+
+
+
+## 字幕转换
+
+subtitle edit (open source)
+    and there is also Linux version
+
+
+## 视频格式转换
+
+vidmore
+
+## DVD 烧录软件
+
+vidmore dvd creator

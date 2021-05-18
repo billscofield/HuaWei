@@ -23,6 +23,8 @@
 
 ## The Foundry 公司
 
+英[ˈfaʊndri] 铸造厂; 玻璃厂
+
 Foundry是来自英国的顶尖软件公司，总部位于伦敦，在软件行业有20年历史。旗下的Nuke软件，是影视特效合成软件，好莱坞99%的电影
 特效都是用Nuke软件制作，在电影／电视／游戏行业有诸多用户；
 
@@ -77,4 +79,13 @@ https://learn.foundry.com/licensing/Content/User_Guide/Installing/flu_install.ht
 
 #### FLU教程系列
 
+
+
+
+
+### RLM
+
+Reprise License Manager
+
+英 [rɪˈpriːz] 重复部分，再现部；重复，重演
 
