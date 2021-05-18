@@ -57,6 +57,7 @@ provider: sshpass.x86_64 1.06-2.el7
 
     $ repotrack ansible
 
+
 ## 方案二：yumdownloader
 
 1. 安装yum-utils
@@ -75,6 +76,7 @@ provider: sshpass.x86_64 1.06-2.el7
 
 仅会将主软件包和基于你现在的操作系统所缺少的依赖关系包一并下载。
 
+
 ## 方案三：yum 的 downloadonly 插件
 
 1. 安装插件
@@ -88,6 +90,7 @@ provider: sshpass.x86_64 1.06-2.el7
 注意
 
     与 yumdownloader 命令一样，也是仅会将主软件包和基于你现在的操作系统所缺少的依赖关系包一并下载。
+
 
 ## 离线安装 rpm
 

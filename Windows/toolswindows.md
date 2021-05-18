@@ -74,3 +74,14 @@ vidmore
 ## DVD 烧录软件
 
 vidmore dvd creator
+
+
+## VLC
+
+快捷键
+
+    VLC windows调倍速快捷键是   [ ]
+    1.0 速度                    =
+    全屏                        f
+    停止                        s
+    下一项/上一项               n/p
