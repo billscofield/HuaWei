@@ -27,9 +27,11 @@ grub1版本
     ll /boot/grub/stage1 是 linux 自己的 loader, 将其放到 mbr 的 loader, 446字节
 
     grub 的内置文件系统是依靠 stage1_5 这些文件定义的
+
         exfat.stage1_5
 
     而后开始读取 stage2, 开始真正的读取配置文件 grub.conf, 解析 /boot/grub/grub.conf
+
         (grub2：/boot/grub/grub.cfg      /etc/default/grub)
 
         splashimage(hd0,0)/grub/splash.xpm.gz   图片
@@ -55,7 +57,9 @@ grub1版本
         每一个 rcN.d 目录内最后都会有一个 S99local 文件，指向 ../rc.local 脚本(空)
 
     /etc/rc.d/rc.local
+
         系统根据 runlevel 执行完 /etc/rc.d/rcN.d 中的脚本后，调用 /etc/rc.d/rc.local
+
         可以写我们要启动的脚本
 
 

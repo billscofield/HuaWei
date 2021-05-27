@@ -4,7 +4,11 @@
 FTP服务     ftp:// HTTP服务    http://本地目录    file:///
 
 
-EPEL 
+https://fedoraproject.org/wiki/EPEL
+
+EPEL (Extra Packages for Enterprise Linux) 
+
+    
 
 
 

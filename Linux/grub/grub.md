@@ -4,8 +4,7 @@
 
 install GRUB to a device
 
-查看当前 grub 版本
-    grub-install --version
+查看当前 grub 版本grub-install --version
 
     dpkg -l | grep grub
 
@@ -16,30 +15,24 @@ install GRUB to a device
 
 ## grub2
 
-redhat 系列是同时包含了 grub 和 grub2
-    /boot/grub
-    /boot/grub2
+redhat 系列是同时包含了 grub 和 grub2 /boot/grub /boot/grub2
 
-debian 系列默认是 grub2
-    /boot/grub
+debian 系列默认是 grub2 /boot/grub
 
 
 grub1 是直接编辑 /boot/grub/grub.conf(centos6) 那种原始的
 
 grub2 是编辑 /etc/default/grub, 
 
-    ```
-    GRUB_DEFAULT=0
-    GRUB_TIMEOUT=5
-    GRUB_DISTRIBUTOR=`lsb_release -i -s 2> /dev/null || echo Debian`
-    GRUB_CMDLINE_LINUX_DEFAULT="quiet"
+    ``` GRUB_DEFAULT=0 GRUB_TIMEOUT=5 GRUB_DISTRIBUTOR=`lsb_release -i -s 2>
+    /dev/null || echo Debian` GRUB_CMDLINE_LINUX_DEFAULT="quiet"
     GRUB_CMDLINE_LINUX=""
 
     ```
 
-    然后 update-grub 用来更新 /boot/grub/grub.cfg
-    或者 grub2-mkconfig -o /boot/grub/grub.cfg(debian)
-    或者 grub2-mkconfig -o /boot/grub2/grub.cfg(redhat)
+    然后 update-grub 用来更新 /boot/grub/grub.cfg或者 grub2-mkconfig -o
+    /boot/grub/grub.cfg(debian)或者 grub2-mkconfig -o
+    /boot/grub2/grub.cfg(redhat)
 
 ## grub 加密
 
@@ -49,8 +42,7 @@ centos6
 
     /boot/grub/grub.conf 或 /etc/grub.conf 文件中的 title 字段上面新增一行
 
-        password --md5 密文     (md5方式加密)
-        password PASSWD (明文方式加密)
+        password --md5 密文     (md5方式加密) password PASSWD (明文方式加密)
 
     reboot
 
@@ -59,23 +51,191 @@ centos6
 找回密码 kernel 行 最后 输入 "1"
 
 
-centos7
-    grub2-mkpasswd-pbkdf2   生成密文
+centos7 grub2-mkpasswd-pbkdf2   生成密文
 
     vi /etc/grub/00_header
 
     最后一行添加 
 
-        ```
-        cat <<<EOF
-        set superusers='root' 自己设的用户名
-        password_pbkdf2 root 密文
-        EOF
-        ```
-    grub2-mkconfig -o /boot/grub2/grub.cfg
+        ``` cat <<<EOF set superusers='root' 自己设的用户名password_pbkdf2 root
+        密文EOF ``` grub2-mkconfig -o /boot/grub2/grub.cfg
 
     reboot
 
     e 直接提示用户名和密码
 
 
+
+
+## 分辨率
+
+https://www.gnu.org/software/grub/manual/grub/html_node/gfxpayload.html
+
+### gfxpayload
+
+If this variable is set, it controls the video mode in which the Linux kernel
+starts up, replacing the ‘vga=’ boot option (see linux). It may be set to ‘text’
+to force the Linux kernel to boot in normal text mode, ‘keep’ to preserve the
+graphics mode set using ‘gfxmode’, or any of the permitted values for ‘gfxmode’
+to set a particular graphics mode (see gfxmode).
+
+Depending on your kernel, your distribution, your graphics card, and the phase
+of the moon, note that using this option may cause GNU/Linux to suffer from
+various display problems, particularly during the early part of the boot
+sequence. If you have problems, set this variable to ‘text’ and GRUB will tell
+Linux to boot in normal text mode.
+
+The default is platform-specific. On platforms with a native text mode (such as
+PC BIOS platforms), the default is ‘text’. Otherwise the default may be ‘auto’or
+a specific video mode.
+
+This variable is often set by ‘GRUB_GFXPAYLOAD_LINUX’ (see Simple
+configuration).
+
+
+
+https://www.gnu.org/software/grub/manual/grub/html_node/gfxmode.html#gfxmode
+
+### gfxmode
+
+If this variable is set, it sets the resolution used on the ‘gfxterm’ graphical
+terminal. Note that you can only use modes which your graphics card supports via
+VESA BIOS Extensions (VBE), so for example native LCD panel resolutions may not
+be available. The default is ‘auto’, which selects a platform-specific default
+that should look reasonable. Supported modes can be listed by ‘videoinfo’
+command in GRUB.
+
+The resolution may be specified as a sequence of one or more modes, separated by
+commas (‘,’) or semicolons (‘;’); each will be tried in turn until one is found.
+Each mode should be either ‘auto’, ‘widthxheight’, or ‘widthxheightxdepth’.
+
+
+
+### 注
+
+VESA 
+
+Video Electronics Standards Association（视频电子标准协会，简称“VESA”）是制定计
+算机和小型工作站视频设备标准的国际组织，1989年由NEC及其他8家显卡制造商赞助成立。
+
+
+
+
+## 
+
+GRUB不区分IDE硬盘和SCSI硬盘，统一使用hdx来标识。软盘使用fdx来标识，x为硬盘号，x
+从0开始计数。GRUB使用(hdx,y)标识某个硬盘中的某个分区，x表示硬盘号，y表示分区号
+，x和y都从0开始计数。
+
+### windows 
+
+在windows中，系统的第一个硬盘驱动器表示为(hd0)，其中的第一个分区表示为(hd0,0)，
+以此类推。
+
+(hd0,0)。表示C盘。
+
+(hd0,4)。表示D盘。当然这里指的是(第一个逻辑分区,如果D盘也是主分区,应该写成
+hd0,1)
+
+由于主分区只能有四个，所以第一硬盘的四个主分区分别用(hd0,0)~(hd0,3)来表示；逻辑
+分区则从(hd0,4)开始算，即第一逻辑分区用(hd0,4)，第二逻辑分区用(hd0,5)来表示，依
+次类推。
+
+一般windwos的分区都是一个主分区，其余是逻辑分区。因此C盘用(hd0,0)，D盘用(hd0,4)
+来表示。 光盘用(fd)标识，第一个软驱用(fd0)表示。
+
+
+### Linux
+
+在Linux系统中，如ubuntu，(hdx,y)中的y是从1开始计数的。第一逻辑分区用(hd0,5)，第
+二逻辑分区用(hd0,6)来表示
+
+
+
+
+## centos 6 
+
+
+centos 6 修改 /boot/grub/grub.conf  修改完之后立即生效
+
+
+/boot/grub
+├── device.map
+├── e2fs_stage1_5
+├── fat_stage1_5
+├── ffs_stage1_5
+├── grub.conf
+├── iso9660_stage1_5
+├── jfs_stage1_5
+├── menu.lst -> ./grub.conf             // menu.lst -> ./grub.conf
+├── minix_stage1_5
+├── reiserfs_stage1_5
+├── splash.xpm.gz
+├── stage1                              // linux 的 loader, Linux 所在分区的 boot sector 放的就是这个, 也可放到 MBR 的loader中
+├── stage2
+├── ufs2_stage1_5
+├── vstafs_stage1_5
+└── xfs_stage1_5                        
+
+
+                                        // stage 1 完成了主程序的引导后，主引导程序开始加载配置文件了，但是加载这些配置
+                                        文件之前需要有文件系统的支持，可以现在还没有文件系统呢，grub在不依赖Linux内核的
+                                        情况下具有读取配置文件与内核映像的能力。grub的内置文件系统其实是依靠 stage1_5
+                                        这些文件定义的，而且有不同文件系统对应不同的 stage1_5 文件
+
+
+
+
+
+
+```/boot/grub/menu.lst
+
+# grub.conf generated by anaconda
+#
+# Note that you do not have to rerun grub after making changes to this file
+# NOTICE:  You have a /boot partition.  This means that
+#          all kernel and initrd paths are relative to /boot/, eg.
+#          root (hd0,0)
+#          kernel /vmlinuz-version ro root=/dev/mapper/VolGroup-lv_root
+#          initrd /initrd-[generic-]version.img
+#boot=/dev/sda
+default=0
+timeout=5
+splashimage=(hd0,0)/grub/splash.xpm.gz          //菜单的背景图片
+hiddenmenu                                      //是否隐藏菜单
+title CentOS 6 (2.6.32-696.el6.x86_64)          //菜单项目的名称
+    root (hd0,0)                                //内核文件位置, boot 分区位置
+
+    kernel /vmlinuz-2.6.32-696.el6.x86_64 ro root=/dev/mapper/VolGroup-lv_root      //kernel 启动哪个内核
+    rd_NO_LUKS LANG=en_US.UTF-8 rd_NO_MD rd_LVM_LV=VolGroup/lv_swap
+    SYSFONT=latarcyrheb-sun16 crashkernel=auto rd_LVM_LV=VolGroup/lv_root
+    KEYBOARDTYPE=pc KEYTABLE=us rd_NO_DM rhgb quiet
+
+    initrd /initramfs-2.6.32-696.el6.x86_64.img     //根目录，加载文件系统和磁盘相关的驱动
+
+```
+
+
+### hiddenmenu
+
+Don't display the menu. If the command is used, no menu will be displayed on
+the control terminal, and the default entry will be booted after the timeout
+expired. The user can still request the menu to be displayed by pressing <ESC>
+before the timeout expires. 
+
+
+``` 如果设置了hiddenmenu
+
+Press any key to enter the menu
+
+Booting CentOS 6 (2.6.32-696.el6.x86_64) in 5 seconds...
+
+```
+
+
+
+
+mingetty命令是精简版的getty。 mingetty适用于本机上的登入程序。
+
+
+getty(get teletypewriter [ˌteliˈtaɪpraɪtə(r)]电传打字机)

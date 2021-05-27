@@ -1,7 +1,5 @@
 ## 7za - A file archiver with highest compression ratio
 
-
-
 7za <command> [<switches>... ] <archive_name> [<file_names>... ] [<@listfiles>... ]
 
 

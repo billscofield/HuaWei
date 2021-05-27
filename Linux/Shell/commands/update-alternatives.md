@@ -26,10 +26,10 @@ update-alternatives - maintain symbolic links determining default commands
 
 ---
 
-update-alternatives在一般情况下是由postinst和prerm这样的安装脚本自
-动调用的，所以一个alternative的状态有两种：自动和手动。每个alternative的初始状态
-都是自动，如果系统发现管理员手动修改了一个alternative，它的状态就从自动变成了手动，
-这样安装脚本就不会更新它了。如果你希望将一个alternative变回自动，只要执行代码：
+update-alternatives在一般情况下是由postinst和prerm这样的安装脚本自动调用的，所
+以一个alternative的状态有两种：自动和手动。每个alternative的初始状态都是自动，
+如果系统发现管理员手动修改了一个alternative，它的状态就从自动变成了手动，这样安
+装脚本就不会更新它了。如果你希望将一个alternative变回自动，只要执行代码：
 
     sudo update-alternatives --auto editor
 

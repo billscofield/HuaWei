@@ -85,3 +85,11 @@ vidmore dvd creator
     全屏                        f
     停止                        s
     下一项/上一项               n/p
+
+
+
+## hdwwiz
+
+Add Hardware Wizard
+
+用这个命令添加虚拟回环网卡, win10 中需要在运行里边输入

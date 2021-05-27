@@ -88,7 +88,7 @@
 
         2001 Mac OS X 基于 FreeBSD
 
-1. **关于 ARPANET**
+1. 关于 ARPANET
 
     美国国防部项目 ARPANET 就是以 BSD Unix 作为研究系统的，ARPANET发展为了今天的Internet
 
@@ -108,7 +108,7 @@
 
 1. 1984 颁布 OSI-RM (Open System Interconnection Reference Model)
 
-1. 1984 反托拉斯法案，AT&T 分拆 **贝尔7兄弟**
+1. 1984 反托拉斯法案，AT&T 分拆 贝尔7兄弟
 
 1. 1987 Richard Stallman 开发出了 GCC 编译器
 
@@ -216,4 +216,17 @@ s="he\0x00llo"
     当时采用的操作系统是西雅图公司的86-DOS 1.14，但微软很快改进了MS-DOS，并使它成功地成为IBM PC采用的操作系统。并于1981年8月12日，
 
     正式发布MS-DOS 1.0 和 PC-DOS 1.0。
+
+
+
+
+|AIX        IBM     PowerPC
+|HP-UX      HP      PA-RISC
+|Solaris    Sun     SPARC
+|Irix       SGI     MIPS
+|Digital    UNIX    DEC Alpha
+
+
+
+
 

@@ -57,3 +57,5 @@ since the log file was created.
 lastb is the same as last, except that by default it shows a log of the /var/log/btmp file, which contains all  the  bad
 login attempts.
 
+
+### 日志切割

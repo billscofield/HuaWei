@@ -11,19 +11,21 @@ The tag should have no leading or trailing spaces in that line to be considered 
 example:
 
 $ cat >> test <<HEREs
-> Hello world HERE <-- Not by itself on a separate line -> not considered end of string
+> Hello world HERE                                               // Not by itself on a separate line
+> Hello world HERE                                               // not considered end of string
 > This is a test
 >  HERE <-- Leading space, so not considered end of string
 > and a new line
-> HERE <-- Now we have the end of the string
+> HERE                                                           // Now we have the end of the string
 ```
 
 
 ---
 
 
-```
-The cat <<EOF syntax is very useful when working with multi-line text in Bash, eg. when assigning multi-line string to a shell variable, file or a pipe.
+``` 
+The cat <<EOF syntax is very useful when working with multi-line text in
+Bash, eg. when assigning multi-line string to a shell variable, file or a pipe.
 
 Examples of cat <<EOF syntax usage in Bash:
 
@@ -35,6 +37,9 @@ WHERE foo='baz'
 EOF
 )
 The $sql variable now holds the new-line characters too. You can verify with echo -e "$sql".
+
+测试 echo -e $sql 还是在一行显示，并没有预想的那样
+
 
 2. Pass multi-line string to a file in Bash
 
