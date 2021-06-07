@@ -44,6 +44,12 @@ Options
 
     -r 递归拷贝目录
     -l 保留软连接
+
+    -L, --copy-links            transform symlink into referent file/dir
+        --copy-unsafe-links     only "unsafe" symlinks are transformed
+        --safe-links            ignore symlinks that point outside the tree
+        --munge-links           munge symlinks to make them safer
+
     -p 保留原有权限 --perms  preserve permissions
     -t 保留原有时间(修改)   --times
 

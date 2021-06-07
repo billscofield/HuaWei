@@ -100,8 +100,11 @@ Options
 
 
     -M, --try-remount
+
         This flag forces checking of filesystem in read-write mode if a remount fails. Do this only when you are sure no process will write to a filesystem while scanning.
+
     -m, --no-remount
+
         Don't try to remount filesystem read-only. See comment with option -M.
 
 
