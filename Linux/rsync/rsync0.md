@@ -150,13 +150,16 @@ rsync -azP --delete rget@192.168.1.63:/var/www/html/ /web-back/
     1. https://www.bilibili.com/video/av30970430/?spm_id_from=333.788.videocard.2
 
 ## scp
+
 scp 无法备份大量数据
 
 rsync不支持远程到远程的拷贝，但scp支持
 
 
 ## 扩展内容
+
 ### xinetd
+
 链接
     1. https://blog.csdn.net/u010454729/article/details/39778213
 

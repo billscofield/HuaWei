@@ -26,3 +26,11 @@ rxvt-unicode被收录在 debian/ubuntu 的源中，安装只需在管理员权�
 
 https://wiki.archlinux.org/index.php/Rxvt-unicode
 
+
+
+
+## 配置
+
+配置文件
+    
+    ~/.Xdefaults

@@ -1,17 +1,17 @@
 ./configure --with-features=huge \
-	--enable-rubyinterp \
-	--enable-pythoninterp \
-	--with-python-config-dir=/usr/lib/python2.7/config-aarch64-linux-gnu/ \
-	--enable-python3interp \
-	--with-python3-config-dir=/usr/lib/python3.7/config-aarch64-linu-gun/ \
-	--enable-perlinterp \
-	--enable-gui=gtk2 \
-	--enable-cscope \
-	--enable-luainterp \
-	--enable-perlinterp \
-	--enable-multibyte \
-    --with-x\
-	--prefix=/usr/local/vim82
+    --enable-rubyinterp \
+    --enable-pythoninterp \
+    --with-python-config-dir=/usr/lib/python2.7/config-aarch64-linux-gnu/ \
+    --enable-python3interp \
+    --with-python3-config-dir=/usr/lib/python3.7/config-aarch64-linu-gun/ \
+    --enable-perlinterp \
+    --enable-gui=gtk2 \
+    --enable-cscope \
+    --enable-luainterp \
+    --enable-perlinterp \
+    --enable-multibyte \
+      --with-x\
+    --prefix=/usr/local/vim82
 
 
 option explains
