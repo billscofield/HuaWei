@@ -104,9 +104,12 @@ OpenLDAP 服务默认使用非加密的 TCP/IP 协议来接收服务的请求，
 
 
 1. phpLDAPadmin
-
+    
     所以，你需要安装一个叫作 phpLDAPadmin的工具，好歹这是一个图形界面，虽然奇丑
     无比，并且配置起来也并不容易。
+
+    LdapAdmin:  a free Windows LDAP client and administration tool for LDAP
+    directory management
 
 
 1. PWM

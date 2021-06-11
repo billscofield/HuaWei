@@ -1,6 +1,3 @@
-
-
-
 ## ldapsearch 
 
 ldapsearch <options> filter [attrs...]
@@ -9,7 +6,7 @@ ldapsearch opens a connection to an LDAP server, binds, and performs a search
 using specified parameters.   
 
 The filter should conform to the string representation for search filters as
-defined in RFC 4515.  If not provided, the default filter, (objectClass=*), is
+defined in RFC 4515.  If not provided, the default filter, (objectClass=\*), is
 used.
 
 

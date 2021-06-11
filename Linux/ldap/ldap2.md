@@ -87,7 +87,6 @@ be hidden, but calling it out explicitly allows it to be returned.
 
 ## Find the Configuration DIT
 
-
 The DIT that can be used to configure the OpenLDAP server is not returned by a
 search for namingContexts. The root entry of the config DIT is instead stored
 in a dedicated attribute called configContext.
