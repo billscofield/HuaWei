@@ -1,4 +1,5 @@
 bind: bind [-lpsvPSVX] [-m keymap] [-f filename] [-q name] [-u name] [-r keyseq] [-x keyseq:shell-command] [keyseq:readline-function or readline-command]
+
     Set Readline key bindings and variables.
     
     Bind a key sequence to a Readline function or a macro, or set a

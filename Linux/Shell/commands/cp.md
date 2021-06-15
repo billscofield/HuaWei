@@ -2,7 +2,6 @@
 
 https://unix.stackexchange.com/questions/386979/info-on-cp-preserve-links
 
-
 --preserve=links选项不是指符号链接，而是指硬链接。它要求cp保留正在复制的两个或多个文件之间的任何现有硬链接。
 
 $ date > file1
@@ -84,8 +83,6 @@ lrwxrwxrwx 1 root root  1 May 20 21:02 as -> a
 ```
 
 ## -p     same as --preserve=mode,ownership,timestamps
-
-
 
 在进行文件复制时，诸如“能力”等文件的扩展属性可以通过 cp -a 自动复制, 但是其他的
 命令可能需要一个特别的参数,例如：rsync -X。

@@ -32,7 +32,9 @@ Run server
     hexo server
 
     虽然显示的是localhost:4000, 但是看 hexo server --help 发现
+
     -i, --ip            Override the default server IP. Bind to all IP address by default.
+
     默认是0.0.0.0的
 
 

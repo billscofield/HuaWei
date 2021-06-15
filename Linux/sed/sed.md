@@ -10,9 +10,8 @@ filtering and transforming text
 文件 -> 缓冲区cache(在sed中又叫做"模式空间") -> 屏幕
 
 
-处理时，把当前处理的行存储在临时缓冲区中，称为”模式空间”（ oattern space），接看用sed命令处理缓冲区中的内容，处理成后，把缓冲区的内容送往屏幕显示。
-
-
+处理时，把当前处理的行存储在临时缓冲区中，称为”模式空间”（ oattern
+space），接看用sed命令处理缓冲区中的内容，处理成后，把缓冲区的内容送往屏幕显示。
 
 
 sed [OPTION]... {script-only-if-no-other-script} [input-file]...
@@ -28,12 +27,16 @@ sed [OPTION]... {script-only-if-no-other-script} [input-file]...
 
 如果不加 -n 选项，是先打印还是先处理呢？
 
+    限制性我们的动作，然后打印
+
 ```
+
 sed '' passwd
 
 我们可以用 sed '=' passwd 得出结论：
 
 先进行我们的动作处理，然后再进行将模式空间中的一行打印出来的默认行为
+
 ```
 
 
@@ -42,10 +45,13 @@ sed '' passwd
 sed [options] '处理动作(一定要加单引号)' 文件名
 
 options
-    -e  : 对每一行进行多项（多次）编辑 
+
+    -e  : 对每一行进行多项（多次）编辑, 每一个 option 都必须有 -e
+
         sed -ne '/root/p' -ne '/root/=' passwd
 
         ```
+
         ➜  Music sed -ne '/root/p' -ne '/root/=' passwd
         root:x:0:0:root:/root:/usr/bin/zsh
         1
@@ -60,13 +66,56 @@ options
         root:liujiao
         
         为什么会这样输出呢? 因为是执行一次扫描，每次扫描按顺序执行多个命令
+            
+            串行，流水线
+
         ```
 
-        或者  sed -n '/root/p;/root/=' 文件
+        或者
 
-              sed -n '1,${/root/p;/root/=}' 文件
+            sed -n '/root/p;/root/=' 文件       每个命令都对缓冲区进行操作，如果第一个option是打印，第二个是替换
+
+            sed -n '1,${/root/p;/root/=}' 文件
 
             用分号分割多个命令，这样更可以不用加 -e 选项
+
+            这样写是错误的❌
+            sed -n '1,${/root/p};{/root/=}' 文件    
+            {} 是语句块
+
+            1,5行匹配的内容整体替换为XXX，怎么写？❓
+
+            ```
+            ➜  sed sed '1,${/hello/c }' a
+            sed: -e expression #1, char 0: unmatched `{'
+            ➜  sed sed '1,${/hello/c"" }' a
+            sed: -e expression #1, char 0: unmatched `{'
+
+
+            这样写✅
+            
+            ➜  sed sed '' a
+            1 hello
+            2 world
+            3 nice
+            4 to
+            4 to
+            5 hello
+            6 meet
+            7 you
+
+            ➜  sed sed -e '4,$!d' -e '/hello/cHELLO' a
+            4 to
+            4 to
+            HELLO
+            6 meet
+            7 you
+
+            ```
+
+
+            这样写是对✅
+            sed -ne '1,${/root/p;/root/=}' -e '1,${/bill/p;/bill/=}'文件
 
 
         看文件有多少行
@@ -100,7 +149,7 @@ options
         -i.备份文件   suffix后缀 生成原文件名.后缀
         
         sed -i.bak 's/dog/cat/1;s/dog/T-rex/1' dog
-
+        
             会先备份dog文件为dog.bak 然后再做修改
 
     -f script-file, --file=script-file
@@ -112,14 +161,38 @@ options
 常见处理动作
 
     'p' 打印
+        
+        如果没有 -n 参数，系统会默认将每个匹配行对模式空间内容打印
+        
+        p 动作也是打印模式空间内容
 
     'i' vim插入,同vim中的大写字母O
 
     'a' vim插入,同vim中的小写字母o
-
+        
         sed 'a' 文件    a和i 后边必须有内容
+        
+        sed '/root/iROOT' a
 
     'c' 整行替换
+        
+        sed '1,4c hello' <file>
+        sed '1,4chello' <file>
+        
+        上边两个效果一样
+        
+        ```
+        ➜  sed sed -i '/HELLOWORLD/c"HELLO"' a
+        ➜  sed sed '' a
+        "HELLO"                     注意这里的双引号
+        2 world
+        3 nice
+        4 to
+        "HELLO"
+        6 meet
+        7 you
+        
+        ```
 
     'd' 删除指定行
 

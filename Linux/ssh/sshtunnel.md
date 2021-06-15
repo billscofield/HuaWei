@@ -14,7 +14,9 @@
 
 
 host3 可以访问 host1 和 host2
+
 host1 不可以访问 host2
+
 如何从 host1 连接上 host2 ?
 
     ssh -L -g host1:port1:host2:port2  user@host3

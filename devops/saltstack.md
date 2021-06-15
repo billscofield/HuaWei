@@ -1,25 +1,38 @@
 作者在盐湖城
 
 三大功能
+
     1. 远程执行(多台计算机同时执行一个命令等)
+
     1. 配置管理(状态)
+
     1. 云管理(saltcloud组件,阿里云等云有API，salt 进行了封装)
 
 同类型工具
+
     Puppet(ruby)
+
     ansible(python)
+
     Saltstack(python)
+
         saltstack.com
+
         saltstack.cn
 
 
 四种运行方式
+
     1. Local
+
     2. Minion(下属[ˈmɪniən])/Master(C/S)(最普遍最佳的方式)
+
     3. Syndic 类似于zabbix proxy
+
     4. Salt SSH 
 
 典型案例
+
     1. 兼容各种操作系统（Python）
     2. 
 

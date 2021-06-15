@@ -1,5 +1,5 @@
 
-USB是Universal Serial Bus的缩写，中文译为通用串行总线。
+USB 是 Universal Serial Bus 的缩写，中文译为通用串行总线。
 
 USB出现之前，计算机领域中的接口太多太繁杂,总的来说，在USB出现之前，各种接口太多，而且都不太容易使用，互相之间的兼容性也较差，因此，才出现了USB。
 

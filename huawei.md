@@ -1,12 +1,15 @@
 ## about ensp
+
 1. Enterprise Network Simulation Platform
 1. 每台设备启动之后占用300MB左右的内存
 
 ## header
+
 header login information "内容"     //输入密码之前的提示,不一定要是double quotes,首位两个字符一样即可
 header shell information "内容"     //输入密码之后进入shell后的提示
 
 ## 文件
+
 move
 copy
 delete /unreserved /force /quiet

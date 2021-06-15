@@ -1,10 +1,13 @@
 # Linux 三剑客
+
 ## awk
+
     awk '{pattern + action}' {filename}
 
     awk '{print}' a.txt 全部输出 同 cat a.txt
 
     行从1开始，列从1开始
+
     匹配 filename 的每一行执行 action
     
     ---

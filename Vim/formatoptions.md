@@ -38,3 +38,47 @@ set compatible 就是让 vim 关闭所有扩展的功能，尽量模拟 vi 的�
 vim 的很多强大功能，所以一般没有什么特殊需要的话（比如执行很老的 vi 脚本），都要
 在 vim 的配置开始，写上 set nocompatible，关闭兼容模式。由于这个选项是最最基础的
 选项，会连带很多其它选项发生变动（称作副作用），所以它必需是第一个设定的选项。
+
+
+## mac 上遇到的问题
+
+https://blog.csdn.net/auwzb/article/details/11609363
+
+
+用 vim 写代码，中有时需要限制每行最多的字符数，比如C++代码一般是每行最多80个字符。
+于是，我们很自然觉得在 vimrc 中设置如下语句应该没有问题
+
+    set textwidth=80
+    "t in fo-table means auto-wrap text using textwidth
+    set formatoptions+=t
+
+关于，formatoptions可以查看vim的帮助文档，两个命令如下
+
+    :help formatoptions
+    :help fo-table
+
+然而，我们发现这样的设置并不奏效。
+
+在 vim 中使用如下命令可以查看我们的设置是否有效。
+
+    :set formatoptions
+
+我们会看到，其实，t 并没有出现在 formatoptions 中。
+
+原因在于，我们开启了 ftplugin。vim 会先读入 vimrc 的配置，接着检测文件类型，重新
+对 vim 的配置进行设置，即我们在 vimrc 的配置被覆盖了。
+
+解决办法可以采用 vim 帮助文档提供的标准解决方法，命令如下
+
+    :help ftplugin-overrule
+
+但是，这些解决方法我觉得都比较麻烦，我采用的方法是，在 vimrc 中增加如下配置
+
+    autocmd FileType c,cpp setlocal textwidth=80 formatoptions+=t
+
+这样做可以解决问题，原因是 vim 启动时先读 vimrc 的配置，接着使用 ftplugin 对应的
+文件类型的配置文件对 vim 进行设置，最后，由于我们在 vimrc 定义了函数，检测到文件
+类型为 c 或者 cpp，那么，再 setlocal。你如果想要对所有的文件类型都使用配置，而不
+仅仅是 c 和 cpp，那么，将命令改为如下即可。
+
+autocmd FileType * setlocal textwidth=80 formatoptions+=t

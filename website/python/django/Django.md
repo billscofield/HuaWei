@@ -3,6 +3,7 @@
 Django  [ˈdʒæŋɡo] 遵循MVC框架思想，自己创造了 MVT 框架
 
 ## Django 简介
+
 Python 开发的开源web开发框架，并遵循MVC设计。
 劳伦斯出版集开发
 

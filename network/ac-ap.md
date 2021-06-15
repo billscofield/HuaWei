@@ -1,9 +1,14 @@
 ac控制器(无线控制器) 接入控制器（Access Controller或Wireless Access Point Controller）
+
     1. 是一种网络设备，负责管理某个区域内无线网络中的AP。
+
     1. 拥有固定的IP地址，操作简单、即插即用，即使非专业用户也能轻松使用
 
+
 AC连接方式
+
     1. 直连ac就是带ap管理功能的路由。
+
     1. 而旁路ac，只是起到管理ap的能力，不提供路由的网关功能。
 
 AP

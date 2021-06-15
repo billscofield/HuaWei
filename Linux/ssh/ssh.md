@@ -1,22 +1,29 @@
-Linux到windows:
+Linux 到 windows:
 
     scp /linux目录/文件名 administrator@windowsIP:/d:/
 
 
 ssh 默认的用户名 是当前系统你此时在用的用户名, 而不是 root
+
     例如, 当你用 windows ssh 登录远程 linux 主机时, 发现用户名是 administrator
+
 
 ## ssh 客户端配置文件
 
 /etc/ssh/ssh_config
+
     自定义:
 
-    Host 名称
-        Hostname IP地址
+    Host your_alias_name
+        HostName IP地址
         User 用户名
         Port 端口号
-        IdentityFile 私钥
-    ...
+        IdentityFile
+
+    Replace "your_alias_name" with a short name for this connection. Something
+    like “home,” “work,” or “asdf” should suffice. ;-)
+
+
 
     默认如下:
 
@@ -25,28 +32,37 @@ ssh 默认的用户名 是当前系统你此时在用的用户名, 而不是 roo
 
 ssh -i ./id_rsa 用户@IP
 
+    -i identity_file, 私钥
+
+        Selects a file from which the identity (private key) for public key
+        authentication is read.
 
 ## sshd 服务端配置文件
 
 /etc/sshd/sshd_config
+
     PermitRootLogin prohibit‐password       //禁止密码,只允许 公钥登录
                     yes                     //允许任何方式登录
                     no                      //不允许 root 登录
+        
     PasswordAuthentication no               //禁止所有用户密码登录
 
+
+https://www.cnblogs.com/sysk/p/4871700.html
 
 
 
 ## 复制公钥到远程主机
 
 方法一:
+
     ssh-copy-id 用户名@远程主机
 
     windows 没有 这条命令
 
 方法二:
-    cat ~/.ssh/id_rsa.pub | ssh 用户@远程主机 tee .ssh/authorized_keys
 
+    cat ~/.ssh/id_rsa.pub | ssh 用户@远程主机 tee .ssh/authorized_keys
 
 
 
@@ -88,7 +104,8 @@ Subsystem   sftp    /usr/lib/openssh/sftp-server
 
 
 禁止在本机使用 scp 命令
-    卸载 openssh-clients ???
+
+    卸载 ftp-server
 
 禁止用户user1登陆，多个空格分隔
     DenyUsers user1

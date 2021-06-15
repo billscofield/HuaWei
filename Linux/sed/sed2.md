@@ -2,9 +2,9 @@
 
 ## 原理
 
-功能性上类似于 Vim, 主要是为了编辑配置文件，但是 Vim 主要是在交互条件下应用的, 当我们执行脚本文件修改配置文件时，
-
-是不可能去做交互的，一般都是预先设定好key-value, 执行脚本时进行设置, 自动执行即可。
+功能性上类似于 Vim, 主要是为了编辑配置文件，但是 Vim 主要是在交互条件下应用的,
+当我们执行脚本文件修改配置文件时，是不可能去做交互的，一般都是预先设定好key-value,
+执行脚本时进行设置, 自动执行即可。
 
 这就是 sed 出现的原因.
 
@@ -24,8 +24,9 @@
                 +--------+ 
                 |暂存空间|
                 +--------+ 
-                   |  |
-                   |  |
+                  /|\ |
+                 h |  |g
+                   | \|/
     +----+      +---------+       +----------+
     |文件| ---->| 模式空间|  ---->|输出到屏幕|
     +----+      +---------+       +----------+
@@ -36,9 +37,10 @@
     h: 模式空间  -->  暂存空间, 将模式空间内容复制给暂存区, 模式空间内容不变
     H: 模式空间  -->  暂存空间, 将模式空间内容append给暂存空间, 模式空间内容不变
 
-    g: 暂存空间  -->  模式空间, 讲暂存空间内容复制给模式空间，暂存区内容不变
-    G: 暂存空间  -->  模式空间, 讲暂存空间内容append给模式空间，暂存区内容不变
+    g: 暂存空间  -->  模式空间, 将暂存空间内容复制给模式空间，暂存区内容不变
+    G: 暂存空间  -->  模式空间, 将暂存空间内容append给模式空间，暂存区内容不变
 
+    x: 交换模式空间和保持空间中的内容
 
 ## 语法格式
 
@@ -49,7 +51,7 @@ sed [options] '[定位][命令]' 文件
 
 常用的有 -enrif
 
-1. -e: 使用多个命令
+1. -e: 使用多个命令, 亦是多个条件
 
     sed -e 's/root/ROOT/' -e 's/zsh/ZSH/' passwd
 
@@ -57,20 +59,27 @@ sed [options] '[定位][命令]' 文件
 
     sed 's/root/ROOT/; s/zsh/ZSH/' passwd
 
+    一般来说应该配合 d 动作，比如 [3,5] 行中匹配响应内容对操作:
+        
+        sed -e '3,5!d' -e 's/old/new/' <filename>
+
+        sed -n 's/old/new/p' <filename>     如果没有p,也不会打印
+
 
 1. -n: 取消默认的打印行为
 
     sed '' 文件     // 默认情况下会打印模式空间缓冲区中的每一行
 
     sed -n '' 文件  // 输出为空, 因为取消了默认的打印行为
+
+    但是某些动作会带有打印功能，如 c
     
 
 1. -r: 使用扩展的正则表达式
 
     基本正则元字符：
 
-    ^ $ . * [] [^] \< \> \(\) \{\}
-
+    ^ $ . * [  ] [^] \< \> \(\) \{\
 
     扩展的正则元字符
 
@@ -118,22 +127,48 @@ why:
         sed '5iHello\nWorld' passwd
 
     a: 在当前行下一行插入，同 vim 中的o
-
+        
         sed '5aHello\nWorld' passwd
+        
+        ```
+        [root@localhost ~]# sed '3i\
+        > This is an inserted line.' data6.txt
+        
+        This is line number 1.
+        This is line number 2.
+        This is an inserted line.
+        This is line number 3.
+        This is line number 4.
+        
+        
+        如果你想将一个多行数据添加到数据流中，只需对要插入或附加的文本中的每一行末尾（除最后一行）添加反斜线即可，例如：
+        [root@localhost ~]# sed '1i\
+        > This is one line of new text.\
+        > This is another line of new text.' data6.txt
+        ```
+
 
     c: 替换当前行
-
+        
         sed '5cHello\nWorld' passwd
 
     d: 删除当前行
-
+        
         sed '4d' passwd
-
+        
         sed '/root/d' passwd
+        
+        也可以使用两个文本模式来删除某个区间内的行，但这么做时要小心，你指定的第一个模式会“打开”行删除功能，第二个模式会“关闭”行删除功能，因此，sed
+        会删除两个指定行之间的所有行（包括指定的行）
+
 
     n: 当前行的下一行, 一般是因为要操作的行没有什么特色，需要用上一行进行定位
 
         sed '/root/{n;d}'
+
+        ❓为什么下边这条语句不行？
+            
+            sed '/root/{n;aROOT}' <file>
 
     r: 读取其他文件内容到当前行的下方, 好像不能读取 shell 命令
         
@@ -167,16 +202,22 @@ why:
         sed '/root/q' passwd
 
     s: s/old/new/gi , 替换命令, 将old 替换为 new
-
+        
         g: 全局替换，默认替换第一个匹配
-
+        
         i: 不区分大小写
-
+        
         N: 动作于第N个匹配项目(当一行中有多个匹配项目时，默认是第一个)
+        
+        如果你想将一个多行数据添加到数据流中，只需对要插入或附加的文本中的每一行末尾（除最后一行）添加反斜线即可，例如：
+        [root@localhost ~]# sed '1i\
+        > This is one line of new text.\
+        > This is another line of new text.' data6.txt
     
     y: 字符转换命令, 类似table转换表，一一对应，否则会报错
-
-        'y/123/abc'     //会将1替换为a, 2替换为b, 3替换为c
+        
+        '[address]y/123/abc/'     //会将1替换为a, 2替换为b, 3替换为c,
+        注意最后的那个/，一定要有
 
     l: List out the current line in a 'visually unambiguous' form.
 
