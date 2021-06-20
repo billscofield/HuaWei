@@ -1,0 +1,467 @@
+## 
+
+MySQL AB是由MySQL创始人和主要开发人创办的公司。MySQL AB最初是由David Axmark、
+Allan Larsson和Michael“Monty”Widenius在瑞典创办的。
+
+Mysql -> SUN -> Oracle
+
+
+C/S
+
+
+## mysql
+
+Step 1 — Installing MariaDB
+
+    apt install -y mariadb-server
+
+    apt install -y libmariadb-dev
+
+Step 2 — Configuring MariaDB
+
+    mysql_secure_installation
+
+Step 3 — (Optional) Adjusting User Authentication and Privileges
+
+    mysql -u -h -P
+
+    GRANT ALL ON *.* TO 'admin'@'localhost' IDENTIFIED BY 'password' WITH GRANT OPTION;
+
+    FLUSH PRIVILEGES;
+
+    exit
+
+    ```
+    mysql root@(none):mysql> select host,user,password,authentication_string from user;
+    +-----------+------+-------------------------------------------+-----------------------+
+    | host      | user | password                                  | authentication_string |
+    +-----------+------+-------------------------------------------+-----------------------+
+    | localhost | root |                                           |                       |
+    | localhost | bill | *843A281F0C343C9E6162F4EEFF3129BD41F9E29D |                       |
+    +-----------+------+-------------------------------------------+-----------------------+
+
+    ```
+
+Step 4 — Testing MariaDB
+    
+    systemctl status mariadb
+
+    For an additional check, you can try connecting to the database using the
+    mysqladmin tool, which is a client that lets you run administrative
+    commands. For example, this command says to connect to MariaDB as root and
+    return the version using the Unix socket:
+
+    ```
+    mysqladmin version
+
+
+    You should receive output similar to this:
+
+
+    mysqladmin  Ver 9.1 Distrib 10.3.29-MariaDB, for debian-linux-gnu on x86_64
+    Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+    Server version      10.3.29-MariaDB-0+deb10u1
+    Protocol version    10
+    Connection          Localhost via UNIX socket
+    UNIX socket         /var/run/mysqld/mysqld.sock
+    Uptime:             46 min 38 sec
+
+    Threads: 7  Questions: 529  Slow queries: 0  Opens: 175  Flush tables: 1  Open tables: 31  Queries per second avg: 0.189
+
+    ```
+
+    If you configured a separate administrative user with password
+    authentication, you could perform the same operation by typing:
+
+    ```
+    mysqladmin -u admin -p version
+
+    ```
+
+## 
+
+ll /usr/bin/mysql
+-rwxr-xr-x 1 root root 4.0M May 10 11:06 /usr/bin/mysql
+
+ll /usr/bin/mariadb
+lrwxrwxrwx 1 root root 5 May 10 11:06 /usr/bin/mariadb -> mysql
+
+
+utf8 不是 utf-8
+
+mysql 的root密码和linux的root不是一回事儿, 默认没有密码
+
+
+```/etc/mysql/mariadb.conf.d/50-server.cnf
+[mysqld]¬
+¬
+# * Basic Settings¬
+user                    = mysql
+pid-file                = /run/mysqld/mysqld.pid
+socket                  = /run/mysqld/mysqld.sock
+#port                   = 3306
+basedir                 = /usr¬                         安装目录
+datadir                 = /var/lib/mysql                数据存放位置
+tmpdir                  = /tmp
+lc-messages-dir         = /usr/share/mysql
+#skip-external-locking
+
+# Instead of skip-networking the default is now to listen only on
+# localhost which is more compatible and is not less secure.
+bind-address            = 127.0.0.1
+
+
+# * Character sets
+#
+# MySQL/MariaDB default is Latin1, but in Debian we rather default to the full¬
+# utf8 4-byte character set. See also
+character-set-server  = utf8mb4¬
+collation-server      = utf8mb4_general_ci
+```
+
+
+```/etc/mysql/mariadb.conf.d/50-client.cnf
+
+[client]¬
+# Default is Latin1, if you need UTF-8 set this (also in server section)¬
+default-character-set = utf8mb4
+
+# socket location¬
+socket = /var/run/mysqld/mysqld.sock                    // /var/run -> /run
+```
+
+
+## 客户端工具
+
+SQLyog: 会自动将关键字转为大些
+
+
+## 常见命令
+
+不区分大小写，但是建议关键字大些，表名、列名小写
+
+select database()                                       //当前所在数据库
+
+select version()                                        //查看版本
+
+## 注释
+
+hash     单行注释
+--空格   单行注释
+/* */    多行注释
+
+
+## DQL 
+
+SELECT 字段,常量,表达式，函数
+FROM
+WHERE
+GROUP BY
+HAVING
+ORDER BY
+LIMIT
+
+字段可以添加 着重号
+
+1. 基础查询
+
+    ```
+    select 'hello';     常量
+    select 4*4;         表达式
+    select version();   函数
+
+    别名
+        select 'helo' as result;  或者  select 'helo' result;
+        别名有空格或特殊符号时，可以加双引号(或单引号)
+    
+    +
+        只做数学运算
+        有一个是null, 结果总为null
+        字符串同php
+        
+        使用 concat 进行拼接
+    ```
+
+2. 条件查询
+    where
+    
+    条件表达式
+        >
+        >=
+        <
+        <=
+        !=
+        <>
+        <=>             //安全等于，可以代替 is ; 也可以普通使用
+            WHERE salary <=> 12000;
+            WHERE salary <=> null;
+
+    逻辑运算符
+        &&
+        || 
+        !
+        and(mysql 中推荐使用这个)
+        or(mysql 中推荐使用这个)
+        not(mysql 中推荐使用这个)
+
+    模糊查询
+        like
+        between A and B;    A 和 B 不能调换顺序
+        in                  值类型要兼容; 不能使用通配符(因为不是模糊查询)
+        is null
+        is not null
+        
+        通配符
+            '%a%'   任意多个(包含另个), 也可以匹配数值类型
+            '_'     一个字符
+                where department_id like '1__';
+            '\_'    转义
+            
+        自定义转义符号
+           where last_name LIKE '_a_%' ESCAPE 'a';
+
+3. 排序查询
+
+    order by asc(default)|desc
+
+    别名，表达式
+
+4. 常见函数
+    
+    单行行数
+        count()                     非null个数
+        sum()
+        distinct()                  也可以不用括号
+        concat()                    字符串拼接
+        ifnull(表达式/列，值)
+            select ifnull(commission_pct,0),last_name from employees;
+        isnull(表达式/列)           是null返回1,否返回零
+        length()                    字符串字符字节长度, 也可以是数字,小数(小数点也是一个),没有了 char_length(),和字符集有关
+        user()
+
+
+    字符函数
+        length()
+        concat(,,)
+        upper()
+        lower()
+        instr(main,sub)                 sub在main中的索引位置，没有则返回零
+        
+        substr(str,pos)                 索引从1开始
+        substr(str,pos,length)
+        
+        trim(' ')                       清除首尾空格, 或字符
+        trim('a' from 'aaahelloaaa');   清除首尾的字符a
+        
+        lpad(str,len,填充)              用制定的自负实现左填充制定长度, 当len小于str时，str会被截断
+        rpad(str,len,填充)
+
+    数学函数
+        round(num[,digit])              digit:保留几位小数
+        ceil()
+        floor()
+        truncate(num,digit)             截断，digit:小数保留几位
+        mod(a,b)                        a%b 取余    a-a/b*b
+
+    日期函数
+        now()                           2021-06-20 11:50:13
+        curdate()                       2021-06-20
+        curtime()                       11:51:05
+        year()
+        month()
+        monthname()
+        day()
+        dayname()
+        datediff(date1,date2)           返回天数
+        
+        可以进行比较
+        
+        str_to_date()
+            str_to_date('2-13-1999','%c-%d-%Y')
+            
+            %Y 4
+            %y 2
+            %m 月份，01,02,...12
+            %c 月份， 1,2,3,..12
+            %d 日
+            %H 24小时
+            %h 12小时
+            %i 分钟
+            %s 秒
+            
+            select * from employees where hiredate = str_to_date('4-3 1992', '%m-%d %Y');
+        
+        date_format('2018/08/09','%Y/%m/%d');
+        date_format(now(),'%Y/%m/%d');
+
+    流程控制函数
+        select if(10<5,真,假);
+        select last_name,commission_pct,if(commission_pct is null,'没有奖金', '有奖金');
+        
+        case 1
+            case 字段或表达式
+            when 常量1 then 值1或语句1
+            when 常量2 then 值2或语句2
+            else 值2或语句2;
+            end
+
+        select last_name,department_id,salary,
+        case department_id                          //从这里到end 算是一列
+        when 30 then salary*1.1
+        when 40 then salary*1.2
+        else salary
+        end as 新工资
+        from employees;
+
+        select salary,
+        -> case
+        -> when salary>2000 then 'a'
+        -> else 'b'
+        -> end as 级别
+        -> from employees;
+
+
+
+5. 分组函数(聚合函数)
+    sum                 null 不参于运算
+    avg                 null 不参数预算
+    max                 null 不参数预算
+    min                 null 不参数预算
+    count               null 不参数预算
+
+    和 distinct 搭配
+        select sum(distinct salary) from employees;
+
+    count()
+        列
+        star    用于统计行数, 只要有一个字段不为null,
+        常量    用于统计行数
+        
+        MYISAM  count(star) 效率最好
+        INNODB  count(star) 和 count(1) 效率差不多
+
+    分组前筛选 where
+    分组后筛选 having
+
+    能用分组前筛选的尽量用分组前筛选
+
+
+6. 连接查询(多表查询)
+
+    内连接
+        等值连接
+        非等值连接
+        自连接
+    外连接
+        左外连接
+        右外连接
+        全外连接
+    交叉连接
+
+    
+    等值连接
+        where a.id = b.refid
+        
+        select last_name,department_name
+        from employees a,departments b
+        where a.department_id = b.department_id;
+        
+        如果为表设置了别名，列就不能用原来的表名进行限定, 而只能使用表别名
+        
+        n表连接至少需要n-1个条件
+        
+    非等值连接
+        也是笛卡尔乘积取交集
+        
+    自连接
+
+7. 子查询
+8. 分页查询
+9. union联合查询
+
+
+## DML
+
+1. 插入语句
+2. 修改语句
+3. 删除语句
+
+## DDL(Data Define Language)
+
+1. 库和表的管理
+
+
+
+2. 常见数据类型介绍
+3. 常见约束
+
+
+## TCL(Transaction Control Language)
+
+事务和事务处理
+
+
+## DCL
+
+
+## 视图
+
+## 存储过程
+
+## 流程控制
+
+
+
+## 数据备份与恢复
+
+1. 备份：从数据库导出数据：
+
+    格式：mysqldump -h链接ip -P(大写)端口 -u用户名 -p密码数据库名>d:XX.sql(路劲)
+
+    示例：mysqldump -h132.72.192.432 -P3307 -uroot -p8888 htgl > bak.sql;
+
+2. 备份导出示例：
+
+    1、导出数据和表结构——将特定数据库特定表中的数据和表格结构和数据全部返回
+
+    mysqldump --u  b_user -h 101.3.20.33 -p'H_password'  -P3306 database_di up_subjects > 0101_0630_up_subjects.sql
+
+    2、导出表结构却不导出表数据——只返回特定数据库特定表格的表格结构，不返回数据,添加“-d”命令参数
+
+    mysqldump --u  b_user -h 101.3.20.33 -p'H_password'  -P3306 -d database_di up_subjects > 0101_0630_up_subjects.sql
+
+    3、导出表结构和满足挑顶条件的表数据——只返回特定数据库中特定表的表格结构和满足特定条件的数据
+
+    mysqldump --u  b_user -h 101.3.20.33 -p'H_password'  -P3306 database_di up_subjects --where=" ctime>'2017-01-01' and ctime<'2017-06-30'" > 0101_0630_up_subjects.sql
+
+      4、导出数据却不导出表结构——只返回特定数据库中特定表格的数据，不返回表格结构，添加“-t”命令参数
+
+    mysqldump --u  b_user -h 101.3.20.33 -p'H_password' -t -P3306 database_di up_subjects  >0101_0630_up_subjects.sql
+
+    5、导出特定数据库的所有表格的表结构及其数据，添加“--databases ”命令参数
+
+    mysqldump  --u  b_user -h 101.3.20.33 -p'H_password' -P3306 --databases test  > all_database.sql
+
+3. 恢复导入数据库数据：
+
+将导出的本地文件导入到指定数据库
+
+    1、系统命令行
+
+    格式：mysql -h链接ip -P(大写)端口 -u用户名 -p密码 数据库名 < d:XX.sql(路劲) 
+
+    mysql -uusername -ppassword db1 <tb1tb2.sql
+
+    2、或mysql命令行
+
+    mysql>
+
+    user db1;
+
+    source tb1_tb2.sql;
+
+    3、恢复整个数据库的方法：
+
+    mysql -u  b_user -h 101.3.20.33 -p'H_password' -P3306   < all_database.sql
+
