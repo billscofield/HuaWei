@@ -40,6 +40,10 @@ sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/i
 # tmux 配置
 ln -s /gitstore/.tmux.conf ~/
 
+
+# nmap
+apt install -y nmap
+
 # 安装 NFS客户端
 apt-get install nfs-common
 
@@ -68,4 +72,8 @@ apt install -y ranger
 
 # vim
 
+
+# asciinema tty录屏
+
+apt install asciinema
 
