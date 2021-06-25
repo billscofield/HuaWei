@@ -193,10 +193,38 @@ fcitx-configtool or fcitx-config-gtk3
 
 
 
+
+#------------------------BEGIN MySQL ------------------------------
+
+apt install -y ffmpeg
+
+# If you want virtual camera support you need v4l2loopback-dkms installed. You
+# can install it with the following command :
+apt install -y v4l2loopback-dkms
+
+apt install -y obs-studio
+
+#------------------------BEGIN MySQL ------------------------------
+
+
+
+#------------------------BEGIN Download Tools ------------------------------
+apt install -y aria2
+#https://github.com/ziahamza/webui-aria2
+git clone https://gitee.com/billscofield/webui-aria2.git /git/software/webui-aria2
+#------------------------END Download Tools ------------------------------
+
+
+
+
 #------------------------BEGIN MySQL ------------------------------
 
 
 apt install mycli
 
 #------------------------END MySQL ------------------------------
+
+
+
+
 
