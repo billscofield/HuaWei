@@ -50,11 +50,13 @@ option explains
 ./configure --help  查看了所有关于gui的选项，都加上了，也是不行...
 
 
+
 ./configure --with-features=huge \
    --with-x \
    --enable-rubyinterp \
    --enable-python3interp \
-   --with-python3-config-dir=/usr/lib/python3.7/config-aarch64-linu-gun/ \
+   // YOU SHOULD INSTALL python3-dev OR YOU'LL NOT GET python3-config-dir
+   --with-python3-config-dir=/usr/lib/python3.7/config-3.7m-x86_64-linux-gnu \
    --enable-perlinterp \
    --enable-gui=auto \
    --enable-gtk2-check \
@@ -65,7 +67,7 @@ option explains
    --enable-luainterp \
    --enable-perlinterp \
    --enable-multibyte \
-   --prefix=/usr/local/vim82python3
+   --prefix=/usr/local/vimPython3
 
 
 

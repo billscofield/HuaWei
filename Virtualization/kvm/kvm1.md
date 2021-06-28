@@ -115,11 +115,22 @@ KVM体系结构
         内核模块
         初始化CPU硬件，打开虚拟化模式，一直吃虚拟机的运行
         负责CPU,内存,中断控制器，时钟
+        
     QEMU
         模拟网卡，显卡，存储控制器和硬盘
-
+        
+        QEMU是一款开源的模拟器及虚拟机监管器(Virtual Machine Monitor, VMM)。
+        
+        QEMU主要提供两种功能给用户使用。
+            
+            一是作为用户态模拟器，利用动态代码翻译机制来执行不同于主机架构的代码。
+            
+            二是作为虚拟机监管器，模拟全系统，利用其他VMM(Xen, KVM, etc)来使用
+            硬件提供的虚拟化支持，创建接近于主机性能的虚拟机。
+        
     libvirt
         它提供统一 API, 守护进程 libvirtd 和一个默认命令行管理工具 virsh
+
 
 
 KVM 集中管理与控制
@@ -214,13 +225,16 @@ centos 7 kikstart
 virt-manager: python 开发的图形化管理工具
 
 iso 文件
+
     windows server 2003
 
 磁盘空间
+
     8e LVM
 
 
 fdisk /dev/sdb
+
     创建 sdb1 LVM
 
 pvcreate /dev/sdb1

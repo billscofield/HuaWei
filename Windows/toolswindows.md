@@ -93,3 +93,16 @@ vidmore dvd creator
 Add Hardware Wizard
 
 用这个命令添加虚拟回环网卡, win10 中需要在运行里边输入
+
+
+## wechat
+
+wechat 多开
+
+```wechat.bat
+@echo off
+start /d "%~sdp0" WeChat.exe
+start /d "%~sdp0" WeChat.exe
+exit
+
+```
