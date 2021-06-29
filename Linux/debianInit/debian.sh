@@ -138,6 +138,11 @@ sed -i 's/geteuid/getppid/' /usr/bin/vlc
 #------------------------END vlc----------------------------
 
 
+# whois   CNNIC(中国互联网络信息中心)
+# port 43 TCP
+apt-get install -y whois
+
+
 # screen record
 apt install asciinema
 

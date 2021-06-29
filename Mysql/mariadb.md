@@ -567,24 +567,200 @@ LIMIT
 
 1. 库和表的管理
 
-    增: create
-        create database [if not exists] 库名
+    增: CREATE
+        CREATE DATABASE [IF NOT EXISTS] 库名
+        
+        CREATE TABLE [IF NOT EXISTS] 表名(
+            列1, 
+            列2 
+        )
 
 
-    删: drop
-        drop database [if exists] 库名;
+    删: DROP
+        DROP DATABASE [IF EXISTS] 库名;
+        
+        DROP TABLE [IF EXISTS] 表名;
 
     改: alter
-        alter database 库名 character set gbk;
+        ALTER DATABASE 库名 CHARACTER SET gbk;
+        
+        表名
+            ALTER TABLE 表名 RENAME TO 新表名;
+         
+        列名
+            ALTER TABLE 表名 CHANGE COLUMN 列名 新列名 列类型;
+         
+        列类型
+            ALTER TABLE 表名 MODIFY COLUMN 列名 列类型;
+         
+        添加列
+            ALTER TABLE 表名 ADD COLUMN 列名 列类型;
+
+    表的复制
+        1. 仅仅复制表结构
+            CREATE TABLE 新表名 LIKE 旧表名;
+            
+        2. 同时复制表结构+数据
+            CREATE TABLE 表名 SELECT * FROM 旧表名
+            CREATE TABLE 表名 SELECT 列名1，列名2 FROM 旧表名 条件;
+            CREATE TABLE 表名 SELECT DB1.列名1，DB2.列名2 FROM 旧表名 条件; //可以跨库
+            
+            复制部分列
+            CREATE TABLE 表名 SELECT 列名1，列名2 FROM 旧表名 WHERE 1=2;
+            CREATE TABLE 表名 SELECT 列名1，列名2 FROM 旧表名 WHERE 0;
 
 2. 常见数据类型介绍
+    
+    整型
+        tinyint         1字节,可以无符号UNSIGNED    t1 UNSIGNED
+        smalltint       2字节,可以无符号UNSIGNED
+        mediumint       3字节,可以无符号UNSIGNED
+        int/integer     4字节,可以无符号UNSIGNED    int(11) 显示长度
+        bigint          8字节,可以无符号UNSIGNED
+        
+        默认有符号
+        超出临界值，报警告，并出入临界值
+        如果不设置长度，会有默认长度,(范围只是由类型界定，这个长度是显示宽度，要搭配zerofill使用，否则没有效果,并且有了zerofill 就默认是无符号)
 
-3. 常见约束
+    小数
+        定点数
+            DEC(M,D)            M+2字节, M:整数位+小数位的位数  D:小数点后的位数
+            DECIMAL(M,D)        超过范围，就插入临界值 decimal(4.2), 插入11111.11 值就是999., 也可能不会插入, 要看配置
+            DECIMAL(10,0)
+            
+        浮点数
+            float       4字节
+            double      8字节
+            默认精度根据输入来的
+        
+    字符型
+        较短的：char, varchar
+            char(M)         //多少个字符, 而不是字节;M:[0,255], 默认为1
+            varchar(M)      //[0,65535]
+        较长的: text, blob
+        
+    ENUM枚举
+        ENUM('a','b','c')    //不区分大小写
+        
+    SET
+        SET('a','b','c')
+        insert into 表明 values('a');
+        insert into 表明 values('a,b');    //不区分大小写
+        
+    日期时间型
+        date
+        time
+        year
+        datetime            8字节
+        timestamp           4字节, 和实际市区有关，和MySQL版本有关
+            东八区插入的时间，如果此时更改为0时区，时间会自动减8
+        
+        除了 timestamp 类型支持系统默认值设置，其他类型都不支持, NOW() 或 DEFAULT CURRENT_TIMESTAMP() 
+        set time_zone='+8:00'
+        show variables like '%time_zone%'
+
+3. 常见约束(6大约束)
+
+    1. default 
+    2. not null: 不能为空
+    3. primary key, 主键，保证字段值唯一性,并且非空
+    4. unique 唯一约束, 可以为空
+    5. check 检查约束(mysql不支持,但是语法不报错), 比如年龄，性别
+    6. foreign key, 外健，用于限制两个表的关系
+        show index from 表
+
+    约束的类型
+        表约束
+            除了 not null 和 default
+        列约束
+            6大约束都可以，但是外健约束没有效果
+
+    ```列约束
+    CREATE TABLE IF NOT EXISTS STUINFO(
+        id INT NOT NULL PRIMARY KEY,
+        stuname VARCHAR(20) NOT NULL,
+        gender CHAR(1) CHECK(GENDER='男' or GENDER='女'),
+        seat INT UNIQUE,
+        age INT DEFAULT 18,
+        majorid INT FOREIGN KEY REFERENCES MAJOR(ID);
+    )
+    ```
+
+    ```表约束
+    CREATE TABLE IF NOT EXISTS STUINFO(
+        id INT,
+        stuname VARCHAR(20),
+        gender CHAR(1),
+        seat INT,
+        age INT,
+        majorid INT,
+        
+        constraint pk primary key(id),      //主键名的约束名在mysql中总是 PRIMARY, 即使自己重命名
+        constraint uq unique(seat),         //constraint uq 可以省略
+        constraint ck check(gender='男' or gender='女'),
+        constraint fk_stuinfo_major foreign key(majorid) references major(id);
+    )
+
+    SHOW INDEX FROM stuinfo;
+    ```
+
+    主键一般用列级，外健用表级
 
 
-## TCL(Transaction Control Language)
 
-事务和事务处理
+    创建表后修改约束
+        列约束
+        alter table 表名 modify
+        
+        表约束
+        alter table 表名 add primary key(id);
+        alter table 表名 add unique(seat);
+        alter table 表名 add foreign key(majorid) feferences major(id);
+        
+        alter table 表名 add constraint 约束名 primary key(id);
+        alter table 表名 add constraint 约束名 unique(seat);
+        alter table 表名 add constraint 约束名 foreign key(majorid) feferences major(id);
+            
+        show index from 表名
+
+        删除
+        alter table 表名 drop 
+
+### 主键 VS.唯一
+
+        保证唯一性      是否允许为空                可以有几个      是否支持多列组合
+主键        y               x                           1个         primary key(id,stuname), 可以但不推荐
+唯一        y               y(只能一个null)             多个        unique(seat1,seat2), 可以但不推荐
+
+### 外健
+
+类型要一致或兼容
+
+主表(如部门表)中的关联列必须是一个key,如 unique (一般是主键)
+
+先插入主表，再插入从表
+先删除从表，再删除主表
+
+
+### 标识列
+
+自增长列
+
+auto_increment
+
+show variables like '%auto_increment'
+    auto_increment_increment    1   //步长
+    auto_increment_offset 1         //起始值，mysql不支持修改
+
+不是必须和主键搭配，但要求是一个key, 如 unique
+
+一个表中只能有一个 auto_increment
+
+只能是数值型，float，double 也可以
+
+
+## TCL(Transaction Control Language) 事务和事务处理
+
 
 
 ## DCL
