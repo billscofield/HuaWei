@@ -239,10 +239,12 @@ LIMIT
         isnull(表达式/列)           是null返回1,否返回零
         length()                    字符串字符字节长度, 也可以是数字,小数(小数点也是一个),没有了 char_length(),和字符集有关
         user()
+        password('')
+        md5('')
 
 
     字符函数
-        length()
+        length()                        字节长度
         concat(,,)
         upper()
         lower()
@@ -263,6 +265,7 @@ LIMIT
         floor()
         truncate(num,digit)             截断，digit:小数保留几位
         mod(a,b)                        a%b 取余    a-a/b*b
+        rand()                          (0,1) 之间的随机数
 
     日期函数
         now()                           2021-06-20 11:50:13
@@ -314,6 +317,7 @@ LIMIT
         end as 新工资
         from employees;
 
+
         select salary,
         -> case
         -> when salary>2000 then 'a'
@@ -324,11 +328,11 @@ LIMIT
 
 
 5. 分组函数(聚合函数)
-    sum                 null 不参于运算
-    avg                 null 不参数预算
-    max                 null 不参数预算
-    min                 null 不参数预算
-    count               null 不参数预算
+    sum                 null 不参于运算 只能处理数值类型
+    avg                 null 不参数预算 只能处理数值类型
+    max                 null 不参数预算 可以处理任何数据类型
+    min                 null 不参数预算 可以处理任何数据类型
+    count               null 不参数预算 可以处理任何数据类型
 
     和 distinct 搭配
         select sum(distinct salary) from employees;
@@ -349,15 +353,28 @@ LIMIT
 
 6. 连接查询(多表查询)
 
-    内连接
+    内连接(也可以用inner join,inner join 是c99的语法，没有 inner join 是c92的语法,join 可以省略)
         等值连接
         非等值连接
         自连接
+        
     外连接
-        左外连接
-        右外连接
-        全外连接
-    交叉连接
+        左外连接(left join)
+        右外连接(right join)
+        全外连接(mysql不支持)(full join)
+        
+        没有匹配的主表中用 null 填充
+        
+        select 查询列表
+        from 表1 别名 [连接类型]
+        join 表2 别名 
+        on 连接条件
+        [where]
+        [group by ]
+        ...
+
+    交叉连接(cross join)
+        就是笛卡尔乘积
 
     
     等值连接
@@ -377,23 +394,191 @@ LIMIT
     自连接
 
 7. 子查询
+    
+    出现在其他语句中的select语句，称为子查询
+
+    出现的位置
+        select 后面
+            仅仅支持标量子查询
+            
+            ```
+            select d.*,(
+                SELECT COUNT(*)
+                FROM employees e
+                WHERE e.department_id = d.department_id
+                ) 个数
+                FROM departments d;
+            
+            ```
+            
+        from 后面
+            支持表子查询(Every derived table must have its own alias)
+            
+        where / having 后面
+            标量子查询!!!
+            列子查询!!!
+            行子查询
+            
+        exists 后面(相关子查询)
+            表子查询
+            //是否有值，一个完整的select, 总是返回1或0
+            select ixists(select employee_id from employees);
+            
+            //有员工的部门名
+            select department_name
+            from departments d
+            where exists(
+                select * 
+                from employees e
+                where d.department_id = d.department_id
+            )
+            
+            可以用in代替
+            select department_name
+            from departments d
+            where d.department_id
+            IN (select department_id from employees)
+
+            //没有女朋友的男生信息
+            select bo.*
+            from boys bo
+            where bo.id NOT IN(
+                select boyfriend_id
+                from beauty
+            )
+            
+            select bo.*
+            from boys bo
+            where NOT exists(
+                select bo.id from beauty b
+                where b.boyfriend_id = bo.id
+            )
+
+    结果集的行列数不同
+        标量子查询  (结果集只有一行一列)
+        列子查询    (结果集只有一列多行)
+        行子查询    (结果集有一行多列)
+        表子查询    (结果集有多行多列)
+
+    单行操作符: > >= = < <= <>
+    多行操作符: IN, ANY/SOME, ALL
+        列子查询
+
+        ANY/SOME: 和子查询返回的某一个值比较 a > any(select ...)    > min()
+        ALL: 和子查询返回的所有值比较   > max()
+
+        = any
+        in 
+
+        行子查询
+            select *
+            FROM employees
+            WHERE (employee_id,salary)=(
+                SELECT MIN(employee_id),MAX(salary)
+                FROM employees
+
+
 8. 分页查询
+    limit offset(起始索引,从0开始),size
+
+    limit 0,5;
+
+    limit (page-1)xsize,size
+
 9. union联合查询
+    将条件拆分成多个
+
+    要相同列数, 每一列的内容类型最好一致
+    union 会自动去重复，可以使用 union all 
 
 
 ## DML
 
 1. 插入语句
+    insert into 表明
+    set 列名x=值x,列名y=值y;
+
+    insert into 表 values(),(),();
+
+    insert into 表 select 
+    insert into 表(x,y) select 'a','b';
+    insert into 表(x,y) select 'a','b' union select 'c','d';        //union 合并的是select 的整体
+
+
 2. 修改语句
+    单表中的记录
+        update 表 set 列=值,列2=值2 where
+
+    修改多表
+        update 表1 别名, 表2 别名       //92
+        set 列=值
+        where 
+        and
+
+
+        update 表1 别名                 //99
+        inner|left|right join 表2 别名
+        set 列=值
+        where 
+        and
+
 3. 删除语句
+
+    delete
+
+    truncate table 表                               //清空，不能加别的关键字
+
+
+
+    删除A的girlfriend
+        
+        delete b
+        from beauty b 
+        inner join boys bo on b.boyfrient_id = bo.id
+        where bo.boyname = 'a';
+
+    删除A和A的girlfriend
+        
+        delete b,bo
+        from beauty b 
+        inner join boys bo on b.boyfrient_id = bo.id
+        where bo.boyname = 'a';
+
+
+    delete 表1的别名, 表2的别名                     // 删除表1的记录就只写表1, 92语法
+    from 表1 别名, 表2 别名
+    where 
+    and
+
+    delete 表1的别名,表2的别名
+    from 表1 别名
+    inner|left|right join 表2 别名 on 条件
+    where 
+
+
+    delete 和 truncate 的区别:
+        1. 自增,delete 从断点继续; truncate 从新从1开始
+        2. truncate 无返回值，共0行受影响; delete 有返回值
+        3. truncate 无法回滚，delete可以回滚
+
+
 
 ## DDL(Data Define Language)
 
 1. 库和表的管理
 
+    增: create
+        create database [if not exists] 库名
 
+
+    删: drop
+        drop database [if exists] 库名;
+
+    改: alter
+        alter database 库名 character set gbk;
 
 2. 常见数据类型介绍
+
 3. 常见约束
 
 
