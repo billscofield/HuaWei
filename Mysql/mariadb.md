@@ -761,6 +761,80 @@ show variables like '%auto_increment'
 
 ## TCL(Transaction Control Language) 事务和事务处理
 
+事务:一个或一组sql语句组成一个执行单元，这个执行单元要么全部执行，要么全部不执行。
+
+存储引擎: show engines
+
+事务的属性 ACID
+
+    原子性 Atomicity
+        指事务是一个不可分割的工作单位，要么都发生，要么都不发生
+        
+    一致性
+        从一个一致性状态变换到另一个一致性状态
+        
+    隔离性 Isolation
+        事务互不干扰
+        
+    持久性 Durability
+
+事务分类
+    隐式事务: 没有明显的开契合结束标记, 如 insert,update,delete,delete
+
+    显示事务: 有明显的开启与结束的标记,前提需要关闭自动提交
+
+    ```
+
+    show variables like "%autocommit%"
+    set autocommit=off    或者 =0   //针对当前会话
+
+    1、关闭自动提交
+    SET autocommit=0;
+
+    2、开启事务
+    START TRANSACTION;
+
+    3、事务语句
+    ALTER TABLE girls MODIFY gname VARCHAR(20) NOT NULL;
+    INSERT INTO girls VALUES(0,'张三123');
+
+    4、明显的结束标记
+    COMMIT;  #提交
+    ROLLBACK;  #回滚
+
+    #查看
+    SELECT * FROM girls;
+
+    注意点：
+    1、关闭自动提交
+    SET autocommit=0;
+
+    2、开启事务
+    START TRANSACTION;
+
+    3、需要执行的sql代码
+    sql1;
+    sql2;
+    .......
+
+    4、明显的结束标志
+    commit / rollback
+    ```
+
+数据库的隔离
+
+
+    脏读:对于两个事务，t1,t2,如果T1读取了已经被t2修改过的但是还没有提交的数据，
+    但是最后t2回滚了，t1读取的内容是临时并且无效的
+        
+        更新
+
+    不可重复读:对于两个事务，T1，T2读取了一个字段的值，但是T2更新了这个字段,T1
+    再次读取的时候，两读取的数据是不一致的
+
+    幻读:对于两个事务T1,T2,T1从一个表中按照一定的条件读取数据，接着T2将表进行了
+    更新，插入几行新数据，当T1再次以相同的条件进行读取的时候，会出现新的数据
+        插入
 
 
 ## DCL

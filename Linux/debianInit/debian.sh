@@ -156,6 +156,8 @@ apt install asciinema
 apt install zathura
 
 
+
+
 #------------------------BEGIN VIM ------------------------------
 ## install dependencies
 ## 1. X11 header files
@@ -186,15 +188,31 @@ git clone https://gitee.com/billscofield/vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 
 # input method
-apt-get install -y fcitx
+#apt-get install -y fcitx
 
-wget http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb
-apt install -y sogoupinyin_2.3.1.0112_amd64.deb
-apt install -f
-apt install -y sogoupinyin_2.3.1.0112_amd64.deb
-fcitx-autostart
-reboot
-fcitx-configtool or fcitx-config-gtk3
+#wget http://cdn2.ime.sogou.com/dl/index/1571302197/sogoupinyin_2.3.1.0112_amd64.deb
+#apt install -y sogoupinyin_2.3.1.0112_amd64.deb
+#apt install -f
+#apt install -y sogoupinyin_2.3.1.0112_amd64.deb
+#fcitx-autostart
+#reboot
+#fcitx-configtool or fcitx-config-gtk3
+
+# ibus
+apt install ibus ibus-pinyin
+
+# 切换到ibus框架
+im-config
+#或者 im-config -s ibus
+
+
+# 然后需要切换为 python2 
+
+ibus-setup
+
+# 配置 urxvt 支持 ibus
+# Urxvt.inputMethod:ibus
+
 
 
 
@@ -233,3 +251,8 @@ apt install mycli
 
 
 
+# excellent tools
+##------------------------ BEGIN geogebra ------------------------------
+## 免费的数字工具, 用于课堂活动, 绘图计算, 几何作图, 白板协作等等
+apt-get install geogebra
+##------------------------ END geogebra ------------------------------
