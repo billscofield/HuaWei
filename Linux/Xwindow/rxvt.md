@@ -22,7 +22,7 @@ RXVT
         通过Unicode实现的多语言支持，透明度支持，多字体显示，Perl插件支持。
 
 
-kde 环境下的 kconsole 十分之美观，gnome-terminal 也相当的好用，但是个头大的东西
+kde 环境下的 kconsole 十分之美观，gnome-terminal 也相当的好用,但是个头大的东西
 都有个不足之处——过于笨重。
 
 而 rxvt 是个轻量快速，节省内存的终端，然而不支持中文。

@@ -6,13 +6,17 @@ https://www.slant.co/topics/1902/~tiling-window-managers-for-linux
 ## i3
 
 
-i3 requires an X-server and is not supported by Wayland. It is available as a metapackage that includes i3-wm, i3lock, i3status, dunst, and suckless-tools.(https://wiki.debian.org/i3)
+i3 requires an X-server and is not supported by Wayland. It is available as a
+metapackage that includes i3-wm, i3lock, i3status, dunst, and
+suckless-tools.(https://wiki.debian.org/i3)
 
 i3 是一种动态的平铺式窗口管理器，其灵感来自于面向开发者与资深用户的 wmii。
 
-i3 的既定目标包括清晰可读的文档，完善的多显示器支持，基于树形结构的窗口管理，提供 vim 式的多种操作模式。
+i3 的既定目标包括清晰可读的文档，完善的多显示器支持，基于树形结构的窗口管理，提
+供 vim 式的多种操作模式。
 
-i3这类窗口管理器与Xfce,KDE,Gnome，Cinnamon这类桌面软件专注于华丽的界面不同的是，更加专注于键盘控制，和效率提升，定制化。
+i3这类窗口管理器与Xfce,KDE,Gnome，Cinnamon这类桌面软件专注于华丽的界面不同的是，
+更加专注于键盘控制，和效率提升，定制化。
 
 i3 软件包组, 其中包含:
 
@@ -42,14 +46,18 @@ exit i3
 
     i3 restart
 
-    i3 must be restarted for the changes to take effect. This will not cause any applications to close, but may occasionally cause them to move.
+    i3 must be restarted for the changes to take effect. This will not cause
+    any applications to close, but may occasionally cause them to move.
 
 
 ### 安装
 
 apt install i3
 
-apt install xcompmgr    //设置半透明
+apt install compton     // 设置半透明
+            xcompmgr    // 不用这个了
+            // Compton 是 xcompmgr-dana 的分支，而后者又是 xcompmgr 的分支。
+
 
 apt install feh         //设置背景
 
@@ -65,6 +73,14 @@ vi ~/.config/i3/config
 exec --no-staretup-id xcompmgr &
 
 exec_always --no-startup-id feh --bg-scale "/home/bill/Pictures/super.jpg"
+
+
+---
+
+如果你没有找到这个config文件，则把/etc/i3/config这个文件复制过去，或者是直接运
+行命令
+
+    i3-config-wizard
 
 
 ### 修改默认桌面管理器为 i3
@@ -111,7 +127,13 @@ transset n
 
 #### 方法2：compton
 
-Compton 是一个独立的合成管理器，可以给不带合成功能的窗口管理器（例如 i3）带来淡入淡出、半透明、阴影等视觉效果。
+Compton 是一个独立的合成管理器，可以给不带合成功能的窗口管理器（例如 i3）带来淡
+入淡出、半透明、阴影等视觉效果。
+
+compton是一个使你窗口透明化的工具，如果你当前使用的软件支持窗口透明的功能，那么
+compton可以帮你设置透明度，阴影效果，窗口切换效果等。
+
+    配置文件路径    ~/.config/compton.conf
 
 Compton 是 xcompmgr-dana 的分支，而后者又是 xcompmgr 的分支。
 
@@ -127,8 +149,11 @@ dpkg --listfiles compton
     man compton 
     /CONFIGURATION FILES
 
-    If --config is not used, compton will seek for a configuration file in $XDG_CONFIG_HOME/compton.conf 
-    (~/.config/compton.conf, usually), then ~/.compton.conf, then compton.conf under $XDG_CONFIG_DIRS (often /etc/xdg/compton.conf).
+    If --config is not used, compton will seek for a configuration file in
+    $XDG_CONFIG_HOME/compton.conf 
+
+    (~/.config/compton.conf, usually), then ~/.compton.conf, then compton.conf
+    under $XDG_CONFIG_DIRS (often /etc/xdg/compton.conf).
 
 
 当前聚焦的窗口透明度低一些，其他窗口透明度高一些
@@ -141,6 +166,10 @@ dpkg --listfiles compton
     exec_always compton -b
 
     这样每次打开i3wm都会后台运行compton。关闭compton可以输入pkill compton。
+
+    -b, --daemon
+           Daemonize process. Fork to background after initialization. Causes
+           issues with certain (badly-written) drives.
 
 
 compton 如何重载配置文件???

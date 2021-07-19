@@ -1,4 +1,5 @@
-aria2c has a man page while aria2 does not. I suspect you are right in that the "aria2c" is the "command" while "aria2" denotes the "project".
+aria2c has a man page while aria2 does not. I suspect you are right in that the
+"aria2c" is the "command" while "aria2" denotes the "project".
 
 aria2c has been merged into aria2 and a synonym created
 
@@ -16,34 +17,52 @@ aria2c has been merged into aria2 and a synonym created
     Tag Synonym aria2c -> aria2 was approved!
     `````
 
-    aria2 is package name and aria2c is a binary file inside it. As you can see here, aria2c is the only executable file inside aria2 package
+    aria2 is package name and aria2c is a binary file inside it. As you can see
+    here, aria2c is the only executable file inside aria2 package
 
-    many programs can use run-time parameters with the executable name or have a command that is different from the product name, but we generally use the product name for the tag rather than the executable name or command. That would be another rationale for using aria2 for the tag
+    many programs can use run-time parameters with the executable name or have
+    a command that is different from the product name, but we generally use the
+    product name for the tag rather than the executable name or command. That
+    would be another rationale for using aria2 for the tag
 
 
 
 
 aria2
+
     ria2 is a lightweight multi-protocol & multi-source command-line download utility. 
+
 支持的协议
+
     It supports HTTP/HTTPS, FTP, SFTP, BitTorrent and Metalink. 
+
 配置
+
     aria2 can be manipulated via built-in JSON-RPC and XML-RPC interfaces.
+
 支持的平台
+
     windows,linux,OSX,Android
 
 Features
+
     Multi-Connection Download
+
     Lightweight
+
     Fully Featured BitTorrent Client(功能齐全的BitTorrent客户端)
+    
     Remote Control
-        aria2 supports RPC interface to control the aria2 process. The supported interfaces are JSON-RPC (over HTTP and WebSocket) and XML-RPC
+
+        aria2 supports RPC interface to control the aria2 process. The
+        supported interfaces are JSON-RPC (over HTTP and WebSocket) and XML-RPC
 
 
 Linux 
 
 ## 安装 
-    apt install aria2
+
+apt install aria2
 
 ## 下载
 
@@ -51,24 +70,31 @@ aria2c http://xx.com/xx
 
 
 Download from WEB:
+
     $ aria2c http://example.org/mylinux.iso
 
 Download from 2 sources:
+
     $ aria2c http://a/f.iso ftp://b/f.iso
 
 Download using 2 connections per host:
+
     $ aria2c -x2 http://a/f.iso
 
 BitTorrent:
+
     $ aria2c http://example.org/mylinux.torrent
 
 BitTorrent Magnet URI:
+
     $ aria2c 'magnet:?xt=urn:btih:248D0A1CD08284299DE78D5C1ED359BB46717D8C'
 
 Metalink:
+
     $ aria2c http://example.org/mylinux.metalink
 
 Download URIs found in text file:
+
     $ aria2c -i uris.txt
 
 

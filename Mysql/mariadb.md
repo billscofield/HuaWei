@@ -17,6 +17,8 @@ Step 1 — Installing MariaDB
 
     apt install -y libmariadb-dev
 
+    注: mariadb-server 默认包含了 mariadb-client: dpkg -l | grep mariadb-client
+
 Step 2 — Configuring MariaDB
 
     mysql_secure_installation
@@ -41,6 +43,13 @@ Step 3 — (Optional) Adjusting User Authentication and Privileges
     +-----------+------+-------------------------------------------+-----------------------+
 
     ```
+
+    WITH GRANT OPTION 这个选项表示该用户可以将自己拥有的权限授权给别人。注意：
+    经常有人在创建操作用户的时候不指定WITH GRANT OPTION选项导致后来该用户不能使
+    用GRANT命令创建用户或者给其它用户授权。
+
+    如果不想这个用户有这个grant的权限，可以不加这句
+
 
 Step 4 — Testing MariaDB
     
@@ -93,6 +102,17 @@ utf8 不是 utf-8
 mysql 的root密码和linux的root不是一回事儿, 默认没有密码
 
 
+配置文件
+
+    /etc/mysql/mariadb.cnf
+
+    !include /etc/mysql/conf.d/
+
+    !include /etc/mysql/mariadb.conf.d/
+
+    ~/.my.cnf
+
+
 ```/etc/mysql/mariadb.conf.d/50-server.cnf
 [mysqld]¬
 ¬
@@ -120,6 +140,15 @@ character-set-server  = utf8mb4¬
 collation-server      = utf8mb4_general_ci
 ```
 
+表的编码转换可以用：（MySQL   Version   >   4.12）
+
+    ALTER   TABLE   tbl_name   CONVERT   TO   CHARACTER   SET   charset_name;
+
+    之前的版本可以用：
+
+    ALTER   TABLE   tbl_name   CHARACTER   SET   charset_name;
+
+
 
 ```/etc/mysql/mariadb.conf.d/50-client.cnf
 
@@ -134,16 +163,17 @@ socket = /var/run/mysqld/mysqld.sock                    // /var/run -> /run
 
 ## 客户端工具
 
-SQLyog: 会自动将关键字转为大些
+SQLyog: 会自动将关键字转为大写
 
 
 ## 常见命令
 
-不区分大小写，但是建议关键字大些，表名、列名小写
+关键字、表名和列名不区分大小写，但是建议关键字大些，表名、列名小写
 
 select database()                                       //当前所在数据库
 
 select version()                                        //查看版本
+
 
 ## 注释
 
@@ -201,9 +231,9 @@ LIMIT
         &&
         || 
         !
-        and(mysql 中推荐使用这个)
-        or(mysql 中推荐使用这个)
-        not(mysql 中推荐使用这个)
+        and (mysql 中推荐使用这个)
+        or  (mysql 中推荐使用这个)
+        not (mysql 中推荐使用这个)
 
     模糊查询
         like
@@ -231,20 +261,26 @@ LIMIT
     
     单行行数
         count()                     非null个数
-        sum()
+        sum()                       不计算null
         distinct()                  也可以不用括号
         concat()                    字符串拼接
-        ifnull(表达式/列，值)
+        ifnull(表达式/列,值)
             select ifnull(commission_pct,0),last_name from employees;
         isnull(表达式/列)           是null返回1,否返回零
-        length()                    字符串字符字节长度, 也可以是数字,小数(小数点也是一个),没有了 char_length(),和字符集有关
+        length()                    字符串字符字节长度(byte), 也可以是数字,小数(小数点也是一个),和字符集有关
+        char_length()
+            character_length()      returns the length of the given string argument, measured in characters.
+                                    If the argument is not a string, it’s converted to a string.
+                                    Passing null returns null
+        bit_length()
+                                    eturns the number of bits in a string.
         user()
         password('')
         md5('')
 
 
     字符函数
-        length()                        字节长度
+        length()                        字节长度 byte
         concat(,,)
         upper()
         lower()
@@ -256,14 +292,26 @@ LIMIT
         trim(' ')                       清除首尾空格, 或字符
         trim('a' from 'aaahelloaaa');   清除首尾的字符a
         
-        lpad(str,len,填充)              用制定的自负实现左填充制定长度, 当len小于str时，str会被截断
+                                        TRIM([{BOTH|LEADING|TRAILING} [removed_str]] FROM str);
+                                        
+                                        TRIM()函数默认使用BOTH选项。
+                                        
+                                        [removed_str]是要删除的字符串。默认情况
+                                        下，它是一个空格。这意味着如果不指定特
+                                        定的字符串，则TRIM()函数仅删除空格。
+                                        
+                                        str是要删除子字符removed_str的字符串。
+                                        
+                                        TRIM()函数返回一个字符串，删除不需要的字符。
+        
+        lpad(str,len,填充)              用指定的字符实现左填充指定长度, 当len小于str时，str会被截断, 使str长度为len
         rpad(str,len,填充)
 
     数学函数
-        round(num[,digit])              digit:保留几位小数
+        round(num[,digit])              digit:保留几位小数, 四舍五入
+        truncate(num,digit)             截断，digit:小数保留几位
         ceil()
         floor()
-        truncate(num,digit)             截断，digit:小数保留几位
         mod(a,b)                        a%b 取余    a-a/b*b
         rand()                          (0,1) 之间的随机数
 
@@ -271,12 +319,13 @@ LIMIT
         now()                           2021-06-20 11:50:13
         curdate()                       2021-06-20
         curtime()                       11:51:05
-        year()
-        month()
-        monthname()
-        day()
-        dayname()
-        datediff(date1,date2)           返回天数
+        year(now())
+        month(now())
+        monthname(now())
+        day(now())
+        dayname(now())
+        
+        datediff(date1,date2)           返回天数, date1 - date2
         
         可以进行比较
         
@@ -296,14 +345,16 @@ LIMIT
             select * from employees where hiredate = str_to_date('4-3 1992', '%m-%d %Y');
         
         date_format('2018/08/09','%Y/%m/%d');
-        date_format(now(),'%Y/%m/%d');
+            以不同的格式显示日期/时间数据
+            一般第一个参数为now(), 如果是字符串的话，顺序是 now() 的顺序
+            date_format(now(),'%Y/%m/%d');
 
     流程控制函数
         select if(10<5,真,假);
         select last_name,commission_pct,if(commission_pct is null,'没有奖金', '有奖金');
         
-        case 1
-            case 字段或表达式
+        case 字段1
+            case 字段2或表达式
             when 常量1 then 值1或语句1
             when 常量2 then 值2或语句2
             else 值2或语句2;
@@ -328,11 +379,11 @@ LIMIT
 
 
 5. 分组函数(聚合函数)
+    avg                 null 不参数运算 只能处理数值类型
     sum                 null 不参于运算 只能处理数值类型
-    avg                 null 不参数预算 只能处理数值类型
-    max                 null 不参数预算 可以处理任何数据类型
-    min                 null 不参数预算 可以处理任何数据类型
-    count               null 不参数预算 可以处理任何数据类型
+    max                 null 不参数运算 可以处理任何数据类型
+    min                 null 不参数运算 可以处理任何数据类型
+    count               null 不参数运算 可以处理任何数据类型
 
     和 distinct 搭配
         select sum(distinct salary) from employees;
@@ -568,7 +619,7 @@ LIMIT
 1. 库和表的管理
 
     增: CREATE
-        CREATE DATABASE [IF NOT EXISTS] 库名
+        CREATE DATABASE [IF NOT EXISTS] 库名 DEFAULT CHARACTER SET utf8mb4;
         
         CREATE TABLE [IF NOT EXISTS] 表名(
             列1, 
@@ -594,7 +645,7 @@ LIMIT
             ALTER TABLE 表名 MODIFY COLUMN 列名 列类型;
          
         添加列
-            ALTER TABLE 表名 ADD COLUMN 列名 列类型;
+            ALTER TABLE 表名 ADD COLUMN 列名 列类型 after 某列;
 
     表的复制
         1. 仅仅复制表结构
@@ -620,7 +671,9 @@ LIMIT
         
         默认有符号
         超出临界值，报警告，并出入临界值
-        如果不设置长度，会有默认长度,(范围只是由类型界定，这个长度是显示宽度，要搭配zerofill使用，否则没有效果,并且有了zerofill 就默认是无符号)
+        
+        如果不设置长度，会有默认长度,(范围只是由类型界定，这个长度是显示宽度，
+        要搭配zerofill使用，否则没有效果,并且有了zerofill 就默认是无符号)
 
     小数
         定点数
@@ -656,6 +709,7 @@ LIMIT
             东八区插入的时间，如果此时更改为0时区，时间会自动减8
         
         除了 timestamp 类型支持系统默认值设置，其他类型都不支持, NOW() 或 DEFAULT CURRENT_TIMESTAMP() 
+        
         set time_zone='+8:00'
         show variables like '%time_zone%'
 
@@ -663,11 +717,11 @@ LIMIT
 
     1. default 
     2. not null: 不能为空
-    3. primary key, 主键，保证字段值唯一性,并且非空
     4. unique 唯一约束, 可以为空
-    5. check 检查约束(mysql不支持,但是语法不报错), 比如年龄，性别
-    6. foreign key, 外健，用于限制两个表的关系
+    3. primary key, 主键，保证字段值唯一性,并且非空
+    5. foreign key, 外健，用于限制两个表的关系
         show index from 表
+    6. check 检查约束(mysql不支持,但是语法不报错), 比如年龄，性别
 
     约束的类型
         表约束

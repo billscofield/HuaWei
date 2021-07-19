@@ -1,30 +1,245 @@
 
+X是一个协议, 实现该协议的软件有很多,如 Xfree86, Xorg, Xnest等
+
+1987年更改X版本到X11, 这一版本取得了明显的进步,后来的窗口接口改进都是基于此版本, 因此后来 X Window System 也被称作 X11
+
+1992年, XFree86 计划顺利展开, 该计划持续在维护X11R6的功能性
+
+    早期定名为XFree86 是根据 X + Free Software + x86硬件而来
+
+    早期Linux所使用的X Window System 的内核都是由XFree86这个计划提供的,因此，我们常常将X和XFree86画上等号
+
+1994年发布了X11R6, X11R6 实际上是 X Protocol version 11 Release 6
+
+XFree86 由于 license 和组织规划的原因, 不太得民心, 开发者又加入到了 X.org 基金会继续进行 X11 的维护
+    
+
+    the industry group that was the successor to the MIT X Consortium in
+    producing the main X11 releases and managing the standards
+
+    这个行业组织是MIT X协会的继承者，它生产主要的X11版本并管理这些标准
+
+    As a result, the once moribund X.Org was revitalized and reformed as an
+    open source foundation, and many developers & distributors have joined it
+    and plan to use it to replace XFree86.
+
+    结果，曾经垂死的X.Org重新焕发了生机，并被改造为一个开源基金会，许多开发人员
+    和分销商加入了它，并计划用它来取代XFree86。
+
+    https://blogs.oracle.com/solaris/post/the-difference-between-xorg-and-xfree86
+
+2005年, X.org 发布了 X11R7.x 版本
+
+
+---
+
+
+1. X server
+
+    X Server 负责管理鼠标,键盘,显卡,显示器等硬件,而X-client则负责处理程序的运行。
+
+    由于x-server负责鼠标、键盘、显卡、显示器这些输入输出部件，你必须在安装好以
+    后，告诉x-server你当前系统使用的是什么样的鼠标、键盘、显卡、显示器。由于当
+    前硬件厂商众多，所以不要指望x-server自动识别出所有需要的参数，通常你需要编
+    辑一下/etc/X11/xorg.conf这个文件来提示它一下
+
+2. X Client 
+
+    X Client 应用程序会将想要呈现的图形告知X Server, 最终由X Server 来将结果通
+    过它所管理的硬件绘制出来
+
+    如果我用电脑A远程服务器B, 则 X Server 运行于电脑A, 而 X Client 运行于服务器B
+
+    由于X Client 的目的在于生产绘图的数据，因此我们也称呼 X Client 为 X Application
+
+3. X Window Manager
+
+    X Client 的主要任务是将来自 X Server 的数据处理成绘图数据, 再返回给 X
+    Server, 所以 X Client 并不知道它在 X Server 当中的位置。
+
+    为了解决这个问题, 因此就产生了 Window Manager(WM, 窗口管理器). 窗口管理器本
+    身也是 X Client, 只是它主要负责全部 X Client 的管理
+
+    gnome   (GNU Network Object Model Environment)
+    kde     (K Desktop Environment)
+    Xface   (XForms Common Environment)
+    twm     (Tab Window Manager)
+
+
+    启动 X Window Manager 的两种方式
+        
+        1. 进入命令行模式后, 输入 startx 来启动 X 窗口, /usr/bin/startx 其实是一个 shell 脚本
+           真正起作用的是 /usr/bin/xinit
+        
+        2. 通过 Display Manager 提供的登陆界面，输入帐号密码来启动 X 窗口
+
+
+
+4. Display Manager, 提供登录需求
+
+    在本机的命令行模式下面我们可以输入 startx 来启动X, 此时由于我们已经登录系统
+    了, 因此不需要重新登录即可取得X环境
+
+    但如果是 graphical.target 环境呢? 你会发现 tty1 或其它 tty 的地方有个可以让
+    你使用图形用户界面模式登录的东西, 这个就是 Display Manager
+
+    Display Manager 最大的任务就是提供登录环境, 加载用户的 Window Manager
+
+    
+
+
+
+
 startx - initialize an X session
 
 SYNOPSIS
-       startx  [  [  client ] options ... ] [ -- [ server ] [ display ]
-       options ... ]
+    startx  [  [  client ] options ... ] [ -- [ server ] [ display ]
+    options ... ]
 
 DESCRIPTION
-       The startx script is a front end to  xinit(1)  that  provides  a
-       somewhat  nicer  user  interface for running a single session of
-       the X Window System.  It is often run with no arguments.
+    The startx script is a front end to  xinit(1)  that  provides  a
+    somewhat  nicer  user  interface for running a single session of
+    the X Window System.  It is often run with no arguments.
 
 
-搜索 xorg-xserver相关完全解析
+## xinit - X Window System initializer
+
+SYNOPSIS
+    xinit [ [ client ] options ... ] [ -- [ server ] [ display ] options ... ]
+
+DESCRIPTION
+
+    The  xinit program is used to start the X Window System server and a first
+    client program on systems that are not using a display manager such as
+    xdm(1) or in environments that use multiple window systems.  When this
+    first client exits, xinit will kill the X server and then terminate.
+
+    If no specific client program is given on the command line, xinit will look
+    for a file in the user's home directory called .xinitrc to run as a shell
+    script  to  start  up client programs.  If no such file exists, xinit will
+    use the following as a default:
+
+        xterm  -geometry  +1+1  -n  login  -display  :0
+
+    If  no specific server program is given on the command line, xinit will
+    look for a file in the user's home directory called .xserverrc to run as a
+    shell script to start up the server.  If no such file exists, xinit will
+    use the following as a default:
+
+        X  :0
+
+    Note that this assumes that there is a program named X in the current
+    search path.  The site administrator should, therefore, make a link to the
+    appropriate type of server on the machine, or create a shell script that
+    runs xinit with the appropriate server.
+
+    Note, when using a .xserverrc script be sure to ``exec'' the real X server.
+    Failing to do this can make the X server slow to start and exit.  For
+    example:
+
+        exec Xdisplaytype
+
+    An  important  point  is  that programs which are run by .xinitrc should be
+    run in the background if they do not exit right away, so that they don't
+    prevent other programs from starting up.  However, the last long-lived
+    program started (usually a window manager or terminal emulator) should be
+    left in the foreground so that the  script  won't exit (which indicates
+    that the user is done and that xinit should exit).
+
+    An  alternate  client and/or server may be specified on the command line.
+    The desired client program and its arguments should be given as the first
+    command line arguments to xinit.  To specify a particular server command
+    line, append a double dash (--) to the xinit command line (after any client
+    and arguments) followed by the desired server command.
+
+    Both  the client program name and the server program name must begin with a
+    slash (/) or a period (.).  Otherwise, they are treated as an arguments to
+    be appended to their respective startup lines.  This makes it possible to
+    add arguments (for example, foreground and background colors) without
+    having to retype the whole command line.
+
+    If an explicit server name is not given and the first argument following
+    the double dash (--) is a colon followed by a digit, xinit will use that
+    number  as  the  display number instead of zero.  All remaining arguments
+    are appended to the server command line.
+
+
+
+## 终端模拟器
+
+1. Xterm
+
+    如果感觉Xterm它很古老，没错，因为它的确很古老。Xterm出生于1984年，Xterm是X
+    Window系统的默认终端模拟器，需要避开任何的图形工具包，否则它可能会显示在你
+    的窗口管理器上。但这种简约的做法也相应的缺乏特色；这是非常简单的一个终端。
+    不过，对于一个非常小的带有图形系统的Linux，Xterm中仍有一席之地。Xterm基于
+    MIT许可。
+
+    Xterm 也是 Xinit 的默认
+
+2. gnome-terminal
+
+3. Konsole : KDE 默认的终端模拟器
+
+4. rxvt / urxvt
+
+5. Kvt
+
+6. Nxterm
+
+7. eterm
+
+8. Guake : 下拉式
+
+9. terminator
+
+10. Tilda
+    为 GTK 涉及的另一种下拉样式(Quake-style)的终端模拟器
+
+11. Yakuake
+    另一个下拉终端模拟器, KDE家族
+
+
+
+## 关于composite
+
+Xomposite是一Xserver的一个扩展。 composite可以完全用软件来实现，比如metacity，
+xfwm，等等现在基本都可以自己支持composite了，composite下面实际上也可以调用硬件
+加速，比如metacity的实现是使用的Xrender。XrenderComposite实际上这个跑到驱动里面
+去的话，如果有exa就会调用到 exapreparecomposite,checkcomposite， composite,
+donecomposite这些实现，如果要加速composite的话，就需要实现这些exa的扩展了，
+composite的运作机制，实际上所有的画面都是先离屏画的，也就是说画在一块内存/显存
+里面，这块内存是不直接显示的,然后到最后把所有的窗口做 alpha blending。 然后才显
+示到屏幕上面，这样我们就可以看到透明效果了。 
+
+composite为什么打开之后系统变慢？
+原因很明显，因为所有的画图结果都不能直接显示到屏幕，要先画到后台，然后
+windowmanager把当前所有window的buf 做alpha blending之后才显示出来，本身这个框架
+就导致延迟，然后就是alpha 运算本身很慢了。
+
+
 
 ## 1.linux图形界面框架
 
 参考至：http://dzdl.ipchina.org/site/?uid-9-action-viewspace-itemid-49
-linux图形界面又称x系统，其主要包含如下几个部分：
+
+linux图形界面又称x系统,其主要包含如下几个部分：
+
     a)xserver
+
     b)显示管理器 (Display Manager) 例如（gdm kdm xdm等）
+
     c)窗口管理器 (Window Manager) 例如（metacity ,fluxbox等）
+
     d)DM 和 WM之上的一些图形应用程序
+
 在使用中一般都是b,c,d三者集合起来构成一个完整的集成工作环境，例如KDE ,GNOME等,这就是我们平时所说的广义上的xclient
 
+
 ### a) xserver 主要提供基本的显示接口共xclient使用，并将用户的操作等也反映给xclient，是xclient与硬件的一个中间层。xserver相关的两个主要部分是
+
 (1) xorg.conf
+
 xorg.conf是X Server的主要配置文件，它包含一个当前系统的硬件资源列表。X Server就是根据这些硬件资源“组织”出基本的图形能力。xorg.conf文件在/etc/X11/xorg.conf，主要包含几个字段：
     Files: X系统使用的字体存放目录(字体的具体使用由FontConfig工具主持)
     InputDevice: 输入设备，如键盘鼠标的信息
@@ -35,12 +250,16 @@ xorg.conf是X Server的主要配置文件，它包含一个当前系统的硬件
 在具有多个显示设备的系统中，可能有多个Screen和多个ServerLayout，用以实现不同的硬件搭配。
 在最近的xorg版本中，X Server已经开始自动侦测硬件，现在的xorg.conf已经都成了默认名称。具体细节还待查，但基本原理还是不变的。
 
+
 (2) X session(X会话)
+
 X session是指X server启动后直到X server关闭之间的这段时间。这期间一切跟X相关的动作都属于X session的内容。管理X session的程序称为Display Manager，常听说的gdm或kdm就是gnome/kde所分别对应的Display Manager。
 开启一个X session，也就是开始了图形界面的使用。在开启的过程中，Display Manager会对用户进行认证(也就是用户名密码的输入)，运行事先设置好的程序(比如scim输入法就是这个时候启动的)等等。
 这个开启过程要执行的一系列操作都可以在/etc/X11/Xseesion以及/etc/X11/Xsession.d/目录下看到，其他还有一些配置文件如Xsession.options, Xresource等，都是执行的X session的初始化过程。仔细阅读这些脚本或配置文件，可以帮助你更好地理解X
 
+
 ### b), Display Manager
+
 上面说过，Display Manager(后简称DM)是管理X session的程序，常见的有gdm, kdm, xdm等。对于默认进入X界面的Linux系统，必须将DM程序在开机时执行，即：/etc/rc2.d/S13gdm。下面我们从手工启动X的过程，看一下DM为我们做了哪些工作。
 如果没有设置DM在开机时运行的话，手动启动X使用startx命令。
 man startx
@@ -48,15 +267,19 @@ man startx
 其中，xserverrc执行X server的运行任务；xinitrc则运行Xsession命令。从/etc/X11/Xsession脚本的内容可以看出，它也就是进入/etc /X11/Xsession.d/目录轮询地执行所有脚本。很明显，这些也就是前面所说的Xsession初始化工作。
 综合起来说，Display Manager完成三个任务：1, X Server的启动; 2, X session的初始化; 3, X session的管理。
 
+
 ### c), Window Manager
 X Server提供了基本的图形显示能力。然而具体怎么绘制应用程序的界面，却是要有应用程序自己解决的。而Window Manager(桌面管理器，后简称WM)就是用来提供统一的GUI组件的(窗口、外框、菜单、按钮等)。否则，应用程序们各自为政，既增加了程序开发的负担，不统一的桌面风格对视觉也是不小的挑战。
 WM的启动由DM控制，在gdm的登录窗口，我们可以进行选择。常见的WM有:Metacity(Gnome默认的WM), fluxbox, fvwm, E17等。
 
+
 ### d), X Clients
+
 最后，就是X Client了。X客户端程序，顾名思义，就是使用X服务的程序。firefox，gedit等等都属于X Client程序。X Client部分值得考虑一下的就是DISPLAY环境变量。它主要用于远程X Client的使用。该变量表示输出目的地的位置，由三个要素组成：
 [host]:display[.screen]
 host指网络上远程主机的名称，可以是主机名、IP地址等。默认的host是本地系统，你可以在自己系统上echo $DISPLAY看一下。
 display和screen分别代表输出画面的编号和屏幕的编号。具体细节由于硬件的缺乏，还有待进一步研究。
+
 
 ## 2.xserver 和x client启动过程
 
@@ -74,6 +297,7 @@ xinit 的用法为： xinit [[client] options ] [-- [server] [display] options] 
 如果不指定 server ， xinit 会查找 HOME( 环境变量 ) 目录下的 .xserverrc 文件，如果存在这个文件， xinit 直接调用 execvp 函数执行该文件。如果这个文件 不存在，那么 server 及其 display 为： X :0 。如果系统目录中不存在 X 命令，那么我们需要在系统目录下建立一个名为 X 的链接，使其指向真正的 X server 命令（ Ubuntu 下为 Xorg ）。
 
 因此startx的用法跟xinit一样：startx [ [ client ] options … ] [ – [ server ] options … ]
+
 
 (2)startx的几种启动方式
 由对 startx 脚本的分析，我们可以知道 startx 主要有三种启动方式：
@@ -115,19 +339,29 @@ exec /usr/bin/X11/X -nolisten tcp
 
 ***综上所述， startx 的默认启动过程为： startx 调用并将系统文件 /etc/X11/xinit/xinitrc 和 /etc/X11/xinit/xserverrc 作为参数传给 xinit ， xinit 就会先执行系统文件 /etc/X11/xinit/xserverrc 以启动 X Server ，然后执行 /etc/X11/xinit/xinitrc ，而 xinitrc 则会执行脚本 /etc/X11/Xsession ，而 Xsession 则会按顺序调用执行 /etc/X11/Xsession.d 目录下的文件，从而最终调用了 gnome-session 这个用于 启动 GNOME 桌面环境的程序***
 
+
 3.图形2d，3d加速简介
+
 为了是linux下图形更加流畅，必须使用加速。常用的加速方法如下
 加速常见有三种方式
-a）ShadowFB
-ShadowFB是xserver自带的与体系结构无关的2D加速方式，它将系统framebuffer复制一份，并且在拷贝回framebuffer中实现图形旋转等操作，这样可以起到一定加速作用，但是效果不好。
-b) XAA
-XAA全称XFree86 Acceleration Architecture，是由 Harm Hanemaayer 在1996年写的一个显卡硬件2D加速的驱动结构，目前大多数的显卡去动均支持这种驱动模式
-c) EXA
-EXA是X.Org发起的用于取代XAA加速的驱动结构，修改的宗旨是是XRender更加好用。
+
+    a）ShadowFB
+        
+        ShadowFB是xserver自带的与体系结构无关的2D加速方式，它将系统framebuffer复制一份，并且在拷贝回framebuffer中实现图形旋转等操作，这样可以起到一定加速作用，但是效果不好。
+
+    b) XAA
+        
+        XAA全称XFree86 Acceleration Architecture，是由 Harm Hanemaayer 在1996年写的一个显卡硬件2D加速的驱动结构，目前大多数的显卡去动均支持这种驱动模式
+
+    c) EXA
+        
+        EXA是X.Org发起的用于取代XAA加速的驱动结构，修改的宗旨是是XRender更加好用。
+
 历史上对2D 和3D加速已经做了区分，2D加速主要使用的是XAA结构，3D加速主要是通过DRM（Direct Rendering Manage) 提供.而EXA提供了比XAA更好集成XRender的结构，同时也提高了XAA的2D加速效果。
 EXA采用的方法是通过实现对OpenGL的加速以实现同时对2D，3D图像的加速，这样2D图像就可以看作是3D图像的一个子集。
 
 4.xserver 主分支代码解析
+
 参考网站：http://xwindow.angelfire.com，
 基于xorg-xserver-1.7.6版本
 xserver代码是从dix/main.c中的main函数开始执行。
@@ -140,17 +374,18 @@ InitConnectionLimits();
 ProcessCommandLine(argc, argv);
 
 随后main函数进入了一个死循环。每次循环均包含了
-a)xserver初始化
-b)xserver循环处理client消息
-c)xserver退出
-三个阶段
+    a)xserver初始化
+    b)xserver循环处理client消息
+    c)xserver退出
+    三个阶段
+
 这是xserver的main函数最外层的循环，一般启动xserver只会执行一次循环：用户在图形界面操作时，实际上xserver是处在b）阶段。
 这个循环就保证了xserver出现一般的异常时会自动恢复，比如在运行x时替换了其显卡驱动，xserver会触发异常结束第一次循环
 并在第二次循环中重新加载替换后的显卡驱动。
 
 以下分别对这三个阶段做解析
-a）xserver初始化
-xserver初始化函数非常多，以下仅粗略介绍几个比较熟悉的：
+    a）xserver初始化
+    xserver初始化函数非常多，以下仅粗略介绍几个比较熟悉的：
 
 (1)
 初始化中有如下代码：
@@ -480,13 +715,16 @@ VisualPtr visual;
 fbPictureInit (pScreen, 0, 0);
 
 #ifdef RENDER
+
 if ((s = xf86GetOptValString(info->Options, OPTION_SUBPIXEL_ORDER))) {
 if (strcmp(s, “RGB”) == 0) subPixelOrder = SubPixelHorizontalRGB;
 else if (strcmp(s, “BGR”) == 0) subPixelOrder = SubPixelHorizontalBGR;
 else if (strcmp(s, “NONE”) == 0) subPixelOrder = SubPixelNone;
 PictureSetSubpixelOrder (pScreen, subPixelOrder);
 }
+
 #endif
+
 这部分是fbPictureInit和对像素RGB顺序的初始化
 
 d)BackStore相关的初始化
@@ -537,31 +775,17 @@ if (!xf86ReturnOptValBool(info->Options, OPTION_SW_CURSOR, FALSE)) {
     if (RADEONCursorInit_KMS(pScreen)) {
     }
 }
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
+
 其中xf86ReturnOptValBool(info->Options, OPTION_SW_CURSOR, FALSE)的判断决定对光标显示是否使用硬件加速
 
 g）其他的初始化
+
 例如CloseScreen，BlockHandler 等变量赋值
 Crtc初始化xf86CrtcScreenInit (pScreen)
 和colormap相关的drmmode_setup_colormap(pScreen, pScrn)。
 
 (4)RADEONAccelInit
+
 需要重点介绍的是RADEONAccelInit函数，因为在这个函数中引入了初始化图像加速相关的函数
 
 以笔者调试过的RS780为例：

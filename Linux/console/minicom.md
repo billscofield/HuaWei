@@ -23,10 +23,14 @@ cat /proc/tty/driver/serial 查看串口驱动
     minicom -s 
 
         -s, --setup
-            Setup.  Root edits the system-wide defaults in /etc/minicom/minirc.dfl with this option.  When it  is
-            used,  minicom  does  not initialize, but puts you directly into the configuration menu. This is very
-            handy if minicom refuses to start up because your system has changed, or for the first time  you  run
-            minicom. For most systems, reasonable defaults are already compiled in.
+
+            Setup.  Root edits the system-wide defaults in
+            /etc/minicom/minirc.dfl with this option.  When it  is used,
+            minicom  does  not initialize, but puts you directly into the
+            configuration menu. This is very handy if minicom refuses to start
+            up because your system has changed, or for the first time  you  run
+            minicom. For most systems, reasonable defaults are already compiled
+            in.
 
 
     +-----[configuration]------+

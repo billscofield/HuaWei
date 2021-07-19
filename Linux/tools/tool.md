@@ -28,6 +28,8 @@ cross-platform and easy-to-use system information command line script that
 collects your Linux system information and display it on the terminal next to
 an image, it could be your distributions logo or any ascii art of your choice.
 
+what does neo mean???
+
 
 ## libimage-exiftool-perl 
 
