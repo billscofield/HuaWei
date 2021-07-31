@@ -528,3 +528,9 @@ The -L command line option is used to choose which logo to use.
 linux_logo -f -L list
 linux_logo -f -L 9
 
+
+## 文件管理器
+
+1. xfe, 即 X File Explorer
+
+2. ranger

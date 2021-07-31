@@ -3,6 +3,18 @@
 # Ctime:	2021-06-02
 # Description:	
 
+
+#------------------------BEGIN ppa------------------------------
+# debian 默认没有安装 add-apt-repository 命令
+
+apt install software-properties-common
+#------------------------END ppa------------------------------
+
+
+
+
+
+
 apt install -y git curl wget tmux tree iftop rsync  build-essential cmake
 
 
@@ -262,3 +274,15 @@ apt install texlive-full
 ## 免费的数字工具, 用于课堂活动, 绘图计算, 几何作图, 白板协作等等
 apt-get install geogebra
 ##------------------------ END geogebra ------------------------------
+
+
+
+#-------------------------------NETWORK BEGIN-------------------------------
+apt install libpcap-dev
+apt install tcpdump
+
+#---
+apt install wireshark
+#-------------------------------NETWORK END-------------------------------
+
+
