@@ -61,6 +61,8 @@ apt install -y nmap
 apt install -y net-tools
 
 
+apt install -y netdiscover
+
 # NSLOOKUP 
 apt install -y dnsutils
 
