@@ -48,6 +48,11 @@ find .. -print0
 -exec rm -f {} \;
     \   转义符， \rm , rm 本身的含义
 
+-samefile name
+
+    File refers to the same inode as name.  When -L is in effect, this can
+    include symbolic links.
+
 
 
 ## depth

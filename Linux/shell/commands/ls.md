@@ -7,6 +7,19 @@ links:
 
 -t     sort by modification time, newest first
 
+-r, --reverse
+
+    reverse order while sorting
+
+-R, --recursive
+
+    list subdirectories recursively
+
+-t  sort by modification time, newest first
+
+-S     sort by file size, largest first
+
+
 
 
 

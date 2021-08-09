@@ -1,12 +1,20 @@
+## nmtui
+    
+    tui 方式
 
 ## nmcli
 
-command-line tool for controlling NetworkManager and
-reporting network status. It can be utilized as a replacement for
-nm-applet or other graphical clients.  nmcli is used to create,
-display, edit, delete, activate, and deactivate network
-connections, as well as control and display network device
-status.
+是命令行管理 NetworkManager 的工具
+
+自动把配置写在 /etc/sysconfig/network-scripts/目录
+
+是基于会话的, 同时只能有一个会话
+
+
+command-line tool for controlling NetworkManager and reporting network status.
+It can be utilized as a replacement for nm-applet or other graphical clients.
+nmcli is used to create, display, edit, delete, activate, and deactivate
+network connections, as well as control and display network device status.
 
 
 Usage: nmcli [OPTIONS] OBJECT { COMMAND | help }
@@ -27,16 +35,34 @@ OPTIONS
   -h[elp]                                        print this help
 
 OBJECT
+  d[evice]        devices managed by NetworkManager         // 硬件相关
+  c[onnection]    NetworkManager's connections              // 逻辑相关, ipv4啊
+  n[etworking]    overall networking control                
   g[eneral]       NetworkManager's general status and operations
-  n[etworking]    overall networking control
   r[adio]         NetworkManager radio switches
-  c[onnection]    NetworkManager's connections
-  d[evice]        devices managed by NetworkManager
   a[gent]         NetworkManager secret agent or polkit agent
   m[onitor]       monitor NetworkManager changes
 
 
 
+### 设置ipv4
+
+1. 
+    nmcli connection add con-name static ifname ens33 type ethernet ip4.address 192.168.1.1/24 ipv4.gateway 192.168.1.254  ipv4.method manual  ipv4.dns 8.8.8.8    //手动, 静态
+    nmcli connection add con-name static ifname ens33 type ethernet ipv4.method auto autoconnect yes                      //自动获取
+
+    nmcli connection modify static ipv4.method manual
+    nmcli connection modify static connection.autoconnect yes
+
+
+2. 
+    nmcli connection up static
+
+3. 
+    nmcli connection show
+    nmcli connection show static
+
+    name UUID   TYPE  DEVICE
 
 ## general
 
@@ -369,3 +395,46 @@ nmcli connection add con-name static-hbsi ifname ens224 type ethernet ipv4.metho
 
 ## agent         NetworkManager secret agent or polkit agent
 ## monitor       monitor NetworkManager changes
+
+
+
+
+## 链路聚合¬
+¬
+1. Round-robin policy(负载军和轮询策略)¬
+¬
+2. Active-backup policy(主备用策略)¬
+¬
+3. broadcast(广播策略)¬
+    一个报文会被复制多份发送出去¬
+    ¬
+    4. load balancing(负载均衡)¬
+
+
+### 具体操作
+
+1. 创建链路聚合会话
+
+    nmcli con add con-name team0 ifname team0 type team config '{"runner":{"name":"activebackup"}}'
+
+2. 添加网卡成员
+
+    nmcli con add con-name team0-p1 ifname eno1 type team-slave master team0
+    nmcli con add con-name team0-p2 ifname eno2 type team-slave master team0
+
+3. 配置网络信息
+
+    nmcli con modify team0 ipv4.address 192.168.1.1/24 ipv4.gateway 192.168.1.254 ipv4.method manual ipv4.dns 8.8.8.8
+
+4. 启用会话
+
+    nmcli con up team0
+
+5. 查看链路聚合状态
+
+    teamctl team0 state
+
+6. 断开一张网卡
+
+    nmcli device disconnect eth0
+

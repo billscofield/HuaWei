@@ -1,10 +1,15 @@
 ## kali安装sogo输入法
+
 apt-get install fcitx 
+
 apt --fix-broken install
+
 dpkg -i sogo...deb
 
 system-configuration / Region & Language / input / add Chinese
+
 fcitx configuration
+
 add sogo
 
 
@@ -13,17 +18,23 @@ add sogo
 ### Debian 安装
 
 官网提供了安装方法
+
 https://github.com/rapid7/metasploit-framework/wiki/Nightly-Installers
 
 ```
+
 curl https://raw.githubusercontent.com/rapid7/metasploit-omnibus/master/config/templates/metasploit-framework-wrappers/msfupdate.erb > msfinstall && \
-  chmod 755 msfinstall && \
-    ./msfinstall
+
+chmod 755 msfinstall && \
+
+./msfinstall
+
 ```
 
 cd /opt/metasploit-framework/embedded/framework/
 
 root提示:
+
     please run msfdb as a non-root user
 
     所以我们切换普通用户
@@ -42,19 +53,26 @@ Rapid7: 一家做扫描器的公司
 
 版本
     Metasploit Framework
+        
         后门只能是基于路由的后门，有可能不成功
 
     Metasploit Pro
+
         AV 免杀
+
         Report报告
+
         基于VPN的后门
 
 Metasploit 渗透测试指南  Kali 官方 Offensive security 出版的(2011年)
 
 
 内部各个库，模块之间的信息桥梁 PostgreSQL
+
     postgresql port 5432
+
     早期版本需要先启动数据库再启动msf
+
     kali中的那个数据库的启动已经继承到了msf的启动当中
 
 msfdb

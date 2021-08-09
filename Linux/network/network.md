@@ -34,3 +34,15 @@ Raspbian:
     apt-file search /etc/resolv.conf    // 得知是 debian-lan-config 这个软件包的文件
     apt-cache show debian-lan-config
     dpkg -l | grep debian-lan-config    // 提示没有安装，这。。。
+
+
+
+## 一些文件
+
+1. /proc/net/nf_conntrack
+    
+    连接跟踪文件，它里面的内容由 nf_conntrack.ko 模块写入。在 iptables 中使用
+    -m state 选项时，iptables 不但加载 xt_state.ko 模块，且 nf_conntrack.ko 模
+    块也会被加载进来。
+
+    https://www.iteye.com/blog/ciaos-2160416

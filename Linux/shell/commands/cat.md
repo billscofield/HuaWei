@@ -64,3 +64,32 @@ baz
 EOF
 The b.txt file contains bar and baz lines. The same output is printed to stdout.
 ```
+
+
+
+## options
+
+-A, --show-all
+    equivalent to -vET
+
+-v, --show-nonprinting
+    use ^ and M- notation, except for LFD and TAB
+
+-n, --number
+    number all output lines
+
+-s, --squeeze-blank
+    suppress repeated empty output lines
+
+-T, --show-tabs
+    display TAB characters as ^I
+
+-b, --number-nonblank
+    number nonempty output lines, overrides -n
+
+-E, --show-ends
+    display $ at end of each line
+
+
+
+

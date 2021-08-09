@@ -1,6 +1,31 @@
+## SYNOPSIS
+
+cp [OPTION]... [-T] SOURCE DEST
+    -T, --no-target-directory
+        treat DEST as a normal file
+
+cp [OPTION]... SOURCE... DIRECTORY
+cp [OPTION]... -t DIRECTORY SOURCE...
+
+-i, --interactive
+    prompt before overwrite (overrides a previous -n option)
+
+
+-a, --archive
+    same as -dR --preserve=all
+
+-d  same as --no-dereference --preserve=links
+
+-R, -r, --recursive
+    copy directories recursively
+
+-n, --no-clobber
+    do not overwrite an existing file (overrides a previous -i option)
+
+
 ## --preserve=links
 
-https://unix.stackexchange.com/questions/386979/info-on-cp-preserve-links
+https://unix.stackexchange.com/questions/386979/info-on-cp-preserv-links
 
 --preserve=links选项不是指符号链接，而是指硬链接。它要求cp保留正在复制的两个或多个文件之间的任何现有硬链接。
 
@@ -44,7 +69,7 @@ hard link files instead of copying
 cp --link a.py a.py.bak
 
 
-## -P   --no-dereference
+## -P   --no-dereference(默认)
 
 never follow symbolic links                     // tab 键的结果
 

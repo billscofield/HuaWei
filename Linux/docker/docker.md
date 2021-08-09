@@ -127,9 +127,113 @@ Docker hub
 
 ## 网络
 
-172.17.xxx.xxx
+### Docke 网络驱动模型
+
+https://www.bilibili.com/video/BV16E41187y4?from=search&seid=10413634710931696721
+
+1. bridge(默认)
+
+    网桥类型网络，就是 NAT 网络
+
+    ```修改默认的配置 /etc/docker/daemon.json
+    {
+        "bip": "192.168.1.5/24",                    // bridge ip
+        "fixed-cidr": "192.168.1.5/25",             // 掩码
+        "fixed-cidr-v6": "2001:db8::/64",           // 可以不设置
+        "mtu": 1500,
+        "default-gateway": "10.0.1.1",
+        "default-gateway-v6": "2001:db8:abcd::89",
+        "dns": ["10.20.1.2","10.20.1.3"]
+    }
+
+    ```
+
+    宿主机: brctl show 查看网桥信息
+
+    宿主机的 veth 和容器内的网卡是如何对应的呢?
+        
+        宿主机: ip a
+            11: veth32f731d@if10: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+                link/ether 66:81:a0:1b:66:b1 brd ff:ff:ff:ff:ff:ff link-netnsid 2
+                inet6 fe80::6481:a0ff:fe1b:66b1/64 scope link
+                   valid_lft forever preferred_lft forever
+            
+        容器: ip a
+            10: eth0@if11: <BROADCAST,MULTICAST,UP,LOWER_UP,M-DOWN> mtu 1500 qdisc noqueue
+                link/ether 02:42:ac:11:00:04 brd ff:ff:ff:ff:ff:ff
+                inet 172.17.0.4/16 brd 172.17.255.255 scope global eth0
+                   valid_lft forever preferred_lft forever
+
+        容器虚拟网卡的名字: eth@if数字, 这个数字就对应宿主机虚拟网卡的数字
+
+
+1. host
+    
+    和主机共用(virtual box 中的桥接)
+
+    docker run --name "test01" --rm -it --network host busybox /bin/sh
+
+    ip a 信息和宿主机完全一样
+
+1. none
+
+1. overlay
+    
+    docker run --name "test01" --rm -it --network container:demo1  busybox /bin/sh
+
+    文件系统和PID 是和 demo1 隔离的
+
+
+1. macvlan
+
+
+docker network list     列出网络模型
+
+docker inspect <Docker-ID>  | grep NetworkSettings
+
+docker network --help
+
+
+### bridge
+
+Docker 的网络接口都是虚拟的接口
+
+虚拟的网络接口的转发效率高
+
+在宿主机上可以看到有个 docker0 的网卡
+
+172.17.0.1
 
 SandBox(沙盒)
+
+
+|   +-------+           +-------+
+|   | 容器1 |           | 容器2 |
+|   +-------+           +-------+
+|   veth接口            veth接口    eth0
+|      |                    |
+|      +----+           +---+
+|           |           |
+|          \|/         \|/  vethXXX
+|      +--------------------+
+|      |    网桥 docker     |
+|      +--------------------+
+|                 |
+|      +--------------------+
+|      |    物理网卡        |
+|      +--------------------+
+
+
+有一个容器就会在宿主机上有一个 vethXXX 与之对应
+
+Docker 创建容器的时候, 会执行下面的操作
+    
+    1. 创建一对的虚拟的网络接口，一个放宿主机，一个容器中
+    2. 宿主机的虚拟接口接到 docker 的网桥上，名称为 vethXXX
+    3. 虚拟网络接口名称为 eth0
+    4. 从宿主机的网桥上获取IP地址
+
+
 
 
 ## Docker 组成
