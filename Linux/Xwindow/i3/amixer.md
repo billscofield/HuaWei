@@ -3,7 +3,9 @@
 
 command-line mixer for ALSA soundcard driver
 
-ALSA是Advanced Linux Sound Architecture的缩写，高级Linux声音架构的简称,它在Linux操作系统上提供了音频和MIDI（Musical Instrument Digital Interface，音乐设备数字化接口）的支持。
+ALSA是Advanced Linux Sound Architecture的缩写，高级Linux声音架构的简称,它在
+Linux操作系统上提供了音频和MIDI（Musical Instrument Digital Interface，音乐设备
+数字化接口）的支持。
 
 amixer，是 alsamixer 的文本模式, 即命令行模式
 

@@ -66,6 +66,9 @@ apt install -y netdiscover
 # NSLOOKUP 
 apt install -y dnsutils
 
+# expect
+apt install -y expect
+
 
 # TO DOWNLOAD MY CONFIG FILES
 mkdir -p /git/software
@@ -170,6 +173,20 @@ apt install asciinema
 apt install zathura
 
 
+# markdown typora
+
+wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
+add-apt-repository 'deb https://typora.io/linux ./'
+apt update
+apt install -y typora
+
+
+
+
+#------------------------BEGIN GUI 编辑器 ------------------------------
+#apt install -y gedit
+apt install -y mousepad
+#------------------------BEGIN GUI 编辑器 ------------------------------
 
 
 #------------------------BEGIN VIM ------------------------------

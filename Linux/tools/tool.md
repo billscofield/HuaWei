@@ -534,3 +534,9 @@ linux_logo -f -L 9
 1. xfe, 即 X File Explorer
 
 2. ranger
+
+
+
+## scp 
+
+openssh-clients

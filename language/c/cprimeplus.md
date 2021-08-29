@@ -1,9 +1,13 @@
 
 vim colorscheme
+
     http://bytefluent.com/vivify/
 
     将 .vim 文件放到 color文件夹下即可 (~/.vim/colors)
+        
         /usr/share/vim/vim81/colors
+
+
 
 
 ## 第一章
@@ -18,12 +22,15 @@ FORTRAN 工程和科学领域
 
 C 不像 Pascal 和 C++ 那么严格，C 很灵活
 
-国际C语言混乱代码大赛 （IOCCC, The International Obfuscated C Code Contest）是一项国际编程赛事，从1984年开始，每年举办一次
+国际C语言混乱代码大赛 （IOCCC, The International Obfuscated C Code Contest）是
+一项国际编程赛事，从1984年开始，每年举办一次
 
 CPU 能理解的指令有限(这些指令的集合叫做指令集), 而且这些指令相当具体
 
 
-1978年，布莱恩·柯林汉(Brian Kernighan) 和 丹尼斯·里奇(Dennis Ritchie) 合著 The C Programming Language(《C语言程序设计》)
+1978年，布莱恩·柯林汉(Brian Kernighan) 和 丹尼斯·里奇(Dennis Ritchie) 合著 The
+C Programming Language(《C语言程序设计》)
+
     K&R
 
 C 语言比其他语言更依赖库, 由于缺乏官方标准，UNIX实现提供的库已成为了标准库
@@ -33,6 +40,7 @@ C 语言比其他语言更依赖库, 由于缺乏官方标准，UNIX实现提供
 
 
 1. ANSI C / ISO C / C89 / C99
+
     美国国家标准协会(ANSI)于1983年组建了X3J11委员会，开发了一套C标准, 于1989年公布(ANSI C)
     ISO 于1990年采用了这套标准，形成ISO C
     ISO C 和 ANSI C 是完全相同的东西
