@@ -1,34 +1,46 @@
 
 ## AWS 简介 AWS Overview
+
 Amazon Web Services
 
 云计算:通过互联网按需提供IT资源，并且采用按使用量付费的定价方式。
 
 三种云部署模式
+
     1. 公有云(一体式云)
+
     1. 混合, 不能全部部署到公有云上
+
     1. 私有云(本地)
 
 Amazon Web Services 于2006年上线
 
+
 ### 对比学习
 
 安全性
+
             防火墙  ACL         管理员进行权限分配      
+
     aws ->  安全组  NACL        AWS IAM(AWS Identity and Access Management)
 
 联网
+
             路由器  网络管道    交换机
+
     aws ->  Amazon VPC      ELB(弹性负载均衡)
 
 服务器
+
             本地服务器
+
     aws ->  AMI --->>  Amazon EC2
 
 存储和数据库
-            DAS     SAN     NAS                              RDBMS(关系型数据库)
-    aws ->  Amazon EBS      Amazon EFS      Amazon S3        Amazon RDS
 
+            DAS     SAN     NAS                              RDBMS(关系型数据库)
+
+    aws ->  Amazon EBS      Amazon EFS      Amazon S3        Amazon RDS
 
 
 AWS Multi-Factor Authentication (MFA)
@@ -36,16 +48,24 @@ AWS Multi-Factor Authentication (MFA)
 
 
 区域(Region)
+
     地理位置
+
     至少有两个可用区组成
+
     异地灾备
 
+
 可用区(Availability Zone)
+
     由一个或多个数据中心组成
+
     专为故障隔离而设计（比如物理的，高可用）
 
 边缘站点(Ponits of Presence)
+
     AWS Web Application Firewall (WAF)
+
     AWS Shield
     ...
 
@@ -53,12 +73,17 @@ AWS Multi-Factor Authentication (MFA)
 AWS Local Zones
 
 AWS Wavelength
+
     嵌入到运营商5G网络中
 
 AWS Outposts
+
     将AWS部署到本地
+
     由AWS维护
+
     统一的管理界面
+
     标准42U机柜
 
 https://infrastructure.aws/

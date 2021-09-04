@@ -1,7 +1,7 @@
 
 ## 同步清华源
 
-reposync命令在yum-utils工具包中
+reposync 命令在 yum-utils 工具包中
 
 yum install yum-utils
 
@@ -19,7 +19,7 @@ reposync -r all -p /mnt/centos7repo
         
         yum repolist
         
-        repoid有4个分别为base、epel、extras、updates。
+        repoid有4个分别为 **base、epel、extras、updates。**
         
         在.repo文件中[serverid]就是repoid, 就是各个 []
         
@@ -60,11 +60,21 @@ reposync -r all -p /mnt/centos7repo
 yum install createrepo
 
 createrepo - Create repomd (xml-rpm-metadata) repository
-createrepo is a program that creates a repomd (xml-based rpm metadata) repository from a set of rpms.
+
+    createrepo is a program that creates a repomd (xml-based rpm metadata) repository from a set of rpms.
 
 
 
 createrepo [options] <directory>
+
+    进入到 repository id 目录/Packages 然后执行 createrepo -v ./
+    例如:
+        cd /lca.data/centos7/base/Packages && createrepo -v ./
+
+    rpmfusion-free-updates:
+        cd rpmfusion-free-updates/
+        createrepo -v .
+        
 
 
 1. -p --pretty

@@ -80,6 +80,13 @@ u      Update files to archive
         i[] 其中为可以为r[- | 0]（具体的-r选项见后面-r），可以为@{listfile} | !{wildcard}。
         7z a -tzip src.zip *.txt -ir!DIR1\*.cpp ：从当前目录中添加 *.txt 文件，和 DIR1 目录及其子目录中的 *.cpp 文件到 src.zip 压缩档案。
 
+        ```
+
+        ```
+
+
+
+
     -x[r[-|0]]]{@listfile|!wildcard}
         Exclude filenames
         
