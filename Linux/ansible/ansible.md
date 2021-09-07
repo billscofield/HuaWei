@@ -43,9 +43,6 @@ SAAS: Software as a Service         软件即服务          去披萨店吃
 
 ## ansible 原理
 
-
-
-
 |
 |
 |
@@ -69,11 +66,6 @@ SAAS: Software as a Service         软件即服务          去披萨店吃
 
 
 
-
-
-
-
-
   +-------->------------------------------------------+
   |                                                   |
   +-------->-----------------------+                  |
@@ -81,7 +73,7 @@ SAAS: Software as a Service         软件即服务          去披萨店吃
   +-------->-------+               |                  |
   |                |               |                  |
 +----+          +----+         +--------+          +------+          +----+
-|开发|  提交->  |测试|  通过-> |上线准备|  通过->  |预上线|   通过-> |上线|
+|开发|  提交->  |测试|  通过-> |上线准备|  通过->  |预上线|---通过-> |上线|
 +-----          +----+         +--------+          +------+          +----+
   |                                                                    |
 开发             测试                              运维工程师          |
@@ -101,7 +93,8 @@ SAAS: Software as a Service         软件即服务          去披萨店吃
 
 1. 灰度环境
     
-    往往该版本功能变更较大，为保险期间特意先让一部分用户优化体验该功能，待这部分用户使用没有重大问题的时候，再全量发布至所有服务器
+    往往该版本功能变更较大，为保险期间特意先让一部分用户优化体验该功能，待这部
+    分用户使用没有重大问题的时候，再全量发布至所有服务器
 
     可以基于服务器
     可以基于用户
@@ -170,7 +163,7 @@ C/S架构，模块化
 
 开源,学习成本低
 
-使用Playbook作为核心配置架构，统一的脚本格式批量化部署
+使用 Playbook 作为核心配置架构，统一的脚本格式批量化部署
 
 强大的稳定性和兼容性
 
@@ -193,9 +186,6 @@ C/S架构，模块化
 1. git clone 
 
 1. pip install ansible
-
-
-
 
 
 ### 2. ansible 配合 virtualenv 安装配置
@@ -258,7 +248,6 @@ git clone https://github.com/ansible/ansible.git
     
 ```
     systemctl stop firewalld
-
     systemctl disable firewalld
 
     ---
@@ -291,15 +280,12 @@ ansible --version
 ansible 2.7.7
   **config file** = /etc/ansible/ansible.cfg
   **configured module search path** = ['/root/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
-  **ansible python module location** = /usr/lib/python3/dist-packages/ansible
+  **ansible python module location** = /usr/lib/python3/dist-packages/ansible           !!!
   executable location = /usr/bin/ansible
   python version = 3.7.3 (default, Jan 22 2021, 20:04:44) [GCC 8.3.0]
 
 1. /etc/ansible/ansible.cfg
     inventory = /etc/ansible/hosts
-
-
-
 
 
 ### Ansible 操作的对象
@@ -329,13 +315,14 @@ ansible controller
         
         [web]
         192.168.1.1
+        
         [dev]
         192.168.2.1
 
 1. 静态资产
     /etc/ansible/hosts      // 没有的话创建
 
-        www[001:006].example.com
+        www.[001:006].example.com
         192.168.1.[1:250]
 
         [db_servers]
