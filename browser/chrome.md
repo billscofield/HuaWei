@@ -10,6 +10,8 @@ https://nira.com/chrome-offline-installer/
 2. windows
     https://www.google.com/intl/en/chrome/?standalone=1
 
+    https://www.google.com/intl/en/chrome/thank-you.html?standalone=1&statcb=1&installdataindex=empty&defaultbrowser=0
+
 3. Linux
     https://www.google.com/chrome/?platform=linux
 

@@ -59,7 +59,7 @@ Two-factory authentication  双因素身份验证
 ## project 地址, 端口
 
 1. 安装完成后一定要设置 external_url, 否则仓库地址是一堆乱码，外部访问不了, 设置为 hostip:9980
-    external_url 要保证host主机的端口号一致
+    external_url 要保证 host 主机的端口号一致
     gitlab_shell_ssh_port 
 
     ssh的配置文件不是/etc/ssh/sshd_config  用 ps axu | grep sshd | grep -v ssh 看， 是 /assets/sshd_config
