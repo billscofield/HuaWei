@@ -21,8 +21,9 @@ SFTP enabled—a common setup.
 
 The sshfs tool is available from most distributions’ standard repositories and
 is most easily installed using that distribution’s package manager. For Fedora,
-installing sshfs is as easy as: dnf install fuse-sshfs. On Debian-based systems,
-the package is simply sshfs.
+installing sshfs is as easy as: 
+    dnf install fuse-sshfs. 
+On Debian-based systems, the package is simply sshfs.
 
 
 ## Mounting a remote file system

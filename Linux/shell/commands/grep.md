@@ -38,4 +38,17 @@
 
     Invert the sense of matching, to select non-matching lines.
 
+-l, --files-with-matches
+
+    Suppress normal output; instead print the name of each input file from
+    which output would normally have been printed.  The scanning will stop on
+    the first match.
+
+    to show only matching file
+
+-L, --files-without-match
+
+    Suppress normal output; instead print the name of each input file from
+    which no output would normally have been printed.  The scanning will stop
+    on the first match.
 

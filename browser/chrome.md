@@ -1,4 +1,4 @@
-
+https://www.google.com/intl/en/chrome/?standalone=1
 ## 离线安装包
 
 https://nira.com/chrome-offline-installer/

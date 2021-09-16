@@ -11,6 +11,9 @@ ssh 默认的用户名 是当前系统你此时在用的用户名, 而不是 roo
 ## ssh 客户端配置文件
 
 /etc/ssh/ssh_config
+~/.ssh/config
+
+man 5 ssh_config
 
     自定义:
 

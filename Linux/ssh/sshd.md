@@ -7,6 +7,37 @@ ListenAdress 0.0.0.0
     Specifies which address family should be used by sshd(8).  Valid arguments
     are any (the default), inet (use IPv4 only), or inet6 (use IPv6 only).
 
+    inet 就是 ipv4
+
+    Common Protocol Suites:
+
+        1. net—Supports IP protocol traffic, including OSPF, BGP, and Internet
+           Control Message Protocol (ICMP).
+        
+        1. Inet6—Supports IPv6 protocol traffic, including RIP for IPv6
+           (RIPng), IS-IS, and BGP.
+        
+        1. ISO—Supports IS-IS traffic.
+        
+        1. MPLS—Supports MPLS.
+        
+        1. ccc—Circuit cross-connect (CCC).
+        
+        1. mlfr-uni-nni—Multilink Frame Relay (MLFR) FRF.16 user-to-network
+           network-to-network (UNI NNI).
+        
+        1. mlfr-end-to-end—Multilink Frame Relay end-to-end.
+        
+        1. mlppp—Multilink Point-to-Point Protocol.
+        
+        1. tcc—Translational cross-connect (TCC).
+        
+        1. tnp—Trivial Network Protocol. This Juniper Networks proprietary
+           protocol provides communication between the Routing Engine and the
+           device's packet forwarding components. Junos OS automatically
+           configures this protocol family on the device's internal interfaces
+           only.
+
 1. LoginGraceTime
 
     The server disconnects after this time if the user has not successfully
@@ -16,7 +47,7 @@ ListenAdress 0.0.0.0
 1. Compression
 
     Specifies whether compression is enabled after the user has authenticated
-    success‐fully.  The argument must be yes, delayed (a legacy synonym for
+    successfully.  The argument must be yes, delayed (a legacy synonym for
     yes) or no.  The de‐fault is yes.
 
 
@@ -40,7 +71,8 @@ GSSAPI ( Generic Security Services Application Programming Interface ) 是一套
 
 1. GSSAPIAuthentication
 
-    Specifies whether user authentication based on GSSAPI is allowed.  The default is no.
+    Specifies whether user authentication based on GSSAPI is allowed.  The
+    default is no.
 
 
 
