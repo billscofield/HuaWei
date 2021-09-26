@@ -30,6 +30,11 @@ vi $PREFIX/etc/apt/sources.list
 将原来的https://termux.net官方源替换为http://mirrors.tuna.tsinghua.edu.cn/termux
 
 
+(详情见)[https://mirrors.tuna.tsinghua.edu.cn/help/termux/]
+
+较新的版本推荐使用 termux-change-repo 直接换源
+
+
 ### 安装 ssh 
 
 sshd是包含在openssh包中的
