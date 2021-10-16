@@ -424,3 +424,14 @@ done
 和通配符是不一样的，有本质区别的
 
 
+
+## 运行多条 SHELL 命令
+
+```
+ssh otherhost <<-EOF
+    ls some_folder;
+    ./someaction.sh 'some params'
+    pwd
+    ./some_other_action.sh 'some params'
+EOF
+```
