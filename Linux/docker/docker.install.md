@@ -49,7 +49,7 @@ service docker start
 
 安装添加新存储库所需的依赖项
 
-    apt install ca-certificates curl software-properties-common gnupg2
+    apt install apt-transport-https ca-certificates curl software-properties-common gnupg2
 
 添加源
 

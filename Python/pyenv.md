@@ -1,10 +1,21 @@
-pyenv是利用系统环境变量PATH的优先级，劫持python的命令到pyenv上，根据用户所在的环境或目录，使用不同版本的python。
+pyenv是利用系统环境变量PATH的优先级，劫持python的命令到pyenv上，根据用户所在的
+环境或目录，使用不同版本的python。
 
-对于系统环境变量 PATH ，里面包含了一串由冒号分隔的路径，例如 /usr/local/bin:/usr/bin:/bin。每当在系统中执行一个命令时，例如 python 或 pip，操作系统就会在 PATH 的所有路径中从左至右依次寻找对应的命令。因为是依次寻找，因此排在左边的路径具有更高的优先级。在PATH 最前面插入一个 $(pyenv root)/shims 目录，$(pyenv root)/shims目录里包含名称为python以及pip等可执行脚本文件；当用户执行python或pip命令时，根据查找优先级，系统会优先执行shims目录中的同名脚本。pyenv 正是通过这些脚本，来灵活地切换至我们所需的Python版本。
+对于系统环境变量 PATH ，里面包含了一串由冒号分隔的路径，例如 /usr/local/bin:
+/usr/bin:/bin。每当在系统中执行一个命令时，例如 python 或 pip，操作系统就会在
+PATH 的所有路径中从左至右依次寻找对应的命令。因为是依次寻找，因此排在左边的路径
+具有更高的优先级。在PATH 最前面插入一个 $(pyenv root)/shims 目录，$(pyenv root)
+/shims目录里包含名称为python以及pip等可执行脚本文件；当用户执行python或pip命令
+时，根据查找优先级，系统会优先执行shims目录中的同名脚本。pyenv 正是通过这些脚本，
+来灵活地切换至我们所需的Python版本。
 
-pyenv 对比 virtualenv 工具来说，解决的问题不同。virtualenv 是一个沙盒，避免环境污染的，而 pyenv 是一个 Python 版本管理器，用来在同一个系统上切换不同的 Python 解释器的，并且 pyenv 是使用 shell 写的，所以容易阅读。
+pyenv 对比 virtualenv 工具来说，解决的问题不同。virtualenv 是一个沙盒，避免环境
+污染的，而 pyenv 是一个 Python 版本管理器，用来在同一个系统上切换不同的 Python
+解释器的，并且 pyenv 是使用 shell 写的，所以容易阅读。
 
-系统自带的脚本会以/usr/bin/python的方式直接调用老版本的 Python，因而不会对系统脚本产生影响；
+系统自带的脚本会以/usr/bin/python的方式直接调用老版本的 Python，因而不会对系统
+脚本产生影响；
+
 使用pip安装第三方模块时会自动按照到当前的 Python 版本下，不会和系统模块发生冲突。
 使用pip安装模块后，可能需要执行pyenv rehash更新数据库；
 

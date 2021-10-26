@@ -45,16 +45,21 @@ pyenv 托管 python 版本，virtualenv 使用 python 版本
 source ~/.bashrc
 
 ## 使用 pyenv
+
 检查 pyenv 的版本
+
     pyenv version
 
 查看 pyenv 已经托管了哪些 python 版本
+
     pyenv versions
 
 安装 3.6.6 版本的 python
+
     pyenv install 3.6.6
 
     注意：在这之前安装依赖
+
     ```
     apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils tk-dev libxml2-dev libxmlsec1-dev libffi-dev
     ```
@@ -69,6 +74,7 @@ source ~/.bashrc
 
 
 ## 更新 pyenv
+
 由于我们是 git 克隆的，所以更新非常简单
 
 cd ~/.pyenv 或者 cd $(pyenv root)
@@ -76,6 +82,7 @@ git pull
 
 
 ## 卸载 pyenv
+
 由于 pyenv 把一切都放在 ~/.pyenv 下了，所以卸载很方便，两个步骤就行了
 
 首先你需要删除环境变量
@@ -88,7 +95,8 @@ rm -rf ~/.pyenv 或者 rm -rf $(pyenv root)
 ## 使用刚才安装的 python 3.6.6
 
 1. 创建虚拟环境
- pyenv virtualenv 3.6.6 liujiao-env-3.6.6
+
+    pyenv virtualenv 3.6.6 liujiao-env-3.6.6
 
 1. 激活虚拟环境
  pyenv activate liujiao-env-3.6.6
