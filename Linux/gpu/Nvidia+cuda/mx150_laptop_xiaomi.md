@@ -3,13 +3,19 @@
 
 
 ## 什么是 CUDA
-CUDA(Compute Unified Device Architecture)，是显卡厂商NVIDIA推出的运算平台。 CUDA™是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
+
+CUDA(Compute Unified Device Architecture)，是显卡厂商NVIDIA推出的运算平台。
+CUDA™是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
 
 ## 什么是CUDNN?
-NVIDIA cuDNN是用于深度神经网络的GPU加速库。它强调性能、易用性和低内存开销。NVIDIA cuDNN可以集成到更高级别的机器学习框架中，如加州大学伯克利分校的流行caffe软件。
-简单的，插入式设计可以让开发人员专注于设计和实现神经网络模型，而不是调整性能，同时还可以在GPU上实现高性能现代并行计算。
+
+NVIDIA cuDNN是用于深度神经网络的GPU加速库。它强调性能、易用性和低内存开销。
+NVIDIA cuDNN可以集成到更高级别的机器学习框架中，如加州大学伯克利分校的流行caffe
+软件。简单的，插入式设计可以让开发人员专注于设计和实现神经网络模型，而不是调整
+性能，同时还可以在GPU上实现高性能现代并行计算。
 
 ## Nvidia 驱动
+
 https://www.geforce.com/drivers
 
 GeForce
