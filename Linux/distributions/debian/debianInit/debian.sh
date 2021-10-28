@@ -7,7 +7,7 @@
 #------------------------BEGIN ppa------------------------------
 # debian 默认没有安装 add-apt-repository 命令
 
-apt install software-properties-common
+apt install -y software-properties-common
 #------------------------END ppa------------------------------
 
 
@@ -71,7 +71,7 @@ apt install -y expect
 
 
 # TO DOWNLOAD MY CONFIG FILES
-mkdir -p /git/software
+mkdir -p /git/
 git clone https://gitee.com/billscofield/ubuntuMate-config.git /git/ubuntuMate-config
 
 
@@ -116,7 +116,7 @@ apt install -y xinit
 apt install -y i3 feh compton
 ln -s /git/ubuntuMate-config/config.i3 /root/.config/i3/config -f
 
-apt install i3lock-fancy
+apt install -y i3lock-fancy
 
 
 # 
@@ -129,7 +129,7 @@ apt install -y ranger
 # It won't work from the repo, so you should install it from source
 #apt install -y cmus
 
-apt install libsystemd-dev
+apt install -y libsystemd-dev
 
 # NOTE: pay attention to the output 
 
@@ -144,7 +144,7 @@ apt install libsystemd-dev
 
 
 #------------------------BEGIN vlc----------------------------
-apt install vlc
+apt install -y vlc
 
 # "VLC is not supposed to be run as root. Sorry. If you need to use real-time
 # priorities and/or privileged TCP ports you can use vlc-wrapper (make sure it
@@ -161,7 +161,7 @@ apt-get install -y whois
 
 
 # screen record
-apt install asciinema
+apt install -y asciinema
 
 
 
@@ -170,7 +170,7 @@ apt install asciinema
 # zathura, It offers a vim-like experience and has a focus on keyboard
 # interaction.  The key bindings, commands and most other settings can be
 # customized.
-apt install zathura
+apt install -y zathura
 
 
 # markdown typora
@@ -200,11 +200,11 @@ apt install -y libx11-dev libxt-dev
 ## 2. terminal library
 ## The ./configure installation prompts while having not install this, prompt
 ##"libncurses-dev"
-apt install libncurses-dev
+apt install -y libncurses-dev
 git clone https://gitee.com/billscofield/vim.git /git/software/vim
 
 ## 3. Install python3-dev, otherwise there will no python3-config-dir
-apt install python3-dev
+apt install -y python3-dev
 
 ## configure vim source and install
 
@@ -230,7 +230,7 @@ git clone https://gitee.com/billscofield/vundle.vim.git ~/.vim/bundle/Vundle.vim
 #fcitx-configtool or fcitx-config-gtk3
 
 # ibus
-apt install ibus ibus-pinyin
+apt install -y ibus ibus-pinyin
 
 # 切换到ibus框架
 im-config
@@ -274,7 +274,7 @@ git clone https://gitee.com/billscofield/webui-aria2.git /git/software/webui-ari
 #------------------------BEGIN MySQL ------------------------------
 
 
-apt install mycli
+apt install -y mycli
 
 #------------------------END MySQL ------------------------------
 
@@ -283,7 +283,7 @@ apt install mycli
 #是由国际TEX用户组（TEXUsers Group，TUG）整理和发布的TEX软件发行套装，包含与TEX
 #系统相关的各种程序、编辑与查看工具、常用宏包及文档、常用字体及多国语言支持。
 
-apt install texlive-full
+apt install -y texlive-full
 #------------------------END texlive ------------------------------
 
 
@@ -297,11 +297,26 @@ apt-get install geogebra
 
 
 #-------------------------------NETWORK BEGIN-------------------------------
-apt install libpcap-dev
-apt install tcpdump
+apt install -y libpcap-dev
+apt install -y tcpdump
 
 #---
-apt install wireshark
+apt install -y wireshark
 #-------------------------------NETWORK END-------------------------------
 
 
+#-------------------------------Docker BEGIN-------------------------------
+# https://blog.csdn.net/baidu_41617231/article/details/120922974
+
+# 1. to satisfy dependcy
+apt install apt-transport-https ca-certificates curl software-properties-common gnupg2
+
+# 2. 信任 Docker 的 GPG 公钥:
+curl -fsSl https://download.docker.com/linux/debian/gpg | apt-key add -
+
+# 3. 添加软件仓库:
+add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker-ce/linux/debian $(lsb_release -cs) stable"
+
+# 4. 安装
+apt update && apt install docker-ce
+#-------------------------------Docker END-------------------------------

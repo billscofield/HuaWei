@@ -6,6 +6,7 @@ python2.7被定为最后一个python2.X版本
 pythonclock.org
 
 ## python解释器 如今有多个语言的实现
+
 1. CPython      
 1. Jython
 1. IronPython   : .net 和 Mono平台
@@ -62,24 +63,32 @@ ipython interactive
 
 
 注释
-1. # 后边有一个空格
-1. """  """
+    1. # 后边有一个空格
+    1. """  """
 
 PEP(Python Enhancement Proposals)
+
 其中第8篇文档专门针对python的代码格式给出了建议，也就是俗称的PEP 8Proposals
+
     一行不超过80个char
 
+## 帮助
+
+help(...)
+
 ## 算数运算符
+
 1. +
 1. -
 1. *    可以用于字符串
 1. /
-1. //取整除 9//2 得到4
+1. //   取整除 9//2 得到4
 1. %
 1. **
 
 
 ## 程序执行原理
+
 1. 三大件
     1. CPU
     1. RAM
@@ -92,30 +101,49 @@ python解释器 大小只有3.4MB
 
 ## 数据类型
 
-number  int,float
-    python2 中还有long,python3 中只有int   type(2 ** 64)
-    333L(a=22L 在Python3中报错,在Python2中正常)
-    a=2E10  (1024.0)
-bool
-    True:非零数 算数运算中为1
-    False: 算数运算中为0
-complex 复数
+1. number  int,float
 
-tuple 元祖
-list
-dictionary
-str
+    python2 中还有 long, python3 中只有 int   type(2 ** 64)
+
+    333L(a=22L 在Python3中报错,在Python2中正常)
+
+    a=2E10  (1024.0)
+
+1. bool
+
+    True:非零数 算数运算中为1
+        
+    False: 算数运算中为0
+
+    bool('0') 真
+    bool(' ') 真
+    bool('') 假
+
+1. complex 复数
+
+1. tuple 元祖
+
+1. list
+
+1. dictionary
+
+1. str
+    import string
+
+
     + 
     *
     ""  建议用""
     ''
 
     str 和 num只有乘法,
+
     算数最终的运算要转换为数字运算
 
-    两个及以上字符串 空格 自动拼接 但是两个str变量是不会自动拼接的
-        "ni" "hao" "ma" 返回"nihaoma"
-    多个变量或str  "," 返回tuple
+    两个及以上字符串 空格 自动拼接 但是两个 str 变量是不会自动拼接的
+        "ni" "hao" "ma" 返回 "nihaoma"
+
+    多个变量或 str  "," 返回 tuple
         a = "hello"
         a,5,"world"     返回('hello',5,'world')
 
@@ -123,11 +151,13 @@ str
 
     .index
         没有则报错
-    .count
+
+    .count(sub[,start[,end]])
         没有不报错，为0
+        
     len
 
-    .isspace()      全部为空白字符
+    .isspace()      全部为空白字符, \t 
 
     .isalnum()      至少有一个字符，且所有字符为 字母 或 数字
     .isalpha()      至少有一个字符，且所有字符为 字母 
@@ -139,11 +169,22 @@ str
     .isdigit()      只包含数字
         unicode码'\u00b2'  也可以
         不支持小数
+        
+        Return True if the string is a digit string, False otherwise.
+        A string is a digit string if all characters in the string are digits and there
+        is at least one character in the string.
+
 
     .isnumeric()    只包含数字  only numeric
-        支持中文数字: "一千零一"
+        **支持中文数字: "一千零一"**
         '\u00b2'
         不支持小数
+
+
+    .isascii()
+        Return True if all characters in the string are ASCII, False otherwise.
+        ASCII characters have code points in the range U+0000-U+007F.
+        Empty string is ASCII too.
 
 
     三者的区别:
@@ -170,6 +211,22 @@ str
     .istitle()      每个单词的首字母大写    忽略数字，"Hello 5You" 返回True,数字被忽略，认为没有,"Hello 5you" 返回False
     .islower()
     .isupper()
+    .casefold()     转为小写
+    .lower()        转为小写
+        lower函数只支持ascill表中的字符，而casefold则支持很多不同种类的语言, 如德文字符ß的小写是ss
+        'ß'.casefold()
+
+        对 Unicode 的时候用 casefold, ASCII 无所谓
+
+        Casefolding is similar to lowercasing but more aggressive because it is
+        intended to remove all case distinctions in a string. For example, the
+        German lowercase letter 'ß' is equivalent to "ss". Since it is already
+        lowercase, lower() would do nothing to 'ß'; casefold()converts it to
+        "ss".
+            
+        The casefolding algorithm is described in section 3.13 of the Unicode
+        Standard
+
 
     .swapcase()
 
@@ -177,23 +234,54 @@ str
     .endswith(str)      //True or False
 
 
-    .isprintable()      //tty file, drive file
+    .isidentifier()
+        Return True if the string is a valid Python identifier, False otherwise.
+        
+        Use keyword.iskeyword() to test for reserved identifiers such as "def" and
+        "class".
+        
+        import keyword
+        keyword.iskeyword('def')
 
-    .expandtabs(tabsize=Num)    //tab键变成多少个空格
+
+
+    .isprintable()      //tty file, drive file
+        Return True if the string is printable, False otherwise.
+        A string is printable if all of its characters are considered printable in
+        repr() or if it is empty.
+
 
     .find(str,start=0,end=len(string))
     .rfind(str,start=0,end=len(string))
         **没有不会报错，返回-1**
-        而.index会报错
+        **而.index会报错**
 
     .index(str,start=0,end=len(string))
     .rindex(str,start=0,end=len(string))
+        没有的话会报错
 
     .replace(old_str,new_str,num=string.count(old))
         返回一个新的字符串,不会修改原字符串
 
 
+    .expandtabs(tabsize=8)
+        Return a copy where all tab characters are expanded using spaces.
+        If tabsize is not given, a tab size of 8 characters is assumed.
+
+
+
+
+
     .format()
+        '{0} {1}'.format('he','lo')
+
+
+        新语法:
+            msg=f'my name is {name}''
+            msg.format(name="Bill")
+
+
+
 
     .format_map(字典)
     "{name} {age} {gender}".format_map({'name':'liujiao','age':30,'gender':'man'})
@@ -219,14 +307,32 @@ str
 
 
     .zfill(count)   //左边补0
+        
+        Pad a numeric string with zeros on the left, to fill a field of the given width.
+        The string is never truncated.
+        
+        实验是: 只要是字符串就行
+
 
 去除空白字符
-    .lstrip(char=" ")
-    .rstrip(char=" ")
-    .strip(char=" ")
+    .lstrip("chars")
+    .rstrip("chars")
+    .strip("chars")
+
 
 拆分和连接
-    .split(str="空白符",num)    //返回list
+    .split(sep,maxsplit=-1)    //返回list
+
+    sep
+
+      The delimiter according which to split the string.  None (the default
+      value) means split according to any whitespace, and discard empty strings
+      from the result.
+
+    maxsplit
+        Maximum number of splits to do.  -1 (the default value) means no limit.
+
+
     string.join(seq)    string作为分隔符
 
     .splitlines()   //.split(\n)   或者 .split(\r) 根据系统定
@@ -392,6 +498,9 @@ random.random()     (0,1)
 顺序
 分支
 循环
+    for ../while ..
+    else:
+        条件不成立时执行，break 时不会执行
 
 
 没有 ++ 、 --
@@ -442,9 +551,15 @@ pyc c:compiled 编译过
 其他语言中叫数组
 
 .sort()  升序
+    python3 中不能混排 数字和字符
+    pythonx 中可以
+
 .sort(reverse=True) 降序
+
     .sort(self,key=None,reverse=False)
+
 以上两个返回 None
+
 
 sorted(元素) 返回list
 
@@ -462,38 +577,45 @@ reversed(元素)  返回迭代器对象
     a[3] = 8 //wrong
 
 ---
-.append(object)
-    .append([1,2])
-        会将[1,2]当做一个元素
 
-.insert(index,object)
-    insert object before index
+1. 增
 
-.extend()
-    原地修改
-    .extend([11,22])
-    会将[11,22]打散，
-    同 + *
+    .append(object)
+        .append([1,2])
+            会将[1,2]当做一个元素
+
+    .insert(index,object)
+        insert object before index
+
+    .extend()
+        原地修改
+        .extend([11,22])
+        会将[11,22]打散，
+        同 + *
+
+    listA + listB
+---
+1. 删
+
+    a.remove(value)  相当于del，返回 None
+        remove first occurrence of value
+        **不存在会报错**
+
+    a.clear()
+        remove all items from list
+
+    a.pop()
+        pop(self)   默认最后一个元素
+        pop(self,index)
+            删除并返回指定index的元素
+            **pop 是唯一既修改列表又返回一个非 None 值的列表方法。**
+
+    del(a[n])
+        本质上是将一个变量从内存中删除
+        不存在报 "index out of range 错误"
+
 ---
 
-a.remove()  相当于del，返回 None
-    remove first occurrence of value
-    **不存在会报错**
-
-a.clear()
-    remove all items from list
-
-a.pop()
-    pop(self)   默认最后一个元素
-    pop(self,index)
-        删除并返回指定index的元素
-        **pop 是唯一既修改列表又返回一个非 None 值的列表方法。**
-
-del(a[n])
-    本质上是将一个变量从内存中删除
-    不存在报 "index out of range 错误"
-
----
 len(X)
 .count()
 
@@ -632,7 +754,7 @@ for k in dicta:
 
 
 len(item)
-del(item)   del a   del(a)
+del(item)   del a   del(a) del  也可以不加括号
 max(item)   如果是字典，只针对key比较
     max("ksdfjla")
 min(item)
@@ -2024,3 +2146,12 @@ mode
 
 with open(one) as f1, open(two) as f2:
     pass
+
+
+
+## copy
+
+import copy
+
+copy.copy(value)
+copy.deepcopy(value)
