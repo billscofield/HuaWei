@@ -18,3 +18,5 @@ apt-cache search wqy
     fonts-wqy-zenhei - "WenQuanYi Zen Hei" A Hei-Ti Style (sans-serif) Chinese font
     xfonts-wqy - WenQuanYi Bitmap Song CJK font for X
 
+
+Bitstream Vera Sans Mono

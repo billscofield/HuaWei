@@ -4,6 +4,9 @@
 
 make && make install
 
+# llvm 下载地址
+# https://github.com/llvm/llvm-project/releases?after=llvmorg-11.0.0-rc5
+
 
 打开vim时提示: ERROR: Python headers are missing in /usr/include/python3.6m.
 
@@ -20,3 +23,6 @@ make && make install
 python install.py --gocode-completer
 
 ```
+
+
+

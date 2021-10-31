@@ -139,6 +139,9 @@ Ubuntu Mono
     Weights:Thin, Regular, Bold
 
 
+Bitstream Vera Sans Mono
+
+
 
 
 
@@ -218,20 +221,118 @@ https://www.cnblogs.com/dw3306/p/13722556.html
 
     3. 安装字体索引指令
 
-       yum install mkfontscale
+       mkfontscale 字体目录 (或者进入到字体所在目录执行 mkfontscale)
 
    4. 生成字体索引
 
         进入目录 cd  /usr/share/fonts/my_fonts, 执行索引字体生成
 
-            mkfontscale
+        mkfontdir
 
-4. 查看黑体常规字体是否安装成功
+4. fc-cache
+
+    fc-cache scans the font directories on the system and builds font
+    information cache files for applications using fontconfig  for  their  font
+    han‐dling.
+
+    If  directory  arguments  are  not  given, fc-cache uses each directory in
+    the current font configuration. Each directory is scanned for font files
+    readable by FreeType. A cache is created which contains properties of each
+    font and the associated filename.  This cache is used to speed up appli‐
+    cation startup when using the fontconfig library.
+
+    Note that fc-cache must be executed once per architecture to generate font
+    information customized for that architecture.
+
+    -f     Force re-generation of apparently up-to-date cache files, overriding
+           the timestamp checking.
+
+    (https://wiki.archlinux.org/title/X_Logical_Font_Description#mkfontscale_and_mkfontdir)
+
+5. 查看黑体常规字体是否安装成功
 
     fc-list :lang=zh
 
 
+Two different font systems are used by X11: 
+    1. the older or core X Logical Font Description, XLFD, 
+    2. and the newer X FreeType, Xft, systems (see An Xft Tutorial for font names format). 
+
+    XLFD was originally designed for bitmap fonts and support for scalable
+    fonts (Type1, TrueType and OpenType) was added later. XLFD does not support
+    anti‑aliasing and sub‑pixel rasterization. 
+
+    Xft uses the FreeType and Fontconfig libraries and is more suitable when the smooth appearance of fonts is desired.
 
 
 
 
+
+sudo mkfontscale
+    创建字体的fonts.scale文件，它用来控制字体旋转缩放
+    create an index of scalable([ˈskeɪləbl]) font files for X
+
+    mkfontscale ... [directory]
+
+    For each directory argument, mkfontscale reads all of the scalable font
+    files in the directory.  
+
+    For every font file found, an X11 font name (XLFD) is generated, and is
+    written together with the file name to a file fonts.scale in the directory.
+
+    (X Logical Font Description X逻辑字体描述规范)
+
+
+sudo mkfontdir
+    创建字体的fonts.dir文件
+    create an index of X font files in a directory
+
+    mkfontdir [directory]
+
+    **The X server and font server use "fonts.dir" to find font files**
+
+
+    The first line of fonts.dir gives the number of fonts in the file.  
+    The remaining lines list the fonts themselves, one per  line,  in  two  fields.
+        First is the name of the font file, 
+        followed by a space and the name of the font.
+
+
+sudo fc-cache -fv
+    建立字体缓存信息，也就是让系统认识该字体
+
+
+
+
+## mkfontscale and mkfontdir
+
+To create a fonts.dir file, two programs are required, mkfontscale and mkfontdir. 
+
+These programs were probably installed when you installed Xorg. 
+
+Mkfontdir reads all the bitmap font files in a directory for the font names,
+and creates the fonts.dir file using the font and file names it has found. 
+**It also adds the entries from a file named fonts.scale.**
+
+
+Because **mkfontdir cannot read scalable font files**, the program mkfontscale
+is used to create the names for TrueType, OpenType and Type1 fonts. 
+The font names and font filenames are stored in the file named fonts.scale. 
+The structure of a fonts.scale file is identical to a fonts.dir file. 
+
+The first line is the number of font names listed; 
+the following lines contain the filename first, followed by a single space, and finally the font name.
+
+Both fonts.scale and fonts.dir can be hand edited. However, every time
+mkfontscale or mkfontdir is run, any existing fonts.scale or fonts.dir is
+overwritten. Your edits are easily lost.
+
+Any time mkfontdir is run, the font database should be updated, using the command:
+
+    $ xset fp rehash    (没有好像也可以)
+
+Note: Filenames that include spaces cannot be parsed correctly from the
+fonts.dir and fonts.scale files. Quoting or escaping these spaces will not
+work. The only solutions are to rename the files using filenames that do not
+contain spaces or to delete the font listings in the fonts.dir and fonts.scale
+files.

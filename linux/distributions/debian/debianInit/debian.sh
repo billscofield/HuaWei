@@ -18,6 +18,9 @@ apt install -y software-properties-common
 apt install -y git curl wget tmux tree iftop rsync  build-essential cmake
 
 
+
+
+
 # collects your Linux system information and display it on the terminal next to
 # an image
 apt install -y neofetch
@@ -82,22 +85,32 @@ chsh -s $(which zsh)
 
 
 # INSTALL oh-my-zsh
-sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+# sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
+
+git clone https://gitee.com/billscofield/oh-my-zsh ~/.oh-my-zsh
+chsh -s $(which zsh)
 mv /root/.zshrc /root/.zshrc.bak
-ln -s /git/ubuntuMate-config/.zshrc /root/.zshrc
+ln -s /git/debian-config/.zshrc /root/.zshrc
 
 #------------------------END ZSH & OH-MY-ZSH------------------------------
 
 # tmux 配置
-ln -s /git/.tmux.conf ~/
+ln -s -f /git/debian-config/.tmux.conf ~/.tmux.conf
 
-# autojump
-git clone git://github.com/joelthelion/autojump.git /git/software/autojump
+
+
+
+#------------------------BEGIN autojump------------------------------
+# git clone git://github.com/joelthelion/autojump.git /git/software/autojump
+git clone https://gitee.com/billscofield/autojump.git /git/software/autojump
 python /git/software/autojump/install.py
+#------------------------END autojump------------------------------
+
 
 # xmodmap
 apt-get install -y x11-xserver-utils
+ln -s /git/debian-config/.xmodmap ~/.xmodmap
 
 
 # 安装 NFS客户端
@@ -189,6 +202,11 @@ apt install -y mousepad
 #------------------------BEGIN GUI 编辑器 ------------------------------
 
 
+
+
+
+
+
 #------------------------BEGIN VIM ------------------------------
 ## install dependencies
 ## 1. X11 header files
@@ -201,6 +219,7 @@ apt install -y libx11-dev libxt-dev
 ## The ./configure installation prompts while having not install this, prompt
 ##"libncurses-dev"
 apt install -y libncurses-dev
+
 git clone https://gitee.com/billscofield/vim.git /git/software/vim
 
 ## 3. Install python3-dev, otherwise there will no python3-config-dir
@@ -208,14 +227,119 @@ apt install -y python3-dev
 
 ## configure vim source and install
 
+cd /git/software/vim/
 
-make install -j 4
+./configure --with-features=huge \
+  --with-x \
+  --enable-rubyinterp \
+  --enable-python3interp \
+  --with-python3-config-dir=/usr/lib/python3.7/config-3.7m-x86_64-linux-gnu \
+  --enable-perlinterp \
+  --enable-gui=auto \
+  --enable-gtk2-check \
+  --enable-gtk3-check \
+  --enable-gnome-check \
+  --enable-gui=gtk2 \
+  --enable-cscope \
+  --enable-luainterp \
+  --enable-perlinterp \
+  --enable-multibyte \
+  --prefix=/usr/local/vimPython3
+
+make install -j 8 && make install
 
 # vundle
 # git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 git clone https://gitee.com/billscofield/vundle.vim.git ~/.vim/bundle/Vundle.vim
 
+
+ln -s /git/debian-config/.vimrc ~/.vimrc
+
+
+git clone https://gitee.com/billscofield/vundle.vim.git             ~/.vim/bundle/vundle.vim
+git clone https://gitee.com/billscofield/emmet-vim                  ~/.vim/bundle/emmet-vim
+git clone https://gitee.com/billscofield/auto-pairs                 ~/.vim/bundle/auto-pairs
+git clone https://gitee.com/billscofield/vim-javascript             ~/.vim/bundle/vim-javascript
+git clone https://gitee.com/billscofield/YouCompleteMe              ~/.vim/bundle/YouCompleteMe
+git clone https://gitee.com/billscofield/tern_for_vim               ~/.vim/bundle/tern_for_vim
+git clone https://gitee.com/billscofield/syntastic                  ~/.vim/bundle/syntastic
+git clone https://gitee.com/billscofield/nerdtree                   ~/.vim/bundle/nerdtree
+git clone https://gitee.com/billscofield/nerdtree-git-plugin        ~/.vim/bundle/nerdtree-git-plugin 
+git clone https://gitee.com/billscofield/nerdcommenter              ~/.vim/bundle/nerdcommenter
+git clone https://gitee.com/billscofield/vim-go                     ~/.vim/bundle/vim-go
+git clone https://gitee.com/billscofield/vim-indent-guides          ~/.vim/bundle/vim-indent-guides
+git clone https://gitee.com/billscofield/tagbar                     ~/.vim/bundle/tagbar
+git clone https://gitee.com/billscofiled/vim-airline                ~/.vim/bundle/vim-airline
+git clone https://gitee.com/billscofield/vim-airline-themes         ~/.vim/bundle/vim-airline-themes
+git clone https://gitee.com/billscofield/vim-multiple-cursors       ~/.vim/bundle/vim-multiple-cursors
+git clone https://gitee.com/billscofield/webapi-vim                 ~/.vim/bundle/webapi-vim
+git clone https://gitee.com/billscofield/matchit.zip                ~/.vim/bundle/matchit.zip
+git clone https://gitee.com/billscofield/SimpylFold                 ~/.vim/bundle/SimpylFold
+git clone https://gitee.com/billscofield/vim-autopep8               ~/.vim/bundle/vim-autopep8
+git clone https://gitee.com/billscofield/bufexplorer                ~/.vim/bundle/bufexplorer
+
+
+
+
+# golang
+# to download without vpn is very slow, env cannot open the web
+# we can download it in this site: https://studygolang.com/dl
+
+export GOPROXY=https://mirrors.aliyun.com/goproxy/
+
+
+
+# node.js
+# npm install -g cnpm --registry=https://registry.nmp.taobao.org
+# ERR! code CERT_HAS_EXPIRED
+# thus try the two line below, but another err
+npm cache clean --force
+npm config set strict-ssl false
+
+# the right method should be as follow:
+# npm get registry   // get the current registry
+npm config set registry http://registry.npm.taobao.org
+
+
+
+
+
+# youcompleteme configure
+
+cd /root/.vim/bundle/YouCompleteMe/
+git submodule update --init --recursive
+apt install -y python3-dev build-essential cmake
+~/.vim/bundle/Yo/bundle/YouCompleteMe/install.py --all
+
+# you have to make sure the version ycm need
+# wget https://github.com/ycm-core/llvm/releases/download/12.0.0/libclang-12.0.0-x86_64-unknown-linux-gnu.tar.bz2  -P /root/.vim/bundle/YouCompleteMe/third_party/ycmd/clang_archives
+
+
+
+# ctags
+apt install -y vim-runtime
+apt install -y exuberant-ctags
+
+
+
 #------------------------END VIM ------------------------------
+
+
+
+# shellcheck
+apt-get install -y shellcheck
+
+
+# fzf
+apt-get install -y fzf
+
+# axel：多线程下载工具，下载文件时可以替代curl、wget。
+apt install -y axel
+
+# multital
+apt install -y multitail
+
+
 
 
 # input method
@@ -245,6 +369,21 @@ ibus-setup
 # Urxvt.inputMethod:ibus
 
 
+ln -s /git/debian-config/.Xdefaults /root/.Xdefaults
+
+
+
+
+#------------------------BEGIN virtual Python environment ------------------------------
+# pyenv
+git clone https://gitee.com/billscofield/pyenv.git ~/.pyenv
+cd ~/.pyenv && src/configure && make -C src
+
+# virtualenv
+git clone https://gitee.com/billscofield/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+#------------------------END virtual Python environment  ------------------------------
+
+
 
 
 
@@ -271,12 +410,18 @@ git clone https://gitee.com/billscofield/webui-aria2.git /git/software/webui-ari
 
 
 
+
+
+
+
 #------------------------BEGIN MySQL ------------------------------
 
 
 apt install -y mycli
 
 #------------------------END MySQL ------------------------------
+
+
 
 
 #------------------------BEGIN texlive ------------------------------ #texlive
@@ -296,6 +441,11 @@ apt-get install geogebra
 
 
 
+# json print
+apt install -y jq
+
+
+
 #-------------------------------NETWORK BEGIN-------------------------------
 apt install -y libpcap-dev
 apt install -y tcpdump
@@ -303,6 +453,10 @@ apt install -y tcpdump
 #---
 apt install -y wireshark
 #-------------------------------NETWORK END-------------------------------
+
+
+
+
 
 
 #-------------------------------Docker BEGIN-------------------------------
@@ -320,3 +474,58 @@ add-apt-repository "deb [arch=amd64] https://mirrors.tuna.tsinghua.edu.cn/docker
 # 4. 安装
 apt update && apt install docker-ce
 #-------------------------------Docker END-------------------------------
+
+
+
+
+
+#-------------------------------KVM BEGIN-------------------------------
+
+apt install -y qemu qemu-kvm qemu-system qemu-utils
+
+
+apt install -y libvirt-clients libvirt-daemon-system virtinst
+
+#-------------------------------KVM END-------------------------------
+
+
+#-------------------------------BAIDU BEGIN-------------------------------
+git clone https://gitee.com/billscofield/BaiduPCS-Go.git /git/software/BaiduPCS-Go
+#-------------------------------BAIDU END-------------------------------
+
+
+
+
+#-------------------------------dlocate BEGIN-------------------------------
+# fast alternative to dpkg -L and dpkg -S
+# Uses GNU grep and text dumps of dpkg's data to greatly speed up finding out which
+# package a file belongs to (i.e. a very fast dpkg -S). Many other uses,
+# including options to view all files in a package, calculate disk space
+# used, view and check md5sums, list man pages, etc.
+
+apt install -y dlocate
+
+#-------------------------------dlocate END-------------------------------
+
+
+
+
+
+apt install -y firefox-esr
+
+
+
+# qt
+wget https://d13lb3tujbc8s0.cloudfront.net/onlineinstallers/qt-unified-linux-x64-4.1.1-online.run
+
+
+
+# sound
+apt install -y alsa-utils
+
+
+
+
+apt install -y zip unzip
+
+apt install -y p7zip-full

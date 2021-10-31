@@ -30,7 +30,8 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 
 ### 方法2
 
-git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
+#git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
+git clone https://gitee.com/billscofield/pyenv.git ~/.pyenv 
 
 cd ~/.pyenv && src/configure && make -C src
 
@@ -162,7 +163,7 @@ Some useful pyenv commands are:
 
 git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
  
-git clone git@gitee.com:billscofield/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
+git clone https://gitee.com/billscofield/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
 
 echo ‘eval “$(pyenv virtualenv-init -)”’ >> ~/.bash_profile
 
