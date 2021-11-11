@@ -27,14 +27,9 @@ session    include      password-auth
 
 
 write_enable
-    This controls whether any FTP commands which change the filesystem are allowed or not. These commands are: STOR, DELE, RNFR, RNTO, MKD, RMD, APPE and SITE.
-    Default: NO
-
-
-
-
-
-
+    This controls whether any FTP commands which change the filesystem are
+    allowed or not. These commands are: STOR, DELE, RNFR, RNTO, MKD, RMD, APPE
+    and SITE.  Default: NO
 
 ##  anonymous
 
