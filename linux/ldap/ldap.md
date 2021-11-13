@@ -1,9 +1,15 @@
+##
+
+目录是一类为了浏览和搜索数据而设计的特殊的数据库
+
+
+
 ## 什么是LDAP？
 
 （一）在介绍什么是LDAP之前，我们先来复习一个东西：“什么是目录服务？”
 
-    1. 目录服务是一个特殊的数据库，用来保存描述性的、基于属性的详细信息，支
-持过滤功能。
+    1. 目录服务是一个特殊的数据库，用来保存描述性的、基于属性的详细信息，支持过
+       滤功能。
 
     2. 是动态的，灵活的，易扩展的。
 
@@ -53,24 +59,38 @@ LDAP的主要产品
 来，我们一起看下下面的表格：
 
 
-厂商    产品                        介绍
-
-SUN     SUNONE Directory Server     基于文本数据库的存储，速度快 。
-
-IBM     IBM Directory Server        基于DB2 的的数据库，速度一般。
-
-Novell  Novell Directory Server     基于文本数据库的存储，速度快, 不常用到。
-
-Microsoft   Microsoft Active Directory  基于WINDOWS系统用户，对大数据量处理速度
-一般，但维护容易，生态圈大，管理相对简单
-
-Opensource  Opensource              OpenLDAP 开源的项目，速度很快，但是非主流应用。
++-------------+----------------------------+-----------------------------------------+
+|厂商         | 产品                       |介绍                                     |
++-------------+----------------------------+-----------------------------------------+
+|SUN          | SUNONE Directory Server    |基于文本数据库的存储，速度快 。          |
++-------------+----------------------------+-----------------------------------------+
+|IBM          | IBM Directory Server       |基于DB2 的的数据库，速度一般。           |
++-------------+----------------------------+-----------------------------------------+
+|Novell       | Novell Directory Server    |基于文本数据库的存储，速度快, 不常用到。 |
++-------------+----------------------------+-----------------------------------------+
+|Microsoft    | Microsoft Active Directory |基于WINDOWS系统用户，对大数据量处理速度一|
+|             |                            |般，但维护容易，生态圈大，管理相对简单   |
++-------------+----------------------------+-----------------------------------------+
+|Opensource   | Opensource                 |OpenLDAP 开源的项目，速度很快，但是非主流|
+|             |                            |应用。                                   |
++-------------+----------------------------+-----------------------------------------+
 
 
 
 有两个国际标准:
     
-    X.500 和 LDAP(实际上是X.500的简化版本, 是X.500的子集)
+    X.500 和 LDAP(实际上是X.500的简化版本, 是X.500的子集), 应该是衍生物
+
+    X.500, a directory protocol standard developed by the International
+    Telecommunications Union (ITU).
+
+    LDAP, a derivative of the X.500 protocol developed as an open source
+    project by the Open System Interconnection – Directory Services (OSI-DS)
+    and the Internet Engineering Task Force (IETF)
+
+    [link](https://www.collectionscanada.gc.ca/iso/ill/document/ill_directory/X_500andLDAP.pdf)
+
+    ---
 
     X.500 实际上是一个协议族，包括了从 X.501 到 X.525 
 
@@ -78,8 +98,8 @@ Opensource  Opensource              OpenLDAP 开源的项目，速度很快，�
 
         slapd - OpenLDAP server (slapd)
 
-    LDAP是基于TCP/IP的,运行在TCP/IP或者其他的面向连接的传输服务至上， 
-    X.500 基于OSI协议
+    LDAP是基于TCP/IP的,运行在TCP/IP或者其他的面向连接的传输服务之上, X.500 基于
+    OSI协议
 
 
 DNS 是一个典型的大范围分布式目录服务的例子
@@ -93,14 +113,20 @@ OpenLDAP 服务默认使用非加密的 TCP/IP 协议来接收服务的请求，
 以它也支持使用基于 SSL/TLS 的加密协议来保证数据传送的保密性和完整性。OpenLDAP
 是使用 OpenSSL 来实现 SSL/TLS 加密通信的。
 
+X.500特征
+    分散维护
+    搜索性能
 
-## 实际上整个 OpenLDAP的架构大致包含 3个部分:
+
+
+
+## 实际上整个 OpenLDAP 的架构大致包含 3个部分:
 
 1. OpenLDAP
 
-    首先，是 OpenLDAP的服务器本身，这个东西其实只相当于是一个 mysql数据库，它是
-    没有酷炫的图形界面的，如果你愿意每次都手敲一大堆代码，也可以用它，但这种反人
-    类的设计真的不是给人用的。
+    首先，是 OpenLDAP 的服务器本身，这个东西其实只相当于是一个 mysql 数据库，它
+    是没有酷炫的图形界面的，如果你愿意每次都手敲一大堆代码，也可以用它，但这种
+    反人类的设计真的不是给人用的。
 
 
 1. phpLDAPadmin
@@ -130,38 +156,31 @@ uid ou dc
 
 
 1. dc      Domain Component
-
     域名的部分，其格式是将完整的域名分成几部分，如域名为example.com变成
     dc=example,dc=com（一条记录的所属位置）
 
 1. ou      Organization Unit
-
-    组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条记
-    录的所属组织）
+    组织单位，组织单位可以包含其他各种对象（包括其他组织单元），如“oa组”（一条
+    记录的所属组织）, 其他人
 
     ou 也是一种条目-容器条目，ou下边即真正的用户条目
 
-1. cn      Common Name
-
+1. cn      Common Name???
     公共名称，如“Thomas Johanson”（一条记录的名称）
 
 1. uid     User Id
-
     用户ID songtao.xu（一条记录的ID）
 
 1. sn      Surname
-
     姓，如“许”
 
 1. dn      Distinguished Name
-
-    一条记录的位置（唯一）每个对象都有一个唯一的名称，如 “uid=songtao.xu,ou=oa组
-    ,dc=example,dc=com”，
+    一条记录的位置（唯一）每个对象都有一个唯一的名称，如 “uid=songtao.xu,ou=oa
+    组,dc=example,dc=com”，
 
     类似于关系数据库的主键，它是一个识别属性，通常用于检索.
 
     DN的两种设置:
-
         1. 基于 cn (姓名), cn=test,ou=auth,dc=abc,dc=org, 最常见的cn是
            /etc/group 转来的条目
             
@@ -169,11 +188,9 @@ uid ou dc
            /etc/passwd 转来的条目
 
     Base DN
-        
         目录树的最顶部就是根
 
     LDIF 格式 
-        
         用于 LDAP 数据导入、导出的格式.
         
         LDAP Interchange Format   在RFC2849中定义的标准，用于规范LDAP的配置和目
@@ -181,7 +198,6 @@ uid ou dc
         。 ASCII 文件格式
 
     LDIF 文件特点
-
         1. 通过空行分割一个条目
         
         2. 注释以 hash 开头
@@ -198,20 +214,24 @@ uid ou dc
     相对辨别名，类似于文件系统中的相对路径，它是与目录树结构无关的部分，如“
     uid=tom”或“cn= Thomas Johansson”
 
+1. c    country 国家
+
+1. o    organization 组织名
+
 Directory   目录，用于存放信息的单元
 
 Entry       条目，LDAP的基本信息单元
     
-    条目是具有分辩名DN(Distinguished Name)的属性-值对(Attribute-Value,简称AV)的
-    集合
+    条目是具有分辩名 DN(Distinguished Name) 的属性-值对(Attribute-Value,简称AV)
+    的集合
 
     每个Entry都可以有多个属性，而每个属性都有特定的类型和一个或多个取值，比如cn
     （Common Name）就是一个属性
 
+    LDAP 目录通常也用 ROOT 作为根, 叫做 BaseDN
+
     LDAP允许你通过一种叫做 objectClass 的特殊属性来控制哪些属性是条目所必须的，
     哪些是可选的。
-
-
 
 DIT(Directory Information Tree) 目录信息树
 
@@ -273,11 +293,72 @@ schema 生产 objectClass, objectClass 生成 attribute, attribute 的产生主�
 SNMP 中 MIB2 概念
 
 
+|           c=GB        c=US
+|                        |
+|                       \|/
+|                  st=California
+|                        |
+|                       \|/
+|                     o=Acme                    // Th Organization
+|                       /\
+|                      /  \
+|                     /    \
+|                 ou=Sales  ou=Marketing        // Organization Unit
+|                   /
+|           cn=Alice                            // Person
+|
+|   LDAP directory tree (traditional naming)
+|
+|
+|
+|
+|          +------+------+
+|         /       |       \
+|        /        |        \
+|   dc=net      dc=com      dc=org
+|                 |
+|               dc=lca                  //The organisation
+|                / \ 
+|       ou=People   ou=Servers          //Organisation Unit
+|   cn
+|
+|   LDAP directory tree (Internet naming)
+
+## LDIF 文件
+
+1. 通过空行来分割一个条目或定义
+2. sharp 注释
+3. 赋值,  属性:值
+4. 属性可以被重复赋值,例如 objectlcass, 
+5. 每个树形一行
+6. 结尾不能有空行
+
+
+## LDAP 的几个重要配置模式
+
+    1. 基本的目录查询服务
+    2. 目录查询代理服务
+    3. 异机复制数据
+
+
+
 ## 安装
 
+sed -i '/SELINUX/s/enforcing/disabled/' /etc/selinux/config
 setenforce 0
 
-yum install openldap openldap-servers openldap-clients
+systemctl disable firewalld.service
+systemctl stop firewalld.service
+
+
+yum install -y openldap
+yum install -y openldap-servers
+yum install -y openldap-clients
+yum install -y compat-openldap
+yum install -y openldap-servers-sql 
+yum install -y openldap-devel
+yum install -y migrationtools
+
 
 chown -R ldap. /var/lib/ldap/DB_CONFIG
 

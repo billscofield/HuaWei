@@ -1,3 +1,10 @@
+NAS(Network append storage): 共享的是文件夹
+    samba 不同系统间的文件夹或**设备共享**
+    nfs 网络文件系统
+
+vsftp 软件使用的是 ftp 协议
+
+
 listen 
     If enabled, vsftpd will run in standalone mode.
 
@@ -29,7 +36,7 @@ listen_ipv6
 
 
 ftpuser
-user_list   userlist_deny  userlist_enable
+user_list   userlist_enable     userlist_deny  
 
 userlist_enable和userlist_deny两个选项联合起来针对的是：本地全体用户（除去ftpusers中的用户）和出现在user_list文件中的用户以及不在在user_list文件中的用户这三类用户集合进行的设置。
 当且仅当userlist_enable=YES时：userlist_deny项的配置才有效，user_list文件才会被使用；
@@ -117,11 +124,41 @@ anonymous_enable
     Default: NO(Debian)
     Default: YES(centos)
 
+    密码好像是说要有个" @"
+
+secure_email_list_enable
+    Set to YES if you want only a specified list of e-mail passwords for **anonymous** logins to be accepted.
+
+    When enabled, anonymous logins are prevented unless the password provided
+    is listed in the file specified  by  the  **email_password_file** setting.  
+
+    The  file  format  is  one password per line, no extra whitespace. The default
+    filename is /etc/vsftpd.email_passwords.
+
+    Default: NO
+
+
+deny_email_enable
+    If  activated, you may provide a list of **anonymous** password e-mail responses which cause
+    login  to  be  denied.
+
+    By  default,  the  file  containing  this   list   is
+    /etc/vsftpd.banned_emails, but you may override this with the
+    banned_email_file setting.
+
+    Default: NO
+
+
+
+
 no_anon_password
     When enabled, this prevents vsftpd from asking for an anonymous password - the anonymous
     user will log straight in.
 
     Default: NO
+
+
+
 
 
 
@@ -140,6 +177,13 @@ write_enable
     Default: NO(debian/centos)
 
     应该是 anonymous 的先决条件
+
+download_enable
+    If set to NO, all download requests will give permission denied.
+    Default: YES
+
+
+
 
 
 local_umask
@@ -231,7 +275,7 @@ anon_other_write_enable
 
 chown_uploads
 
-    If enabled, all anonymously uploaded files will have the ownership  changed  to  the
+    If enabled, all **anonymously uploaded files** will have the ownership  changed  to  the
     user  specified  in  the setting chown_username.  This is useful from an administra‐
     tive, and perhaps security, standpoint.
 
@@ -251,6 +295,7 @@ chown_username
 chroot_local_user
 chroot_list_enable
 chroot_list_file
+allow_writeable_chroot
 
 
 
@@ -375,6 +420,11 @@ allow_writeable_chroot
 
 
 
+pasv_enable
+    Set to NO if you want to disallow the PASV method of obtaining a data connection.
+    Default: YES
+
+    自己连自己的时候，"ftp" 这个软件是不会显示 227 Entering Passive Mode (10,0,5,18,246,143). 的，或者是debian 的软件不显示? 在centos7  上是显示的
 
 
 
@@ -428,6 +478,29 @@ chown_upload_mode
 
 
 
+user_config_dir
+    This  powerful  option  allows the override of any config option specified in the manual
+    page, on a per-user basis. Usage is simple, and is best illustrated with an example.  
+
+    If you set user_config_dir to be /etc/vsftpd_user_conf and then log on as
+    the user "chris", then vsftpd will apply the settings in the file
+    /etc/vsftpd_user_conf/chris for the  duration  of  the  session.  
+
+    The format  of this file is as detailed in this manual page!
+
+    PLEASE NOTE that not all settings are effective on a per-user basis. 
+    For  example,  many settings only prior to the user's session being started. Examples of
+    settings which will not affect any  behviour  on  a  per-user  basis
+    include  listen_address,  banner_file, max_per_ip, max_clients, xferlog_file, etc.
+
+    Default: (none)
+
+
+
+
+
+
+
 
 guest_enable
 guest_username
@@ -442,6 +515,79 @@ guest_username
     See the boolean setting guest_enable for a description of what constitutes a  guest  login. 
     This setting is the real username which guest users are mapped to.
     Default: ftp
+
+1. 创建虚拟用户映射的本地帐号
+    useradd -s /sbin/nologin -d /var/tmp/vusers uservirtual
+    chmod 500 /var/tmp/vusers
+    mkdir /var/tmp/vusers/shichang
+    mkdir /var/tmp/vusers/caiwu
+    mkdir /var/tmp/vusers/xingzheng
+    chmod 700 /var/tmp/vusers/*
+    
+    chown uservirtual:uservirtual /var/tmp/vusers/ -R
+
+1. 配置文件开启虚拟用户验证
+    guest_enable=YES
+    guest_username=uservirtual
+    **virtual_use_local_privs=NO**
+    **user_config_dir=/etc/vsftpd/vconf.d/**                    !!!!!!!!!!
+
+1. 建立虚拟用户验证数据库
+    /etc/vsftpd/vuser
+    ```
+    sc_01       奇数行：帐号
+    pass1       偶数行：密码
+    sc_02
+    pass2
+    cw_01
+    pass1
+    cw_02
+    pass2
+    xz_01
+    pass01
+    xz_02
+    pass02
+
+    [将上面的用户放入 /etc/vsftpd/chroot_list, 不允许切出家目录]
+    ```
+
+    生成帐号密码数据库文件
+        db_load -T -t hash -f /etc/vsftpd/vuser /etc/vsftpd/vuser.db
+        chmod 600 /etc/vsftpd/vuser.db
+
+1. 开启 pam 认证
+    将下列内容添加到开头/etc/pam.d/vsftpd.db
+    auth sufficient /lib64/pam_userdb.so db=/etc/vsftpd/vuser
+    account sufficent /lib64/security/pam_userdb.so db=/etc/vsftpd/vuser
+
+    apt install db5.3-util
+
+    pam_service_name
+        This string is the name of the PAM service vsftpd will use.
+        Default: vsftpd
+
+    修改 pam_service_name=/etc/pam.d/vsftpd.db
+
+
+1. 设置不同用户的权限
+
+    每个用户的配置文件需要和自己的名字一样                      !!!!!!!!!!
+
+    财务主管为例:
+        cat /etc/vsftpd/vconf.d/cw_01                           !!!!!!!!!!
+        ```
+        local_root=/var/tmp/vusers/caiwu                        这个和全局的 local_root , chroot_user
+        anon_umask=077
+        anon_wrold_readable_only=NO
+        anon_upload_enable=YES
+        anon_mkdir_write_enable=YES
+        anon_other_write_enable=YES
+        ```
+1. 测试
+
+
+
+
 
 
 
@@ -501,4 +647,129 @@ vsftpd_log_file
     output is sent to the system log instead.
 
     Default: /var/log/vsftpd.log
+
+
+
+
+
+
+nopriv_user=ftpsecure       对子进程的管理者
+
+
+async_abor_enable
+tcp_wrappers
+    /etc/hosts.deny
+        vsftpd: ALL
+    /etc/hosts.allow
+        vsftpd: 192.168.1.1/24
+
+
+
+ascii_upload_enable
+ascii_download_enable
+使用"ftp"客户端软件可以设置是用 binary 还是 ascii
+
+
+
+
+
+
+
+ftp
+
+    open host [port]
+        Establish a connection to the specified host FTP server.
+
+    close
+        Terminate the FTP session with the remote server, and return to the
+        command interpreter.  Any defined macros are erased.
+
+    bye
+        Terminate the FTP session with the remote server and exit ftp.  An end
+        of file will also terminate the session and exit.
+
+    quit
+        A synonym for bye.
+
+
+    ! [command [args]]
+        Invoke an interactive shell on the local machine. 
+
+    lcd [directory]
+        Change the working directory on the local machine.  If no directory
+        is specified, the user's home directory is used.
+
+    get
+    mget
+    put
+    mput
+
+    mkdir
+    rename
+    delete remote-file
+        Delete the file remote-file on the remote machine.
+    rmdir directory-name
+        Delete a directory on the remote machine.
+
+
+
+
+
+
+
+
+
+## mysql 
+
+[pam-mysql](http://pam-mysql.sourceforge.net/)
+
+wget http://prdownloads.sourceforge.net/pam-mysql/pam_mysql-0.7RC1.tar.gz
+
+apt-cache search pam-mysql
+    libpam-mysql - PAM module interfacing with MySQL databases
+
+This is different lib, centos does not have this lib, we should complise it ourself,
+    yum search pam-mysql
+        dspam-mysql.x86_64 : MySQL storage driver for libdspam
+
+    ```
+    wget http://prdownloads.sourceforge.net/pam-mysql/pam_mysql-0.7RC1.tar.gz
+
+    cat INSTALL
+
+    1. ./configure --with-pam-mods-dir=/lib64/security
+    2. make install
+
+    ls /lib64/security | grep mysql
+    ```
+
+调用 pam-mysql 模块
+
+    vim /etc/pam.d/vsftpd.mysql
+    ```可以查看 README
+    auth required pam_mysql.so user=vsftpd passwd=xxx host=[mysqlserver] db=[vsftpd-db] table=[table] usercolmn=name passwordcolumn=password crypt=2
+    account required pam_mysql.so user=vsftpd passwd=xxx host=[mysqlserver] db=[vsftpd-db] table=[table] usercolmn=name passwordcolumn=password crypt=2
+    ```
+
+    /etc/vsftpd/vsftpd.conf
+        pam_service_name=vsftpd.mysql
+
+
+
+yum install mariadb-server
+systemctl start mariadb
+
+```
+
+create database vsftpd;
+use vsftpd;
+
+create table users(id int not null primary key auto_increment, name char(50) binary not null, password char(50) binary not null);
+
+insert users values(null,'vuser1',password('vuser1'))
+
+grant select on vsftpd.* to vsftpd@'10.0.0.%' identified by 'password';
+flush privileges;
+```
+
 
