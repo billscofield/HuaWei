@@ -75,7 +75,7 @@ apt install -y expect
 
 # TO DOWNLOAD MY CONFIG FILES
 mkdir -p /git/
-git clone https://gitee.com/billscofield/ubuntuMate-config.git /git/ubuntuMate-config
+git clone https://gitee.com/billscofield/debian-config.git /git/debian-config
 
 
 #------------------------BEGIN ZSH & OH-MY-ZSH------------------------------
@@ -89,7 +89,6 @@ chsh -s $(which zsh)
 
 
 git clone https://gitee.com/billscofield/oh-my-zsh ~/.oh-my-zsh
-chsh -s $(which zsh)
 mv /root/.zshrc /root/.zshrc.bak
 ln -s /git/debian-config/.zshrc /root/.zshrc
 
@@ -127,12 +126,12 @@ apt install -y xinit
 
 
 apt install -y i3 feh compton
-ln -s /git/ubuntuMate-config/config.i3 /root/.config/i3/config -f
+ln -s /git/debian-config/config.i3 /root/.config/i3/config -f
 
 apt install -y i3lock-fancy
 
 
-# 
+# ranger file manager
 apt install -y ranger
 
 
@@ -326,7 +325,6 @@ apt install -y exuberant-ctags
 
 
 
-# shellcheck
 apt-get install -y shellcheck
 
 
