@@ -505,6 +505,8 @@ apt install -y dlocate
 
 #-------------------------------dlocate END-------------------------------
 
+# rpm2cpio - tool to convert RPM package to CPIO archive
+apt install -y rpm2cpio
 
 
 

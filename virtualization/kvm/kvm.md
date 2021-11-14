@@ -11,8 +11,6 @@ Kernel-based Virtual Machine
 
 KVM的虚拟化需要硬件的支持(如 Intel VT 技术 or AMD V 技术)
 
-是第一个正和岛 Linux 内核的虚拟化技术。
-
 在 KVM 模型中，每一个虚拟机都是一个由 Linux 调度程序管理的标准进程，你可以在用
 户空间启动客户机操作系统
 
@@ -38,6 +36,7 @@ KVM 支持其他操作系统
 
     AMD   : cat /proc/cpuinfo | grep --color svm
 
+    egrep '(vmx|svm)' /proc/cpuinfo
 
 ## Virtual Machine Extension (VMX)
 

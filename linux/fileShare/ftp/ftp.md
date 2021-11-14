@@ -11,7 +11,7 @@
     
     ftp     
         - classical file transfer client tftp    
-        - Trivial file transfer protocol client tftpd   
+        - Trivial(简单的) file transfer protocol client tftpd   
         - Trivial file transfer protocol server
 
 1. tftp Trivial ftp very simple transfer protocol
@@ -361,8 +361,9 @@ a local (i.e. non-anonymous) login. Failure is silently  ignored.
 local_root=/data/ftp
 
 
-#
-如果启动这个选项，那么使用者第一次进入一个目录时，会检查该目录下是否有.message这个档案，如果有，则会出现此档案的内容，通常这个档案会放置欢迎话语，或是对该目录的说明。默认值为开启。
+#如果启动这个选项，那么使用者第一次进入一个目录时，会检查该目录下是否有.message
+这个档案，如果有，则会出现此档案的内容，通常这个档案会放置欢迎话语，或是对该目
+录的说明。默认值为开启。
 
 ftp 会显示，但是lftp不显示 # 搭配 message_file=.message dirmessage_enable=YES
 
