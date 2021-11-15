@@ -1,6 +1,33 @@
-NAS(Network append storage): 共享的是文件夹
+DAS(Direct-Attached Storage)
+    直连存储
+
+NAS(Network-Attached storage): 共享的是文件夹
+    ftp
     samba 不同系统间的文件夹或**设备共享**
     nfs 网络文件系统
+
+SAN(Storage area Network)
+    
+
+MySQL
+    主从
+NAS
+    rsync
+
+tpc/21
+tpc/20
+
+## 服务状态码
+
+1xx: 信息
+2xx: 成功类状态
+3xx: 补充类
+4xx: 客户端错误
+5xx: 服务器错误
+
+
+
+
 
 vsftp 软件使用的是 ftp 协议
 
@@ -14,8 +41,7 @@ listen
     vsftpd itself will then take care of listening for and handling incoming
     connections.
 
-    Default: NO
-
+    efault: NO
 
 
 
@@ -209,7 +235,7 @@ anon_upload_enable
 
     This  setting  is  also required  for virtual users to upload; 
 
-    by default, virtual users are treated with anony‐mous (i.e.  maximally restricted) privilege.
+    by default, virtual users are treated with anonymous (i.e. maximally restricted) privilege.
 
     Default: NO(debian/centos)
 
@@ -237,7 +263,7 @@ anon_world_readable_only
     which  are  world readable.  
 
     This  is recognising that the ftp user may own files, especially in the
-    pres‐ence of uploads.
+    presence of uploads.
 
     只能下载全部读的文件
 

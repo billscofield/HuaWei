@@ -37,12 +37,26 @@ FTP监听TCP端口号为21, 数据端口为20
 
 1. 服务器端
 
-    Wu-ftp, vsftpd, Pureftpd, Filezilla, Server-U, IIS
+    vsftpd, Pureftpd, Filezilla, Server-U, IIS
+
+    wu-ftp
+        https://www.debianhelp.co.uk/wuftp.html
+        Washington University
+
+    Proftpd
+        相比WuFTP更安全，由于Proftpd在自身的原始码中已经包含了所需要的执行指令，
+        不需要Linux系统本机的执行程序的支持，所以在系统安全上更为安全。配置简单
+        且灵活，安装后只需要设定proftpd.conf一个配置文件即可，可配置性更强。可
+        以使用stand-alone或者super daemon方式来启动ftp服务。
+        
+        **Proftpd 可以控制上下传比例，实现流量控制**，针对不同的目录设定不同的权限。
+        登录者分为anonymous和real user两种。
+
 
 2. 客户端
 
     命令行
-        ftp, lftp, wget, curl
+        ftp, lftp, wget, curl, 浏览器， windows文件管理器
     
     图形化
         gftp, FileZilla
