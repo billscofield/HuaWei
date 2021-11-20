@@ -119,3 +119,8 @@ Subsystem   sftp    /usr/lib/openssh/sftp-server
 
 
 ## 
+
+
+
+
+ssh -o StrictHostKeyChecking=no

@@ -252,6 +252,8 @@ definitions (attribute types and object classes) are also provided in the
 
 ### 配置示例
 
+[link](https://www.qiansw.com/how-to-install-openldap-in-centos7-system.html)
+
 安装openldap后，会有三个命令用于修改配置文件，分别为
     ldapadd
     ldapmodify
@@ -263,8 +265,8 @@ definitions (attribute types and object classes) are also provided in the
 1. 生成管理员密码
 
     ```
-    slappasswd -s 123456
-
+    slappasswd -s mima
+    >> {SSHA}U7scarx5fP28oJ0QLpxHDSgH80cjAV14
     ```
 
     // 新增修改密码文件,ldif为后缀，文件名随意，不要在 /etc/openldap/slapd.d/
@@ -279,7 +281,247 @@ definitions (attribute types and object classes) are also provided in the
 
     ```
 
-2. 
+2. 配置 OpenLDAP 服务器
+
+    1. OpenLDAP服务器配置文件位于 /etc/openldap/slapd.d/。要开始配置LDAP，我们
+       需要更新变量 olcSuffix 和 olcRootDN。
+
+    2. olcSuffix - 数据库后缀，它是LDAP服务器提供信息的域名。简单来说，它应该更
+       改为您的域名。
+
+    3. olcRootDN - 具有对LDAP执行所有管理活动的无限制访问权限的用户的根专有名称
+       （DN）条目，如root用户。
+
+    4. olcRootPW - 上述RootDN的LDAP管理员密码。
+
+    以上条目需要在 /etc/openldap/slapd.d/cn=config/olcDatabase={2}hdb.ldif 文件
+    中更新。不要手动编辑LDAP配置文件，所有的变动都应该使用 ldapmodify 命令行工
+    具来操作，执行该命令行工具时，手动操作所做的变动都会丢失。
+
+---
+
+    1. 创建一个.ldif文件。添加以下条目，需要将域名和SSHA 密码更换为你自己的正确值：
+
+        ```
+        dn: olcDatabase={2}hdb,cn=config
+        changetype: modify
+        replace: olcSuffix
+        olcSuffix: dc=qiansw,dc=com
+        
+        dn: olcDatabase={2}hdb,cn=config
+        changetype: modify
+        replace: olcRootDN
+        olcRootDN: cn=root,dc=qiansw,dc=com
+        
+        dn: olcDatabase={2}hdb,cn=config
+        changetype: modify
+        replace: olcRootPW
+        olcRootPW: {SSHA}U7scarx5fP28oJ0QLpxHDSgH80cjAV14
+        ```
+
+    2. 将配置发送到LDAP服务器：
+
+        执行 ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif，输出：
+        
+        ```
+        SASL/EXTERNAL authentication started
+        SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+        SASL SSF: 0
+        modifying entry "olcDatabase={2}hdb,cn=config"
+        
+        modifying entry "olcDatabase={2}hdb,cn=config"
+        
+        modifying entry "olcDatabase={2}hdb,cn=config"
+        ```
+    
+    3. 对/etc/openldap/slapd.d/cn=config/olcDatabase={1 }monitor.ldif （不要手
+       动编辑）文件进行更改，以仅将监视器访问限制为ldap root（root）用户而不是
+       其他用户。
+        
+       创建 monitor.ldif，输入使用以下信息：
+        
+       ```
+       dn: olcDatabase={1}monitor,cn=config
+       changetype: modify
+       replace: olcAccess
+       olcAccess: {0}to * by dn.base="gidNumber=0+uidNumber=0,cn=peercred,cn=external, cn=auth" read by dn.base="cn=root,dc=qiansw,dc=com" read by * none
+       ```
+    4. 更新文件后，将配置发送到LDAP服务器。
+
+    执行 ldapmodify -Y EXTERNAL -H ldapi:/// -f monitor.ldif 输出：
+
+    ```
+    SASL/EXTERNAL authentication started
+    SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
+    SASL SSF: 0
+    modifying entry "olcDatabase={1}monitor,cn=config"
+    ```
+
+3. 设置 OpenLDAP 数据库
+
+    1. 将示例数据库配置文件复制到/var/lib/ldap并更新文件权限。
+        
+        ```
+        cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
+        chown ldap:ldap /var/lib/ldap/ -R
+        ```
+
+    2. 添加cosine和nis LDAP模式。
+        
+        ```
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
+        ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/inetorgperson.ldif
+        ```
+
+    3. 创建 base.ldif 为您的域生成文件。使用以下信息。您可以根据自己的要求进行修改。
+        
+        ```
+        dn: dc=qiansw,dc=com
+        dc: qiansw
+        objectClass: top
+        objectClass: domain
+        
+        dn: cn=root ,dc=qiansw,dc=com
+        objectClass: organizationalRole
+        cn: root
+        description: LDAP Manager
+        
+        dn: ou=People,dc=qiansw,dc=com
+        objectClass: organizationalUnit
+        ou: People
+        
+        dn: ou=Group,dc=qiansw,dc=com
+        objectClass: organizationalUnit
+        ou: Group
+        ```
+        
+        构建目录结构：ldapadd -x -W -D "cn=root,dc=qiansw,dc=com" -f base.ldif
+        此次需要输入上面步骤设置的 root 密码。
+
+4. 创建 LDAP 用户
+
+    您可以将本地用户迁移到LDAP，而不是创建新用户。
+
+    我们为名为 raj 的新用户创建一个LDIF文件。
+
+    ```
+    vim raj.ldif
+    dn: uid=raj,ou=People,dc=qiansw,dc=com
+    objectClass: top
+    objectClass: account
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    cn: raj
+    uid: raj
+    uidNumber: 9999
+    gidNumber: 100
+    homeDirectory: /home/raj
+    loginShell: /bin/bash
+    gecos: Raj [Admin (at) qiansw]
+    userPassword: {crypt}x
+    shadowLastChange: 17058
+    shadowMin: 0
+    shadowMax: 99999
+    shadowWarning: 7
+    ```
+
+    使用带有上述文件的ldapadd命令在OpenLDAP目录中创建名为“ raj ” 的新用户。
+
+    ldapadd -x -W -D "cn=root,dc=qiansw,dc=com" -f raj.ldif
+
+    输出：adding new entry "uid=raj,ou=People,dc=qiansw,dc=com"
+    变更 raj 的密码为 password123：
+
+    ldappasswd -s password123 -W -D "cn=root,dc=qiansw,dc=com" -x "uid=raj,ou=People,dc=qiansw,dc=com"
+
+    -s指定用户名的密码
+    -x用户名，密码已更改
+    -D要对LDAP服务器进行身份验证的可分辨名称。
+
+    1. 验证LDAP条目。
+
+    ldapsearch -x cn=raj -b dc=qiansw,dc=com
+
+    输出：
+    ```
+    # extended LDIF
+    #
+    # LDAPv3
+    # base <dc=qiansw,dc=com> with scope subtree
+    # filter: cn=raj
+    # requesting: ALL
+    #
+
+    # raj, People, qiansw.com
+    dn: uid=raj,ou=People,dc=qiansw,dc=com
+    objectClass: top
+    objectClass: account
+    objectClass: posixAccount
+    objectClass: shadowAccount
+    cn: raj
+    uid: raj
+    uidNumber: 9999
+    gidNumber: 100
+    homeDirectory: /home/raj
+    loginShell: /bin/bash
+    gecos: Raj [Admin (at) qiansw]
+    shadowLastChange: 17058
+    shadowMin: 0
+    shadowMax: 99999
+    shadowWarning: 7
+    userPassword:: e1NTSEF9MlZkUVJFWEhUemdyRnhBT3dDS3lyb1B4eVFrbWhaM0M=
+
+    # search result
+    search: 2
+    result: 0 Success
+
+    # numResponses: 2
+    # numEntries: 1
+    ```
+
+    1. 从LDAP中删除条目（可选）。
+
+        ldapdelete -W -D "cn=root,dc=qiansw,dc=com" "uid=raj,ou=People,dc=qiansw,dc=com"
+
+    还可以使用 Apache Directory Studio 图形化 LDAP 管理工具 来管理 ldap。
 
 
+5. 防火墙-Firewall
 
+    如果开启了防火墙，还需要将 LDAP 服务添加到防火墙（TCP 389）。
+
+    firewall-cmd --permanent --add-service=ldap
+    firewall-cmd --reload
+
+6. 启用LDAP日志记录
+
+    配置Rsyslog以将LDAP事件记录到日志文件/var/log/ldap.log。
+
+    vim /etc/rsyslog.conf
+    将以下行添加到/etc/rsyslog.conf文件中。
+
+    local4.* /var/log/ldap.log
+
+    重新启动rsyslog服务。
+    systemctl restart rsyslog
+
+7. LDAP客户端配置以使用LDAP服务器
+
+    在客户端计算机上安装必要的LDAP客户端软件包。
+        yum install -y openldap-clients nss-pam-ldapd
+
+    执行以下命令将客户端计算机添加到LDAP服务器以进行单点登录。将“192.168.1.10”替换为LDAP服务器的IP地址或主机名。
+        authconfig --enableldap --enableldapauth --ldapserver=192.168.1.10 --ldapbasedn="dc=51cto,dc=com" --enablemkhomedir --update
+
+    重新启动LDAP客户端服务。
+        systemctl restart nslcd
+
+    验证LDAP登录
+    使用getent命令从LDAP服务器获取LDAP条目。
+        getent passwd raj
+
+    输出：
+        raj:x:9999:100:Raj [Admin (at) qiansw]:/home/raj:/bin/bash
+
+    要验证LDAP，请使用客户端计算机上的LDAP用户“ raj ” 登录。

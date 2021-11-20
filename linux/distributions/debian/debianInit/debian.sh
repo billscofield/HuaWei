@@ -276,6 +276,7 @@ git clone https://gitee.com/billscofield/matchit.zip                ~/.vim/bundl
 git clone https://gitee.com/billscofield/SimpylFold                 ~/.vim/bundle/SimpylFold
 git clone https://gitee.com/billscofield/vim-autopep8               ~/.vim/bundle/vim-autopep8
 git clone https://gitee.com/billscofield/bufexplorer                ~/.vim/bundle/bufexplorer
+git clone https://gitee.com/billscofield/taglist.git                ~/.vim/bundle/taglist
 
 
 
@@ -523,7 +524,8 @@ wget https://d13lb3tujbc8s0.cloudfront.net/onlineinstallers/qt-unified-linux-x64
 # sound
 apt install -y alsa-utils
 
-
+# drawingboard
+apt install -y openboard
 
 
 apt install -y zip unzip
