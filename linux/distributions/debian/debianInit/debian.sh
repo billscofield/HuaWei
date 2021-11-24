@@ -524,6 +524,9 @@ wget https://d13lb3tujbc8s0.cloudfront.net/onlineinstallers/qt-unified-linux-x64
 # sound
 apt install -y alsa-utils
 
+# screenshot
+apt install flameshot
+
 # drawingboard
 apt install -y openboard
 
