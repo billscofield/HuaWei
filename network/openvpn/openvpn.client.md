@@ -24,3 +24,13 @@ sudo nmcli connection import type openvpn file /path/to/your.ovpn
 ### Desktop
 
 First, install the OpenVPN Network Manager plugin:
+
+
+
+
+## debian
+
+curl -fsSL https://swupdate.openvpn.net/repos/openvpn-repo-pkg-key.pub | gpg --dearmor > /etc/apt/trusted.gpg.d/openvpn-repo-pkg-keyring.gpg
+
+
+
