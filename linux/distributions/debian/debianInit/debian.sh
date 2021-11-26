@@ -81,7 +81,7 @@ git clone https://gitee.com/billscofield/debian-config.git /git/debian-config
 #------------------------BEGIN ZSH & OH-MY-ZSH------------------------------
 # ZSH
 apt install -y zsh
-chsh -s $(which zsh)
+chsh -s "$(which zsh)"
 
 
 # INSTALL oh-my-zsh
@@ -226,7 +226,7 @@ apt install -y python3-dev
 
 ## configure vim source and install
 
-cd /git/software/vim/
+cd /git/software/vim/ || exit
 
 ./configure --with-features=huge \
   --with-x \
@@ -306,7 +306,7 @@ npm config set registry http://registry.npm.taobao.org
 
 # youcompleteme configure
 
-cd /root/.vim/bundle/YouCompleteMe/
+cd /root/.vim/bundle/YouCompleteMe/ || exit
 git submodule update --init --recursive
 apt install -y python3-dev build-essential cmake
 ~/.vim/bundle/Yo/bundle/YouCompleteMe/install.py --all
@@ -534,3 +534,15 @@ apt install -y openboard
 apt install -y zip unzip
 
 apt install -y p7zip-full
+
+
+# 对于系统的函数进行跳转
+mkdir -p ~/.vim/tags/
+ctags --fields=+iaS --extra=+q -R -f ~/.vim/tags/systags /usr/include /usr/local/include
+
+
+
+apt install -y bc
+
+# include cal,ncal
+apt install -y bsdmainutils

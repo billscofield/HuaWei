@@ -1,12 +1,19 @@
 
 taglist依赖于ctags，所以要先装ctags
 
-## ctags
+## [ctags](ctags.sourceforge.net)
 
 apt install ctags
-或者 apt install exuberant-ctags [ɪg'z(j)uːb(ə)r(ə)nt; eg-],繁茂的
+    最初只支持 C 语言
+
+或者 
+
+apt install exuberant-ctags [ɪg'z(j)uːb(ə)r(ə)nt; eg-],繁茂的
+    支持多种语言的程序
 
 
+man ctags
+    
 
 ## taglist 安装
 
@@ -16,14 +23,14 @@ which vim
 which ctags
 
 cp doc/taglist.txt /usr/share/vim/vim74/doc/
-cp plugin/taglist.vim /usr/share/vim/vim74/plugin/plugin
+cp plugin/taglist.vim /usr/share/vim/vim74/plugin/
 
     ```
     用vim打开任何文件开始报错
     line   89: E488: Trailing characters
 
     发现是写错了
-    let Tlist_Ctags Cmd = 'exctags'
+    let Tlist_Ctags Cmd = 'exctags'     // 少写了一个 underline
 
     应该该写成下面这样
     let Tlist_Ctags_Cmd = 'exctags'

@@ -29,10 +29,14 @@ Flask-Admin         管理接口的框架
 
 ## 安装
 
-pip install flask   #pyenv路径 /root/.pyenv/versions/3.7.3/envs/liujiao373/lib/python3.7/site-packages
+
+pip install flask
 
 from flask import Flask
 
+pyenv路径 /root/.pyenv/versions/3.7.3/envs/liujiao373/lib/python3.7/site-packages
+
+    > ctags -R /root/.pyenv/versions/3.7.3/envs/liujiao373/lib/python3.7/site-packages/*
 
 ## requirements 文件
 
@@ -131,7 +135,7 @@ flask 将配置信息保存到了 app.config 属性中，该属性可以按照�
             """
             默认配置
             """
-            SECRET_KEY='jdsklafjldksjafldsajf'
+            SECRET_KEY='jdsklafjldksjafldsajf'      // every character of key must be upper case
         
         app=Flask(__name__)
         app.config.from_object(DefaultConfig)
@@ -263,7 +267,7 @@ URL 路径参数(动态路由)
         ---
 
         1. 
-        from werkzeug.routeing import BaseConverter
+        from werkzeug.routing import BaseConverter
 
         class MobileConverter(BaseConverter):
             """
@@ -275,7 +279,7 @@ URL 路径参数(动态路由)
             app.url_map.converters['mobile']=MobileConverter
 
         3. 使用
-            @app.route('/sms-codes/<mobile:mob_num')
+            @app.route('/sms-codes/<mobile:mob_num>')
         ```
 
 其他参数
@@ -388,6 +392,7 @@ URL 路径参数(动态路由)
     session
         from flask import session
         @app.route('/setsession')
+        app.secret_key = 'helloworld'
         def set_session():
             session['username'] = 'itcast'      // 必须配置 secret key
 
@@ -882,13 +887,8 @@ http://ip/url_prefix/blueprint-name
 
 
 Debug 模式的作用
-    后端错误会将真实报错信息返回给前端
+    后端错误会将真实报错信息返回给前端**修改代码自动重启服务器** ## Flask-Script
     修改代码自动重启服务器
-
-
-
-## Flask-Script
-
 
     ```
     from flask import Flask
