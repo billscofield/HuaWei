@@ -22,6 +22,12 @@ This package contains the expect binary and several Expect based scripts.
 
 
 
+The -f flag prefaces a file from which to read commands from.  The flag itself
+is optional as it is only useful when using the #! notation (see above), so
+that other arguments may be supplied on the command line.  (When using Expectk,
+this option is specified as -file.)
+
+
 ```
 #!/usr/bin/expect
 
@@ -59,3 +65,12 @@ expect {
     "y/d/N" send { "y\r" }
 }
 ```
+
+
+---
+
+
+
+
+
+
