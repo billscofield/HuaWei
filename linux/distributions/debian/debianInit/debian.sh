@@ -546,3 +546,8 @@ apt install -y bc
 
 # include cal,ncal
 apt install -y bsdmainutils
+
+
+# 用来观察特定进程的IO信息的。. 该脚本是用shell写的
+apt install -y percona-toolkit
+
