@@ -1,9 +1,4 @@
-links:
-
-    https://www.bilibili.com/video/BV1xA411i7wU?p=3&spm_id_from=pageDriver
-
-
-
+[links](https://www.bilibili.com/video/BV1xA411i7wU?p=3&spm_id_from=pageDriver)
 
 硬件监控
     通过远程控制卡，Dell的iDRAC, HP的ILO 和 IBM 的 IMM 等
@@ -35,20 +30,21 @@ links:
 
 1. Cacti
 
-早期产品
+    擅长出图
+    添加监控项很麻烦
 
-    使用轮询的方式由主服务器向设备发送数据请求来获取设备上状态数据信息, 如果设备很多, 这个轮询的过程就非常的耗时，轮询的结果就不能及时的反应设备的状态
+    早期产品
+
+    使用轮询的方式由主服务器向设备发送数据请求来获取设备上状态数据信息, 如果设
+    备很多, 这个轮询的过程就非常的耗时，轮询的结果就不能及时的反应设备的状态
 
     关注的是对数据的展示，而不是异常反馈, 缺乏报警机制
 
-值夜班
+2. Nagios
 
-
-1. Nagios
-
-开源免费
-
-插件机制
+    不能出图
+    开源免费
+    插件机制
 
     无法将多个相同应用集群的数据及合起来，也不能监控到集群中特殊节点的迁移和恢复
 
@@ -56,29 +52,47 @@ links:
 
     配置复杂
 
+3. Ganglia
 
-1. Ganglia
+    肛裂监控
 
-UC Berkeley 发起
+    UC Berkeley 发起
 
-主要监控系统性能, 主要用于 hoodop 
+    主要监控系统性能, 主要用于 hoodop 
 
+    分布式集群监控，上千台以上, 性能成本很低
 
-1. zabbix
+    不可以发送告警
 
-支持主动轮询 和 被动捕获
+4. promethus
 
-server 对设备性能要求低，并发监控，对 CPU 的要求更高
+    适合监控 k8s
 
-被动模式
+5. ELK
 
-    从 agent 的角度来说的, ** server 向 agent 发送一份监控项请求，agent 接收请求，获取数据并想应该 server **, 相当于老师向学渣要作业, 学渣做完后发给老师
+    日志监控
 
-**主动模式
+6. zabbix
 
-    从 agent 的角度来说的, ** agent 向server 请求与自己相关监控项配置，主动地将server配置的监控项相关数据发送给server ** 相当于学霸主动问老师有什么作业，做完后主动发给老师
+    分布式开源监控系统, GPL协议
 
-    能极大的节约监控 server 的资源
+    支持主动轮询 和 被动捕获
+
+    server 对设备性能要求低，并发监控，对 CPU 的要求更高
+
+    **被动模式**
+
+        从 agent 的角度来说的, ** server 向 agent 发送一份监控项请求，agent 接
+        收请求，获取数据并想应该 server **, 相当于老师向学渣要作业, 学渣做完后
+        发给老师
+
+    **主动模式**
+
+        从 agent 的角度来说的, ** agent 向server 请求与自己相关监控项配置，主动
+        地将server配置的监控项相关数据发送给server ** 相当于学霸主动问老师有什
+        么作业，做完后主动发给老师
+        
+        能极大的节约监控 server 的资源
 
     zabbix_sender
         -z zabbix_server_ip
@@ -99,9 +113,24 @@ server 对设备性能要求低，并发监控，对 CPU 的要求更高
             若后边两个同时启用，下边一个选择生效
 
 
+    版本
+        LTS:线性发布版，稳定持续维护
+        标准版本: 类似小白鼠, 不提供持续维护
+
+    zabbix5 新特性
+        httpd nginx 没有什么要求
+        mysql > 5.5
+        php   > 7.2
+        
+        1. 增加了监控项预测试功能
+            有个按钮，点击，立即取值
+        2. 自动发现规则，支持过滤
+        3. 监控项取值上限:2048
+        4. 加密升级, 由 md5 改为 bcrypt
+        5. 不再支持 ES7 以前的版本(ELK)
+        6. 新增客户端 zabbix-agent2
 
 
-支持自动发现功能
 
 ---
 
@@ -143,11 +172,13 @@ server 对设备性能要求低，并发监控，对 CPU 的要求更高
 
 
 
-
-
-|
+|                       zabbix-web
+|                           /|\
+|                            |
+|                            |
+|                            |
 |                                        heart beat
-|                       zabbix server <---------------- server backup
+|                       zabbix-server <---------------- server backup
 |                           /|\
 |                            |
 |        proxy1--------------+-----------------proxy2
@@ -204,6 +235,13 @@ Zabbix API
     
 
 
+
+client 端
+    1. 数据采集
+        snmp: 监控网络设备，三层协议
+        ipmi: 监控物理硬件
+        jmx : 监控 java 项目相关
+        ssh
 
 
 ## centos 系统下载地址

@@ -30,7 +30,7 @@ plt.ylabel("Y 标题")
     [c]yan 青色
     [m]agenta 品红
     [y]ellow 黄色
-    [b]lack
+    blac[k]
     [w]hite
 
     线条和颜色也可以写在一块
