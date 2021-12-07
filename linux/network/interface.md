@@ -12,9 +12,11 @@ links:
 ### auto
 
 auto:            
+
     try to ip link set <dev> up  at boot.  Best choice for anything PCIe/SoC.
 
 allow-hotplug:   
+
     *wait* for kernel+drivers+udev to detect the device, then ip link set <dev> up it.  The only thing that can deal with annoying USB, SDIO, etc.
 
 
@@ -37,3 +39,8 @@ https://lists.debian.org/debian-boot/2007/07/msg00377.html
 The problem of using auto is that the booting gets stuck until
 dhclient3 timeouts, if you lack network support while booting the
 system. If you use allow-hotplug it doesn't happen.
+
+
+
+
+
