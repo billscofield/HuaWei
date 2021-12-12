@@ -17,3 +17,8 @@ actual name of the file, not the file descriptor (e.g., log rotation).
 Use --follow=name in that case.  That causes tail to track the named file in a
 way that accommodates(容纳；使适应) renaming, removal and creation.
 
+
+## -n [数字] 和 -数字 的区别
+
+-n 选项是 POSIX 要求，但两种写法效果没啥区别。《shell 脚本学习指南》这本书上说的。
+
