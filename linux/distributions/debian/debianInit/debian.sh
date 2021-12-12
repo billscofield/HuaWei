@@ -548,6 +548,9 @@ apt install -y bc
 apt install -y bsdmainutils
 
 
+# an editor for diagrams, graphs, charts etc.
+apt install -y dia
+
 # 用来观察特定进程的IO信息的。. 该脚本是用shell写的
 apt install -y percona-toolkit
 
