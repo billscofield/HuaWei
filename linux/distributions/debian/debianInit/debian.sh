@@ -308,8 +308,9 @@ npm config set registry http://registry.npm.taobao.org
 
 cd /root/.vim/bundle/YouCompleteMe/ || exit
 git submodule update --init --recursive
-apt install -y python3-dev build-essential cmake
-~/.vim/bundle/Yo/bundle/YouCompleteMe/install.py --all
+apt install -y python3-dev build-essential cmake vim-nox
+apt install -y mono-complete golang nodejs default-jdk npm
+python3 ~/.vim/bundle/Yo/bundle/YouCompleteMe/install.py --all
 
 # you have to make sure the version ycm need
 # wget https://github.com/ycm-core/llvm/releases/download/12.0.0/libclang-12.0.0-x86_64-unknown-linux-gnu.tar.bz2  -P /root/.vim/bundle/YouCompleteMe/third_party/ycmd/clang_archives

@@ -17,6 +17,9 @@ git submodule update --init --recursive
 
 apt install python3-dev build-essential cmake
 
+# 不建议使用 --clang-completer, 而是使用 --clangd-completer, 使用 clang 总是不成功, clangd 可以
+# https://clangd.llvm.org/
+
 ./install.py --clang-completer --go-completer
 make && make install
 
