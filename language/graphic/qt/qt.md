@@ -1,3 +1,5 @@
+[link1](https://www.bilibili.com/video/BV1g4411H78N?p=4)
+[link2](https://www.bilibili.com/video/BV1M5411K7KG?p=6&spm_id_from=pageDriver)
 
 ## 什么是 Qt
 
@@ -54,6 +56,10 @@
 
 7. AutoDesk
 
+## 安装
+
+在线安装, onlineinstall 版本号
+
 
 ## Qt Creator
 
@@ -74,7 +80,7 @@ F4
 编译并运行
     Ctrl + r
 
-函数声明和定义
+函数
     F2
 
 字体大小
@@ -120,9 +126,11 @@ gcc g++
 ## 环境设置
 
     ```
-    export QTDIR=/opt/Qt/5.9.9/
-    export PATH=$QTDIR/gcc_64/bin/:$PATH
-    export LD_LIBRARY_PATH=$QTDIR/gcc_64/lib/:$LD_LIBRARY_PATH
+    export QTVER=6.2.2
+    export QTDIR=/opt/Qt/
+    export PATH=${QTDIR}${QTVER}/gcc_64/bin/:$PATH
+    export PATH=${QTDIR}Tools/QtCreator/bin/:$PATH
+    export LD_LIBRARY_PATH=${QTDIR}${QTVER}/gcc_64/lib/:$LD_LIBRARY_PATH
 
     ```
 
@@ -278,3 +286,106 @@ this->stu = new Student(this);
 
 connect(tea,&Teacher::hungry,stu,&Student::treat);
 ```
+
+
+
+
+
+#### 图形化
+
+右键 -> Go to slot
+
+1. 点击按钮在控制台输出字符串
+
+    ```helloworld.h
+    #include <iostream>
+    using namespace std;
+    ```
+
+    ```helloworld.cpp
+    void helloworld::on_pushButton_clicked()
+    {
+        cout << "hello world" << endl;
+        
+    }
+    ```
+
+2. 点击按钮在控制台输出 textedit 的字符串 
+
+    ```helloworld.h
+    #include <iostream>
+    using namespace std;
+    ```
+
+        ```helloworld.cpp
+    void helloworld::on_pushButton_clicked()
+    {
+        cout << ui->textEdit->toPlainText().toStdString() <<endl;
+    }
+    ```
+
+#### 不同平台文字尺寸问题
+
+font 单位是 pointsize, 从ui 文件可知
+
+1. 两种方法设置为 px
+
+    方法一:
+        在构造函数中:
+            this->setStyleSheet("Qwidget{font-size:20px}");
+
+    方法二:
+        使用 QtDesigner 打开 ui 文件, 在 styleSheet 中输入属性
+            > QWidget{font-size:20px}
+
+
+1. 不同系统不同设置
+
+    通过宏指定
+
+    ```
+    #ifdef Q_OS_MAC
+        QWidget{font-size:30px}
+    #else
+        QWidget{font-size:20px}
+    #endif
+
+    ```
+
+### QT的核心类库 QString
+
+QT 对 c++ 字符串的封装
+
+1. 拼接字符串
+
+    方法1：
+
+    ```
+    QString str1 = "hello";
+    str1 = "hello" + "world";
+    str1 +="!!!";
+
+    cout << str1.toStdString() << endl;
+    ```
+
+    方法2：
+
+    ```
+    QString str1 = "hello";
+    QString str1 = "hello";
+    str1.append(str2);          // 更改了 str1
+    cout << str1.toStdString() << endl;
+    ```
+
+    方法3：arg 函数
+
+    ```
+    QString str1;
+    str1 = QString("hello %1 %2").args("world").arg("!!!");
+    ```
+
+    方法4：
+    ```
+    QString str1;
+    str1 = str1.asprintf("%s","welcome");
+    ```
