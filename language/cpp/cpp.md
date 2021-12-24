@@ -149,7 +149,6 @@ if 后可以是任意的条件语句。
 #endif
 ```
 
-## 数据类型
 
 
 
@@ -167,6 +166,7 @@ iSum, cSex,
 2. 全局变量
 
 
+## 数据类型
 
 ### 数组
 
@@ -174,6 +174,171 @@ iSum, cSex,
     
     char s[]="hello world";
     cout << char << endl;
+
+
+### 结构体 struct
+
+    ```
+    struct Student{¬
+        string name;¬
+        int age;¬
+    };¬
+    ¬
+    int main(){¬
+    ¬
+        Student liujiao = {"liujiao",32};¬      // C: 还要写上 struct
+      ¬
+        cout << liujiao.name << endl;¬
+    ¬
+        return 0;¬
+    }
+    ```
+
+    访问： .
+
+    一定要进行初始化，不然是随机值，故引出了构造函数的概念
+
+和数组进行配合使用:
+
+    ```
+    struct Student{
+        string name;
+        int id;
+        int age;
+        char gender;
+    }
+
+    Student stu[2];
+    for(int i=0;i<2;i++){
+        cin >> stu[i].name;
+        cin >> stu[i].id;
+        cin >> stu[i].age;
+        cin >> stu[i].gender;
+    }
+    for(int i=0;i<2;i++){
+        cout << stu[i].name << "\n" << stu[i].id <<"\n"<<stu[id].age<<"\n"<<stu[id].gender<<endl;
+    }
+    ```
+
+作为函数参数
+    **值传递**
+
+    ```
+    void set_num(Student* stu){
+        static int num = 1001;
+        (*stu).id = num++;          // 通过变量引用方法成员
+        stu->id = num++;            // 通过指针引用方法成员
+    }
+    接上面的代码
+    ```
+
+
+
+
+
+
+### 枚举类型 enum
+
+    ```
+    enum Egender{
+        male,
+        female
+    };
+    ```
+
+1. 枚举元素按常量处理，所以称作枚举常量。他们不是变量，所以不要对他们进行赋值，即枚举元素的值是固定的；
+
+2. **枚举元素是常量**，所以其也是有值的，他们的值是一个整数，按照元素声明时候的顺序从0开始依次进行+1操作，默认的值就是：0,1,2,3，...
+
+3. 枚举元素有默认的值，但也可以在声明的时候指定值，例如：
+
+    ```
+    enum EWeekDay
+    {
+        EWeekDay_1 = 3,
+        EWeekDay_2 = 4,
+        EWeekDay_3 = 5,
+        EWeekDay_4,
+        EWeekDay_5,
+        EWeekDay_6,
+        EWeekDay_7          // 可以有 ",", 也可以没有
+    };
+    ```
+
+    其中从 EWeekDay_4 开始未赋值，所以按照他的上一个元素的值+1的规则进行默认赋值，也就是 EWeekDay_3 + 1 = 6。
+    这里面有个注意事项，即，上面赋值的最好是依次增大，不然有可能会造成两个枚举元素是一样的值，不会报错，例如：
+
+    ```
+    enum EWeekDay
+    {
+        EWeekDay_1 = 3,
+        EWeekDay_2 = 2,
+        EWeekDay_3 = 1,
+        EWeekDay_4,
+        EWeekDay_5,
+        EWeekDay_6,
+        EWeekDay_7
+    };
+    ```
+
+    ```
+    int day = EWeekDay_4;       // 可以用int直接拿来用, 
+    ```
+4. 枚举值可以用来进行跟整数一样的判断，比较，switch-case 等操作
+
+5. 虽然枚举类型的变量可以看做是整形类型的变量，但是不能把普通的整数赋值给枚举类型变量，例如：
+
+    > EWeekDay day = 2;
+
+    这种是错误的，除非进行强制类型转换，但是不建议。最好还是：
+
+    > EWeekDay day = EWeekDay_2;
+
+枚举类型举例：枚举类型和结构体类型结合：
+
+
+struct Student
+{
+    string name;
+    int num;
+    EGender sex;
+    int age;
+};
+
+Student stu;
+stu.sex = ESex_Male;
+
+
+### 用 typedef 类型声明新的类型名字：
+
+除了可以用 struct 结构体，union 联合体，enum 枚举 等自定义类型以外，还可以使用
+typedef 声明一个新的类型名字来代替已有的类型名。注意是新的类型名字，只是名字而
+已，不是一种全新的类型，只是改个名字而已。
+
+例如，我们定义一个无符号的整型int变量可以这样来定义：unsigned int a = 5;
+
+类型的名字比较长，unsigned int，而且以后所有定义无符号的整型int变量都得这么写，
+那么有没有简单的写法呢，typedef就派上用场了，咱们可以给 unsigned int 改个名字，
+例如：
+
+    > typedef unsigned int uint;
+    > uint a = 5;
+
+所以，以后所有的 unsigned int 都可以改成 uint 了，方便吧？同理，其他的类型也都
+可以使用 typedef 改名，例如：
+
+    ```
+    typedef int myint;
+    typedef unsigned long ulong;
+    typedef Student StuT;
+    typedef EWeekDay EWDay;
+    ```
+
+
+
+### 类类型 class
+
+
 
 
 ## 运算
