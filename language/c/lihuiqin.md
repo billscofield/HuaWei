@@ -1,3 +1,5 @@
+[link](https://www.bilibili.com/video/BV18p4y167Md)
+
 
 ## stdlib.h
 
@@ -67,10 +69,10 @@ printf("%d\n",MAX(a,b))
     比较 i++, 和 j++, 
 
 
-#define MAX(a,b)    ({int A=a, B=b; (A) > (B) ? (A) : (B)};)
+#define MAX(a,b)    ({int A=a, B=b; ((A) > (B) ? (A) : (B));})
 
 
-#define MAX(a,b)    ({typeof(a) A=a, B=b; (A) > (B) ? (A) : (B)};)
+#define MAX(a,b)    ({typeof(a) A=a, B=b; ((A) > (B) ? (A) : (B));})
 
 
 ```

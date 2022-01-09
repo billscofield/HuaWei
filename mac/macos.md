@@ -41,6 +41,15 @@ dmg
         7.2G
 
 
+        原版系统安装
+        
+            1. 将dmg 文件打开,将里边的app文件拖放到 application 中
+            2. 执行如下命令:
+
+                > sudo /Application/Install macOS Sierra.app/Contents/Resources/createinstallmedia  --volume /Volumes/U盘名称 --applicationpath /Applications/Install macOS Sierra.app --nointeraction
+
+
+
 
 crd 
 
@@ -51,18 +60,21 @@ crd
 
 1. 这个macOS Mojave应用程序副本已损坏,不能用
 
+    (This copy of the install macOS High Sierra application is damaged, and can't be used to install macOS)
+
     打开终端 （顶部菜单下拉选项中）
 
     ifconfig en0 down
 
     date 032208102018.20
-        月日时分年.秒   //一说改成版本发布的年份, Mojave 确实是18年发布的, 但是是6月5日 苹果全球开发者大会
+        月日时分年.秒   // 一说改成版本发布的年份, Mojave 确实是18年发布的, 但是是6月5日 苹果全球开发者大会
+    date 071014102018   // Sierra
 
     再次安装即可
 
     第二条命令是设置电脑时间为以前的一个时间
 
-    如果不输入第一条命令可能第二条命令输了也没有效果
+    如果不输入第一条命令可能第二条命令输了也没有效果(除非断开网线)
 
 1. 蓝屏
 
