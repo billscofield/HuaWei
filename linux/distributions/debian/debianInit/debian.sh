@@ -186,11 +186,11 @@ apt install -y zathura
 
 
 # markdown typora
-
-wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
-add-apt-repository 'deb https://typora.io/linux ./'
-apt update
-apt install -y typora
+# it is not free now from 2021.12
+#wget -qO - https://typora.io/linux/public-key.asc | sudo apt-key add -
+#add-apt-repository 'deb https://typora.io/linux ./'
+#apt update
+#apt install -y typora
 
 
 
