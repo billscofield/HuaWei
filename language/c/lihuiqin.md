@@ -277,3 +277,177 @@ man 2 stat
             return 0;¬
         }
         ```
+
+
+
+## 共用体
+
+共用同一块空间, 里边那个最大就占用多少
+
+就像单选按钮, 而结构体就像复选项
+
+类型描述
+
+    ```
+    union 共用体名{  
+        数据类型 成员名1;
+        数据类型 成员名2;
+        ...
+    };
+    ```
+
+
+    ```
+    union test_un{
+        int i;
+        float f;
+        double d;
+        char ch;
+    };
+
+    int main(){
+        union test_un a;    //一个时间只有一个成员可以生效
+        a.f = 1.1;
+        printf("%d\n",sizeof(a));
+        printf("%f\n",a.i);
+    }
+    ```
+
+成员引用
+    变量名.成员名
+    指针名->成员名
+
+
+x86 大部分是小端
+
+位域
+    共用体的一种形式，不是以字节为单位，而是以位为单位
+
+    ```
+    union{
+        struct{
+            char a:1;       // a 占用1bit
+            char b:2;       // b 占用2bit
+            char c:1;       // c 占用1bit
+        }x;
+        int y;
+    }w;
+    ```
+
+    因为大小端的问题, 移植性不强
+
+    +---+---+---+---+---+---+---+---+
+    | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
+    +---+---+---+---+---+---+---+---+
+
+    w.y = 1;
+    printf("%d\n",w.x.a)
+
+
+
+## 枚举
+
+    enum 标识符{
+        成员1,
+        成员2,
+        成员3
+    };
+
+    ```
+    enum day{
+        mon = 1,
+        tus,
+        wes,
+        thr,
+        fri,
+        sat,
+        sun
+    };
+
+    enum day a = wes;
+    ```
+
+
+    ```
+    enum{
+        STATE_RUNNING=1,
+        STATE=CANCELED,
+        STATE_OVER
+    };
+
+    struct job_st{
+        int id;
+        int state;
+        time_t start,end;
+    };
+
+    int main(void){
+        struct job_st jobs;
+        获取任务状态
+        job1.state = STATE_OVER;
+        switch(job1.state){
+            case STATE_RUNNING: do sth;break;
+            case STATE_CANCELED: do sth;break;
+            case STATE_OVER; do sth;break;
+            default:abort();
+        }
+    }
+
+    gcc -E 可以看到是没有变化的，当作宏来处理，但是比宏的好处是，不会变成宏值
+    ```
+
+
+## 动态内存管理
+
+malloc
+    man 3 malloc
+
+ralloc
+
+realloc
+
+谁申请，谁释放
+    alloc
+
+free
+    释放
+
+
+1. malloc
+    
+    ```
+    void *malloc(size_t size);
+    ```
+    
+    ```
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(){
+        int* p = NULL;
+        p = malloc(sizeof(int));
+        if(p == NULL)
+        {
+            printf("error");
+            exit(1);
+        }
+            
+        *p = 10;
+        free(p);
+    }
+    ```
+
+
+2. calloc
+
+    ```
+    void *realloc(void *ptr, size_t size);
+    ```
+
+3. realloc
+
+    ```
+    void *realloc(void *ptr, size_t size);
+    ```
+
+    
