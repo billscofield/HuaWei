@@ -280,6 +280,7 @@ man 2 stat
         }
         ```
 
+<<<<<<< HEAD
 
 
 ## 共用体
@@ -453,3 +454,94 @@ free
     ```
 
     
+=======
+## 指针
+
+指针有两个运算, 取地址和取值
+还可以作 ++ -- 比较
+
+指针的大小在某一个平台下是一定的, 一般是8
+
+
+```
+*q -> *(&p) -> p
+p 即 &a
+
+**q -> **(&p) -> *p -> *(&a) -> a
+```
+
+空指针
+    NULL 是一个宏
+
+
+void 指针类型
+
+    > void *memcpy(void *dest, const void *src, size_t n);
+
+
+    ```
+    int a[3] = {1,2,3};
+    int *p = a;
+    int i;
+
+    a[i] = *(a+i) = *(p+i) = p[i]
+    &a[i] = a+i   = p+i    = &p[i]
+
+    *a <-> *(a+0)
+    sizeof(a)/sizeof(*a)
+
+    a 是一个数组名,是一个存方地址的常量
+    p 是一个变量, 存放地址的变量
+    ```
+
+
+
+
+    ```
+    int main(void){
+
+        int a[3];
+        int *p = a;
+        
+        for(int i=0; i<3; i++){
+            scanf("%d",p++);
+        }
+        
+        for(int i=0; i<3; i++){
+            printf("%d\n",a[i]);
+        }
+        ---或者---
+        p = a;
+        for(int i=0; i<3; i++){¬
+            printf("%p -> %d\n",p,*p);¬
+            p++;¬
+        }¬
+    exit(0);
+    }
+    ```
+
+
+    ```
+    int main(void){
+
+        int *p = (int [3]){1,2,4};          // **无名数组**
+        
+        for(int i=0; i<3; i++)
+            printf("%d\n",p[i]);
+        exit(0);
+    }
+    ```
+
+    ```
+    int main(void){
+
+        int a[] = {5,3,9,1,8};
+        int y;
+        int *p = &a[1];
+        y = (*--p)++;
+        printf("%d\n",y);                   // 输出 5
+        printf("%d\n",a[0]);                // 输出 6
+        exit(0);
+    }
+    ```
+>>>>>>> 845c87b58bf3053de2f7257a0bdfafddd7ca3cbb
