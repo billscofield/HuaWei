@@ -280,7 +280,6 @@ man 2 stat
         }
         ```
 
-<<<<<<< HEAD
 
 
 ## 共用体
@@ -454,13 +453,14 @@ free
     ```
 
     
-=======
+
 ## 指针
 
 指针有两个运算, 取地址和取值
+
 还可以作 ++ -- 比较
 
-指针的大小在某一个平台下是一定的, 一般是8
+指针的大小在某一个平台下是一定的, 一般是 8
 
 
 ```
@@ -532,7 +532,7 @@ void 指针类型
     }
     ```
 
-    ```
+    ``` 练习
     int main(void){
 
         int a[] = {5,3,9,1,8};
@@ -544,4 +544,393 @@ void 指针类型
         exit(0);
     }
     ```
->>>>>>> 845c87b58bf3053de2f7257a0bdfafddd7ca3cbb
+
+    **是次内层**
+
+    ```
+    int main(void){
+
+        int a[2][3] = {1,2,3,4,5,6};
+        
+        for(int i=0; i<2; i++){
+            for(int j=0; j<3; j++){
+                printf("%p -> %d\n",&a[i][j],a[i][j]);
+                printf("%p -> %d\n",*(a+i)+j,*(*(a+i)+j));          //!!!
+            }
+            printf("\n");
+        
+        }
+        
+        printf("%p ->\n",a);
+        printf("%p ->\n",a+1);
+        
+        exit(0);
+
+    }
+    ```
+
+
+
+
+## 函数
+
+### 1. 函数的定义
+
+数据类型  函数名([形式参数说明表])
+
+1. 定参
+
+2. 变参, eg. printf
+
+    int printf(const char *format, ...);
+
+3. main参数
+
+    (int argc, char *argv[])
+
+    int argc: 多少个参数
+
+    char * argv[]: 参数列表, 指针数组
+
+
+4. 返回值
+
+    一个进程的返回状态是给它的父进程看的
+
+### 2. 函数的传参
+
+### 3. 函数的调用
+
+### 4. 函数与数组
+
+### 5. 函数与指针
+
+1. 指针函数
+    
+    返回值是指针
+
+    > 返回值 * 函数名(形参)
+    > 如 int * fun(int a);
+
+2. 函数指针
+
+    指向函数的指针
+
+    > 类型 (*指针名) (形参)
+
+    > 如 int (*p)(int)
+
+3. 函数指针数组
+    
+    > 类型 (*数组名[下标])(形参)
+
+    int (*funcp[2])(int,int)
+        int (int,int) * funcp[2]
+
+[指向指针函数的函数指针数组](https://www.bilibili.com/video/BV18p4y167Md?p=59&spm_id_from=pageDriver)
+
+    > int *(*funcp[N])(int)
+
+
+### 6. 函数与一维数组
+
+
+### 7. 函数与二维数组
+
+
+## 构造类型
+
+### 1. 结构体
+
+1. 产生和意义
+
+    不像数组，存放不同类型的数据
+
+2. 类型描述
+
+    一般定义在函数外
+
+    ```
+    struct 结构体名字{
+        数据类型 成员1;         // 不占据空间的
+        数据类型 成员2;
+        ...
+    };                          <--- 这里的分号
+    ```
+
+    e.g.
+
+    ```
+    struct simple_st{
+        int i,j;
+        float f;
+        char ch;
+    }
+    ```
+
+3. 嵌套定义
+
+```
+#define NAMESIZE 32
+
+
+struct birthday_st{
+    int year;
+    int month;
+    int day;
+};
+
+struct student_st{
+    int id;
+    char name[NAMESIZE];
+    struct birthday_st birth;           // struct birthday_st 数据类型
+    int math;
+    struct collage_day{
+        int year;
+        int month;
+        int day;
+    };
+    collage_date;
+    int chinese;
+};
+```
+
+4. 定义变量(变量，数组，指针), 初始化及成员引用
+
+    成员引用
+        变量名.成员名
+
+        ```
+        #include <stdio.h>
+        #include <stdlib.h>
+    
+        struct simp_st{
+            int a;
+            int b;
+            char c;
+        };
+
+        int main(int argc, char *argv[]){
+            struct simp_st a = {1,2,'c'};
+            a.a = 111;
+            printf("%d\n",a.a);
+        }
+        ```
+
+    可以只初始化部分元素
+    
+    ```
+    struct student_st liu = {.math=99};
+    ```
+
+    还可以用指针, 使用箭头 
+        指针->成员名
+        (*指针).成员名
+    
+    ```
+    struct student_st liu = {.name="liu"}
+    struct student_st *pliu = &liu;
+    printf("%d %s\n",pliu->id,pliu->name);
+    ```
+
+    数组
+        ```
+        struct student_st liu[2] = {{.name="liu"},{.name="wang"}};
+        p = &liu[0];            //
+        for(int i=0; i<2; i++,p++){
+            printf("%s\n",p->name);
+        }
+        ```
+
+5. 占用内存空间大小
+
+    内存对齐, 占据大小为 address/sizeof(成员)
+    ```
+    struct simp_st{
+        int i;              0/sizeof(int)   ok->占用4Byte
+        char ch;            4/sizeof(char)  ok->占用1Byte
+        float f;            5/sizeof(float) no  空
+                            6/sizeof(flaot) no  空
+                            7/sizeof(flaot) no  空
+                            8/sizeof(flaot) ok ->占用4Byte
+    };                      所以一共占用13
+    ```
+
+    但是也可以不对齐
+    ```
+    struct simp_st{
+        int i;              0/sizeof(int)   ok->占用4Byte
+        char ch;            4/sizeof(char)  ok->占用1Byte
+        float f;            8/sizeof(float) ok ->占用4Byte
+    }__attribute__((packed));               所以一共占用13
+    ```
+
+6. 传参
+    
+    指针方式
+       truct simp_st a;
+       truct simp_st *p = &a;
+       func(p);
+
+
+
+### 2. 共用体 union
+
+1. 共用体的产生和意义
+    
+    多个成员只有一个存在, 例如单选; 而结构体类似多选
+
+2. 类型描述
+
+    ```
+    union 共用体名{
+        数据类型 成员1;
+        数据类型 成员2;
+        ...
+    };
+    ```
+
+3. 嵌套定义
+
+    结构体嵌套共用体或者共用体嵌套结构体
+
+    ```
+    struct {
+        int i;          //4B
+        char ch;        //1B
+
+        union{
+            int a;      //4,取4
+            char c;     //1
+        }un;
+
+        float f;        //4
+    };
+
+
+
+    union{
+        int a;
+        double d;
+        struct{
+            int arr[10];
+            float f;
+        }c;                 // 44, 取这个
+    };
+
+
+    到底可以做什么
+
+    大：低位保存在高位
+    小：低位保存在低位
+
+    32bit 数，高16bit 和低16bit的和
+        解法1
+            #include <stdint.h>
+            uint32_t =0x11223344;
+            printf("%s\n",i>>16 + i & 0xFFFF);
+
+        解法2
+            
+            union{
+                struct{
+                    uint16_t i;
+                    uint16_t j;
+                }x;
+                uint32_t y;
+            }a;
+            
+            a.y = 0x11223344;
+            printf("%d\n",a.x.i + a.x.j);
+    ```
+
+4. 定义变量(变量，数组，指针),初始化和成员引用
+
+```
+union test_un{
+    int i;          // 只占用一块内存空间
+    float f;
+    double d;
+    char ch;
+};
+
+union test_un a;
+
+a.f = 3.1;          // 其它值是
+
+printf("%d\n",sizeof(a));   // 输出4
+printf("%d\n",a.f);
+
+
+union test_un *p = &test_un;
+
+变量名.成员名
+指针名->成员名
+```
+
+5. 占用内存大小
+
+    以最大的成员为准
+
+6. 函数传参(值，地址)
+
+    
+
+7. 位域
+
+    没有实际开发的意义
+
+    ```
+    union{
+        struct{
+            char a:1;       //1bit
+            char b:2;       //1bit
+            char c:1;       //1bit
+        }x;
+        char y;             //8bits
+    }w;                     //8bits
+
+
+    w.y = 1;
+    printf("%d\n",w.x.a);
+
+    7    6    5    4    3    2    1    0
+    +----+----+----+----+----+----+----+----+
+    |    |    |    |    |    |    |    | 1  |           // 补码形式存在, 为-1
+    +----+----+----+----+----+----+----+----+
+                          c    b    b    a
+    ```
+
+### 3. 枚举类型
+
+    enum 标识符{
+        成员1,      可以赋值，下面的值依次
+        成员2,
+        成员3
+    };
+
+
+    enum day{
+        mon,    // 默认为0
+        tue,
+        thr,
+        wes,
+        fri,
+        sat,
+        sun
+    };
+
+    enum state_en{
+        STATE_RUNNING = 1,
+        STATE_CANCELED,
+        STATE_OVER
+    };
+
+    struct job_st{
+        int id;
+        enum stat_en state;
+        ...
+    };
+
+
+## 
