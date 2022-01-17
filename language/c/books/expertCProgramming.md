@@ -36,3 +36,5 @@ C
 
 
 Mike Lesk写了一个“可移植I/O包”, 后来被修改成为C的“标准I/O”例程。
+
+Google "教父" Eric Schmidt 和 Mike Lesk 合作写出了 Lex 编程工具
