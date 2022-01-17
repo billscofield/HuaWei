@@ -151,11 +151,25 @@ QT下 cannot find -IGL的解决办法
 
 
 
+## qt 帮助手册
 
+[link](https://www.bilibili.com/video/BV1Wf4y1Y7uh?spm_id_from=333.999.0.0)
 
+1. assistant 命令
+    qt network
+    qt sql
+
+    Index -> qapplication
+
+    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x.h
+    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x           -> #include "x.h"
+
+    The **QObject** class is the base class of all Qt objects
 
 
 ## Qt Widgets Application
+
+widget:装饰物；小机械；小部件；未定名的主要新产品
 
 widgets: 控件 -> 窗口
 
