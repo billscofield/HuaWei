@@ -97,6 +97,9 @@ ln -s /git/debian-config/.zshrc /root/.zshrc
 # tmux 配置
 ln -s -f /git/debian-config/.tmux.conf ~/.tmux.conf
 
+# tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
 
 
 
