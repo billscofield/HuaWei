@@ -1,6 +1,7 @@
 https://www.bilibili.com/video/av59639498?p=3
 
 ## 安装
+
 cd /usr/local/src
 
 wget http://nginx.org/download/nginx-1.16.0.tar.gz

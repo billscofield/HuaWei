@@ -7,6 +7,12 @@ OpenResty 是基于 Nginx 和 Lua 实现的 Web 应用网关，继承了大量�
     Nginx的山寨
 
 
+查看版本
+    nginx -v
+
+关闭 nginx
+    nginx -s stop
+
 /usr/local/openresty/
 
 cd /usr/local/openresty/nginx/

@@ -1,6 +1,8 @@
 
 ## 初识Nginx
+
 优点
+
     1. 高并发，高性能
     1. 可扩展性好
     1. 高可靠性
@@ -9,6 +11,7 @@
     1. BSD许可证
 
 组成
+
     1. Nginx 二进制可执行文件
         1. 由各模块源码编译出的一个文件
         1. 相当于一辆汽车
@@ -31,6 +34,7 @@
     1.奇数 stable version
     
 版本选择
+
     开源版：nginx.org
     商业版：nginx.com(Nginx plus)
     阿里巴巴的Tengine
@@ -133,6 +137,15 @@
             
     1. 日志切割
             nginx reopen
+
+
+## 基础命令
+
+nginx -v
+
+nginx -s stop
+
+nginx -s reload
 
 ## Nginx 架构基础
 
