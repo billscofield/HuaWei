@@ -1,3 +1,4 @@
+centos
 
 ## 三个主要模块
 
@@ -12,10 +13,10 @@
 
     主要影响 Nginx 与用户的网络连接
 
-    每个进程的最大连接数
-    哪种事件驱动模型
-    是否允许同时接受多个网络链接
-    开启多个网络链接序列化
+    1. 每个进程的最大连接数
+    2. 哪种事件驱动模型, 默认 epoll
+    3. 是否允许同时接受多个网络链接
+    4. 开启多个网络链接序列化
 
     worker_connections 1024;                // 最大链接数,单个IP?
 
@@ -46,9 +47,17 @@ server {
 配置请求的路由,以及各种页面的处理情况
 
 
+### 主配置文件
 
+/etc/nginx/nginx.conf
 
-### 子配置文件
+最后一行
+
+    > include /etc/nginx/conf.d/*.conf;
+
+### 子配置文件夹
+
+/etc/nginx/nginx.conf.d/
 
 //早期的版本的 default 是放在 /etc/nginx/nginx.conf 中, 
 /etc/nginx/conf.d/default.conf 
@@ -57,6 +66,7 @@ server {
 Server {
     listen 80;
     server_name localhost;      // 服务器域名 www.aaa.com, 有多个虚拟主机时,可以根据这个 switch
+    
 
     #access_log  /var/log/nginx/host.access.log  main;  // 注释掉就是主配文件中的
 
@@ -71,3 +81,112 @@ Server {
 }
 
 多个网站就在 /etc/nginx/conf.d/ 下边写配置文件
+
+
+### /etc/nginx/fastcgi_params
+
+动态网站模块文件-python,php所需要的相关变量
+
+### /etc/nginx/scgi_params
+
+### /etc/nginx/uwscgi_params
+
+### /etc/nginx/koi-utf
+
+字符集, 文件编码
+
+### /etc/nginx/win-utf
+
+### /etc/nginx/koi-win
+
+### /etc/nginx/mime.types
+
+文件关联程序
+
+
+### /etc/nginx/modules
+
+三方模块
+
+### /etc/sysconfig/nginx
+
+
+### 启动
+
+/usr/lib/systemd/system/nginx-debug.service     // nginx 调试程序启动脚本
+
+/usr/lib/systemd/system/nginx.service
+
+/usr/sbin/nginx
+
+
+### 文档
+
+/usr/share/doc/nginx-xxx
+/usr/share/doc
+
+
+
+/var/cache/nginx
+/var/log/nginx/
+
+/usr/lib64/nginx
+
+
+
+
+## nginx 编译参数
+
+nginx -V
+
+--prefix=/etc/nginx
+--sbin-path=/usr/sbin/nginx
+--modules-path=/usr/lib/nginx/modules
+--conf-path=/etc/nginx/nginx.conf
+--error-log-path=/var/log/nginx/error.log
+--http-log-path=/var/log/nginx/access.log
+--pid-path=/var/run/nginx.pid
+--lock-path=/var/run/nginx.lock
+--http-client-body-temp-path=/var/cache/nginx/client_temp
+--http-proxy-temp-path=/var/cache/nginx/proxy_temp
+--http-fastcgi-temp-path=/var/cache/nginx/fastcgi_temp
+--http-uwsgi-temp-path=/var/cache/nginx/uwsgi_temp
+--http-scgi-temp-path=/var/cache/nginx/scgi_temp
+--user=nginx
+--group=nginx
+--with-compat
+--with-file-aio
+--with-threads
+--with-http_addition_module
+--with-http_auth_request_module
+--with-http_dav_module
+--with-http_flv_module
+--with-http_gunzip_module
+--with-http_gzip_static_module
+--with-http_mp4_module
+--with-http_random_index_module
+--with-http_realip_module
+--with-http_secure_link_module
+--with-http_slice_module
+--with-http_ssl_module
+--with-http_stub_status_module
+--with-http_sub_module
+--with-http_v2_module
+--with-mail
+--with-mail_ssl_module
+--with-stream
+--with-stream_realip_module
+--with-stream_ssl_module
+--with-stream_ssl_preread_module
+--with-cc-opt='-g
+-O2
+-ffile-prefix-map=/data/builder/debuild/nginx-1.21.5/debian/debuild-base/nginx-1.21.5=.
+-fstack-protector-strong
+-Wformat
+-Werror=format-security
+-Wp,-D_FORTIFY_SOURCE=2
+-fPIC'
+--with-ld-opt='-Wl,-z,relro
+-Wl,-z,now
+-Wl,--as-needed
+-pie'
