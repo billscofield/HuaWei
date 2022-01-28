@@ -140,7 +140,8 @@ links:
 
     https://www.thewindowsclub.com/wuauserv-high-cpu-usage-windows
 
-Windows Update服务，它是Windows系统自动更新服务，当自动更新运行时，那么会从远程计算机下载更新并进行安装，这时系统可能会变的很卡，但是更新是必须的。
+Windows Update服务，它是Windows系统自动更新服务，当自动更新运行时，那么会从远程
+计算机下载更新并进行安装，这时系统可能会变的很卡，但是更新是必须的。
 
 如果你想禁止wuauserv服务禁用自动更新
 
