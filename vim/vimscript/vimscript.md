@@ -88,7 +88,7 @@ map - x
 <space> 
 <c-d>
 <esc>
-<cr>
+<cr> <enter>
 <nop>
     :inoremap <esc> <nop>
 

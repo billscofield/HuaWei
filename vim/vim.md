@@ -17,6 +17,7 @@ Bill Joy            ex/vi
 Bram Moolenaar      vim
 
 ## 
+
 :h vimtutor
 :h user-manual
 
@@ -254,33 +255,55 @@ In whatever cases, It is vim who decide once you quit insert mode. Vim will firs
 if at last it cannot make a full tabstop, vim simply compensates by Space.
 
 To speak a little bit more, if you set expandtab, it is equal to say to vim:
-    Please do not bother to calculate how many Tab and Sapce is needed. Simply insert Space.
 
-***softtabstop 是按下 Tab 键时移动多少个字符宽度, 不足一个 softtabstop 时以空格补齐, 建议 采用 et, 并且设置 tabstop == softtabstop***
+    Please do not bother to calculate how many Tab and Sapce is needed. Simply
+    insert Space.
+
+***softtabstop 是按下 Tab 键时移动多少个字符宽度, 不足一个 softtabstop 时以空格
+补齐, 建议 采用 et, 并且设置 tabstop == softtabstop***
 
 
 ## set let
+
 :set is for setting options, :let for assigning a value to a variable. 
-It happens that the value for an option is linked to the name of the option prepended by a & (the &option-name construct then behaves very similar to “ordinary” variables). So, the following are equivalent: 
-:set tw=40 
-:let &tw=40 
-But, for example, assigning 50 to the global variable foo (:let g:foo=50) cannot be achieved with a :set command (because g:foo is a variable and not an option). 
-Some options are boolean like. When setting these, no value is needed (as in :set noic and the opposite :set ic).
+
+It happens that the value for an option is linked to the name of the option
+prepended by a & (the &option-name construct then behaves very similar to
+“ordinary” variables). So, the following are equivalent: 
+
+    :set tw=40 
+    :let &tw=40 
+
+But, for example, assigning 50 to the global variable foo (:let g:foo=50)
+cannot be achieved with a :set command (because g:foo is a variable and not an
+option). 
+
+Some options are boolean like. When setting these, no value is needed (as in :
+set noic and the opposite :set ic).
 
 
 ---
 
-:set only works with options, and sehe's answer showcases some good usage examples.
+:set only works with options, and sehe's answer showcases some good usage
+examples.
 
-:let on the other hand can do almost everything that :set can do, plus more. It can assign a value to
+:let on the other hand can do almost everything that :set can do, plus more. It
+can assign a value to
 
-a variable, e.g. let vi = 'vim'
-an option, e.g. let &tw = 40
-a register, e.g. let @a = $HOME . '/vimfiles'
-an environment variable, e.g. let $NOTHING = 'NOTHING'
-Another major difference is that the right hand side of :let is an expression, meaning you can do things like string concatenation (as seen in my register example above) and arithmetic operations (e.g. let &tw = 40 + 60). This also means that you have to quote the value if it's a string. :set on the other hand reads the value verbatim.
+    a variable, e.g. let vi = 'vim'
+    an option, e.g. let &tw = 40
+    a register, e.g. let @a = $HOME . '/vimfiles'
+    an environment variable, e.g. let $NOTHING = 'NOTHING'
 
-It's easier to use :set with options even though :let can also do most of it, Here are some comparison using sehe's examples ("n/a" means no way to do it with :let)
+Another major difference is that the right hand side of :let is an expression,
+meaning you can do things like string concatenation (as seen in my register
+example above) and arithmetic operations (e.g. let &tw = 40 + 60). This also
+means that you have to quote the value if it's a string. :set on the other hand
+reads the value verbatim.
+
+It's easier to use :set with options even though :let can also do most of it,
+Here are some comparison using sehe's examples ("n/a" means no way to do it
+with :let)
 
 :verbose set vs n/a (don't think there's another way to list all options)
 :set tw=40 vs :let &tw = 40 (yes, you can use the same shorthand in let too)
@@ -289,8 +312,9 @@ It's easier to use :set with options even though :let can also do most of it, He
 :set wrap! vs :let &wrap = !&wrap
 A few more examples
 
-print the value of an option: :set formatoptions? vs :echo &formatoptions (let doesn't print values, unlike set)
-assigning to multiple options at the same time:
+print the value of an option: :set formatoptions? vs :echo &formatoptions (let
+doesn't print values, unlike set) assigning to multiple options at the same
+time:
 
 :set et sw=4 sts=4 
 vs
@@ -304,3 +328,34 @@ See :h :set and :h :let for more details
 https://stackoverflow.com/questions/9990219/vim-whats-the-difference-between-let-and-set
 
 ---
+
+
+
+
+
+## 常用选项
+
+1. 'nrformats' 'nf'
+
+    string  (default "bin,octal,hex", set to "bin,hex" in defaults.vim) local to
+    buffer
+
+    This defines what bases Vim will consider for numbers when using the
+    CTRL-A and CTRL-X commands for adding to and subtracting from a number
+    respectively; see CTRL-A for more info on these commands.
+
+
+    1. alpha
+    2. octal
+    3. hex
+    4. bin
+    5. unsigned
+
+    另外还可以赋空值, 即 set nf=
+
+    Numbers which simply begin with a digit in the range 1-9 are always
+    considered decimal.  This also happens for numbers that are not recognized
+    as octal or hex.
+
+
+2. 
