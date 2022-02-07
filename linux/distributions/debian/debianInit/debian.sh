@@ -15,7 +15,9 @@ apt install -y software-properties-common
 
 
 
-apt install -y git curl wget tmux tree iftop rsync  build-essential cmake
+apt install -y git curl wget tmux tree iftop build-essential cmake
+
+apt install -y rsync inotify-tools
 
 
 

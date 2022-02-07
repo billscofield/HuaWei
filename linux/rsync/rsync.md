@@ -60,6 +60,10 @@ rsync: remote synchronous
 
 4. 列表模式
 
+    Usages with just one SRC arg and no DEST arg will list the source files
+    instead of copying.
+
+
 ## 语法
 
 rsync - a fast, versatile, remote (and local) file-copying tool
@@ -202,11 +206,16 @@ ssh-copy-id命令也会给远程主机的用户主目录（home）和~/.ssh, 和
 -i 指定认证文件路径（默认是~/.ssh/id_rsa.pub）
 
 
-#### rsync 作为后台程序使用
+### rsync 作为后台程序使用
+
+默认不存在
+
 
 cp /usr/share/doc/rsync/examples/rsyncd.conf /etc/rsyncd.conf
 
-port 873端口
+man rsyncd.conf
+
+port 873 端口
     --port xxx
 
 
@@ -225,12 +234,160 @@ port 873端口
 
 
 man 5 rsyncd.conf
+
+
+#### 1. rsyncd.conf 的构成
+
+1. 全局参数(GLOBAL PARAMETERS)
+
+    pid file: pid路径和名称
+
+    port
+
+
+
+2. 模块参数(MODULE PARAMETERS)
+
+    [模块1]
+        模块参数
+
+    comment
+
+    path: 指定备份
+
+    use chroot
+
+    log file: 日志文件和路径
+
+    lock file: rsync 进程的锁文件的路径和名称
+
+    daemon chroot
+
+    max connections
+
+    syslog facility
+
+    read only
+    write only
+
+    list
+
+    uid: 指定 rsync 以什么身份执行, 默认 nobody, 要写入的话,要确保此用户对该文件夹有权限
+    gid: 指定 rsync 以什么身份执行
+
+    auth_users: 非系统用户,保存在一个自定义的文件中, 访问模块需要使用的用户名,虚拟用户
+        a comma and/or space-separated list of authorization rules.
+        修改不用重启
+        alias:aliaspassword
+        bob:bobpassword
+        
+        **必须显示指出那些用户,否则即使用户在 rsyncd.secrets 中,也不能访问**
+        
+        chmod o= /etc/rsyncd.secrets            // others 要为零
+
+    secrets file
+        user1
+
+    hosts allow
+        a list of comma- and/or whitespace-separated patterns
+    hosts deny
+
+        
+        两个参数均未指定:则全都可以访问
+        仅有白名单:
+        仅有黑名单:
+        两者都有: 白名单优先,然后黑名单, 否则**允许**
+
+    log format
+
+    timeout: 空闲超时时间
+
+
+
+
+
+
+
+    ```
+    [web]
+    path=/www
+    usr chroot=no
+    read only=false
+    list=false              用户是否可以显示全部模块列表
+    ```
+
+
+
+
+
+
+
 后台运行方式
     rsync --daemon
-    必须有 /etc/rsyncd.conf 配置文件, 即使是空的
+        默认是 /etc/rsyncd.conf 配置文件, 即使是空的
+
+
+    --port=
+
+    --config=/path/confile
 
 
 rsyncd.conf
+
+
+默认不会对目标中多的文件进行删除
+
+
+--delete: client 和 server 完全一致
+    删除目标端(本地或服务器都可以)
+
+    rsync -av --delete  ./ /root/Documents/lca/             // 源目录和目标目录结构一定要一样,不能一个是文件,一个是目录, ./* /  就不行
+
+
+--dry-run, -n            perform a trial run with no changes made
+
+
+--exclude: 排除文件
+    --exclude a.txt                         // 单个文件
+    --exclude {a.txt,file2,file3}           // 单个文件
+    --exclude *.txt                         // 通配符
+
+也可以在服务端进行设置/etc/rsyncd.conf
+    [rsynctest]
+    exclude=*.txt b.txt                     // space-separated list
+
+
+#### 2. 客户端
+
+
+Pull: 
+    rsync [OPTION...] [USER@]HOST::模块 [DEST]
+        rsync alias@192.168.1.1::rsynctest
+
+    rsync [OPTION...] rsync://[USER@]HOST[:PORT]/SRC... [DEST]
+        rsync alias@192.168.1.1/rsynctest
+
+
+    例如
+        rsync -vrt --bwlimit=20480 rsync://rsync.mirrors.ustc.edu.cn/repo/debian        --bwlimit 单位是Kb
+        
+        rsync https://mirrors.tuna.tsinghua.edu.cn::debian
+        rsync mirrors.tuna.tsinghua.edu.cn::debian
+
+        客户端可以将密码写在文件中
+        rsync rsync://192.168.1.1/rsynctest --password-file=/etc/rsync.pass     // 权限同样 others 0
+
+
+
+
+Push:
+    rsync [OPTION...] SRC... [USER@]HOST::模块
+    rsync [OPTION...] SRC... rsync://[USER@]HOST[:PORT]/DEST
+
+
+
+
+
 
 ```
 在代码源服务器上
@@ -300,41 +457,116 @@ rsync -av /backup user@192.168.10.1::app1
 ### rsync + inotify 实现实时同步
 
 inotify 或者 sersync
+
+    sersync 是 inotify 的封装
     
     监控发生了变化的文件
+
 
 
 inotify 可以监控一个目录
 inotify 安装到 备份源 服务器上
 
-源码默认安装到 /usr/local/bin/
+源码安装默认安装到 /usr/local/bin/
 ls /usr/local/bin
-    inotifywait    等待目录发生改变 
-    inotifywatch
+    inotifywait                 // 等待目录发生改变 
+    inotifywatch                // 用来进行统计
+
 
 inotifywait [option] 文件1 文件2 ...
-    -m --monitor   持续保持监听
-    -r --recursive  递归
+
+    -m --monitor   持续保持监听, 否则是监控到了一次就退出监控了
+
+    -r --recursive  递归,
+        The default maximum is 8192; it can be increased by writing to /proc/sys/fs/inotify/max_user_watches.
+
+    --exclude <pattern>         // 区分大小写
+    --excludei <pattern>        // 不区分大小写
+
     -q --quiet  print less(only print events,增加，删除，改变)
+
+
+
+    -d, --daemon
+        Same as --monitor, except run in the background logging events to a file that must be specified by --outfile. Implies --syslog.
+
+    -o, --outfile <file>
+        Output events to <file> rather than stdout.
+
+    -s, --syslog
+        Output errors to syslog(3) system log module rather than stderr.
+
+
+
+    --timefmt <fmt>
+        监控到事件触发后,输出的时间格式
+
+    --format <fmt>              // 自定义输出格式
+
+        %w  产生事件的监控**绝对路径**, 不一定就是发生事件的具体文件, 例如递归
+            监控一个目录,该目录下的某文件产生事件,将输出该目录而非其内具体文件
+
+        %f  文件
+        %e  产生事件的具体名称
+
+        %T  以 --timefmt 的格式**输出**发生事件的时间, --timefmt 必须定义, 定义了 %T, 就必须定义 --timefmt
+
+
+        --format "%T"
+
     -e --event 
         access
-
-        move
+        move            // 移走和delete不一样
         create
         modify
         delete
+            A file or directory within a watched directory was deleted.
         attrib
+
+        access
+        open
+        close_write
+        close_nowrite
+        close
+            regardless of how it was opened.  Note that this is actually
+            implemented simply by listening for both close_write and
+            close_nowrite
+
+        moved_to
+            向监控目录下移入了文件或目录,也可以是在监控目录内部的移动
+        moved_from
+            将监控目录下文件或目录移动到其他地方,也可以是在监控目录内部的移动
+        move
+        unmount
+        ...
+
+
+    inotifywait -mrq --timefmt "%F %T" --format "%w%f %e %T"
 
 
     ```
     #!/bin/bash
     /usr/local/bin/inotifywait -mrq -e modify,delete,create,attrib,move /app/java_project
-    | while read events(变量)
+    while read events(变量)
     do
-        rsync -a --delete /app/java_project/ 192.168.10.1:/backup
+        rsync -a --delete /app/java_project/ 192.168.10.1::/backup
         echo "`date +%F\ %T` 出现事件$eventsi">>/var/log/rsync.log 2>&1
     done
     ```
 
 
+    ```
+    PROGRAM=/usr/bin/inotifywait
+    EVENTS="create,delete,modify,attrib"
+    FLAGS=-mrq
 
+    lpath=/test/
+    rhost=192.168.1.1
+    secfile="/etc/rsync.password"
+
+
+    ${PROGRAM} ${FLAGS} --format "%w%f" -e ${EVENTS} ${lpath} | while read line
+    do
+        rsync -az $line vuser@${rhost}::modetest --password-file='/etc/rsyncd.password'
+    done
+    ```
