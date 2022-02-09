@@ -60,8 +60,14 @@ rsync: remote synchronous
 
 4. 列表模式
 
+    --list-only
+
     Usages with just one SRC arg and no DEST arg will list the source files
     instead of copying.
+
+    As expected, if neither the source or destination path specify a remote
+    host, the  copy  occurs  locally  (see also the --list-only option).
+
 
 
 ## 语法
@@ -356,6 +362,44 @@ rsyncd.conf
     [rsynctest]
     exclude=*.txt b.txt                     // space-separated list
 
+
+
+
+
+1. 更改rsync创建文件的所有者
+2. 更改rsync创建的文件的权限
+
+incoming chmod
+
+    This  parameter  allows  you to specify a set of comma-separated chmod
+    strings that will affect the permissions of all incoming files (files that
+    are being received by the daemon).  These changes happen after all other
+    permission calculations, and this will even override destination-default
+    and/or existing permissions when the client does not specify --perms.  See
+    the description of the --chmod rsync option and the  chmod(1)  manpage for
+    information on the format of this string.
+
+outgoing chmod
+
+    This  parameter  allows  you to specify a set of comma-separated chmod
+    strings that will affect the permissions of all outgoing files (files that
+    are being sent out from the daemon).  These changes happen first, making
+    the sent permissions appear to be different than those stored in the
+    filesystem itself.  For instance, you could disable group write permissions
+    on the server while having it appear to be on to the  clients.   See  the
+    description of the --chmod rsync option and the chmod(1) manpage for
+    information on the format of this string.
+
+
+    ```
+    # 其他配置
+    uid = www-data
+    # 其他配置...
+    incoming  chmod  = Du=r,Dg=r,Fu=rwx,Fgo=r
+
+    #du是目录权限 d开头的是跟目录权限有关，fu是文件所有者，fgo用户组。
+
+    ```
 
 #### 2. 客户端
 

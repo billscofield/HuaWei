@@ -54,6 +54,29 @@ PDO:    PHP Data Object
 
     \help <command_name>
 
+#### 2. 服务管理
+
+su - postgres
+pwd
+/var/lib/postgresql
+
+1. pg_ctl
+    
+    centos
+
+2. pg_ctlcluster
+
+    pg_ctlcluster is Ubuntu-specific pg_ctl wrapper.
+
+    pg_ctlcluster 14 main status
+    pg_ctlcluster 14 main stop
+    pg_ctlcluster 14 main start
+
+3. systemctl
+
+    systemctl status postgresql
+
+
 ## 2. 库操作
 
 ### 2. 创建数据库

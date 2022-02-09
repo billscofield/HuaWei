@@ -1,8 +1,12 @@
-## yum配置文件中baseurl和mirrorlist的区别
+## yum配置文件中 baseurl 和 mirrorlist 的区别
 
-找到yum.repo.d文件夹下的文件，随便打开一个，找到mirrorlist的url，比如：
+找到yum.repo.d文件夹下的文件，随便打开一个，找到 mirrorlist 的 url，比如：
 
 http://mirrorlist.centos.org/?release=6&arch=$basearch&repo=os
+
+    rpm -qi centos-release
+
+    $basearch是我们的系统硬件架构(CPU指令集),使用命令arch得到
 
 可以在/etc/yum.conf文件中看到如下url：
 cachedir=/var/cache/yum/$basearch/$releasever
@@ -14,7 +18,7 @@ cachedir=/var/cache/yum/$basearch/$releasever
 发现就是一堆容器url，所以mirrorlist指向的就是一堆baseurl（Specifies a URL to a
 file containing a list of baseurls. ）
 
-而baseUrl必须指向 yum服务器上的repository的repodata文件夹，因为这个文件夹上保存
+而 baseUrl 必须指向 yum 服务器上的 repository 的 repodata 文件夹，因为这个文件夹上保存
 着rpm文件安装时需要的依赖信息（Must be a URL to the directory where the yum
 repository’s ‘repodata’ directory lives.）
 
