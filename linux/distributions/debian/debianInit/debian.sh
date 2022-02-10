@@ -282,7 +282,8 @@ git clone https://gitee.com/billscofield/SimpylFold                 ~/.vim/bundl
 git clone https://gitee.com/billscofield/vim-autopep8               ~/.vim/bundle/vim-autopep8
 git clone https://gitee.com/billscofield/bufexplorer                ~/.vim/bundle/bufexplorer
 git clone https://gitee.com/billscofield/taglist.git                ~/.vim/bundle/taglist
-
+git clone https://gitee.com/billscofield/vim-gitgutter.git          ~/.vim/bundle/vim-gitgutter
+git clone https://gitee.com/billscofield/vim-fugitive.git           ~/.vim/bundle/vim-fugitive
 
 
 
