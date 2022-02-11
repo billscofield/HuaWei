@@ -415,8 +415,11 @@ Pull:
     例如
         rsync -vrt --bwlimit=20480 rsync://rsync.mirrors.ustc.edu.cn/repo/debian        --bwlimit 单位是Kb
         
-        rsync https://mirrors.tuna.tsinghua.edu.cn::debian
+        rsync https://mirrors.tuna.tsinghua.edu.cn::debian      // 这个不行
         rsync mirrors.tuna.tsinghua.edu.cn::debian
+
+
+        rsync rsync://mirrors.tuna.tsinghua.edu.cn/elasticstack/6.x/yum/
 
         客户端可以将密码写在文件中
         rsync rsync://192.168.1.1/rsynctest --password-file=/etc/rsync.pass     // 权限同样 others 0

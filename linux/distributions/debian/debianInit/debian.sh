@@ -284,6 +284,8 @@ git clone https://gitee.com/billscofield/bufexplorer                ~/.vim/bundl
 git clone https://gitee.com/billscofield/taglist.git                ~/.vim/bundle/taglist
 git clone https://gitee.com/billscofield/vim-gitgutter.git          ~/.vim/bundle/vim-gitgutter
 git clone https://gitee.com/billscofield/vim-fugitive.git           ~/.vim/bundle/vim-fugitive
+git clone https://gitee.com/billscofield/vim-surround.git           ~/.vim/bundle/vim-surround
+
 
 
 
