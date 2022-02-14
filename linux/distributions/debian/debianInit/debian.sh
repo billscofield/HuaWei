@@ -138,6 +138,8 @@ apt install -y i3lock-fancy
 
 # ranger file manager
 apt install -y ranger
+ranger --copy-config=all
+echo "map     cv console shell vim%space">>"${HOME}"/.config/ranger/rc.conf
 
 
 #------------------------BEGIN cmus------------------------------
@@ -403,6 +405,8 @@ apt install -y ffmpeg
 # can install it with the following command :
 apt install -y v4l2loopback-dkms
 
+
+apt isntall simplyscreenrecorder
 apt install -y obs-studio
 
 #------------------------BEGIN MySQL ------------------------------

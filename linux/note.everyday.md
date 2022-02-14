@@ -214,3 +214,29 @@ man 5 limits.conf
     executable packer for several executable formats.
 
     UPX 是一款先进的可执行程序文件压缩器
+
+
+
+---
+
+
+2022-02-12
+
+shell 中的 action 命令是什么??
+
+https://m.zhipin.com/mpa/html/get/column?contentId=8dea87f091936383qxB43Ni1&identity=0&userId=11499836
+
+    ```
+    #!/bin/bash
+    . /etc/init.d/functions
+    for var in {10..25};
+    do
+        ip=192.168.75.${var}
+        ping -c2 ${ip} >/dev/null 2>&1
+        if [ $? = 0 ];then
+            action "${ip}" /bin/true
+        else
+            action "${ip}" /bin/false
+        fi
+    done
+    ```

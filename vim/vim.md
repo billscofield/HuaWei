@@ -1,20 +1,88 @@
+## [History of Emacs and vi Keys](http://xahlee.info/kbd/keyboard_hardware_and_key_choices.html)
 
-## 为什么Vim使用HJKL移动光标
+### 1. 为什么 Vim 使用 hjkl 移动光标
+
+[link](http://xahlee.info/kbd/ADM-3A_terminal.html)
+
+ADM-3A Terminal, first shipped in 1976.
+This is the machine that begot the vi editor.
+
 
 ADM-3A设备使用HJKL键在vi编辑器及其后代中移动光标。它在这四个键上印有光标移动箭
 头。Vim是源自Vi也是使用相同的HJKL键作为方向键。
 
-ADM-3A是一个早期视频显示终端在1976年引入的,这是由制造利尔西格勒并且具有12英寸的
-屏幕显示的80个字符12个或24行。它创下了995美元的新行业低单价。由于计算机通信速度
-的快速提高，以及由于需要廉价的操作员控制台而向市场推出的新型小型计算机系统，它
-很快在商业上取得了成功。
+ADM-3A是一个早期视频显示终端在1976年引入的,这是由利尔西格勒(Lear-Siegler)制造,
+具有12英寸的屏幕显示的80个字符12个或24行。它创下了995美元的新行业低单价。由于计
+算机通信速度的快速提高，以及由于需要廉价的操作员控制台而向市场推出的新型小型计
+算机系统，它很快在商业上取得了成功。
 
+### 2. 为什么要用字符 ~ 来表示home目录
+
+同样是 ADM-3A, 这种机器上波浪号和“home”键（用于把光标移动到最左端）正好在同一个
+键上。
+
+
+[link](https://www.sohu.com/a/271050442_156793)
 
 Ken Thompson        重写 QED
+
+    1966 年，贝尔实验室聘用了 Ken Thompson 。Thompson 刚刚在加州大学伯克利分校
+    完成了电气工程和计算机科学的硕士学位。在伯克利他使用一个名为 QED 的文本编辑
+    器，该编辑器在 1965 到 1966 年间被开发用于伯克利分时系统。Thompson 到达贝尔
+    实验室后做的第一件事就是为麻省理工学院兼容分时系统重写 QED。他后来又为
+    Multics 项目写了另一个版本的QED。
+
 UNIX                ed
+
+    1969 年 8 月，在妻子和幼子外出去加州度假时，Thompson “给操作系统、shell、编
+    辑器和汇编程序分别分配了一个星期”，将新系统的基本组件组合在一起。
+
+    这个编辑器被称为 ed 。它是基于 QED 的，但并不完全是 QED 的复现。 Thompson
+    决定放弃某些 QED 的功能，弱化了对常规的表达式的支持，因此 ed 只能理解相对简
+    单的正则表达式。QED 允许用户打开多个缓冲区同时编辑多个文件，但是 ed 一次只
+    使用一个缓冲区。QED 可以执行包含命令的缓冲区，而 ed 则不能。这些简化可能是
+    必要的。
+
+    ed 现在是 POSIX 规范的一部分，所以如果你有一个符合 POSIX 的系统，你的电脑上
+    就安装了 ed 。
+
+    ed 是一个真正的行编辑。它被广泛应用于电传打字机时代。
+
 George Coulsuris    em
+
+    在 1975 年，一个名叫 George Coulouris 的人在伦敦玛丽皇后学院的 Unix 系统上
+    开发了一个改进版 ed 。Coulouris 利用他在玛丽女王学院的视频显示器开发他的编
+    辑器。与 ed 不同的是，Coulouris 的程序允许用户编辑在屏幕中的一行代码，通过
+    一次次击键的方式来操作行（想象一下在 Vim 中每次编辑一行）。 Thompson 拜访玛
+    丽女王学院时，看到 Coulouris 已经写好的程序，驳斥道他不需要在编辑文件的时候
+    看到它的状态。受此启发，Coulouris 将他的程序命名为 em(editor for mortals
+    [ˈmɔːrtl])，"为凡人而生的编辑器"。
+
 Bill Joy            ex/vi
+
+    在伯克利，Coulouris 遇到了 Bill Joy，一名伯克利软件发行公司（BSD）的研究生。
+    Coulouris 斯向Joy 展示了 em， Joy 以 Coulouris 的源代码为基础，为扩展 ed 建
+    立了一个名为 ex 的改进版 ed。1978年，1.1 版本的 ex 与第 1 个版本的 BSD Unix
+    捆绑在一起。ex 在很大程度上与 ed兼容，但它增加了两种模式：一种“开放”模式，
+    这种模式可以使 em 单行编辑成为可能，还有一种“可见”模式，这种模式会占据整个
+    屏幕，并且可以像我们今天所习惯的那样，对整个文件进行实时编辑。
+
+    1979 年的第 2 版 BSD 引入了一个名为 vi 的可执行文件，它只在可视模式下打开 ex 。
+
+    ex/vi （后来称为 vi）建立了我们现在使用的 Vim 中大多数的约定，但这些约定当
+    时并不是 ed 的一部分。Bill Joy 使用的视频终端是 Lear Siegler ADM-3A
+
+    1976年，那时，一个叫作 Bill Joy 的美国兄弟编写了一款行编辑器工具，叫 ex，在
+    当时非常的出名。但是，经过对用户行为的观察，Joy 发现人们更愿意使用 ex 的可
+    视化模式，而非行编辑模式。因此，Joy 决定在 1979 年发布 Vi 这款编辑器，直接
+    把可视化模式（Visual Mode）呈现给用户。正是这个决定造就了今天家喻户晓的Vi
+    编辑器。
+
 Bram Moolenaar      vim
+
+    荷兰人,他对 Vim 的定位并不高，从他给这款产品命名 Vi IMitation 就能看得出来。
+    而后来由于加入的特性越来越多，也越来越受到人们的喜爱和欢迎，因此他也顺势将
+    Vim 的名字全称改为了 Vi IMproved，意为 Vi 的增强版本
 
 ## 
 
@@ -224,7 +292,85 @@ x、s、d、c、y 都会覆盖寄存器中的内容
 复制专用寄存器 "0
 
 
+## expandtab
+
+In Insert mode: Use the appropriate number of spaces to insert a <Tab>. 
+
+在 :help tabstop 命令的说明中，只有设置了 expandtab 选项，把 tab 字符替换为空格
+的情况下，才建议修改 tabstop 选项为其他值
+
+## shiftwidth
+
+'shiftwidth' 'sw'       number  (default 8)
+
+    local to buffer
+    Number of spaces to use for each step of (auto)indent.  Used for
+    |'cindent'|, |>>|, |<<|, etc.
+
+    When zero the 'ts' value will be used.  Use the |shiftwidth()|
+    function to get the effective shiftwidth value.
+
+    行选择后，使用 < 或者 > 做缩进时，缩进的列数
+
+
 ## tabstop softtabstop
+
+tabstop 选项只修改 tab 字符在 vim 中的显示宽度，不修改插入模式下按 Tab 键，vim
+插入的是 tab 字符
+
+
+
+
+一旦设置了softtabstop的值时，你按下tab键，插入的是空格和tab制表符的混合，具体如
+何混合取决于你设定的softtabstop
+
+举个例子，
+    如果 softtabstop=8, 那么按下tab键，插入的就是正常的一个制表符;
+    如果 softtabstop=16,那么插入的就是两个制表符；
+    如果 softtabstop=12,那么插入的就是一个制表符加上4个空格；
+    如果 softtabstop=4呢？那么一开始，插入的就是4个空格，此时一旦你再按下一次tab，这次的四个空格就会和上次的四个空格组合起来变成一个制表符。
+    换句话说，softtabstop是“逢8空格进1制表符”,前提是你tabstop=8。
+
+
+softtabstop 选项(可以简写为 sts)会影响 vim 在插入模式下按 Tab 键所实际得到的字
+符，可能是插入特定数目的空格，也可能是插入一个 tab 字符。
+
+    具体使用时，会受到 tabstop 选项和 expandtab 选项的影响。
+
+---
+
+    set tabstop=8
+    set softtabstop=4
+
+    当 softtabstop 选项值小于 0 时，其真实值会被设置成 shiftwidth 选项的值。这个特
+    性有助于保持和自动缩进的排版一致。后面会具体说明。
+
+    注意：softtabstop 选项影响 vim 在插入模式下按 Tab 键所实际得到的字符，不改变
+    vim 中 tab 字符的显示宽度，tab 字符始终显示为 tabstop 指定的宽度。
+
+    当 softtabstop 选项值小于 tabstop 选项值时，第一次按 Tab 键，会插入 softtabstop
+    选项值对应的多个空格，当插入的空格个数到达 tabstop 指定的宽度时，会删除插入的空
+    格，替换成一个 tab 字符。
+
+---
+
+    set tabstop=8
+    set softtabstop=4
+    set expandtab
+
+    对于 softtabstop 选项值为 4，tabstop 选项值为 8，且没有设置 expandtab 选项
+    的场景来说，第一次按 Tab 键，插入的是 4 个空格，并没有插入 tab 字符，没有发
+    生替换 tab 字符为空格的情况，并不是说设置 softtabstop 选项值为 4，expandtab
+    选项会基于 softtabstop 选项值来把 tab 字符替换成 4 个空格。
+
+    **当按两次 Tab 键，插入一个 tab 字符后，expandtab 选项还是基于 tabstop 选项值
+    把 tab 字符替换成 8 个空格。**
+
+
+注意：设置 expandtab 选项只能把新插入的 tab 字符替换成特定数目的空格，不影响文
+件中已有的 tab 字符。即，文件已有的 tab 字符会保持不变。
+
+
 
 https://vi.stackexchange.com/questions/4244/what-is-softtabstop-used-for
 
@@ -358,4 +504,137 @@ https://stackoverflow.com/questions/9990219/vim-whats-the-difference-between-let
     as octal or hex.
 
 
-2. 
+## 不常用的模式
+
+[link](https://www.jianshu.com/p/ce4b763e5e4b)
+
+1. 操作符待决模式
+
+    1. 你也许知道vim中有四种模式：普通模式，插入模式，可视模式，命令行模式，但
+       还有操作符待决模式
+
+    1. vim中有一条额外的规则，当一个操作符命令被连续调用两次时，它会作用于当前
+       行
+
+    1. 什么是操作符待决模式，d是删除的操作符，< 是减少缩进的操作符，可是我们按
+       dd才是删除一行，<<才是减少缩进一行，其实我们在按下第一个d的时候进入了一
+       个操作符待决模式，只是这个模式是个短暂的存在，直到接收到我们下一个动作命
+       令，才完成整个操作，比如dd，第一个d是是操作符，第二个d时说要删除整行，所
+       以同理cc就是删除整行并插入，yy就是复制整行，dap，就是删除整个段落，gUap
+       就是将整个段落大写
+
+    1. 可以将操作符和查找动作结合起来使用d/staff<cr>可以删除从当前光标到staff前
+       面的内容
+
+    1. 可以将操作符待决模式和文本对象结合起来，在操作符待决模式中，i 不再是切换
+       到插入模式并将光标置于字符前，a也不是将光标置于字符后，而是当作文本对象
+       的组成部分。因为aw会删除当前单词加一个空格，iw只删除当前单词的特性，c命
+       令适合和iw等配合，d命令则适合和aw等配合
+
+    1. 很多命令都是两个或更多按键，比如<C-w> s 会水平切分此窗口，但是<C-w>只是
+       第二个按键的前缀，可以当作命名空间，但是他们并不会激活操作符待决模式，因
+       为只有操作符才会激活操作符待决模式
+
+
+2. 插入-普通模式
+
+    1.有时候会在插入模式的情况下想使用普通模式的命令，可以不需要按<Esc>, <C-o>
+    切换到插入-普通模式，当在插入模式时，想要运行一个普通模式命令，然后马上继续
+    输入的时候可以用这个命令。比如想滚动一下屏幕，让当前行显示在窗口正中，以更
+    好地阅读，然后继续插入，可以按<C-o>zz。再比如在当前行操作完毕，想到下方10行
+    的地方进行操作，可以按<C-o>10j
+
+3. 选择模式
+
+    1.可视模式下，当选中一段文本后，再按<C-g>可以切换到选择模式，再输入任意可见
+    字符，如p，这个选中的文本将会被删除，并显示你输入的字符p，并切换到插入模式，
+    但是在可视模式下，会将这些字符当作命令，p会被认为是粘贴
+
+
+
+
+## 缓冲区
+
+By allowing hidden buffers with set hidden, you’re telling Vim that you can
+have unsaved worked that’s not displayed on your screen.
+
+
+
+## filetype 文件类型检测
+
+vim中执行
+
+    :filetype
+
+查看Vim的文件类型检测功能是否已打开；
+
+:set filetype查看当前文件是什么类型；
+:set filetype=HTML设置文件类型为HTML；
+
+
+filetype的默认属性：detection:ON plugin:OFF indent:OFF
+
+
+1. detection：
+
+    默认情况vim会对文件自动检测文件类型，也就是你看到的'detection:ON'，如需关闭:
+    filetype off。
+
+    还有一种方式就是在文件内容中指定，Vim会从文件的头几行自动扫描文件是否有声明
+    文件类型的代码，如在文件的首行加入 //vim: filetype=HTML，当作注释写入，以致
+    于不影响文件的编译，这样Vim不通过文件名也能检测出文件是什么类型
+
+2. plugin：
+    
+    当plugin状态为"ON"时，那么就会在Vim的运行时环境目录下加载该类型相关的插件。
+    比如为了让Vim更好的支持Html编程，就需要下载一些Html相关的插件。vim中执行 :
+    filetype plugin on
+
+3. indent：
+
+    不同类型文件有不同的方式，比如Python要求使用4个空格作为缩进，而Html使用2个
+    空格作为缩进，那么indent就可以为不同文件类型选择合适的缩进方式。你可以在Vim
+    的安装目录的indent目录下看到定义了很多缩进相关的脚本。vim中执行 :filetype
+    indent on。 
+
+以上三个参数，可以写成一行filetype plugin indent on在 vimrc 文件中写入。
+
+
+## word
+
+:help word
+
+
+Special case: "cw" and "cW" are treated like "ce" and "cE" if the cursor is on
+a non-blank.  This is because "cw" is interpreted as change-word, and a word
+does not include the following white space.
+
+
+Another special case: When using the "w" motion in combination with an operator
+and the last word moved over is at the end of a line, the end of that word
+becomes the end of the operated text, not the first word in the next line.
+
+e.g.
+
+```
+value1              在单词 value1 上执行 w/W , 都会到 value2 上
+    value2          但是 dw 却只能删除 value1, value1 这一行还在
+```
+
+
+
+:scr[iptnames]          List all sourced script names, in the order they were
+                        first sourced.  The number is used for the script ID
+                        <SID>.
+                        {not available when compiled without the +eval
+                            feature}
+
+:smile                  彩蛋, :smi[le]        make the user happy
+
+:windo 对于所有的 window 执行一个操作
+
+:Ex 打开内置的文件或目录浏览器.
+
+:only 关闭所有其他窗口而仅保留当前窗口.
+
+如果你的光标处是一个 url, 那么 gx 将会在默认浏览器中打开该 url.

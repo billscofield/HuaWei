@@ -1,6 +1,7 @@
 # Linux Server
 
 ## ip
+
 子网卡
 
 1. ifconfig
@@ -65,16 +66,22 @@ ifup
     ifdown 提示 cannot assign requested address  是什么意思?
     ```
 
-貌似修改了/etc/network/interfaces，即使/etc/init.d/networking restart 或者  ifconfig ens33 down && ifconfig ens33 up 或者 ifdown ens33 && ifup ens33 也不会生效，init 6 才会生效
+貌似修改了/etc/network/interfaces，即使/etc/init.d/networking restart 或者
+ifconfig ens33 down && ifconfig ens33 up 或者 ifdown ens33 && ifup ens33 也不会
+生效，init 6 才会生效
 
 
 
 ## 主机名
+
 1. 临时修改
+
     hostname 新主机名
+
     重新登陆一个终端就可以看到改变了
 
 1. 查看所有ip
+
     hostname -I , --all-ip-addresses
     hostname -i , --ip-adress   //和hostname对应的那个ip
 
@@ -83,16 +90,19 @@ ifup
     上边两个发现
 
 1. 主机名文件
+
     1. /etc/hostname
 
 ## 主机名和ip对应关系
+
 1. /etc/hosts
 
-存放的是域名与ip的对应关系，域名与主机名没有任何关系，你可以为任何一个IP指定任意一个名字
+        存放的是域名与ip的对应关系，域名与主机名没有任何关系，你可以为任何一个IP指定任意一个名字
 ?
 
 
 ## netstat
+
 -t:列出tcp协议端口
 -u:列出udp协议端口
 
@@ -120,6 +130,7 @@ netstat -an | grep ESTABLISHED | wc -l
 
 
 ## route
+
 -v, --verbose
 -n, --numeric       don't resolve names
 -e, --extend        display other/more information
@@ -127,27 +138,30 @@ netstat -an | grep ESTABLISHED | wc -l
 -C, --cache         display routing cache instead of FIB
 
 ## nslookup
+
 (name server lookup)
 
 Nslookup can be use in interactive and non-interactive mode.
 
+By default nslookup will use the domain server that is currently configured for
+your system.  You can switch DNS servers using server name or server IP address
+option.
 
-By default nslookup will use the domain server that is currently configured for your system.
-You can switch DNS servers using server name or server IP address option.
+To switch to using the open dns server address 208.67.222.222 then go to an
+interactive prompt and type:
 
-To switch to using the open dns server address 208.67.222.222 then go to an interactive prompt and type:
-
-nslookup
->server 20867.222.222
-
+    nslookup
+    >server 20867.222.222
 
 http://www.steves-internet-guide.com/using-nslookup/
 
 
 ## telnet
+
 telnet使用的是tcp协议，换句话说telnet只能检测tcp的这个端口打开了没
 
-Telnet是基于TCP的，默认端口是23。**端口承载的服务可以由用户设定。** sqlserver的Telnet服务是1433端口
+Telnet是基于TCP的，默认端口是23。**端口承载的服务可以由用户设定。** sqlserver的
+Telnet服务是1433端口
 
 telnet ip port测试目标主机端口是否开放
 
@@ -169,24 +183,10 @@ telnet 80端口是什么意思呢?
 telnet 服务端都没有开启，为什么还可以telnet 80端口呢?
 
 ## traceroute
+
 使用的是ping，如果禁止了ping，那么就...
 
 -n, --numeric   
 
 
 ## wget
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

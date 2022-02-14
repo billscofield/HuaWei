@@ -8,21 +8,31 @@ RHCSA: 红帽认证系统管理员
 
 ## Alpine
 
-Alpine Linux is a security-oriented, lightweight Linux distribution based on musl libc and busybox.
+Alpine Linux is a security-oriented, lightweight Linux distribution based on
+musl libc and busybox.
 
 
 ## BusyBox
 
-BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说BusyBox就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统的自带的shell。
+BusyBox 是一个集成了三百多个最常用Linux命令和工具的软件。BusyBox 包含了一些简单
+的工具，例如ls、cat和echo等等，还包含了一些更大、更复杂的工具，例grep、find、
+mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀。简单的说BusyBox
+就好像是个大工具箱，它集成压缩了 Linux 的许多工具和命令，也包含了 Android 系统
+的自带的shell。
 
 ## Libc
 
-libc的名字来源于历史，指 C开发包的函数库 ，包括头文件和基本C库libc.a，最初的libc由发明C语言那些人写的，后来随着C移植到不同平台，libc也有了多个版本，可能是为了兼容吧，很多头文件和libc.a的文件名都没有变（很好的传统）。
+libc的名字来源于历史，指 C开发包的函数库 ，包括头文件和基本C库libc.a，最初的
+libc由发明C语言那些人写的，后来随着C移植到不同平台，libc也有了多个版本，可能是
+为了兼容吧，很多头文件和libc.a的文件名都没有变（很好的传统）。
 
-现在libc泛指C函数库， 而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版Linux用的就是glibc。
+现在libc泛指C函数库， 而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版
+Linux用的就是glibc。
 
 
-libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的libc.so其实不是.so文件，而是一个ld Script，这没有关系，gnu ld 会正确处理的。
+libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的libc.so其实不是
+.so文件，而是一个ld Script，这没有关系，gnu ld 会正确处理的。
+
     ld - The GNU linker
 
 
@@ -31,49 +41,79 @@ libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的lib
 
 ### musl libc
 
-Welcome to the home of musl, a new standard library to power a new generation of Linux-based devices. musl is lightweight, fast, simple, free, and strives to be correct in the sense of standards-conformance and safety.
+Welcome to the home of musl, a new standard library to power a new generation
+of Linux-based devices. musl is lightweight, fast, simple, free, and strives to
+be correct in the sense of standards-conformance and safety.
 
 
-1. Glibc = GNU C Library 是GNU项（GNU Project）目，所实现的 C语言标准库（C standard library）。 目前，常见的桌面和服务器中的GNU/Linux类的系统中，都是用的这套C语言标准库。 其实现了常见的C库的函数，支持很多种系统平台，功能很全，但是也相对比较臃肿和庞大。
+1. Glibc = GNU C Library 是GNU项（GNU Project）目，所实现的 C语言标准库（C
+   standard library）。 目前，常见的桌面和服务器中的GNU/Linux类的系统中，都是用
+   的这套C语言标准库。 其实现了常见的C库的函数，支持很多种系统平台，功能很全，
+   但是也相对比较臃肿和庞大。
 
-2. uClibc 一个小型的C语言标准库，主要用于嵌入式。 其最开始设计用于uClinux（注：uClinux不支持MMU），因此比较适用于微处理器中。 对应的，此处的u意思是μ，Micro，微小的意思。 
+2. uClibc 一个小型的C语言标准库，主要用于嵌入式。 其最开始设计用于uClinux（注：
+   uClinux不支持MMU），因此比较适用于微处理器中。 对应的，此处的u意思是μ，Micro，
+   微小的意思。 
 
     1. uClibc的特点： 
 
         1. uClibc 比 glibc 要小很多。 
 
-        2. uClibc 是独立的，为了应用于嵌入式系统中，完全重新实现出来的。和 glibc 在源码结构和二进制上，都不兼容。
+        2. uClibc 是独立的，为了应用于嵌入式系统中，完全重新实现出来的。和
+           glibc 在源码结构和二进制上，都不兼容。
 
-3. EGLIBC = Embedded GLIBC EGLIBC是，（后来）glibc的原创作组织FSF所（新）推出的，glibc的一种变体，目的在于将glibc用于嵌入式系统。 
+3. EGLIBC = Embedded GLIBC EGLIBC是，（后来）glibc的原创作组织FSF所（新）推出的，
+   glibc的一种变体，目的在于将glibc用于嵌入式系统。 
 
     EGLIBC的目标是： 
 
-    1. 保持源码和二进制级别的兼容于Glibc 源代码架构和ABI层面兼容 如果真正实现了这个目标，那意味着，你之前用glibc编译的程序，可以直接用eglibc替换，而不需要重新编译。 这样就可以复用之前的很多的程序了。 
+    1. 保持源码和二进制级别的兼容于Glibc 源代码架构和ABI层面兼容 如果真正实现了
+       这个目标，那意味着，你之前用glibc编译的程序，可以直接用eglibc替换，而不
+       需要重新编译。 这样就可以复用之前的很多的程序了。 
 
     1. 降低(内存)资源占用/消耗 
 
     1. 使更多的模块为可配置的（以实现按需裁剪不需要的模块） 
 
-    1. 提高对于交叉编译(cross-compilation)和交叉测试(cross-testing)的支持 Eglibc的最主要特点就是可配置，这样对于嵌入式系统中，你所不需要的模块，比如NIS，locale等，就可以裁剪掉，不把其编译到库中，使得降低生成的库的大小了。 更多特点，可以去看：Eglibc的特点 【glibc, uClibc, Elibc的渊源/历史/区别/联系】 
+    1. 提高对于交叉编译(cross-compilation)和交叉测试(cross-testing)的支持
+       Eglibc的最主要特点就是可配置，这样对于嵌入式系统中，你所不需要的模块，比
+       如NIS，locale等，就可以裁剪掉，不把其编译到库中，使得降低生成的库的大小
+       了。 更多特点，可以去看：Eglibc的特点 【glibc, uClibc, Elibc的渊源/历史/
+       区别/联系】 
 
     
-    1. 写程序，需要用到很多c语言的库函数。所有的库函数加起来，就是对应的C语言（标准）函数库。 
+    1. 写程序，需要用到很多c语言的库函数。所有的库函数加起来，就是对应的C语言
+       （标准）函数库。 
 
-    2. 目前在普通GNU/Linux系统中所用的C语言标准库，叫做glibc。其功能很全，函数很多，但是代码太多，编译出来的函数库的大小也很大，即资源占用也很多。 
+    2. 目前在普通GNU/Linux系统中所用的C语言标准库，叫做glibc。其功能很全，函数
+       很多，但是代码太多，编译出来的函数库的大小也很大，即资源占用也很多。 
 
-    3. 而嵌入式系统中，也需要C语言写代码实现特定功能，也需要用到C语言函数库，但是由于嵌入式系统中，一般资源比较有限，所以不适合直接使用（太占用资源的）gLibc。 
+    3. 而嵌入式系统中，也需要C语言写代码实现特定功能，也需要用到C语言函数库，但
+       是由于嵌入式系统中，一般资源比较有限，所以不适合直接使用（太占用资源的）
+       gLibc。 
 
-    4. 所以有人就又（没有参考glibc，而是从头开始，）重新实现了一个用于嵌入式系统中的，代码量不是很大的，资源占用相对较少的，C语言函数库，叫做uClibc。并且，uClibc不支持MMU（内存管理单元）。 
+    4. 所以有人就又（没有参考glibc，而是从头开始，）重新实现了一个用于嵌入式系
+       统中的，代码量不是很大的，资源占用相对较少的，C语言函数库，叫做uClibc。
+       并且，uClibc不支持MMU（内存管理单元）。 
 
-    5. 而后来，glibc的开发者，又推出个Embedded glibc，简称eglibc，其主要目的也是将glibc用于嵌入式领域。 相应最大的改动就在于，把更多的库函数，改为可配置的，这样，如果你的嵌入式系统中不需要某些函数，就可以裁剪掉，不把该函数编译到你的eglibc库中，使得最终生成的eglibc库的大小变小，最终符合你的嵌入式系统的要求（不能超过一定的大小），这样，就实现了，把glibc引用于嵌入式系统中的目的了。 
+    5. 而后来，glibc的开发者，又推出个Embedded glibc，简称eglibc，其主要目的也
+       是将glibc用于嵌入式领域。 相应最大的改动就在于，把更多的库函数，改为可配
+       置的，这样，如果你的嵌入式系统中不需要某些函数，就可以裁剪掉，不把该函数
+       编译到你的eglibc库中，使得最终生成的eglibc库的大小变小，最终符合你的嵌入
+       式系统的要求（不能超过一定的大小），这样，就实现了，把glibc引用于嵌入式
+       系统中的目的了。 
     
     1. 可以简单的理解为： glibc，uClibc，eglibc都是C语言函数库： 
 
         1. uClibc是嵌入式系统中用的，glibc是桌面系统用的 
 
-        2. eglibc也是嵌入式系统中用的，是glibc的嵌入式版本，和glibc在源码和二进制上兼容。
+        2. eglibc也是嵌入式系统中用的，是glibc的嵌入式版本，和glibc在源码和二进
+           制上兼容。
 
-4. Musl-libc C语言标准库Musl-libc项目发布了1.0版。Musl是一个轻量级的C标准库，设计作为GNU C library (glibc)、 uClibc或Android Bionic的替代用于嵌入式操作系统和移动设备。它遵循POSIX 2008规格和 C99 标准，采用MIT许可证授权，使用Musl的Linux发行版和项目包括sabotage，bootstrap-linux，LightCube OS等等。
+4. Musl-libc C语言标准库Musl-libc项目发布了1.0版。Musl是一个轻量级的C标准库，设
+   计作为GNU C library (glibc)、 uClibc或Android Bionic的替代用于嵌入式操作系统
+   和移动设备。它遵循POSIX 2008规格和 C99 标准，采用MIT许可证授权，使用Musl的
+   Linux发行版和项目包括sabotage，bootstrap-linux，LightCube OS等等。
 
 目前openwrt LEDE默认使用Musl-libc了。。。CC分支还是uclibc
 
@@ -100,32 +140,45 @@ Welcome to the home of musl, a new standard library to power a new generation of
 
 ## /etc/issue & /etc/issue.net & /etc/motd
 
-/etc/issue 和 /etc/issue.net ：这2个文件是你在登录之前显示的，区别一个负责本地登录前显示，一个负责网络登录前显示。
+/etc/issue 和 /etc/issue.net ：这2个文件是你在登录之前显示的，区别一个负责本地
+登录前显示，一个负责网络登录前显示。
 
-也即 /etc/issue 是显示在TTY控制台登录前（非图形界面），而 /etc/issue.net 是显示在 Telnet (SSH默认不开启，请看文章最后面说明)远程登录前，另外 /etc/issue.net 不支持转义字符
-
-
-/etc/motd ：这个文件是在你登录之后显示的，不管你是 TTY 还是 PTS 登录，也不管是  Telnet 或 SSH 都显示这个文件里面的信息。
-
-在较新的Linux发行版中，这个功能被扩展了，有了动态motd和静态motd的区别，在Ubuntu 16.04.01 LTS中，仅仅启用了动态motd，而未启用静态motd
+也即 /etc/issue 是显示在TTY控制台登录前（非图形界面），而 /etc/issue.net 是显示
+在 Telnet (SSH默认不开启，请看文章最后面说明)远程登录前，另外 /etc/issue.net 不
+支持转义字符
 
 
-动态文件: /run/motd.dynamic
+/etc/motd ：这个文件是在你登录之后显示的，不管你是 TTY 还是 PTS 登录，也不管是
+Telnet 或 SSH 都显示这个文件里面的信息。
 
-它是由 /etc/update-motd.d/ 下的几个脚本文件来动态生成的。所以你可以通过/etc/update-motd.d/ 下的脚本来控制信息的生成。那么如何禁用该动态motd功能呢？方法是将/etc/update-motd.d/ 下的脚本移除或者去掉可执行权限。
+在较新的Linux发行版中，这个功能被扩展了，有了动态motd和静态motd的区别，在Ubuntu
+16.04.01 LTS中，仅仅启用了动态motd，而未启用静态motd
 
-在关闭动态motd之后，发现登录之后还有会一行：Last login: Thu May 25 15:39:48 CST 2017 from 192.168.2.122 on pts/1
+
+### 动态文件: /run/motd.dynamic
+
+它是由 /etc/update-motd.d/ 下的几个脚本文件来动态生成的。所以你可以通过
+/etc/update-motd.d/ 下的脚本来控制信息的生成。那么如何禁用该动态motd功能呢？方
+法是将/etc/update-motd.d/ 下的脚本移除或者去掉可执行权限。
+
+在关闭动态motd之后，发现登录之后还有会一行：Last login: Thu May 25 15:39:48 CST
+2017 from 192.168.2.122 on pts/1
 
 这是由/etc/pam.d/login配置文件中pam_lastlog.so这一行控制的，相应地注释即可。
 
+### 静态文件
 
-如果需要静态motd消息，那么在/etc/目录下，新建或者修改配置文件motd，在其中定制你需要的登录后信息即可。
+如果需要静态motd消息，那么在/etc/目录下，新建或者修改配置文件motd，在其中定制你
+需要的登录后信息即可。
 
 
-默认情况下/etc/issue.net 文件的内容不会在ssh登录前显示，要显示这个信息可以修改/etc/ssh/sshd_config 文件中的 Banner /etc/issue.net ，配置更改后，需要重启SSH服务。
+默认情况下/etc/issue.net 文件的内容不会在ssh登录前显示，要显示这个信息可以修改
+/etc/ssh/sshd_config 文件中的 Banner /etc/issue.net ，配置更改后，需要重启SSH服
+务。
 
 
-/etc/issue.net 文件记录了操作系统的名称和版本号，这些登录提示很明显的泄漏了系统信息，为了安全起见，建议将系统相关信息去除。
+/etc/issue.net 文件记录了操作系统的名称和版本号，这些登录提示很明显的泄漏了系统
+信息，为了安全起见，建议将系统相关信息去除。
 
 ```
 108 # no default banner path
@@ -182,9 +235,11 @@ quiet splash rw init=/bin/bash
 
 1. quiet
 
-    1. This option tells the kernel to NOT produce any output (a.k.a. Non verbose mode). 
+    1. This option tells the kernel to NOT produce any output (a.k.a. Non
+       verbose mode). 
 
-    1. If you boot without this option, you'll see lots of kernel messages such as drivers/modules activations, filesystem checks and errors.
+    1. If you boot without this option, you'll see lots of kernel messages such
+       as drivers/modules activations, filesystem checks and errors.
 
     1. quiet的意思是内核启动时候简化提示信息
 
@@ -315,9 +370,10 @@ grup配置文件
 
 执行以下命令：
 
-sudo update-grub
+    > sudo update-grub
 
-该命令作用是更新原来的/boot/grub/grub.cfg文件，但修改配置时不要修改/boot/grub/grub.cfg文件，而是要修改/etc/default/grub文件，然后
+该命令作用是更新原来的/boot/grub/grub.cfg文件，但修改配置时不要修改
+/boot/grub/grub.cfg文件，而是要修改/etc/default/grub文件，然后
 
 sudo update-grub
 
@@ -337,21 +393,28 @@ sudo update-grub
 
 ## md5sum && sha1sum
 
-在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势在必行的
+在网络传输、设备之间转存、复制大文件等时，可能会出现传输前后数据不一致的情况。
+这种情况在网络这种相对更不稳定的环境中，容易出现。那么校验文件的完整性，也是势
+在必行的
 
 md5值是一个128位的二进制数据，转换成16进制则是32（128/4）位的进制值
 
-SHA1 与 md5 类似，是另一种常用的校验和算法。160位二进制数据，它从给定的输入文件中生成一个长度为40个字符的十六进制串
+SHA1 与 md5 类似，是另一种常用的校验和算法。160位二进制数据，它从给定的输入文件
+中生成一个长度为40个字符的十六进制串
 
-**md5校验，有很小的概率不同的文件生成的 md5 可能相同。比md5更安全的校验算法还有SHA系列的**
+**md5校验，有很小的概率不同的文件生成的 md5 可能相同。比md5更安全的校验算法还有
+SHA系列的**
 
 生成md5值重定向到指定的文件，通常文件的扩展名我们会命为.md5
+
     md5sum data > data.md5
 
 将多个文件的md5重定向到指定的文件(每个文件的md5生成为一行)
+
     md5sum * > data.md6
     
--c选项来对文件md5进行校验。校验时，根据已生成的md5来进行校验。生成当前文件的md5，并和之前已经生成的md5进行对比，如果一致，则返回OK，否则返回错误信息
+-c 选项来对文件md5进行校验。校验时，根据已生成的md5来进行校验。生成当前文件的
+md5，并和之前已经生成的md5进行对比，如果一致，则返回OK，否则返回错误信息
 
 
     ```
@@ -421,8 +484,8 @@ lsb_release
 
     -s, --short
 
-        Use  the  short  output format for any information displayed.  This format omits
-        the leading header(s).
+        Use  the  short  output format for any information displayed. This
+        format omits the leading header(s).
 
 
     虽然执行成功，但是会返回 No LSB modules are available.
@@ -500,6 +563,7 @@ apt-cache pkgnames
     列出了源包含有哪些包(以最后一次 apt update 为准)
 
 ### check package information
+
 apt-cache show 包名字
 
 
@@ -680,6 +744,7 @@ pkill will send the specified signal (by default SIGTERM) to each process instea
 
 
 ## 查看内核
+
 1. cat /proc/version
 
 1. uname -r
@@ -1173,6 +1238,7 @@ concatenate files and print on the standard output
 
 
 ## du
+
 -b, --bytes
     equivalent to '--apparent-size --block-size=1'
 
@@ -1778,48 +1844,51 @@ diff -q
 
 
 ### 生成patch
+
 patch - apply a diff file to an original
 
 
 -N:将不存在的文件当做空文件
 
 1. 先找出文件不同，然后输出到一个文件
-diff -uN file1 file2 > file.patch
+
+    diff -uN file1 file2 > file.patch
 
 1. 将补丁文件作用于文件
-patch file1 file.patch
+
+    patch file1 file.patch
 
 1. 验证测试
-diff file1 file2
+
+    diff file1 file2
+
+    -b  or  --backup
+        Make backup files.  That is, when patching a file, rename or copy the original instead of removing it.
+        See the -V or --version-control option for details about how backup file names are determined.
+        
+    -R  or  --reverse
+        Assume  that  this  patch  was created with the old and new files swapped.  (Yes, I'm afraid that does
+        happen occasionally, human nature being what it is.)  patch attempts to swap each hunk  around  before
+        applying  it.   Rejects  come  out  in  the  swapped format.  The -R option does not work with ed diff
+        scripts because there is too little information to reconstruct the reverse operation.
+        
+        If the first hunk of a patch fails, patch reverses the hunk to see if it can be applied that way.   If
+        it  can,  you are asked if you want to have the -R option set.  If it can't, the patch continues to be
+        applied normally.  (Note: this method cannot detect a reversed patch if it is a normal diff and if the
+        first  command  is  an append (i.e. it should have been a delete) since appends always succeed, due to
+        the fact that a null context matches anywhere.  Luckily, most patches add or change lines rather  than
+        delete  them,  so  most reversed normal diffs begin with a delete, which fails, triggering the heuris‐
+        tic.)
+        卸载补丁
 
 
--b  or  --backup
-    Make backup files.  That is, when patching a file, rename or copy the original instead of removing it.
-    See the -V or --version-control option for details about how backup file names are determined.
-
--R  or  --reverse
-    Assume  that  this  patch  was created with the old and new files swapped.  (Yes, I'm afraid that does
-    happen occasionally, human nature being what it is.)  patch attempts to swap each hunk  around  before
-    applying  it.   Rejects  come  out  in  the  swapped format.  The -R option does not work with ed diff
-    scripts because there is too little information to reconstruct the reverse operation.
-
-    If the first hunk of a patch fails, patch reverses the hunk to see if it can be applied that way.   If
-    it  can,  you are asked if you want to have the -R option set.  If it can't, the patch continues to be
-    applied normally.  (Note: this method cannot detect a reversed patch if it is a normal diff and if the
-    first  command  is  an append (i.e. it should have been a delete) since appends always succeed, due to
-    the fact that a null context matches anywhere.  Luckily, most patches add or change lines rather  than
-    delete  them,  so  most reversed normal diffs begin with a delete, which fails, triggering the heuris‐
-    tic.)
-    卸载补丁
 
 
+    ## paste
 
-
-## paste
-
-merge lines of files
-用于合并文件行
-不更改源文件，只显示到屏幕
+    merge lines of files
+    用于合并文件行
+    不更改源文件，只显示到屏幕
 
 第一个文件的第一行和第二个文件的第一行合并
 
@@ -1844,6 +1913,7 @@ merge lines of files
 
 
 ## man 
+
 1   Executable programs or shell commands
 2   System calls (functions provided by the kernel)
 3   Library calls (functions within program libraries)
@@ -1932,15 +2002,19 @@ date +"%z %F %T"
         date -d "2020-2-25 19:06" +%s
         还原
             date -d "1970-1-1 1582628760seconds UTC"
-        因为 %s 是按照UTC计算的，那就是比方说我们是格林威治时区，date -d 时，也要加上UTC时区，而不是我们目前的CST时区
+        
+        因为 %s 是按照UTC计算的，那就是比方说我们是格林威治时区，date -d 时，也
+        要加上UTC时区，而不是我们目前的CST时区
 
 -s, --set=STRING
+
     set time described by STRING
     
     date -s '20200101 18:00'
 
 
 -d, --date=STRING
+
     display time described by STRING, not 'now'
 
     date -d "1970-1-1 20000days UTC"
@@ -1962,16 +2036,25 @@ bash , zsh 没有
 6. home
 7. shell
 
-If the password field is a lower-case “x”, then the encrypted password is actually stored in the shadow(5) file instead; there must be a corresponding line in the /etc/shadow file, or else the user account is invalid.
+If the password field is a lower-case “x”, then the encrypted password is
+actually stored in the shadow(5) file instead; there must be a corresponding
+line in the /etc/shadow file, or else the user account is invalid.
 
-    The encrypted password field may be empty, in which case no password is required to authenticate as the specified login name. However, some applications which read the /etc/passwd file may decide not to permit any access at
-    all if the password field is blank.
+    The encrypted password field may be empty, in which case no password is
+    required to authenticate as the specified login name. However, some
+    applications which read the /etc/passwd file may decide not to permit any
+    access at all if the password field is blank.
 
-    A password field which starts with an exclamation(感叹号) mark means that the password is locked. The remaining characters on the line represent the password field before the password was locked.
+    A password field which starts with an exclamation(感叹号) mark means that
+    the password is locked. The remaining characters on the line represent the
+    password field before the password was locked.
 
     Refer to crypt(3) for details on how this string is interpreted.
 
-    If the password field contains some string that is not a valid result of crypt(3), for instance ! or *, the user will not be able to use a unix password to log in (but the user may log in the system by other means).
+    If the password field contains some string that is not a valid result of
+    crypt(3), for instance ! or *, the user will not be able to use a unix
+    password to log in (but the user may log in the system by other means).
+
         比如可以通过root su 过去
 
 centos 中将uid改为零，这个用户就是管理员了
@@ -1979,44 +2062,64 @@ centos 中将uid改为零，这个用户就是管理员了
 ## useradd
 
 -d, --home-dir HOME_DIR
-    The new user will be created using HOME_DIR as the value for the user's login directory. The default is to
-    append the LOGIN name to BASE_DIR and use that as the login directory name. The directory HOME_DIR does
-    not have to exist but will not be created if it is missing.
+
+    The new user will be created using HOME_DIR as the value for the user's
+    login directory. The default is to append the LOGIN name to BASE_DIR and
+    use that as the login directory name. The directory HOME_DIR does not have
+    to exist but will not be created if it is missing.
 
 -m, --create-home
-    Create the user's home directory if it does not exist. The files and directories contained in the skeleton
-    directory (which can be defined with the -k option) will be copied to the home directory.
 
-    By default, if this option is not specified and CREATE_HOME is not enabled, no home directories are
-    created.
+    Create the user's home directory if it does not exist. The files and
+    directories contained in the skeleton directory (which can be defined with
+    the -k option) will be copied to the home directory.
 
-    -M, --no-create-home
-    Do no create the user's home directory, even if the system wide setting from /etc/login.defs (CREATE_HOME)
-    is set to yes.
+    By default, if this option is not specified and CREATE_HOME is not enabled,
+    no home directories are created.
+
+-M, --no-create-home
+
+    Do no create the user's home directory, even if the system wide setting
+    from /etc/login.defs (CREATE_HOME) is set to yes.
 
 -g, --gid GROUP
-    The group name or number of the user's initial login group. The group name must exist. A group number must refer to an already existing group.
 
-    If not specified, the behavior of useradd will depend on the USERGROUPS_ENAB variable in /etc/login.defs. If this variable is set to yes (or -U/--user-group is specified on the command line), a group will be created for
-    the user, with the same name as her loginname. If the variable is set to no (or -N/--no-user-group is specified on the command line), useradd will set the primary group of the new user to the value specified by the GROUP
-    variable in /etc/default/useradd, or 100 by default.
+    The group name or number of the user's initial login group. The group name
+    must exist. A group number must refer to an already existing group.
+
+    If not specified, the behavior of useradd will depend on the
+    USERGROUPS_ENAB variable in /etc/login.defs. If this variable is set to yes
+    (or -U/--user-group is specified on the command line), a group will be
+    created for the user, with the same name as her loginname. If the variable
+    is set to no (or -N/--no-user-group is specified on the command line),
+    useradd will set the primary group of the new user to the value specified
+    by the GROUP variable in /etc/default/useradd, or 100 by default.
 
 
 
 -G, --groups GROUP1[,GROUP2,...[,GROUPN]]] 附加组
-    A list of supplementary groups which the user is also a member of. Each group is separated from the next by a comma, with no intervening whitespace. The groups are subject to the same restrictions as the group given with
-    the -g option. The default is for the user to belong only to the initial group.
+
+    A list of supplementary groups which the user is also a member of. Each
+    group is separated from the next by a comma, with no intervening
+    whitespace. The groups are subject to the same restrictions as the group
+    given with the -g option. The default is for the user to belong only to the
+    initial group.
 
     useradd -G group1 
 
 
 -c, --comment COMMENT
-    Any text string. It is generally a short description of the login, and is currently used as the field for the user's full name.
+
+    Any text string. It is generally a short description of the login, and is
+    currently used as the field for the user's full name.
 
 
 
 -u, --uid UID
-    The numerical value of the user's ID. This value must be unique, unless the -o option is used. The value must be non-negative. The default is to use the smallest ID value greater than or equal to UID_MIN and greater than
+
+    The numerical value of the user's ID. This value must be unique, unless the
+    -o option is used. The value must be non-negative. The default is to use
+    the smallest ID value greater than or equal to UID_MIN and greater than
     every other user.
 
     See also the -r option and the UID_MAX description.
@@ -2026,17 +2129,25 @@ centos 中将uid改为零，这个用户就是管理员了
 
 
 -r, --system
+
     Create a system account.
 
-    System users will be created with no aging information in /etc/shadow, and their numeric identifiers are chosen in the SYS_UID_MIN-SYS_UID_MAX range, defined in /etc/login.defs, instead of UID_MIN-UID_MAX (and their GID
+    System users will be created with no aging information in /etc/shadow, and
+    their numeric identifiers are chosen in the SYS_UID_MIN-SYS_UID_MAX range,
+    defined in /etc/login.defs, instead of UID_MIN-UID_MAX (and their GID
     counterparts for the creation of groups).
 
-    Note that useradd will not create a home directory for such a user, regardless of the default setting in /etc/login.defs (CREATE_HOME). You have to specify the -m options if you want a home directory for a system account
-    to be created.
+    Note that useradd will not create a home directory for such a user,
+    regardless of the default setting in /etc/login.defs (CREATE_HOME). You
+    have to specify the -m options if you want a home directory for a system
+    account to be created.
 
 
 -s, --shell SHELL
-    The name of the user's login shell. The default is to leave this field blank, which causes the system to select the default login shell specified by the SHELL variable in /etc/default/useradd, or an empty string by
+
+    The name of the user's login shell. The default is to leave this field
+    blank, which causes the system to select the default login shell specified
+    by the SHELL variable in /etc/default/useradd, or an empty string by
     default.
 
 
@@ -2048,6 +2159,7 @@ centos 中将uid改为零，这个用户就是管理员了
     skel 应该是 skeleton 骨骼，纲要的缩写
 
 /etc/pam.d/
+
 
 ## usermod
 
@@ -2078,100 +2190,149 @@ groupmod -n NewUser OldName
 
 ## /etc/shadow
 1. 用户名
+
 2. 密码
-    This field may be empty, in which case no passwords are required to authenticate as the specified login name. However, some applications which read the /etc/shadow file may decide not to permit any access at all if the
+
+    This field may be empty, in which case no passwords are required to
+    authenticate as the specified login name. However, some applications which
+    read the /etc/shadow file may decide not to permit any access at all if the
     password field is empty.
 
-    A password field which starts with an exclamation mark means that the password is locked. The remaining characters on the line represent the password field before the password was locked.
+    A password field which starts with an exclamation mark means that the
+    password is locked. The remaining characters on the line represent the
+    password field before the password was locked.
 
     Refer to crypt(3) for details on how this string is interpreted.
 
-    If the password field contains some string that is not a valid result of crypt(3), for instance ! or *, the user will not be able to use a unix password to log in (but the user may log in the system by other means).
+    If the password field contains some string that is not a valid result of
+    crypt(3), for instance ! or *, the user will not be able to use a unix
+    password to log in (but the user may log in the system by other means).
+
         系统用户都是这个*
 
-
 3. date of last password change(1970.1.1)
+
     0:下次登录需要修改密码
     空:An empty field means that password aging features are disabled.
 
     如何计算呢?
+        
         date -d "2020-02-25 UTC" +%s
         date -d "1970-1-1 20000days UTC" 得到2024 12:00
         
 
 4. minimum password age
-    the number of days the user will have to wait before she will be allowed to change her password again.
-    An empty field and value 0 mean that there are no minimum password age.
 
+    the number of days the user will have to wait before she will be allowed to
+    change her password again.  An empty field and value 0 mean that there are
+    no minimum password age.
 
 5. maximum password age
-    The maximum password age is the number of days after which the user will have to change her password.
 
-    After this number of days is elapsed, the password may still be valid. The user should be asked to change her password the next time she will log in.
+    The maximum password age is the number of days after which the user will
+    have to change her password.
 
-    An empty field means that there are no maximum password age, no password warning period, and no password inactivity period (see below).
+    After this number of days is elapsed, the password may still be valid. The
+    user should be asked to change her password the next time she will log in.
 
-    If the maximum password age is lower than the minimum password age, the user cannot change her password.
+    An empty field means that there are no maximum password age, no password
+    warning period, and no password inactivity period (see below).
+
+    If the maximum password age is lower than the minimum password age, the
+    user cannot change her password.
 
 6. password warning period
-    The number of days before a password is going to expire (see the maximum password age above) during which the user should be warned.
-    maxmium 到期日向前数
+
+    The number of days before a password is going to expire (see the maximum
+    password age above) during which the user should be warned.  maxmium 到期日
+    向前数
 
     An empty field and value 0 mean that there are no password warning period.
 
 7. password inactivity(静止，不活动) period
-    The number of days after a password has expired (see the maximum password age above) during which the password should still be accepted (and the user should update her password during the next login).
-    maximux 到期后向后数
 
-    **After expiration of the password and this expiration period is elapsed, no login is possible using the current user's password. The user should contact her administrator.**
+    The number of days after a password has expired (see the maximum password
+    age above) during which the password should still be accepted (and the user
+    should update her password during the next login).  maximux 到期后向后数
 
-    An empty field and -1(see /etc/default/useradd) means that there are no enforcement of an inactivity period.
+    **After expiration of the password and this expiration period is elapsed,
+    no login is possible using the current user's password. The user should
+    contact her administrator.**
+
+    An empty field and -1(see /etc/default/useradd) means that there are no
+    enforcement of an inactivity period.
 
 8. account expiration date
-    The date of expiration(期满) of the account, expressed as the number of days since Jan 1, 1970.
+
+    The date of expiration(期满) of the account, expressed as the number of
+    days since Jan 1, 1970.
 
     Note that an account expiration differs from a password expiration. 
-    In case of an account expiration, the user shall not be allowed to login. (如果超过了失效时间，就算密码没有过期，用户也就失效，无法使用了)
-    In case of a password expiration, the user is not allowed to login using her password.
+
+    In case of an account expiration, the user shall not be allowed to login.
+    (如果超过了失效时间，就算密码没有过期，用户也就失效，无法使用了)
+
+    In case of a password expiration, the user is not allowed to login using
+    her password.
+
     An empty field means that the account will never expire.
 
-    The value 0 should not be used as it is interpreted as either an account with no expiration, or as an expiration on Jan 1, 1970.
+    The value 0 should not be used as it is interpreted as either an account
+    with no expiration, or as an expiration on Jan 1, 1970.
 
 9. reserved field
+
     This field is reserved for future use.
 
 
 ## /etc/group
 
-group_name  the name of the group.
+group_name
 
-password    the (encrypted) group password 都是x, 存在/etc/gshadow中.  If this field is empty, no password is needed.
+    the name of the group.
 
-GID         the numeric group ID.
+password
+    
+    the (encrypted) group password 都是x, 存在/etc/gshadow中.  If this field is
+    empty, no password is needed.
 
-user_list   a list of the usernames that are members of this group, separated by commas.
+GID
+    
+    the numeric group ID.
 
+user_list
+    
+    a list of the usernames that are members of this group, separated by commas.
 
 
 ## /etc/gshadow
 
 group name
-           It must be a valid group name, which exist on the system.
+
+    It must be a valid group name, which exist on the system.
 
 encrypted password
+
     Refer to crypt(3) for details on how this string is interpreted.
 
-    If the password field contains some string that is not a valid result of crypt(3), for instance ! or \*, users will not be able to use a unix password to access the group (but group members do not need the password).
+    If the password field contains some string that is not a valid result of
+    crypt(3), for instance ! or \*, users will not be able to use a unix
+    password to access the group (but group members do not need the password).
 
-    The password is used when a user who is not a member of the group wants to gain the permissions of this group (see newgrp(1)).
+    The password is used when a user who is not a member of the group wants to
+    gain the permissions of this group (see newgrp(1)).
 
-    This field may be empty, in which case only the group members can gain the group permissions.
+    This field may be empty, in which case only the group members can gain the
+    group permissions.
 
-    A password field which starts with an exclamation mark means that the password is locked. The remaining characters on the line represent the password field before the password was locked.
+    A password field which starts with an exclamation mark means that the
+    password is locked. The remaining characters on the line represent the
+    password field before the password was locked.
 
     This password supersedes any password specified in /etc/group.
 
 administrators
+
     It must be a comma-separated list of user names.
 
     Administrators can change the password or the members of the group.
@@ -2179,6 +2340,7 @@ administrators
     Administrators also have the same permissions as the members (see below).
 
 members
+
     It must be a comma-separated list of user names.
 
     Members can access the group without being prompted for a password.
@@ -2187,6 +2349,7 @@ members
 
 
 ## 家目录
+
 /home/bill    700
 Kali : 755
 
@@ -2202,7 +2365,9 @@ uptime - Tell how long the system has been running.
 
 the system load averages for the past 1, 5, and 15 minutes.
 
-The JCPU time is the time used by all processes attached to the tty.  It does not include past background jobs, but does include currently running background jobs.
+The JCPU time is the time used by all processes attached to the tty.  It does
+not include past background jobs, but does include currently running background
+jobs.
 
 The PCPU time is the time used by the current process, named in the "what" field.
 
@@ -2305,17 +2470,24 @@ last, lastb - show a listing of last logged in users
 
 
 lastb
-    lastb is the same as last, except that by default it shows a log of the /var/log/btmp file, which contains all the bad login attempts.
+
+    lastb is the same as last, except that by default it shows a log of the
+    /var/log/btmp file, which contains all the bad login attempts.
 
 
 /var/log/wtmp 文件
 
 utmp, wtmp - login records
 
-The utmp file allows one to discover information about who is currently using the system.  There may be more users currently using the system, because not all programs use utmp logging.
+The utmp file allows one to discover information about who is currently using
+the system.  There may be more users currently using the system, because not
+all programs use utmp logging.
 
-       Warning:  utmp  must not be writable by the user class "other", because many system programs (foolishly) depend on its integrity.  You risk faked system logfiles and modifications of system files if you leave utmp writable to
-       any user other than the owner and group owner of the file.
+       Warning:  utmp  must not be writable by the user class "other", because
+       many system programs (foolishly) depend on its integrity.  You risk
+       faked system logfiles and modifications of system files if you leave
+       utmp writable to any user other than the owner and group owner of the
+       file.
 
 
 
@@ -2331,7 +2503,9 @@ lastb [options] [username...] [tty...]
 lastlog - reports the most recent login of all users or of a given user
 
 -u, --user LOGIN|RANGE
-    This RANGE of users can be specified with a min and max values (UID_MIN-UID_MAX), a max value (-UID_MAX), or a min value (UID_MIN-).
+
+    This RANGE of users can be specified with a min and max values
+    (UID_MIN-UID_MAX), a max value (-UID_MAX), or a min value (UID_MIN-).
 
     lastlog -u 0-10
 
@@ -2340,43 +2514,62 @@ lastlog - reports the most recent login of all users or of a given user
 ## netstat
 
 -l, --listening
+
     Show only listening sockets.  (These are omitted by default.)
 
 --numeric, -n
-   Show numerical addresses instead of trying to determine symbolic host, port or user names.
+
+   Show numerical addresses instead of trying to determine symbolic host, port
+   or user names.
 
 -p, --program
+
    Show the PID and name of the program to which each socket belongs.
 
 --route, -r
-   Display the kernel routing tables. See the description in route(8) for details.  netstat -r and route -e produce the same output.
-    就是 route
+
+   Display the kernel routing tables. See the description in route(8) for
+   details.  netstat -r and route -e produce the same output.
+
+   就是 route
     
 ## mount 
 
 mount 显示已经挂载的设备
 
 mount -t type device dir
+
     fat16 识别为 fat
     fat32 识别为 vfat
     光盘    iso9660
 
 -l, --show-labels
-    Add the labels in the mount output.  mount must have permission to read the disk device (e.g. be set-user-ID root) for this to work.  One can set such a label for ext2, ext3 or ext4 using the e2label(8) utility, or for
-    XFS using xfs_admin(8), or for reiserfs using reiserfstune(8).
+
+    Add the labels in the mount output.  mount must have permission to read the
+    disk device (e.g. be set-user-ID root) for this to work.  One can set such
+    a label for ext2, ext3 or ext4 using the e2label(8) utility, or for XFS
+    using xfs_admin(8), or for reiserfs using reiserfstune(8).
 
 
 -a, --all
-    Mount all filesystems (of the given types) mentioned in fstab (except for those whose line contains the noauto keyword).  
+
+    Mount all filesystems (of the given types) mentioned in fstab (except for
+    those whose line contains the noauto keyword).  
+
     The filesystems are mounted following their order in fstab.  
-    The mount command compares filesystem source, target (and fs root for bind mount or btrfs) to detect already mounted filesystems. 
-    The kernel table with already mounted filesystems is cached during mount --all. It means that all duplicated fstab entries will be mounted.
+
+    The mount command compares filesystem source, target (and fs root for bind
+    mount or btrfs) to detect already mounted filesystems. 
+
+    The kernel table with already mounted filesystems is cached during mount
+    --all. It means that all duplicated fstab entries will be mounted.
 
     依据 /etc/fstab 自动挂在
 
-
 -o, --options
-    Use the specified mount options.  The opts argument is a comma-separated list.  For example:
+
+    Use the specified mount options.  The opts argument is a comma-separated
+    list.  For example:
 
         mount LABEL=mydisk -o noatime,nodev,nosuid
 
@@ -2416,20 +2609,27 @@ shutdown [OPTIONS...] [TIME] [WALL...]
     那 shutdown -h == --poweroff
 
 -k
+
     Do not halt, power-off, reboot, just write wall message.
 
 --no-wall
+
    Do not send wall message before halt, power-off, reboot.
 
 -c
-    Cancel a pending shutdown. This may be used to cancel the effect of an invocation of shutdown with a time argument that is not "+0" or "now".
+
+    Cancel a pending shutdown. This may be used to cancel the effect of an
+    invocation of shutdown with a time argument that is not "+0" or "now".
 
 
-
-If the time argument is used, 5 minutes before the system goes down the /run/nologin file is created to ensure that further logins shall not be allowed.
+If the time argument is used, 5 minutes before the system goes down the
+/run/nologin file is created to ensure that further logins shall not be
+allowed.
 
 "+m" referring to the specified number
-       of minutes m from now.  "now" is an alias for "+0", i.e. for triggering an immediate shutdown. If no time argument is specified, "+1" is implied.
+
+    of minutes m from now.  "now" is an alias for "+0", i.e. for triggering an
+    immediate shutdown. If no time argument is specified, "+1" is implied.
 
 Note that to specify a wall message you must specify a time argument, too.
 
@@ -2440,7 +2640,8 @@ ps -aux
 pgrep -u 用户 -l
 sync
 sync
-shutdown -r +6 "system will reboot in 6 mins, after 1 min , nobody is able to login, because the system denys"
+
+shutdown -r +6 "system will reboot in 6 mins"
 
 
 
@@ -2480,15 +2681,19 @@ login, logout - write utmp and wtmp entries
 get file access control lists
 
 -R, --recursive
+
     List the ACLs of all files and directories recursively.
 
 -L, --logical
+
     Logical walk, follow symbolic links to directories. The default behavior is to follow symbolic link arguments, and skip symbolic links encountered in subdirectories.  Only effective in combination with -R.
 
 -P, --physical
+
     Physical walk, do not follow symbolic links to directories. This also skips symbolic link arguments.  Only effective in combination with -R.
 
 -n, --numeric
+
     List numeric user and group IDs
 
 --  End of command line options. All remaining parameters are interpreted as file names, even if they start with a dash character.
@@ -2496,6 +2701,7 @@ get file access control lists
 -   If the file name parameter is a single dash character, getfacl reads a list of files from standard input.
 
 -c, --omit-header
+
     Do not display the comment header (the first three lines of each file's output).
 
     getfacl -n services
@@ -2511,15 +2717,18 @@ get file access control lists
 ## setfacl
 
 -b, --remove-all
+
     Remove all extended ACL entries. The base ACL entries of the owner, group and others are retained.
     
     setfacl -b file
 
 -L, --logical
+
     Logical  walk,  follow  symbolic links to directories. The default behavior is to follow symbolic link arguments, and skip symbolic links encountered in subdirectories.  Only effective in combination with -R.  This option
    cannot be mixed with `--restore'.
 
 -P, --physical
+
     Physical walk, do not follow symbolic links to directories.  This also skips symbolic link arguments.  Only effective in combination with -R.  This option cannot be mixed with `--restore'.
 
 --  End of command line options. All remaining parameters are interpreted as file names, even if they start with a dash.
@@ -2527,6 +2736,7 @@ get file access control lists
 -   If the file name parameter is a single dash, setfacl reads a list of files from standard input.
 
 The --set and --set-file options set the ACL of a file or a directory. The previous ACL is replaced.  ACL entries for this operation must include permissions.
+
     会进行覆盖
 
 The -m and -x options expect an ACL on the command line. Multiple ACL entries are separated by comma characters (`,'). 
@@ -2537,11 +2747,13 @@ The --set and --set-file options set the ACL of a file or a directory. The previ
 
 
 The -m (--modify) and -M (--modify-file) options modify the ACL of a file or directory.  ACL entries for this operation must include permissions.
+
     -M : 从一个文件读入ACL设置信息并以此为模版修改当前文件或目录的ACL规则
 
 
 The -x (--remove) and -X (--remove-file) options remove ACL entries. It is not an error to remove an entry which does not exist.  Only ACL entries without the perms field are accepted as parameters, unless POSIXLY_CORRECT  is
 defined.
+
     -X : 从一个文件读入ACL设置信息并以此为模版删除当前文件或目录的ACL规则
     
 
@@ -2553,26 +2765,31 @@ reflect the ACL as closely as possible, writes an error message to standard erro
 
 
 -R, --recursive
+
     Apply operations to all files and directories recursively. This option cannot be mixed with `--restore'.
 
     setfacl -m u:bill:rwx -R dir
 
 -d, **--default**
+
     All operations apply to the Default ACL. Regular ACL entries in the input set are promoted to Default ACL entries. Default ACL entries in the input set are discarded. (A warning is issued if that happens).
 
     setfacl -d -m u:用户:rwx dir
 
     设置了某个用户对目录的默认权限后的删除:
+
         setfacl -d -x u:用户 dir
 
 
 PERMISSIONS
+
     The  file  owner  and processes capable of **CAP_FOWNER** are granted the right to modify ACLs of a file. This is analogous to the permissions required for accessing the file mode. (On current Linux systems, root is the only user
     with the CAP_FOWNER capability.)
 
 
 
 ACL是由一系列的Access Entry所组成的，每一条Access Entry定义了特定的类别可以对文件拥有的操作权限。
+
 Access Entry有三个组成部分：
 - Entry tag type
 - qualifier (optional)
@@ -2592,6 +2809,7 @@ ACL_OTHER：         相当于Linux里other的permission
 
 
 EXAMPLES
+
     Granting an additional user read access
         setfacl -m u:lisa:r file
 
@@ -2736,13 +2954,16 @@ chmod 1777 dir
 change file attributes on a Linux file system
 
 chattr +/-/= 选项 文件
+
     +: 增加权限
     -: 删除权限
     =: 赋值权限
 
 对root同样生效
 
-A file with the 'i' attribute cannot be modified: it cannot be deleted or renamed, no link can be created to this file, most of the file's metadata can not be modified, and the file can not be opened in write mode.
+A file with the 'i' attribute cannot be modified: it cannot be deleted or
+renamed, no link can be created to this file, most of the file's metadata can
+not be modified, and the file can not be opened in write mode.
     
 
     chattr +i 文件
@@ -2753,7 +2974,8 @@ A file with the 'i' attribute cannot be modified: it cannot be deleted or rename
         不能重命名，删除该目录
         只能修改目录下文件的数据，不能创建和删除
 
-???The 'e' attribute indicates that the file is **using extents for mapping the blocks on disk**.  It may not be removed using chattr(1).
+???The 'e' attribute indicates that the file is **using extents for mapping the
+blocks on disk**.  It may not be removed using chattr(1).
 
 A file with the 'a' attribute set can only be opened in append mode for writing.
     对于文件
@@ -2825,26 +3047,54 @@ ALL ALL=(ALL) ALL
 
     $ sudo -g dialer /usr/bin/cu
 
-    Multiple users and groups may be present in a Runas_Spec, in which case the user may select any combination of users and groups via the -u and -g options.  In this example:
+    Multiple users and groups may be present in a Runas_Spec, in which case the
+    user may select any combination of users and groups via the -u and -g
+    options.  In this example:
 
     alan    ALL = (root, bin : operator, system) ALL
     alan    ALL = (root, bin : operator, system) PASSWD:ALL
     alan    ALL = (root, bin : operator, system) NOPASSWD:ALL
 
-    user alan may run any command as either user root or bin, optionally setting the group to operator or system.
+    user alan may run any command as either user root or bin, optionally
+    setting the group to operator or system.
 
 
 
 -u user, --user=user
-    Run the command as a user other than the default target user (usually root).  The user may be either a user name or a numeric user-ID (UID) prefixed with the ‘#’ character (e.g., #0 for UID 0).  When running com‐
-    mands as a UID, many shells require that the ‘#’ be escaped with a backslash (‘\’).  Some security policies may restrict UIDs to those listed in the password database.  The sudoers policy allows UIDs that are not in
-    the password database as long as the targetpw option is not set.  Other security policies may not support this.
+
+    Run the command as a user other than the default target user (usually root)
+    .
+
+    The user may be either a user name or a numeric user-ID (UID) prefixed with
+    the ‘#’ character (e.g., #0 for UID 0).
+
+    When running com‐mands as a UID, many shells require that the ‘#’ be
+    escaped with a backslash (‘\’).
+
+    Some security policies may restrict UIDs to those listed in the password
+    database.
+
+    The sudoers policy allows UIDs that are not in the password database as
+    long as the targetpw option is not set.  Other security policies may not
+    support this.
 
 
 -g group, --group=group
-    Run the command with the primary group set to group instead of the primary group specified by the target user's password database entry.  The group may be either a group name or a numeric group-ID (GID) prefixed
-    with the ‘#’ character (e.g., #0 for GID 0).  When running a command as a GID, many shells require that the ‘#’ be escaped with a backslash (‘\’).  If no -u option is specified, the command will be run as the invok‐
-    ing user.  In either case, the primary group will be set to group.  The sudoers policy permits any of the target user's groups to be specified via the -g option as long as the -P option is not in use.
+
+    Run the command with the primary group set to group instead of the primary
+    group specified by the target user's password database entry.
+
+    The group may be either a group name or a numeric group-ID (GID) prefixed
+    with the ‘#’ character (e.g., #0 for GID 0).
+
+    When running a command as a GID, many shells require that the ‘#’ be
+    escaped with a backslash (‘\’).
+
+    If no -u option is specified, the command will be run as the invoking user.
+
+    In either case, the primary group will be set to group.  The sudoers policy
+    permits any of the target user's groups to be specified via the -g option
+    as long as the -P option is not in use.
 
 
 
@@ -2852,28 +3102,36 @@ ALL ALL=(ALL) ALL
 
 PASSWD(默认) and NOPASSWD
 
-    By default, sudo requires that a user authenticate him or herself before running a command.  This behavior can be modified via the NOPASSWD tag.  Like a Runas_Spec, the NOPASSWD tag sets a default for the commands that follow
-    it in the Cmnd_Spec_List.  Conversely, the PASSWD tag can be used to reverse things.  For example:
+    By default, sudo requires that a user authenticate him or herself before
+    running a command.  This behavior can be modified via the NOPASSWD tag.
+    Like a Runas_Spec, the NOPASSWD tag sets a default for the commands that
+    follow it in the Cmnd_Spec_List.  Conversely, the PASSWD tag can be used to
+    reverse things.  For example:
 
     ray     rushmore = NOPASSWD: /bin/kill, /bin/ls, /usr/bin/lprm
 
-    would allow the user ray to run /bin/kill, /bin/ls, and /usr/bin/lprm as root on the machine rushmore without authenticating himself.  If we only want ray to be able to run /bin/kill without a password the entry would be:
+    would allow the user ray to run /bin/kill, /bin/ls, and /usr/bin/lprm as
+    root on the machine rushmore without authenticating himself.  If we only
+    want ray to be able to run /bin/kill without a password the entry would be:
 
     ray     rushmore = NOPASSWD: /bin/kill, PASSWD: /bin/ls, /usr/bin/lprm
 
 
 案例
+
     bill ALL=(root) PASSWD:/usr/sbin/visudo, (root) NOPASSWD:/usr/sbin/useradd
 
 
 
 
 Runas alias specification
+
     Runas_Alias     OP = root, operator
     Runas_Alias     DB = oracle, sybase
     Runas_Alias     ADMINGRP = adm, oper
 
 Host alias specification
+
     Host_Alias      SPARC = bigtime, eclipse, moet, anchor :\
                     SGI = grolsch, dandelion, black :\
                     ALPHA = widget, thalamus, foobar :\
@@ -2884,6 +3142,7 @@ Host alias specification
     Host_Alias      CDROM = orion, perseus, hercules
 
 Cmnd alias specification
+
     Cmnd_Alias      DUMPS = /usr/bin/mt, /usr/sbin/dump, /usr/sbin/rdump,\
                             /usr/sbin/restore, /usr/sbin/rrestore,\
                             sha224:0GomF8mNN3wlDt1HD9XldjJ3SNgpFdbjO1+NsQ== \
@@ -2896,9 +3155,12 @@ Cmnd alias specification
 
 
 
-The sudoers file is composed of two types of entries: aliases (basically variables) and user specifications (which specify who may run what).
+The sudoers file is composed of two types of entries: aliases (basically
+variables) and user specifications (which specify who may run what).
 
-     When multiple entries match for a user, they are applied in order.  Where there are multiple matches, the last match is used (which is not necessarily the most specific match).
+    When multiple entries match for a user, they are applied in order.  Where
+    there are multiple matches, the last match is used (which is not
+    necessarily the most specific match).
 
 
 
@@ -3147,57 +3409,80 @@ share 是进程间的共享内存
 
 9. Setting Up Swap Space
 9.1. Swap Files
-Normally, there are only two steps to setting up swap space, creating the partition and adding it to /etc/fstab. A typical fstab entry for a swap partition at /dev/hda6 would look like this:
 
+Normally, there are only two steps to setting up swap space, creating the
+partition and adding it to /etc/fstab. A typical fstab entry for a swap
+partition at /dev/hda6 would look like this:
 
-/dev/hda6   swap    swap    defaults    0   0
-The next time you reboot, the initialization scripts will activate it automatically and there's nothing more to be done.
+    /dev/hda6   swap    swap    defaults    0   0
 
-However, if you want to make use of it right away, you'll need to activate it maually. As root, type:
+The next time you reboot, the initialization scripts will activate it
+automatically and there's nothing more to be done.
 
+However, if you want to make use of it right away, you'll need to activate it
+maually. As root, type:
 
-mkswap -f /dev/hda6
-swapon /dev/hda6
-9.2. Swap Files
-There might be times when you've run out of swap space and it is not practical to repartition a drive or add a new one. In this case, you can use a regular file in an ordinary partition. All you have to do is create a file of the size you want
+    mkswap -f /dev/hda6
+    swapon /dev/hda6
+    9.2. Swap Files
 
-dd if=/dev/zero of=/var/my_swap bs=1024 count=131072
+There might be times when you've run out of swap space and it is not practical
+to repartition a drive or add a new one. In this case, you can use a regular
+file in an ordinary partition. All you have to do is create a file of the size
+you want
+
+    dd if=/dev/zero of=/var/my_swap bs=1024 count=131072
 
 and activate it
 
-
     mkswap -f /var/my_swap
+        
         swapon /var/my_swap
-        This invocation creates a file called my_swap in /var. It is 128 Mb long (128 x 1024 = 131072). Initially, it is filled with zeros. However, mkswap marks it as swap space and swapon tells the kernel to start using it as swap space. When you are done with it,
-
-
+        
+        This invocation creates a file called my_swap in /var. It is 128 Mb
+        long (128 x 1024 = 131072). Initially, it is filled with zeros. However,
+        mkswap marks it as swap space and swapon tells the kernel to start
+        using it as swap space. When you are done with it,
+        
         swapoff /var/my_swap
         rm /var/my_swap
         9.3. Multiple Swap Areas
-        More than one swap partition can be used on the same system. Consider an example fstab where there is a single swap partition:
 
-
-        /dev/hda5   /        ext3   defaults        1   1
-        /dev/hda1   /boot    ext2   defaults        1   2
-        none        /dev/pts devpts gid=5,mode=620  0   0
-        none        /proc    proc   defaults        0   0
-        /dev/hda7   /usr     ext3   defaults        1   2
-        /dev/hda6   swap     swap   defaults        0   0
+        More than one swap partition can be used on the same system. Consider
+        an example fstab where there is a single swap partition:
+            
+            /dev/hda5   /        ext3   defaults        1   1
+            /dev/hda1   /boot    ext2   defaults        1   2
+            none        /dev/pts devpts gid=5,mode=620  0   0
+            none        /proc    proc   defaults        0   0
+            /dev/hda7   /usr     ext3   defaults        1   2
+            /dev/hda6   swap     swap   defaults        0   0
+            
         Imagine replacing the entry for the swap partition with these three lines:
+         
+            /dev/hda6   none    swap    sw,pri=3    0   0
+            /dev/hdb2   none    swap    sw,pri=2    0   0
+            /dev/hdc2   none    swap    sw,pri=1    0   0
+         
+        This configuration would cause the kernel to use /dev/hda6 first. it
+        has the highest priority assigned to it (pri=3). The maximum priority
+        can be 32767 and the lowest 0. If that space were to max out, the
+        kernel would start using /dev/hdb2, and on to /dev/hdc2 after that. Why
+        such a configuration? Imagine that the newest (fastest) drives are
+        given the highest priority. This will minimize speed loss as swap space
+        usage grows.
 
-
-        /dev/hda6   none    swap    sw,pri=3    0   0
-        /dev/hdb2   none    swap    sw,pri=2    0   0
-        /dev/hdc2   none    swap    sw,pri=1    0   0
-        This configuration would cause the kernel to use /dev/hda6 first. it has the highest priority assigned to it (pri=3). The maximum priority can be 32767 and the lowest 0. If that space were to max out, the kernel would start using /dev/hdb2, and on to /dev/hdc2 after that. Why such a configuration? Imagine that the newest (fastest) drives are given the highest priority. This will minimize speed loss as swap space usage grows.
-
-        It is possible to write to all three simulataneously. If each has the same priority, the kernel will write to them much like a RAID, with commensurate speed increases.
+        It is possible to write to all three simulataneously. If each has the
+        same priority, the kernel will write to them much like a RAID, with
+        commensurate speed increases.
 
 
         /dev/hda6   none   swap   sw,pri=3   0   0
         /dev/hdb2   none   swap   sw,pri=3   0   0
         /dev/hdc2   none   swap   sw,pri=3   0   0
-        Notice that these three partitions are on separate drives, which is ideal in terms of speed enhancement.
+
+        Notice that these three partitions are on separate drives, which is
+        ideal in terms of speed enhancement.
 
 ```
 
