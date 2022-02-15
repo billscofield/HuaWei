@@ -190,6 +190,8 @@ type() 返回字符串
 
     true/false
 
+    只有 nil 为假
+
 5. userdata 用户自定义
 
     先不用
@@ -306,12 +308,27 @@ type() 返回字符串
 
     tostring(11)
 
+
+## 迭代器
+
+a = {'a','b','c'}
+print(a[1])
+print(a[2])
+
+for k,v in pairs(a)
+do
+    print(k)
+end
+
 ## 运算符
 
 1. 算数运算符
 
     二元运算符: + - x / % ^     输出是小数, 只能用于number, 不能用于 string
     一元运算符: + -
+
+    21/10 = 2.1
+    21%10 = 1
 
 2. 关系运算符
 
@@ -342,10 +359,13 @@ type() 返回字符串
 其它运算符
 
 ```
+#           长度运算符
+#'hello'
+
+
 .. 字符串连接
 
-
-# 取字符串，表的总长度
+取字符串，表的总长度
 
     s1 = "hello"
     s2 = "world"
@@ -500,6 +520,13 @@ type() 返回字符串
         a['key']
         a.key
             数字索引不能使用这种方式
+
+        a= {
+            1,              1
+            'h',            2
+            a1="hello",
+            4               3
+        }
         
     2. 可以动态的添加值
         a={}
@@ -615,7 +642,7 @@ type() 返回字符串
     
     1. while
 
-        while(condition)
+        while(condition)        也可以  while xxx
         do
             statements
         end
@@ -1099,10 +1126,18 @@ str2 = string.upper(str1)
 
 
 
-.find(str,target,pos)   从 str 的 pos 索引处查找 target
-    
-    print(string.find("hello world",'wo',1))
+string.find (s, pattern [, init [, plain]])
 
+    Looks for the first match of pattern (see §6.4.1) in the string s. If it finds
+    a match, then find returns the indices of s where this occurrence starts and
+    ends; otherwise, it returns fail. A third, optional numeric argument init
+    specifies where to start the search; its default value is 1 and can be
+    negative. A true as a fourth, optional argument plain turns off the pattern
+    matching facilities, so the function does a plain "find substring" operation,
+    with no characters in pattern being considered magic.
+
+    If the pattern has captures, then in a successful match the captured values
+    are also returned, after the two indices.
 
 
 .reverse()      反转，返回新的字符串
@@ -1200,3 +1235,374 @@ string.match(str,pattern,n)
     
     table.sort(表明)
     table.sort(表明,排序函数)
+
+
+
+## 模块
+
+Lua 从 5.1 开始, 加入了标准的模块管理机制,可以把一些共用的代码放在一个文件里,以
+API 接口的形式在其他地方调用,有利于代码的重用和降低代码耦合度
+
+Lua 模块是由变量, 函数等已知元素组成的 table, 因此创建一个模块很简单,就是创建一
+个 table, 然后把需要导出的常量,函数放入其中, 最后返回这个 table 就行了
+
+
+文件名要和表名相同
+
+```
+---文件名  module.lua
+
+---定义一个名为 module 的模块
+
+module = {}
+
+---定义一个常量
+module.name = "这是一个常量"
+
+---定义个函数
+function module.func1()
+    io.write("这是一个共有函数!\n")
+end
+
+local function func2()          // 稀有不能通过 模块访问
+    print("这是一个私有函数")
+end
+
+function module.func3()
+    func2()
+end
+
+
+return moudule                  // 注意
+
+```
+
+
+```
+#!/usr/bin/env lua
+require ("模块名")    或者   require "模块名"
+
+print(module.name)
+module.func1()
+module.func3()
+
+
+还可以这样:
+local mo = require ("模块名")
+```
+
+
+
+## NSE 脚本引擎
+
+后缀直接修改为 nse
+
+nmap 
+
+    -sC 来激活 nse 脚本引擎, 使用默认脚本进行探测
+        /usr/share/nmap/scripts/
+
+    --script  具体脚本来进行某一具体内容的探测
+
+
+### NSE 功能
+
+网络发现
+
+复杂版本信息发现
+
+漏洞发现:
+
+    NSE 脚本可以拓展漏洞发现的功能
+
+后门发现:
+
+    NSE 脚本可以拓展后门发现的功能
+
+漏洞攻击
+    
+    NSE 脚本可以漏洞攻击的功能
+
+
+### 案例
+
+使用默认脚本对目标进行探测
+    nmap -sC -p21,22 -T4 目标
+
+使用具体的脚本
+    nmap -p21 --script ftp-vsftpd-backdoor 目标
+
+--script-args=
+--script-args-file
+    来自定义一些脚本的参数
+
+
+--script-help
+    显示脚本的使用方法和功能
+    nmap --script-help daytime
+
+--script-trace
+    调试和开发脚本
+
+    nmap -sC -p80 --script-trace 目标
+
+--script-update
+    更新脚本库
+
+
+
+
+使用脚本扫描通常需要组合端口扫描, 因为脚本是否会被执行取决于目标对应端口的状态.
+
+使用 -sn 只进行主机发现,并不进行端口扫描. 这意味着在这种情况下,只有 hostrule(函
+数) 脚本会被执行
+
+在运行脚本扫描时, 使用 -Pn -sn  -sC/--script : 既不进行主机法系那, 也不进行端口扫描
+    -Pn: 假设主机存活
+        应该是传输层之下的技术
+
+    -sn: (No port scan)
+        This option tells Nmap not to do a port scan after host discovery, and
+        only print out the available hosts that responded to the host discovery
+        probes.
+
+        ping, icmp, traceroute
+
+    端口没有开启,就不进行了
+
+
+多个脚本用逗号隔开
+
+    nmap --script http-title, http-methods 目标
+
+
+## NSE 脚本分类
+
+1. auth             认证相关的脚本
+
+2. broadcast        使用广播手机网络信息
+
+3. brute            暴力破解
+
+4. default          使用默认脚本进行探测 --script default
+
+5. discovery        主机和服务发现相关的脚本
+
+6. dos              拒绝服务
+
+7. exploit          利用安全漏洞 的脚本
+
+8. external         适用于第三方服务的脚本,通过第三方获取
+
+9. fuzzer           模糊测试
+
+10. intrusive       入侵脚本
+
+11. malware         与恶意软件检测相关的脚本
+
+12. vuln            与检测和利用安全漏洞相关的脚本, 检查特定的漏洞,如果发现,通常只是报告结果
+
+13. version         版本检测特性的扩展,不能显示选择,只有在请求版本检测(-sV) 时,才选择运行他们
+
+14. safe            在所有情况下默认为安全的脚本
+
+
+
+脚本中的  categories 表数据格式
+
+
+### 1. NSE引擎执行流程
+
+Nmap的扩展脚本语言都基于lua来开发的，执行也是调用了内部封装的lua解释器。
+
+正常情况下，调用任何一个扩展脚本会首先执行nse_main.lua，该脚本主要做了以下几件事：
+
+    1. 加载一些Nmap的核心库（nselib文件夹中）
+    2. 定义多线程函数
+    3. 定义输出结果处理函数
+    4. 读取、加载扩展脚本
+    5. 定义扩展脚本函数接口
+    6. 执行扩展脚本
+    7. ……
+
+
+### 2. /usr/share/nmap/nse_main.lua 最先执行
+
+
+在nse_main.lua的 67 行左右，定义了一些规则
+
+local NSE_SCRIPT_RULES = {¬
+  prerule = "prerule",¬
+  hostrule = "hostrule",¬
+  portrule = "portrule",¬
+  postrule = "postrule",¬
+};¬
+
+每一个规则代表了函数，由函数的返回值决定执行流程
+
+1. prerule
+    在扫描任何主机之前，prerule函数运行一次
+
+2. hostrule
+    在扫描一个主机后运行一次
+
+3. portrule
+    在扫描一个主机的端口后运行一次
+
+4. postrule
+    在全部扫描完毕以后运行一次
+
+也就是说，prerule和postrule是在开始和结束运行，并且只运行一次，hostrule是扫描一
+个主机就运行一次，有N个主机就会运行N次，portrule是扫描到一个端口就运行一次，有N
+个端口就运行N次。
+
+
+
+/usr/share/nmap/scripts/test.nse
+
+内容如下：
+
+```
+prerule=function()
+    print("prerule()")
+end
+
+hostrule=function(host)
+    print("hostrule()")
+end
+
+portrule=function(host,port)
+    print("portrule()")
+end
+
+action=function()
+    print("action()")
+end
+
+postrule=function()
+    print("postrule()")
+end
+```
+
+    使用nmap扫描一个主机调用这个脚本看看执行效果：
+
+
+
+### NSE 选取
+
+    ```
+    nmap --script default,safe 目标
+
+    nmap --script /root/custom/scripts/ 目标        // 使用这个目录下的所有脚本进行探测
+
+    nmap --script smb-os-discovery 目标
+
+    nmap --script "http-*"  目标                    // 通配符
+
+    namp --script "default or safe"                 // 在 default 或者 safe 类别中的脚本
+
+    namp --script "default and safe"                // 在 default 中,也在 safe 中的脚本
+
+    namp --script "(default and safe) and not http-*"                // 在 default 中,也在 safe 中的脚本
+
+    ```
+
+
+### NSE 脚本格式
+
+NSE 脚本包含
+    1. **几个描述性字段**,
+    2. 一个定义何时执行脚本的规则,
+    3. 以及一个包含实际脚本指令的操作函数 action
+
+可以将值分配给描述性字段,规则,函数,就像分配其它 Lua 变量一样. 他们的名字必须是
+小写的
+
+
+description = [[   ]]                   // 描述性字段
+
+author = "xxx"
+
+license = "xxx"
+
+dependencies = {"smb-brute"}            // 依赖表是可选的
+categories = {"discovery","safe"}
+
+portrule = shortport.http               // 何时执行脚本的规则
+
+action = function(host,port)            // 实际的指令
+...
+end
+
+
+
+nmap 使用脚本规则(rule) 来确定是否应该针对目标运行脚本
+    规则是一个 Lua 函数, 返回 true 或 false
+    只有当返回 true 时,材质行脚本
+
+
+
+prerule()
+hostrule(host)
+portrule(host,port)
+postrule()
+
+
+action 是 nse 的核心
+action 的返回值可以使 key-value对, 字符串或者 nil 的表
+
+
+
+### NSE 环境变量
+
+SCRIPT_PATH         脚本路径
+SCRIPT_NAME         脚本名称,常用来进行调试
+SCRIPT_TYPE         哪个规则激活了脚本
+
+
+dns-zone-transfer
+
+stdnse.debug3("Skipping '%s' %s, 'dnszonetransfer.domain' argument is missing.", SCRIPT_NAME, SCRIPT_TYPE)
+
+
+
+### neslib
+
+/usr/share/nmap/nselib
+
+    local comm = require "common"       // local 防止命名冲突
+
+    https://nmap.org/nsedoc/ 看这些比较快一些
+
+daytime.nse
+
+    https://nmap.org/nsedoc/ 
+
+    portrule = shortport.port_or_service(13, "daytime", {"tcp", "udp"})
+
+    action = function(host, port)¬
+        return oops.output(comm.exchange(host, port, "dummy", {lines=1}))¬
+    end¬
+
+    查看 nselib/shortport
+    
+        port_or_service = function(ports, services, protos, states)¬
+          return function(host, port)¬
+            local port_checker = portnumber(ports, protos, states)¬
+            local service_checker = service(services, protos, states)¬
+            return port_checker(host, port) or service_checker(host, port)¬
+          end¬
+        end¬
+
+    portnumber
+    service
+
+
+
+
+### Dedecms 后门漏洞复现
+
+
+
+
+os.time()

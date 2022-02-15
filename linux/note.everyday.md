@@ -240,3 +240,39 @@ https://m.zhipin.com/mpa/html/get/column?contentId=8dea87f091936383qxB43Ni1&iden
         fi
     done
     ```
+
+
+
+
+---
+
+
+2022-02-14
+
+
+1. How do I change the color of text in the Lua terminal
+
+    https://www.reddit.com/r/lua/comments/jrz7ki/how_do_i_change_the_color_of_text_in_the_lua/
+
+
+    answers:
+
+    This is more terminal-specific than Lua-specific. E.g. most terminals on
+    Linux use VT100-style commands. For a start, have a look at ANSI escape
+    codes: https://en.wikipedia.org/wiki/ANSI_escape_code
+
+    是的, windows 的是这样的:
+        color 0a    绿色字体
+        color 0c    红色字体
+
+    ANSI escape code
+
+    ANSI escape sequences are a standard for in-band signaling to control
+    cursor location, color, font styling, and other options on video text
+    terminals and terminal emulators. Certain sequences of bytes, most starting
+    with an ASCII Escape and bracket character followed by parameters, are
+    embedded into text. The terminal interprets these sequences as commands,
+    rather than text to display verbatim. ANSI sequences were introduced in the
+    1970s to replace vendor-specific sequences and became widespread in the
+    computer equipment market by the early 1980s.
+

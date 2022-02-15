@@ -60,6 +60,7 @@ apt install -y strace
 
 # NMAP
 apt install -y nmap
+apt install -y ndiff
 
 
 # NETSTAT
