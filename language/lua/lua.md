@@ -1376,7 +1376,7 @@ nmap
     nmap --script http-title, http-methods 目标
 
 
-## NSE 脚本分类
+## NSE 脚本分类(https://nmap.org/nsedoc/categories/auth.html)
 
 1. auth             认证相关的脚本
 
