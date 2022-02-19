@@ -541,6 +541,11 @@ apt install -y alsa-utils
 # screenshot
 apt install flameshot
 
+
+# lua
+
+apt install -y luarocks
+
 # drawingboard
 apt install -y openboard
 

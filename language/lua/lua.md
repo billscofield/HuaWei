@@ -23,6 +23,7 @@
     2. Web 应用
     3. 扩展数据库, 如 Mysql Proxy 和 Mysql WorkBench
     4. 安全系统
+    5. nginx+lua 开发高性能 web 应用(kong 网关)
 
 ## lua & luac
 

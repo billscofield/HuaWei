@@ -50,6 +50,155 @@ filter用来将数据包划分到具体的控制策略中，包括以下几种�
     tos：根据tos字段过滤数据包
 
 
+
+
+## Linux Advanced Routing & Traffic Control HOWTO
+
+[link](https://berthub.eu/lartc/lartc.qdisc.classful.html)
+
+
+Classful qdiscs are very useful if you have different kinds of traffic which
+should have differing treatment. One of the classful qdiscs is called 'CBQ' ,
+'Class Based Queueing' and it is so widely mentioned that
+
+people identify queueing with classes solely with CBQ, but this is not the case.
+人们仅用CBQ来识别排队与类
+
+CBQ is merely the oldest kid on the block(街区里最大的孩子) - and also the most
+complex one. It may not always do what you want.
+
+This may come (as something of a shock, 震惊) to many who fell for(爱上，倾心)
+the 'sendmail effect', which teaches us that any complex technology which
+doesn't come with documentation must be the best available.(It's funny)
+
+When traffic enters a classful qdisc, it needs to be sent to any of the classes
+within - it needs to be 'classified'. To determine what to do with a packet,
+the so called 'filters' are consulted(请教). 
+
+The filters attached to that qdisc then return with a decision, and the qdisc       // qdisk 包含 filters
+uses this to enqueue the packet into one of the classes. 
+
+Each subclass may try other filters to see if further instructions apply. If        // class 也可以包含 filters?
+not, the class enqueues the packet to the qdisc it contains.                        // 怎么理解呢?
+
+Besides containing other qdiscs, most classful qdiscs also perform shaping.
+This is useful to perform both packet scheduling (with SFQ, for example) and
+rate control. 
+
+
+9.5.2. The qdisc family: roots, handles, siblings and parents
+
+Each interface has one egress 'root qdisc', by default the earlier mentioned
+classless pfifo_fast queueing discipline.
+
+Each qdisc can be assigned a handle, which can be used by later configuration
+statements to refer to that qdisc. 
+
+The handles of these qdiscs consist of two parts, a major number and a minor
+number. It is habitual([həˈbɪtʃuəl],习惯上的) to name the root qdisc '1:',
+which is equal to '1:0'.  The minor number of a qdisc is always 0.
+
+Classes need to have the same major number as their parent.
+
+Recapping(recap, 扼要重述，摘要说明), a typical hierarchy might look like this:
+
+|       root 1:
+|         |
+|       _1:1_
+|       /  |  \
+|      /   |   \
+|     /    |    \
+|    10:   11:   12:
+|   /   \       /   \
+| 10:1  10:2   12:1  12:2
+
+
+You should *not* imagine the kernel to be at the apex([ˈeɪpeks] 顶点，最高点)
+of the tree and the network below, that is just not the case.
+
+Packets get enqueued and dequeued at the root qdisc, which is the only thing        // where is the root qdisc???
+the kernel talks to.
+
+A packet might get classified in a chain like this:
+
+1: -> 1:1 -> 12: -> 12:2
+
+The packet now resides in a queue in a qdisc attached to class 12:2.                // 包现在驻留在一个队列中，这个队列规则附属于类 12:2
+
+However, this is also possible:
+
+1: -> 12:2
+
+In this case, a filter attached to the root decided to send the packet directly     // ???
+to 12:2.
+
+
+9.5.2.2. How packets are dequeued to the hardware
+
+When the kernel decides that it needs to extract packets to send to the
+interface, the root qdisc 1: gets a dequeue request, which is passed to 1:1,
+which is in turn passed to 10:, 11: and 12:, which each query their siblings,
+and try to dequeue() from them. In this case, the kernel needs to walk the
+entire tree, because only 12:2 contains a packet.
+
+In short, nested classes ONLY talk to their parent qdiscs, never to an              // ???
+interface. Only the root qdisc gets dequeued by the kernel!
+
+
+The upshot(结果,结局) of this is that classes never get dequeued faster than        // ???
+their parents allow. And this is exactly what we want: this way we can have SFQ
+in an inner class, which doesn't do any shaping, only scheduling, and have a
+shaping outer qdisc, which does the shaping.
+
+
+9.5.3. The PRIO qdisc
+
+The PRIO qdisc doesn't actually shape, it only subdivides(细分) traffic based
+on how you configured your filters. 
+
+You can consider the PRIO qdisc a kind of pfifo_fast on stereoids, whereby(其中)
+each band is a separate class instead of a simple FIFO.
+
+When a packet is enqueued to the PRIO qdisc, a class is chosen based on the
+filter commands you gave. By default, three classes are created. These classes
+by default contain pure FIFO qdiscs with no internal structure, but you can
+replace these by any qdisc you have available.
+
+Whenever a packet needs to be dequeued, class :1 is tried first. Higher classes
+are only used if lower bands all did not give up a packet.
+
+This qdisc is very useful in case you want to prioritize(/ praɪˈɔːrətaɪz /按优
+先顺序列出；优先考虑（处理）) certain kinds of traffic without using only
+TOS-flags but using all the power of the tc filters.  It can also contain more
+all qdiscs, whereas pfifo_fast is limited to simple fifo qdiscs.
+
+Because it doesn't actually shape, the same warning as for SFQ holds: either
+use it only if your physical link is really full or wrap it inside a classful
+qdisc that does shape. The last holds for almost all cablemodems and DSL
+devices.
+
+In formal words, the PRIO qdisc is a Work-Conserving(保护，保存；节省，节约) scheduler.
+
+
+
+
+## 
+
+htb
+
+https://blog.csdn.net/eydwyz/article/details/53390294
+
+r2q：在规则中的作用是用来分配剩余带宽的全局变量，它的默认值为10
+
+quantum与r2q的关系为quantum=rate/r2q，quantum的值必须在1500到60000之间，值越小
+越好
+
+每个规则的quantum的值就是从父类借用带宽的因子（也就是每个子类每次可以从父类借用
+空闲带宽的大小）也可以说是与其他子类同时从父类借带宽的比例。
+
+rate单位为Mbit时，上限临界值为 0.7左右，即r2q最小要设为0.7。rate单位为Gbit时，
+上限临界值为700左右，即r2q最小要设为700。
+
 ## CLASSLESS QDisc
 
     sfq
@@ -203,3 +352,25 @@ The show command has additional formatting options:
             ```
 
         tc will not fail if -nm was specified without -cf option but /etc/iproute2/tc_cls file does not exist, which makes it possible to pass -nm option for creating tc alias.
+
+
+
+### View your current qdisc:
+
+    > tc qdisc show dev enp0s1
+
+Inspect the current qdisc counters:
+
+    ```
+    > tc -s qdisc show dev enp0s1
+
+    qdisc fq_codel 0: root refcnt 2 limit 10240p flows 1024 quantum 1514 target 5.0ms interval 100.0ms memory_limit 32Mb ecn
+    Sent 1008193 bytes 5559 pkt (dropped 233, overlimits 55 requeues 77)
+    backlog 0b 0p requeues 0
+    ....
+    ```
+
+
+    dropped - the number of times a packet is dropped because all queues are full
+    overlimits - the number of times the configured link capacity is filled
+    sent - the number of dequeues
