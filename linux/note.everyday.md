@@ -276,3 +276,52 @@ https://m.zhipin.com/mpa/html/get/column?contentId=8dea87f091936383qxB43Ni1&iden
     1970s to replace vendor-specific sequences and became widespread in the
     computer equipment market by the early 1980s.
 
+
+
+---
+2022-02-20
+
+
+Pandoc 是一个免费开源的格式转换工具，可以用于各种标记格式文档之间的转换。Pandoc 被广泛用于书写工作和电子书籍出版流程。
+
+apt install pandoc
+
+pandoc 
+    -f source-file format
+
+    -t target-file format
+    
+    -s, --standalone
+        Produce output with an appropriate header and footer (e.g.  a
+        standalone HTML, LaTeX, TEI, or RTF file, not a fragment).
+        
+        This option is  set automatically  for  pdf,  epub,  epub3,  fb2, docx,
+        and odt output.  For native output, this option causes metadata to be
+        included; otherwise, metadata is suppressed.
+
+    -o FILE, --output=FILE
+        Write  output  to  FILE  instead of stdout.  If FILE is -, output will
+        go to stdout, even if a non-textual format (docx, odt, epub2, epub3) is
+        specified.
+
+
+pandoc -f markdown -t html -s -o test.html
+
+
+
+---
+
+centos 网卡重新命名
+
+1. 规则文件模板
+    cp /usr/lib/udev/rules.d/60-net.rules /etc/udev/rules.d/
+    修改此文件内容为:
+        > ACTION=="add", SUBSYSTEM=="net", DRIVERS=="?*", ATTR{address}=="mac address", NAME="eth0"
+
+2. 修改配置文件
+    
+    mv ifcfg-enp0s3  ifcfg-eth0     可以不用改，但是容易混淆
+    NAME=eth0       // ifup ifdown
+    DEVICE=eth0     // 系统启动时的名字
+
+3. reboot
