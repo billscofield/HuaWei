@@ -84,3 +84,65 @@ JRE Java Runtime Environment
 vscode 运行时的 bug:
 
 F1 ->Clean the java language server workspace
+
+
+
+## 特点
+
+main 方法
+    public static void main(String[] args)
+
+区分大小写
+
+一个源文件中最多只能有一个 public 类, 其他类的个数不限.
+也可以将 main 方法用在非public类中,然后指定运行非 public 类, 这样入口方法就是非 public 的main方法
+
+```hello.java
+public class Hello {
+    public static void main(String[] args){
+            System.out.println("hello world");
+                
+    }
+}
+
+class Dog{
+    public static void main(String[] args){
+            System.out.println("hello dog");
+                
+    }
+    
+}
+
+javac hello.java
+java Hello
+java Dog
+```
+
+如果源文件包含一个 public 类,则文件名必须按该类名命名
+
+每一个类都会对应一个 class 文件
+
+
+\r 仅仅是 carrage return
+
+```
+System.out.println("hello\rworld\n");
+
+```
+
+## 注释
+
+```
+1. 多行注释
+
+/*
+*/
+
+
+2. 单行注释
+
+//
+
+3. 文档注释
+
+```
