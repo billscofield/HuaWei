@@ -192,6 +192,9 @@ apt install -y asciinema
 # customized.
 apt install -y zathura
 
+# Xournal++
+# 手写可以
+
 
 # markdown typora
 # it is not free now from 2021.12
@@ -573,3 +576,9 @@ apt install -y dia
 # 用来观察特定进程的IO信息的。. 该脚本是用shell写的
 apt install -y percona-toolkit
 
+
+
+# dvd 刻录
+
+apt install -y brasero
+apt install -y k3b

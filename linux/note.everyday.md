@@ -325,3 +325,30 @@ centos 网卡重新命名
     DEVICE=eth0     // 系统启动时的名字
 
 3. reboot
+
+---
+
+2022-02-22
+
+ImageMagick
+
+    debian repo里没有,需要手动安装
+
+    wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+
+    centos repos 有
+
+
+统一集中管理系统cronsun, 代替 crontab
+
+
+
+---
+
+2022-02-24
+
+15 Free Windows 7 Tweaking(扭,拧,微调) Tools
+
+
+
+

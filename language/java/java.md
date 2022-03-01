@@ -1,4 +1,25 @@
-### Java 版本
+## 开发环境
+
+1. 编辑器
+    
+    vscode
+
+    插件:
+        Extension Pack for Java
+        
+        可以看到是安装了6个其他的插件
+        
+        1. Language Support for Java(TM) by Red Hat
+        2. Debugger for Java
+        3. Java Test Runner
+        4. Maven for Java
+        5. Project Manager for Java
+        6. Visual Studio IntelliCode
+
+
+[链接](https://www.zhihu.com/question/278838022/answer/1709832515)
+
+## Java 版本
 
 1. JavaSE: Java标准版
 
@@ -6,6 +27,7 @@
 
 1. JAVAME: Java微型版
 
+7, 8 ,11 是长期支持版本
 
 ### 卸载 openjdk
 
@@ -43,3 +65,84 @@ vi /etc/zsh/zprofile
 source /etc/zsh/zprofile
 
 java -version
+
+
+jvm 是包含在 jdk 中的
+
+JDK 包含 JRE + java 开发工具(java,javac,javadoc,javap等)
+
+JRE Java Runtime Environment
+
+    JRE = JVM + Java的核心类库
+
+    如果要运行一个 java 程序,只需安装 jre 即可
+
+
+
+## 
+
+vscode 运行时的 bug:
+
+F1 ->Clean the java language server workspace
+
+
+
+## 特点
+
+main 方法
+    public static void main(String[] args)
+
+区分大小写
+
+一个源文件中最多只能有一个 public 类, 其他类的个数不限.
+也可以将 main 方法用在非public类中,然后指定运行非 public 类, 这样入口方法就是非 public 的main方法
+
+```hello.java
+public class Hello {
+    public static void main(String[] args){
+            System.out.println("hello world");
+                
+    }
+}
+
+class Dog{
+    public static void main(String[] args){
+            System.out.println("hello dog");
+                
+    }
+    
+}
+
+javac hello.java
+java Hello
+java Dog
+```
+
+如果源文件包含一个 public 类,则文件名必须按该类名命名
+
+每一个类都会对应一个 class 文件
+
+
+\r 仅仅是 carrage return
+
+```
+System.out.println("hello\rworld\n");
+
+```
+
+## 注释
+
+```
+1. 多行注释
+
+/*
+*/
+
+
+2. 单行注释
+
+//
+
+3. 文档注释
+
+```
