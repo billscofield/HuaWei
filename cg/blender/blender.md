@@ -138,3 +138,21 @@ grap 抓取模式
 
 
 
+import bpy      // blender python
+
+
+vscode
+    python
+    blender python code template
+    blender development
+
+    fake-bpy-module         // bpy自动补全 下载解压
+    ```
+    {
+        "python.autoComplete.extraPaths":
+        [
+            "/../fake_bpy_modules"
+        ],
+    ```
+    }
+
