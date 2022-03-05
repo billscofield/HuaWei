@@ -352,3 +352,10 @@ ImageMagick
 
 
 
+---
+
+2022-03-05
+
+nslookup 在 bind-utils 包中
+
+
