@@ -370,6 +370,20 @@ access privileges in this case.
 
             /etc/samba/smbpasswd 也类似 /etc/passwd 的格式
 
+    Example 1: allow all IPs in 150.203.*.*; except one
+    hosts allow = 150.203. EXCEPT 150.203.6.66
+
+    Example 2: allow hosts that match the given network/netmask
+    hosts allow = 150.203.15.0/255.255.255.0
+
+    Example 3: allow a couple of hosts
+    hosts allow = lapland, arvidsjaur
+
+    Example 4: allow only hosts in NIS netgroup "foonet", but deny access from one particular host
+    hosts allow = @foonet
+    hosts deny = pirate
+
+    Default: hosts allow =  # none (i.e., all hosts permitted access)
 
 
 
