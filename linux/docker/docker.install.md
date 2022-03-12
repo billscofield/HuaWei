@@ -91,7 +91,7 @@ service docker start
     }
     ```
 
-    通过 docker info 查看镜像地址(Registry Mirrors)
+    通过 **docker info** 查看镜像地址(Registry Mirrors)
 
     docker run hello-world
     现在本地寻找，如果没有去仓库下载 

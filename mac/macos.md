@@ -45,11 +45,19 @@ dmg
         
             1. 将dmg 文件打开,将里边的app文件拖放到 application 中
             2. 执行如下命令:
-
+            
+                10.12.6
                 > sudo /Application/Install macOS Sierra.app/Contents/Resources/createinstallmedia  --volume /Volumes/U盘名称 --applicationpath /Applications/Install macOS Sierra.app --nointeraction
-
-
-
+             
+            点按开机，按下 option 键, 直到出现启动菜单选项
+             
+            date 032208102018.20        // 貌似是证书过期的问题
+            
+            退出 terminal ， 左上角 退出 terminal 重新回到 «macOS实用工具»
+            
+            进度条到最后一两分钟的时候有可能报 "The installer payload failed signature check"       // 有说是要更新到当前的时间 ntpdate -u time.apple.com
+            
+            断开电脑网络
 
 crd 
 

@@ -359,3 +359,29 @@ ImageMagick
 nslookup 在 bind-utils 包中
 
 
+
+---
+
+linux 回收站  ~/.locl/share/Trash/files/
+              ~/.locl/share/Trash/info/
+                每个被删除的文件的信息
+                
+                [Trash Info]
+                Path=/home/liujiao/Desktop/jiachang.sh
+                DeletionDate=2022-03-10T18:54:58
+
+dcvviewer 的日志也在这个目录
+    ~/.local/share/NICE/dcvviewer/
+
+sidefx
+    [19:10:35]liujiao@newcomer: ~/.local/share/sidefx$ tree
+    .
+    └── QtWebEngine
+        └── Hserver
+                └── Cookies
+
+    Cookies: SQLite 3.x database
+
+
+
+
