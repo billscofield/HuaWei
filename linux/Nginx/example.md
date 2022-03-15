@@ -86,5 +86,28 @@ www.baidu.com/vod   nginx   ---+-->     :8081
 
 ## 负载均衡实例1
 
+浏览器访问  192.168.17.129/edu/a.html
 
+nginx 主机 
+
+两台 tomcat 主机(8080, 8081)
+    webapps 中创建 edu/a.html
+
+    ``` /etc/nginx/nginx.conf
+
+    http {
+        upstream myserver{          是域名吗?
+            ip_hash;
+            server 1.1.1.1:8080 weight=1;       ------> +
+            server 1.1.1.2:8081 weight=1;       ------> +
+        }                                               |   拦截nginx到 1.1.1.1 h
+                                                        +-->
+        server{                                         |
+            server_name 本季ip;                         |
+            location / {                                |
+                proxy_pass http://myserever;     -------+
+            }
+        }
+    }
+    ```
 

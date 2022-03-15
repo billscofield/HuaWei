@@ -46,8 +46,11 @@ dmg
             1. 将dmg 文件打开,将里边的app文件拖放到 application 中
             2. 执行如下命令:
             
-                10.12.6
+                10.12.6 High sierra
                 > sudo /Application/Install macOS Sierra.app/Contents/Resources/createinstallmedia  --volume /Volumes/U盘名称 --applicationpath /Applications/Install macOS Sierra.app --nointeraction
+
+                Big Sur
+                > sudo /Applications/Install macOS Big Sur.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume 
              
             点按开机，按下 option 键, 直到出现启动菜单选项
              
