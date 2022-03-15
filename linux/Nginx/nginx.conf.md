@@ -1,12 +1,19 @@
 centos
 
+
+/etc/nginx/nginx.conf
+
 ## 三个主要模块
 
 1. 全局块(核心模块)
     
     从配置文件开始到 event 之上的部分
 
-    work_processes  auto;                  // 处理并发的数量, 基本一个 core 一个
+    work_processes  auto;                  // 处理并发的数量, 基本一个 core 一个, 表示工作进程的数量
+
+        worker_cpu_affinity，这个配置用于将worker process与指定cpu核绑定，降低
+        由于多CPU核切换造成的寄存器等现场重建带来的性能损耗[link](http:
+        //nginx.org/en/docs/ngx_core_module.html#worker_cpu_affinity)
 
 
 2. event 块(事件驱动模块)
@@ -21,25 +28,29 @@ centos
     worker_connections 1024;                // 最大链接数,单个IP?
 
 
+3. http 全局块
+
+    include 配置文件
+    mime.types
+    log_format
+    keepalive_timeout
 
 
-3. http 块
-
-    http 块也可以包含 Server 块 location 块
+    http 全局块也可以包含 Server 子块 location 子块
 
     include /etc/nginx/mime.types;
     default_type    字节流
 
-
-
-### http -> server 块
+### http 全局块 -> server 子块
 
 配置虚拟主机的相关参数,一个 http 中可以有多个 server
 
 server {
     listen  80;
-    
-    location 
+    server_name _;
+    root /usr/share/nginx/html;
+    location /405.html {
+    }
 }
 
 ### http -> server -> location 块

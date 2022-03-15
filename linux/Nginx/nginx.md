@@ -1,5 +1,7 @@
 
-## 初识Nginx
+## 1. 初识Nginx
+
+### 1. 什么是 nginx
 
 优点
 
@@ -44,11 +46,61 @@
         开源版 openresty.org
         商业版 openresty.com
 
-## 安装
+### 2. 反向代理
 
-1. apt
+1. 正向代理
+    
+    翻墙
 
-1. 编译安装(推荐)
+    我的代理人
+
+    我    ->    代理人    ->    它
+
+2. 反向代理
+
+    暴露的是代理服务器的地址，隐藏了真实服务器的IP地址
+
+    我    <-    代理人    <-    它
+
+
+
+### 3. 负载均衡
+
+
+|           请求                查询
+|   client  -------->  服务器  -------->  数据库
+|           <--------          ---------
+|           响应                
+
+
+### 4. 动静分离
+
+
+|   client --->    nginx --+-->  tomcat -> 动态资源(jsp,servlet)
+|                          |
+|                          |
+|                          +---> 静态资源服务器
+
+## 2. 安装
+
+1. 方法一:
+
+    apt
+
+
+    yum install -y epel-release
+    yum install -y nginx
+
+    
+
+2. 方法二:编译安装(推荐)
+
+    依赖:
+
+        pcre
+        openssl
+        zlib
+
 
     下载
     目录介绍
@@ -67,18 +119,26 @@
 
     configure
         看看configure 支持那些参数
-        ./configure --help
+        
+        1. ./configure --help
             1. 目录类大块
+            
             1. 使用哪些模块，不使用哪些模块
                 --with-xxx
                     意味着不会默认编译进安装
                 --without-xxx
                     意味着会默认编译进安装
                 我安装的时候提示没有pcre模块: ./configure --prefix=/usr/local/nginx --with-pcre=pcre
+                
             1. 中间文件会放在 objs 文件夹中
                 ngx_modules.c 决定哪些模块会编译进nginx
+        
+        2. make && make install
+        
+        3. /usr/local/nginx
 
 1. 配置文件
+
     时间
         1. ms,milliseconds
         1. s,seconds
@@ -88,6 +148,7 @@
         1. w,weeks
         1. M,months,30days
         1. y,years,365days
+
     空间
         1.      bytes
         1. k/K  kilobytes
@@ -103,9 +164,11 @@ apt-get --purge remove nginx
 apt autoremove  自动移除全部不使用的软件包
 
 dpkg --get-selections | grep nginx  列出与 nginx 相关的软件，并删除显示的软件
+
 apt --purge remove nginx-common
 
 再次执行 dpkg --get-selections | grep nginx
+
 which nginx  不再显示nginx
 
 
@@ -146,11 +209,29 @@ which nginx  不再显示nginx
 
 ## 基础命令
 
-nginx -v
+1. 版本号
 
-nginx -s stop
+    nginx -v
 
-nginx -s reload
+2. 启动
+
+    /usr/sbin/nginx
+
+3. 关闭
+
+    nginx -s stop           // -s signal
+
+4. 重新加载
+
+    nginx -s reload
+
+## 配置文件
+
+centos
+
+/etc/nginx/nginx.conf
+
+
 
 ## Nginx 架构基础
 
@@ -160,3 +241,7 @@ nginx -s reload
 
 
 ## 反向代理与负载均衡
+
+
+
+
