@@ -8,6 +8,8 @@ Remi 源大家或许很少听说， 但是我们强烈推荐, 尤其对于不想
 
 ## docker 
 
+apt install docker-ce -y
+apt install docker-ce=<ver> -y
 
 
 ## nginx
@@ -16,6 +18,13 @@ Remi 源大家或许很少听说， 但是我们强烈推荐, 尤其对于不想
 
 yum install nginx
 
+
+apt-cache madison nginx     // 查看支持哪些版本
+
+nginx.conf
+    user www-data;           // 一般systemctl在启动nginx和php-fpm的时候默认是以root权限执行的，为了安全起见，nginx和php-fpm会在启动的配置文件中指明他们所需的权限
+
+php-fpm所需的权限一般在pool里面指定比如:/etc/php/7.2/fpm/pool.d/www.conf 里面
 
 ## php8.0
 
@@ -29,9 +38,25 @@ yum install nginx
 
 2. 手动编译安装(debian)
 
+    
+
     https://www.liuvv.com/p/ad42ac48.html
 
     ```
+    apt install apt-transport-https ca-certificates
+
+    deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+    deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-updates main contrib non-free
+    deb https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye-backports main contrib non-free
+    deb https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
+    # deb-src https://mirrors.tuna.tsinghua.edu.cn/debian-security bullseye-security main contrib non-free
+
+
+
+
     apt install build-essential
     apt-get install pkg-config
     apt-get install libssl-dev              // no package openssl found
@@ -41,6 +66,8 @@ yum install nginx
     apt-get install libpng-dev              // no package libpng found
     apt-get install libonig-dev             // no package oniguruma found
     apt-get install libzip-dev              // no package libzip found
+
+    apt-get install libxml2 libxml2-dev     // No package 'libxml-2.0' found
 
     apt install -y pkg-config build-essential autoconf bison re2c libxml2-dev libsqlite3-dev libssl-dev libonig-dev libpng-dev zlib1g-dev libzip-dev
 
@@ -56,7 +83,57 @@ https://www.mediawiki.org/wiki/Compatibility
 
 MediaWiki is not compatible with PHP 8 yet. See task T248925 for more information.
 
+### 7.4.9
 
+
+debian
+
+    看了 tsinghua的源，php 是7.4.28的
+
+    手工编译安装 7.4.9
+
+    apt install nginx
+
+
+/usr/local/php749/etc/php-fpm.d/www.conf
+    listen = /usr/local/php749/var/run/php7.4-fpm.sock          // nginx 要一致, 这样就不会监听 9000端口了(二选一)
+    listen.owner = www-data                                     // 默认root， nginx 没有权限
+    listen.group = www-data                                     // 默认root， nginx 没有权限
+
+
+
+
+访问时候
+
+LocalSettings.php not found.
+
+
+[link](https://www.shuzhiduo.com/A/LPdorybw53/)
+错误提示 
+Warning:
+open(F:/689phpsessiondatasess_66a39376b873f4daecf239891edc98b5,
+O_RDWR) failed 
+分析及解决方法 
+出现这样的错误语句一般是因为你的php.ini中关于session.save_path一项没有设置好，解决的方法是将session.save_path和session.cookie_path
+设置置为 
+session_save_path = c: emp 
+session.cookie_path = c: emp 
+
+
+
+
+如果你的php是编译安装的，那么默认是没有php.ini的，你必须自行去源码包里边拷贝。
+运行phpinfo（）命令可以看到php指定的配置文件路径，把配置文件放到这个路径中即可
+
+    /usr/local/php749/etc
+    
+    在源文件中叫做:
+        ./php.ini-production
+        ./php.ini-development
+
+
+
+    
 
 
 ## nginx 调用 php
@@ -88,6 +165,31 @@ docker push dockerhub.qingcloud.com/mediawiki/mediawiki:0.02
 
 
 
+## mysql
+
+
+
+```
+
+docker run -itd --name mediawikimysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD="xibbaz"  -v /data/docker/mediawikimysql/var/lib/mysql:/var/lib/mysql  xxx
+
+
+
+skip-grant-tables
+
+
+
+
+
+CREATE DATABASE my_wiki;
+create user xxx identified by 
+grant all on xx.x to xxx@'%'
+GRANT INDEX, CREATE, SELECT, INSERT, UPDATE, DELETE, ALTER, LOCK TABLES ON my_wiki.* TO 'sammy'@'localhost' IDENTIFIED BY 'password';
+FLUSH PRIVILEGES;
+exit
+```
+
+
 ## mediawiki
 
 1. LocalSettings.php not found - mediawiki installation
@@ -98,3 +200,13 @@ docker push dockerhub.qingcloud.com/mediawiki/mediawiki:0.02
 
     Never edit DefaultSettings.php; copy appropriate lines to LocalSettings.php instead and amend them as appropriate.
     Create your own LocalSettings.php by copying DefaultSettings.php, and then go through and delete the stuff you don't need/want.
+
+
+
+页面配置完毕后，该页面正在自动为我们下载一个名为 LocalSettings.php 的文件。想要成功完成安装，需要将该文件移动到服务器上。因此在完成下载之前，请不要关闭该页面，以免下载失败！
+
+现在我们将下载的文件，移动到服务器的 /var/www/html 站点根目录下 。
+
+
+
+

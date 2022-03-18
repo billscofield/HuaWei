@@ -282,6 +282,12 @@ docker info
 docker 命令 --help
 
 
+## 目录
+
+/etc/docker/
+/var/lib/docker/
+
+
 ## 镜像命令
 
 

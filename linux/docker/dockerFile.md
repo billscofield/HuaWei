@@ -1,6 +1,8 @@
 
 ## dockerfile 容器卷
+
 根目录 dockerfile
+
 FROM centos
 VOLUME ["/dataVolumeContainer1","/dataVolumeContainer2"]
 CMD echo "finished"
