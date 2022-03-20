@@ -385,3 +385,20 @@ sidefx
 
 
 
+
+
+
+---
+
+
+2022-03-19
+
+
+pkg-config
+
+
+apt install sshfs
+sshfs user@ip:/path1 localpath
+
+umount:
+    fusermount -u /path/to/mount/point

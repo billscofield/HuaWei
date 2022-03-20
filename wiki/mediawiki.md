@@ -92,6 +92,8 @@ debian
 
     手工编译安装 7.4.9
 
+    https://www.php.net/distributions/php-7.4.9.tar.gz
+
     apt install nginx
 
 
