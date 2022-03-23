@@ -276,7 +276,7 @@ var_dump($a)
     
 
 4. 比较运算符
-    ==          // '2' == 2;    true
+    ==          // '2' == 2;    true        "a" == True  true
     ===         // '2' === 2;   false
     !=
     !==
@@ -540,3 +540,320 @@ array_slice($arr,offset:0,length:3,preserve_keys:true);
 
     echo '</table>';
     ```
+
+#### 系统预定义变量
+
+```
+$_GET
+$_POST
+$_SERVER        服务器和运行环境信息
+$_COOKIE
+$_SESSION
+    ["HTTP_REFERER"]=> string(24) "http://10.0.6.218/a.html"        // 从那个页面跳转到当前页面的
+$GLOBALS
+```
+
+```
+<form action="./index.php?age=32" method="post">   还可以这么玩耍, 同时传 get 和 post
+    age: <input type="text" name="age">'¬
+    <input type="submit">¬
+</form>¬
+
+<?php
+    var_dump($_GET);
+    echo '<br/>';
+    var_dump($_POST);
+
+```
+
+
+
+## 函数
+
+**函数名不区分大小写**，不能重复定义
+
+function say(){
+
+}
+
+
+return 语句
+
+#### 全局变量
+
+1. 要在函数内部声明
+
+    ```
+    $name = "zhangsan";
+
+    function say(){
+        global $name;       // 不能在此赋值，可以在下一行进行赋值
+        $name = "zhangsan"  // 外部的也会变
+        echo $name;
+    }
+    ```
+
+2. GLOBALS 数组
+
+    ```
+    function say(){
+        echo $GLOBALS['name'];          // 外部的也会变
+    }
+    ``` 
+
+#### 静态变量
+
+可以统计被调用的次数
+
+$num=1;
+```
+function say(){
+    static $num = 1;
+    $num ++;
+    echo $num;
+}
+```
+
+和全局变量不冲突
+
+
+#### 引用传参
+
+function say(&$num){
+
+}
+
+
+array_pop($arr)     也是引用传参
+
+#### 变量函数
+
+```
+$num = 1;
+
+function say(){
+    echo "hello<br/>";
+    
+}
+
+$a = 'say';
+
+$a();
+
+---
+
+if($_GET['operator']){
+    $_GET['operator']($_GET['num1'],$_GET['num2']);
+}
+
+```
+
+#### 回调函数
+
+变量函数的一种变形
+
+```
+function say($func){
+    $func();
+    
+}
+
+function say1(){
+    echo 'This is'.__FUNCTION__.'<br/>';
+    
+}
+
+function say2(){
+    echo 'This is'.__FUNCTION__.'<br/>';
+    
+}
+
+
+say('say1');                    // 要用引号括起来
+say('say2');                    // 要用引号括起来
+
+```
+
+array_filter()                  // 返回为 true 的
+array_filter($arr,$my_func)     // 返回为 true 的
+
+
+    ``` 自实现
+    $arr = array("hello",1,2,3,0.01,0.0,2,0.0,true,999,false,9);
+
+#$res = array_filter($arr);
+
+    function say($arr,$func=''){
+        $myarr=[];
+        if(empty($func)){
+            foreach($arr as $key=>$value){
+                if($value){
+                    $myarr[$key] = $value;
+                }
+            }
+        }
+        return $myarr;
+    }
+
+    $res = say($arr);
+
+    echo '<pre>';
+    print_r($res);
+
+    echo '</pre>';
+
+    ```
+
+#### 内部函数(函数内部的函数)
+
+在函数内部定义函数
+
+```
+function outer(){
+    function inner(){
+        echo "say";
+    }
+    inner();
+}
+
+outer();
+```
+
+
+#### 递归函数
+
+
+#### 匿名函数
+
+```
+$a = function (){
+    echo "hello anonymous";
+    
+};                              // 这里有分号
+
+$a();
+
+var_dump($a);                   // 是 object 类型
+
+```
+
+
+
+#### 闭包
+
+```
+function say(){
+    $name = 'say';
+    $anon = function() use($name){                  // 用什么要写在 use 里边, 只能用匿名的形式，正常方式是不可以的, **只读的**
+        echo "I am anon ".$name."<br/>";
+    };
+
+    return $anon;
+}
+
+$a = say();
+$a();
+
+
+---
+
+function say(){
+    $name = 'say';
+#$anon = function() use($name){
+    echo $name.'<br/>';
+    $anon = function() use($name){
+            $name = "woshi bibao";
+                    echo "I am anon ".$name."<br/>";
+                        
+    };
+
+
+        return $anon;
+        
+}
+
+$a = say();         // 输出 say
+$a();
+
+$b = say();         // 同样输出 say
+$b();
+}
+```
+
+
+#### 匿名回调
+
+#### 可变长度参数
+
+array_push()
+
+func_get_args() 获取传入的所有实参
+
+```
+function sum(){
+$arr = func_get_args();
+
+    echo '<pre>';
+    print_r($arr);
+    echo '</pre>';
+}
+
+$res = sum(1,2,3,4,'a','b');
+
+```
+
+#### 系统函数
+
+1. & 表示只能传变量，不能传数值
+
+2. mixed 可以传任何类型的数据变量或值
+
+3. [] 里的是可选的
+
+4. callable 参数的函数，表示这个位置需要穿第一个回调函数
+
+5. ... 表示可以传多个
+
+
+### 文件包含
+
+
+include()
+    成功返回 1
+    效率高(相比较 include_once)
+
+include_once()
+    第一次成功返回1， 之后成功返回 true
+    
+
+```
+$res = include('./a.php');      // 
+
+require("./top.html");
+
+$top = require("./top.html");
+```
+
+
+require
+    $one = require('./top.html');
+    $two = require './top.html';        // 另外一种写法
+
+require_once
+
+    返回和 include / include_one 一样, 第一次返回1， 第二次返回 true
+
+
+包含失败的话， include 报 warning 错，require 会报 fatal 错
+
+
+### 常用系统函数
+
+
+
+
+### 分页函数
+
+```
+
+```
