@@ -169,6 +169,7 @@ section:
 ## 命令
 
 ctrl p      // 左侧的 open command palette
+    insert current date
 
 
 ## 模板变量
