@@ -169,19 +169,15 @@ docker push dockerhub.qingcloud.com/mediawiki/mediawiki:0.02
 
 ## mysql
 
-
-
 ```
-
 docker run -itd --name mediawikimysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD="xibbaz"  -v /data/docker/mediawikimysql/var/lib/mysql:/var/lib/mysql  xxx
 
 
-
-skip-grant-tables
-
-
+/etc/mysql/conf.d/docker.cnf   如果不能登录的话，应该是改这个文件
+    skip-grant-tables
 
 
+mysql -uroot -p
 
 CREATE DATABASE my_wiki;
 create user xxx identified by 
@@ -189,6 +185,7 @@ grant all on xx.x to xxx@'%'
 GRANT INDEX, CREATE, SELECT, INSERT, UPDATE, DELETE, ALTER, LOCK TABLES ON my_wiki.* TO 'sammy'@'localhost' IDENTIFIED BY 'password';
 FLUSH PRIVILEGES;
 exit
+
 ```
 
 

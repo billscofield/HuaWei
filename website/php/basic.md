@@ -481,6 +481,23 @@ print_r($arr);      // 不会输出类型信息
 2. 二纬数组
 
 
+#### 超全局数组
+
+```
+$_GET
+
+$_POST
+
+$_REQUEST
+    $_GET + $_POST
+
+$_SERVER
+
+$_SESSION
+
+$_COOKIE
+```
+
 
 
 #### 分页
@@ -566,6 +583,23 @@ $GLOBALS
 
 ```
 
+
+## 错误处理
+
+notice 和 warning 会后续执行
+
+错误抑制 @
+    @var_dump(a);
+    屏蔽不了致命错误
+
+不显示错误信息
+    php.ini
+    display_errors = Off
+
+错误信息写道日志
+    php.ini
+    error_log
+    ;error_log = php_errors.log         默认是注释的
 
 
 ## 函数
@@ -857,3 +891,106 @@ require_once
 ```
 
 ```
+
+
+### 时间
+
+时间戳
+    1970年1月1日 0:00:00(格林威治时间)
+    1970年1月1日 8:00:00(北京时间)
+
+    date('Y m d H:i:s',time())
+
+    date('Y m d')
+
+        Y  4位的
+    date_default_timezone_set('PRC');
+
+    php.ini
+        date.timezone = "Asia/Shanghai"
+        date.timezone = "UTC"
+        date.timezone = "PRC"
+
+
+### 数据库
+
+php7 之后是 mysqli, 之前是 mysql
+
+1. 链接数据库
+
+    mysqli_connect('host','user','pass','dbname');
+    mysqli_connect('host','user','pass');
+
+2. 判断是否连接成功
+
+    if(!$link)
+
+
+3. 设置字符集
+
+    mysqli_set_charset($link,'utf8mb4');
+
+4. 选择数据库
+
+    mysqli_select_db($link,'dbname')
+
+
+5. 准备 sql 语句
+
+    $sql = "select "
+
+6. 发送 sql 语句
+
+    $res = mysqli_query($link,$sql);        // object
+
+7. 处理结果集
+    
+    1. $result = mysqli_fetch_assoc($link);    // 只取一条数据的关联数组
+
+        while($row = mysqli_fetch_assoc($link)){
+        }
+
+    2. mysqli_fetch_row($res)                  // 返回索引数组
+
+    3. mysqli_fetch_array($res)                // 返回索引和关联数据的结合体
+
+    4. mysqli_num_rows($res)                    // 有多少条数据
+
+    5. mysqli_affected_rows($link)              // 
+
+    6. mysqli_insert_id($link)                  // 插入语句有效
+
+8. 关闭数据库
+
+    mysqli_close($link);
+
+
+
+
+##
+
+```
+session_start();
+$_SESSION['username'] = 'zhangsan';
+
+unset($_SESSION['username'])
+
+session_destroy()           // 单单 session_destroy 后还是可以访问 session 的
+
+```
+
+## 画图 gd
+
+phpinfo()
+    有 gd 则表示打开
+
+    php.ini             // 默认关闭的
+        ;extension=gd2
+
+mime
+
+1. 缩放
+
+2. 验证码
+
+3. 水印

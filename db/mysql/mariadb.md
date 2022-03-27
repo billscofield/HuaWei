@@ -231,9 +231,9 @@ LIMIT
         &&
         || 
         !
-        and (mysql 中推荐使用这个)
-        or  (mysql 中推荐使用这个)
-        not (mysql 中推荐使用这个)
+        and (mysql 中推荐使用这个)!!!
+        or  (mysql 中推荐使用这个)!!!
+        not (mysql 中推荐使用这个)!!!
 
     模糊查询
         like
@@ -722,6 +722,7 @@ LIMIT
     5. foreign key, 外健，用于限制两个表的关系
         show index from 表
     6. check 检查约束(mysql不支持,但是语法不报错), 比如年龄，性别
+    7. 全文索引(fulltext)
 
     约束的类型
         表约束
@@ -779,6 +780,7 @@ LIMIT
 
         删除
         alter table 表名 drop 
+
 
 ### 主键 VS.唯一
 
