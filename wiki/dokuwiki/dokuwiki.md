@@ -2,6 +2,7 @@
 1. Dokuwiki 是php的，所以要先搭建php环境，下载 apache和php，第1、2步下载完，相关的依赖都会下载
 
 ## Dokuwiki 安装
+
 1. httpd
     yum -y install httpd
     // 在浏览器中输入http://localhost 如果现实It works则说明Apache安装成功，否则Apache未成功安装
@@ -103,6 +104,7 @@ httpd 默认启动的用户及组是 apache，所以修改文件夹所属用户�
     chkconfig --levels 235 httpd on
 
 ### 遇到的问题1：Dokuwiki Setup Error
+
 DokuWiki Setup Error
 
 The datadir ('pages') at ./data/pages is not found, isn't accessible or writable. You should check your config and permission settings. Or maybe you want to run the installer?
@@ -110,6 +112,7 @@ The datadir ('pages') at ./data/pages is not found, isn't accessible or writable
 解决方法：用yum命令先安装 httpd，再安装 php。开始的时候直接用 yum 安装 php，通过依赖会自动安装其他环境，包括 httpd，但是一直报 Dokuwiki Setup Error，网上都没有找到解决方法，后来重新搭一个环境，先装 httpd，再装 php，就没有出现这个错误了
 
 ### 遇到的问题2：如果访问时显示 403 Forbidden，需要关闭SELinux
+
 查看SELinux状态：
 1、/usr/sbin/sestatus -v ##如果SELinux status参数为enabled即为开启状态
 SELinux status: enabled
@@ -123,6 +126,7 @@ SELinux status: enabled
         修改/etc/selinux/config 文件
         将SELINUX=enforcing改为SELINUX=disabled
         重启机器即可
+
 ### 链接
 https://www.cnblogs.com/error503/p/8041982.html
 
@@ -146,5 +150,6 @@ Dokuwiki系列教程
     1. https://blog.csdn.net/leekwen/article/details/54907445
 
 ## Dokuwiki基本语法
+
 维基语法，也支持Markdown语法
 

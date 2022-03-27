@@ -10,19 +10,16 @@ palette [ˈpælət] n. 调色板；（画家或一幅画所用的）一组颜色
 
 ctrl 单击文件是在工作区新打开一个窗口展示点击的文件
 
----
 
 在一个文件中选择文本，然后可以拖动到第二个文件中，以进行复制
 
 同一个文件中是移动选中的文本到新的位置
 
----
 
 三个小圆点/link with pane... 与其他面板同步
 
 点击 链条 即可解除同步
 
----
 
 ## 链接
 
@@ -103,8 +100,29 @@ PDF/音频/视频 也可以嵌入
 
     整个文件的模板
 
+    结构型模板
+    片段型模板
 
-6. 
+
+
+第三方插件
+
+    进入目录 .obsidian/plugins/
+    将下载的插件放入上面的目录当中(插件要在一个自己的文件夹中)
+    重启 obsidian 即可
+
+    templater
+        Trigger Templater on new file creation 需要打开
+        每个文件夹下一个模板文件, 当前文件夹下创建文件时引用这个模板
+        最初的版本需要 右键/新建 才行, 现在链接也可以
+
+    note refactor
+
+    quickadd
+        可以和模板结合的比较好
+
+    image auto upload
+
 
 
 ## problems
@@ -131,6 +149,15 @@ tag:
     > #tag-name   没有空格, 有点不方便, 如 Linus Torvalds
 
     plugin: tag pane
+
+
+    状态
+    ```
+    #tag:状态/工作中
+    ```
+    科目
+
+    人物
 
 
 section:
@@ -184,6 +211,12 @@ ctrl p      // 左侧的 open command palette
 ```
 ---
 tags: tagname1 tagname2                 // meta data like
+
+aliases: 苏东坡 诸葛亮                  // 在其他文章中引用,显示为苏东坡，诸葛亮 [[xxx|苏东坡]]
+
+date:{{date}}                           // 只显示 aliases 和 tags , 其他的都不显示
+
+time:{{time}}
 ---
 
 关闭 front-matter
@@ -192,8 +225,45 @@ tags: tagname1 tagname2                 // meta data like
 
 ```
 
+```query
+markdown的搜索, 在预览模式下会显示出所有所有能搜索到的
+tag:abc
+```
 
-## 帮助
+
+
+
+
+Link First, Folder less
+
+
+
+选中一段文本，右键，extract current selection, 将当前选择保存为一个新的文本, 如
+果第一行是标题，会默认提示使用这个标题作为文件名
+
+
+
+右上角三点:
+    open local graph
+
+    
+
+
+
+F2 修改当前活动文件的文件名
+
+
+ctrl alt <-
+ctrl alt ->
+
+
+
+
+
+手动链接和自动链接
+
+
+
 
 
 
