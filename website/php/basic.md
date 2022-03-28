@@ -985,12 +985,129 @@ phpinfo()
     有 gd 则表示打开
 
     php.ini             // 默认关闭的
-        ;extension=gd2
+        ;extension=gd2  // 报错, /usr/local/php749/lib/php/extensions/ 没有这个文件
 
 mime
+    windows 服务器中有个 mime.types 的文件, 但是 debian 中没有
 
-1. 缩放
 
-2. 验证码
+1. 创建画布
 
-3. 水印
+    imagecreatetruecolor(int $width, int $height)
+
+    $image = imagecreatecolor(600,600);
+
+2. 创建颜色
+
+    imagecolorallocate(resource $image,int $red, int $green, int $blue)
+
+    imagecolorallocate($image,255,0.0)
+
+3. 使用 gd 库画画
+
+    imageline($im,0,0,600,600,$text_color);
+    imagestring($im, 1, 5, 5,  "A String", $text_color);
+
+4. 告诉浏览器 mime 类型
+
+    header("content-type:image/png");
+
+5. 输出到浏览器或者可以存放到本地
+
+    imagepng($im);
+    imagejpeg
+    imagegif
+    imagewbmp
+
+6. 销毁资源
+
+    imagedestroy($im);
+
+
+获取文件信息
+
+    $arr = getimagesize("./a.jpg");
+    list($width,$height) = $arr;
+    echo $width,$height;
+
+
+合并
+
+    $dst = imagecreatefromjpeg('./a.jpg')
+    $src = imagecreatefromjpeg('./b.jpg')
+
+    imagecopyresampled($dst,$src, )
+    header('content-type:image/jpeg')
+    imagejpeg($im);
+
+
+### 验证码
+
+    ```
+    function verify($width = 100, $height = 40, $num = 5, $style = 1){
+        #1. 准备画布
+        $im = imagecreatetruecolor($width, $height);
+
+        #2. 颜色
+
+        #3. 字符
+        switch($type){
+            case 1:
+                $str = '01234567890';
+                $string = substr(str_shuffle($str),0,$num);
+                break;
+            case 2:
+                $arr = range('a','z');
+                shuffle($arr)
+                $tmp = array_slice($arr,0,$num);
+                $string = join('',$tmp);
+                break;
+            case 3:
+                // 0-9 a-z A-Z
+                $str = '0123...abc...A...Z';
+                $string = substr(str_shuffle($str),0,$num);
+                break;
+        }
+
+        imagefilledrectangle($image,0,0,$width,$height,lightcolor($image));
+        
+        #4. 写字
+        for($i = 0; $i < $num; $i++){
+            $x = floor($width / $num) * $i;
+            $y = mt_rand(10,$height - 20);
+            imagechar($image, 5, $x, $y, $string[$i],darkColor($iamge));
+        }
+
+        #5. 干扰线
+        for($i = 0; $i<$num; $i++){
+            imagearc($image,mt_rand(10,$width),mt_rand(10,$hieght), mt_rand(10,$width), mt_rand(10,$height), mt_rand(0,10), mt_rand(0,270), darkColor($image))
+        }
+
+
+        for($i = 0; $i<$num; $i++){
+            imagesetpixel($image, mt_rand(0,$widht), mt_rand(0,$height), darkColor($image));
+        }
+
+
+        #6. 输出的类型
+        header('content-type:image/png')
+
+        #7. 输出图片
+
+
+        #8. 
+    }
+
+    function darkcolor($iamge){
+        return imagecolorallocate($image, mt_rand(0,135), mt_rand(0,135, mt_rand(0,135)));
+    }
+    function littlecolor($iamge){
+        return imagecolorallocate($image, mt_rand(130,255), mt_rand(130,255, mt_rand(130,255)));
+    }
+    ```
+
+## 文件操作
+
+
+
+
