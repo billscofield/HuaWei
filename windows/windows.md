@@ -156,7 +156,85 @@ Windows Update服务，它是Windows系统自动更新服务，当自动更新�
     1. 然后再点击上方的恢复选项卡，把第一次失败设置为“无操作”；
 
 
+### GUID
+
+Globally Unique Identifier的简称，中文翻译为“全局唯一标示符”,在Windows系统中也
+称之为Class ID，缩写为CLSID。电脑中的GUID可以在注册表中找到，具体方法如下:
+
+在注册表中展开HKEY_CLASSES_ROOT\CLSID\，在CLSID分支下面就可以看到很多的GUID，这
+些ID对应的都是系统里面不同的程序，文件，系统组件等
 
 
+### UUID
+
+如何查看windows系统UUID
+
+在命令提示符下输入 wmic 再输入csproduct 或 csproduct list full
 
 
+### sysprep.exe修改SID
+
+1. 查询当前机器的SID
+
+    单击“开始”--》“运行”,执行cmd--》输入whoami /user,然后回车
+
+2. 执行修改SID的命令，完整过程如下，最后电脑自动重启，开始初始化一个新的SID。
+
+    ` cd c:\windows\system32\sysprep
+     
+    ` sysprep.exe /generalize /oobe /reboot
+
+    Problems 1:尝试使用sysprep处理计算机时出现错误
+    
+        把 WMPNetworkSvc   (Windows Media Player Netwroking SharingService)服务停用
+
+Sysprep 命令行选项
+
+    下列命令行选项可用于 Sysprep：
+
+    sysprep.exe [/oobe | /audit] [/generalize] [/reboot | /shutdown | /quit] [/quiet] [/unattend:answerfile]
+ 
+
+ 1. /audit
+
+    重新启动计算机进入审核模式。审核模式使您可以将其他驱动程序或应用程序添加到
+    Windows。您还可以在将 Windows 安装发送给最终用户前对其进行测试。如果指定了
+    无人参与 Windows 安装程序文件，Windows 安装程序的审核模式将运行 auditSystem
+    和 auditUser 配置阶段。
+
+2. /generalize
+
+    准备要作为映像的 Windows 安装。如果指定此选项，所有唯一的系统信息将从
+    Windows安装中删除。安全 ID (SID) 重置，所有系统还原点将被清除，事件日志也将
+    被删除。下一次计算机启动时，将运行 specialize 配置阶段。将创建新的安全 ID
+    (SID)，如果用于 Windows 激活的时钟三次没有被重置，将其重置。
+
+3. /oobe
+
+    重新启动计算机进入“欢迎使用 Windows”模式。“欢迎使用 Windows”允许最终用户自
+    定义其 Windows 操作系统、创建用户帐户、命名计算机和其他任务。在“欢迎使用
+    Windows”启动前，将立即处理答案文件中 oobeSystem 配置阶段中的所有设置。
+
+4. /reboot
+
+    重新启动计算机。使用该选项审核计算机并确保首次运行体验正确工作。
+
+5. /shutdown
+
+    在 Sysprep 完成后关闭计算机。
+
+6. /quiet
+
+    运行 Sysprep 而不显示屏幕确认消息。如果自动运行 Sysprep，使用该选项。
+
+7. /quit
+
+    运行指定命令后，关闭 Sysprep。
+
+9. /unattend: answerfile
+
+    在无人参与安装期间，将答案文件中的设置应用到 Windows。
+
+10. answerfile
+
+    指定要使用的答案文件的路径和文件名。

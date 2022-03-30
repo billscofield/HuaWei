@@ -58,6 +58,58 @@
 5. To start Houdini FX, type "houdinifx".
 
 
+## 关于 active
+
+/root/.sesi_licenses.pref 已经修改, 但还是隔一段时间就会掉 license
+    
+    ` netstat -tnpu | grep 1715
+
+    查看又是监听到了本地的 1715
+
+    ```
+    mv /usr/lib/sesi{,.ori}
+
+    systemctl stop sesinetd
+    systemctl disable sesinetd
+    ```
+
+
+/opt/hfs19.0/houdini/hserver.opt
+    一些配置信息
+
+
+
+ps -ef | grep -i sesinetd | grep -v grep
+
+```
+root      11072      1  0 Mar17 ?        00:00:00 /bin/sh /usr/lib/sesi/sesinetd_safe --sesi=/usr/lib/sesi --sesinetd=/usr/lib/sesi/sesinetd --log-file=/var/log/sesinetd.log -V 2 -z 1048576
+root      11100  11072  0 Mar17 ?        00:09:36 /usr/lib/sesi/sesinetd -l /var/log/sesinetd.log -D -V 2 -z 1048576
+```
+
+/var/log/sesinetd.log
+```
+84272bda: Generic    Houdini-Escape 17.5                 100/100 free
+a73a0905: Generic    Houdini-Escape 17.5                 0/0 free
+4c03956a: Generic    Houdini-Escape 17.5                 100/100 free
+9781e4c5: Generic    Houdini-Escape 18.5                 100/100 free
+6dc2adf6: Generic    Houdini-Render-Plus 17.5            100/100 free
+adafe398: Generic    Houdini-Render-Plus 17.5            100/100 free
+514d6f03: Generic    Houdini-Render-Plus 17.5            0/0 free
+356f1ccc: Generic    Houdini-Render-Plus 18.5            100/100 free
+
+
+04:15:19 03/30/22 sesinetd: Usage: 0/0/0 Houdini/NonGraphic/Render [Peak 1/0/0]
+04:15:19 03/30/22 sesinetd: QueueStats: 4975 requests 1/280 peak/fail
+04:15:19 03/30/22 sesinetd:    Threads: 1 peak, wait: 0.00121174/2.9873
+04:15:19 03/30/22 sesinetd:   Max Wait: 3.00516 (0.099844/0.049923)
+04:15:19 03/30/22 sesinetd:   Avg Wait: 0.187097 (0.0190455/0.000842715)
+```
+
+avahi-daemon 服务
+
+
+
 ## 计划
 
 搭建 nginx 负载均衡服务器, 后面堆 license servers
+

@@ -8,3 +8,7 @@ https://www.sohu.com/a/199298598_100036496?spm=smpc.author.fd-d.4.1613629824491H
 https://www.sohu.com/a/202404211_100036496?spm=smpc.author.fd-d.2.1613644823246egr3P4k
 
 
+
+## gho 恢复
+
+Symantec GhostCast Server

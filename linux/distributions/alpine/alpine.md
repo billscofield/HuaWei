@@ -1,3 +1,40 @@
+# Alpine
+
+## About Apline
+
+Alpine Linux is an independent, non-commercial, general purpose Linux
+distribution
+
+1. small
+
+    Alpine Linux is built around musl libc and busybox. This makes it smaller
+    and more resource efficient than traditional GNU/Linux distributions. A
+    container requires no more than 8 MB and a minimal installation to disk
+    requires around 130 MB of storage. Not only do you get a fully-fledged
+    Linux environment but a large selection of packages from the repository.
+
+2. Simple
+
+    It uses its own package manager called apk, the OpenRC init system, script
+    driven set-ups and that’s it! 
+
+3. Security
+
+    Alpine Linux was designed with security in mind. All userland binaries are
+    compiled as Position Independent Executables (PIE) with stack smashing
+    protection.
+
+
+Alpine Linux是一个完整的操作系统，像其他操作系统一样，可以将Alpine安装到本地硬
+盘中
+
+## Compare with slackware
+
+Slackware uses glibc. Alpine uses musl.
+
+A second major difference is that Slackware uses GNU Coreutils while Alpine
+uses Busybox.
+
 
 ## 查看版本
 
