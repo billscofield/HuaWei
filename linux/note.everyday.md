@@ -409,3 +409,45 @@ umount:
 2022-03-24
 
 authconfig-tui
+
+
+
+--- 
+
+
+2022-03-31
+
+gsettings 命令
+
+
+houdinifx
+    user        polkitd
+    command     sesinetd
+
+
+
+
+## avahi-daemon.service avahi-daemon.socket
+
+systemctl stop avahi-daemon.service avahi-daemon.socket
+systemctl disable avahi-daemon.service avahi-daemon.socket
+
+/etc/avahi/
+
+Zeroconf
+Zero configuration networking(zeroconf)零配置网络服务规范，是一种用于自动生成可用IP地址的网络技术，不需要额外的手动配置和专属的配置服务器。
+
+“零 配置网络服务”的目标，是让非专业用户也能便捷的连接各种网络设备，例如计算机，打印机等。整个搭建网络的过程都是通过程式自动化实现。如果没有 zeroconf，用户必须手动配置一些服务，例如DHCP、DNS，计算机网络的其他设置等。这些对非技术用户和新用户们来说是很难的事情。
+
+Zeroconf规范的提出者是Apple公司.
+
+Avahi
+Avahi 是Zeroconf规范的开源实现，常见使用在Linux上。包含了一整套多播DNS(multicastDNS)/DNS-SD网络服务的实现。它使用 的发布授权是LGPL。Zeroconf规范的另一个实现是Apple公司的Bonjour程式。Avahi和Bonjour相互兼容。
+
+Avahi允许程序在不需要进行手动网络配置的情况 下，在一个本地网络中发布和获知各种服务和主机。例如，当某用户把他的计算机接入到某个局域网时，如果他的机器运行有Avahi服务，则Avahi程式自 动广播，从而发现网络中可用的打印机、共享文件和可相互聊天的其他用户。这有点象他正在接收局域网中的各种网络广告一样。
+
+Linux下系统实际启动的进程名，是avahi-daemon
+
+除非你有兼容的设备或使用 zeroconf 协议的服务，否则应该关闭它。
+
+
