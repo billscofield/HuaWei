@@ -451,3 +451,7 @@ Linux下系统实际启动的进程名，是avahi-daemon
 除非你有兼容的设备或使用 zeroconf 协议的服务，否则应该关闭它。
 
 
+
+
+
+内省(IntroSpector)是Java 语言针对 Bean 类属性、事件的一种缺省处理方法。　
