@@ -128,6 +128,22 @@ balenaEtcher，这个有Win版本也有Mac版本，所以如果在Mac系统下�
 https://support.apple.com/zh-cn/HT211683
 
 
+### 方法2 制作U盘启动盘
+
+
+制作Mac os Catalina u盘启动报错： createinstallmedia: command not found
+
+这是因为没有权限打开createinstallmedia，修改权限即可:
+
+    ` swaedeMacBook-Pro:~ swae$ chmod +x /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia
+
+修改完成权限后，重置制作u盘启动即可：
+
+    ` swaedeMacBook-Pro:~ swae$ sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/Catalina/
+
+
+
+
 ### 安装系统
 
 制作好的U盘系统插入电脑，在关机状态下，开机按住【option】键不放，直到出现安装图标
@@ -332,3 +348,24 @@ Option键加 Command键加P键加R键
 
 sw_vers
 
+
+
+
+### mac ssh Linux 乱码问题
+
+mac 的 locale 设置
+```
+➜  ~ locale
+LANG=""
+LC_COLLATE="C"
+LC_CTYPE="UTF-8"
+LC_MESSAGES="C"
+LC_MONETARY="C"
+LC_NUMERIC="C"
+LC_TIME="C"
+LC_ALL=
+```
+
+发现是 C, 更改为和 Linux 一样的
+    
+    ` export LCA_ALL=en_US.UTF-8

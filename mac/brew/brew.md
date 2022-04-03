@@ -3,7 +3,12 @@
 
 1. 安装homebrew
 
-    /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ` /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+    ruby 方式已经废弃，使用 shell 方式
+
+
+    
 
 2. 配置brew国内
 
@@ -15,6 +20,11 @@
 
     cd "$(brew --repo)"  && git remote get-url origin
 
+4. brew config
+
+    查看配置
+
+4. brew doctor
 
 
 ## mount 
