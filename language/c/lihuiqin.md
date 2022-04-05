@@ -44,6 +44,11 @@ shift k : man 手册帮助
     "0"
     '\0'
 
+## math.h
+
+gcc -c a.c -o a.o
+gcc a.o -lm
+
 ## 常量
 
 整型常量
@@ -61,6 +66,8 @@ shift k : man 手册帮助
 
 int a = 1, b = 2;
 printf("%d\n",MAX(a,b))
+
+MAX(i++,j++)
 
 ---
 
@@ -83,11 +90,12 @@ printf("%d\n",MAX(a,b))
 
 [存储类型] 数据类型 标识符 = value
 
-           type     name   = value
+    存储类型    type     name   = value
 
     1. auto     : 默认，自动分配空间，自动回收空间
+        栈空间
 
-    1. static   : 静态型, 自动初始化为0值或空值, 有继承性, 也可修饰函数, 只能在当前文件中使用
+    1. static   : 静态型, 自动初始化为**0值**或**空值**, 有继承性, 也可修饰函数, 只能在当前文件中使用
         修饰全局变量,
         类似 private 属性
 
@@ -114,7 +122,8 @@ main.c
 
 
 proj.c
-    extern int i;
+    extern int i;               // 其实可以不用写, 类型都可以不用写
+    extern i;                   // 类型都不写, 新标准默认为int型了, 会出错的
 
     void proj.c.fun(void){
         printf("%d\n",i);
@@ -123,18 +132,31 @@ proj.c
 ```
 
 
-
 生命周期和作用范围
 
     全局变量和局部变量
 
+    ```
+    #include <stdio.h>
+    #include <stdlib.h>
 
+    int i = 1000;
 
+    int main(void){
+        int i = 100;
+        {
+            int i = 10;
+            printf("%d\n",i);
+            exit(0);
+        }
+        
+    }
+    ```
 
     > __FUNCTION__, __LINE__
 
 
-man 3 fopen  中最早的 error number 就是全局变量
+man 3 fopen  中最早的 errno(error number) 就是全局变量, 现在不是了
 
 
 |   +----------------------------------------------------------------+
@@ -157,6 +179,35 @@ man 3 fopen  中最早的 error number 就是全局变量
 
 
 
+## 表达式和语句
+
+加上分号就是语句
+
+
+## 运算符
+
+1. %
+    两边都必须是整型
+
+1. 逗号运算符
+
+1. 位运算
+
+    >>
+        a = a << 1;
+    <<
+    &
+    |
+    ^
+    ~   取反
+
+
+    num = num | 1<<n
+    num = num & ~(1<<n)
+
+1. 分量运算符(.  ->)
+
+1. 
 
 ## gcc
 
@@ -170,22 +221,91 @@ man 2 stat
     struct stat 结构体
         st_mode 权限    
 
+    man 2 inode
+        S_IROTH     00004   others have read permission
+        S_IWOTH     00002   others have write permission
+        S_IXOTH     00001   others have execute permission
+
 
 
 ## 输入、输出专题
 
 标准IO, 文件IO
 
-格式化输入输出函数  printf()    scanf()
+1. 格式化输入输出函数  printf()    scanf()
+
     man 3 printf
     scanf("%s")     %s 是危险的, 越界
 
-字符输入输出函数    getchar()   putchar()
+    d,i         10进制
+    x,X         16进制无符号整数
+    o           8进制无符号整数
+    c           单一字符
+    e,E         指数形式浮点小数
+    g           e/f 中较短的一种
+    %%          %
+    -           左对齐
+    +           显示正负符号
+    #           8进制,16进制显示前导符号
+    l           d,o,x,u :       long
+    l           e,f,g   :       double
+
+    char a[] = "helloworld";
+    printf("%.5s\n",a);
+
+    12 是没有单位的, int, long short等就是单位
+    12L/12LL 也是有单位的
+
+    缓冲区
+        1. 程序结束
+        2. 强制输出缓冲区
+        3. 缓冲区满
+
+    scanf("%s",a);         // %s 很危险,不会检查越界
+
+    ```
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    int main(void){
+        int a;
+        while(1){
+            int res = scanf("%d",&a);
+            if(res == 1){
+                printf("a is : %d\n",a);            // 没有 if 的判断的话,如果输入a, 会陷入死循环, 希望得到 %d, 但是输入'a', 则持续输入缓冲区中的合法值
+            }else{
+                break;
+            }
+        }
+            exit(0);
+    }
+    ```
+
+    scanf 返回不包括 \0
+
+
+2. 字符输入输出函数    getchar()   putchar()
+
     man 3 getchar
 
-字符串输入输出函数  gets()  puts()
+    char a = getchar();
+
+
+    fputc(), putc(), and putchar() return the character written as an unsigned char cast to an int or EOF on error.
+
+    puts() and fputs() return a nonnegative number on success, or EOF on error.
+        
+        没有回车，还需要手动写个回车
+
+    fgetc(), getc(), and getchar() return the character read as an unsigned char cast to an int or EOF on end of file or error.
+
+
+
+3. 字符串输入输出函数  gets()  puts()
+
     man 3 gets  
-    gets 很危险
+
+    **gets() 很危险**
 
         gets()  reads  a  line  from  stdin  into  the buffer pointed to by s until
         either a terminating newline or EOF, which it replaces with a null byte
@@ -196,6 +316,7 @@ man 2 stat
         getline 动态内存, 不会引起越界, 但是是 gun libc
 
 
+    puts() writes the string s and a trailing newline to stdout.
 
     数字是有单位的, int , long 
 
@@ -280,6 +401,51 @@ man 2 stat
         }
         ```
 
+## 流程控制
+
+有限状态机
+    switch
+        case 常量/常量表达式
+
+if-goto
+    无条件跳转
+    不能跨函
+
+```
+int score;
+printf("Plz input score:");
+scanf("%d",&score);
+
+if(score == 100){
+    goto a;
+}else if(score == 200){
+    goto b;
+}
+a:
+    printf("100");
+b:
+    printf("200");
+}
+
+```
+
+## 数组
+
+### 1. 一维数组
+
+    [存储类型] 数据类型 key[]
+
+    变长数据要看编译器支持否
+
+    数组名：表示地址的常量, 数组的起始位置
+    不检查越界
+
+
+
+
+
+### 2. 二维数组
+### 3. 多维数组
 
 
 ## 共用体
@@ -984,3 +1150,10 @@ union test_un *p = &test_un;
 
 
 ## 静态库与动态库
+
+
+
+
+
+## 未看
+p32

@@ -2,6 +2,10 @@
 
 ## 
 
+最初叫做 c with class
+
+支持了面向对象变成和泛型编程的支持
+
 C++ 是一种静态类型的、编译式的、通用的、大小写敏感的、不规则的编程语言，支持过
 程化编程、面向对象编程和泛型编程。
 
@@ -33,9 +37,56 @@ C++：网络游戏开发、音视频技术、Socket网络通信，另外，苹�
 件公司的系统或者软件上面都支持C/C++语言的集成开发。
 
 
+## 头文件
+
+C++ 旧风格      以.h 结尾           iostream.h      C++ 程序可以调用
+C旧时风格       以.h 结尾           math.h          c/C++ 程序可用
+C++ 新风格      无扩展名            iostream        C++程序可用,使用 namespace std
+转换后的c       加上前缀c,无扩展名  cmath           C++ 程序可用，可以使用非C特性,如 namespace std
+
+```
+#include <string.h>
+#include <cstring>    c++中都可以
+
+```
+
+
+c 是弱语法语言(很多警告可以忽略)
+c++ 是强语法语言，
+
+自己的头文件，就必须
+
+
+using namespace std;
+    是指标识符的可见范围
+
+    是指标识符的可见范围。用来把单个标识符下的大量有逻辑联系的程序实体组合到一
+    起。此标识符作为此组群的名字
+
+
+
+## 三大特性
+
+1. 封装
+
+    将数据和方法打包在一起，加以权限的区分，达到安全是用的目的
+
+2. 继承
+
+    减少代码和数据冗余
+
+    有些东西是不能继承的
+
+3. 多态
+
+    一个接口，多个方法
+
+
+
 ## C/C++ 同其他语言的区别 
 
 1. 编译型语言(compiler)
+
     代表语言：C、C++、Pascal、Object-C 以及苹果的 Swift
 
 
@@ -103,19 +154,27 @@ C++：网络游戏开发、音视频技术、Socket网络通信，另外，苹�
     3. 标准模板库（STL），提供了大量的方法，用于操作数据结构等。
 
 
-
-
 ## 第一个程序
 
-   ```
-   #include <iostream>
-   using namespace std;                     // 告诉编译器使用 std 命名空间。命名空间是 C++ 中一个相对新的概念。
+    ```
+    #include <iostream>
+    using namespace std;                     // 告诉编译器使用 std 命名空间。命名空间是 C++ 中一个相对新的概念。
 
-   int main(int argc, char* argv[]){
+    int main(int argc, char* argv[]){
         cout << "hello world"<<endl;        // << 运算符用于向屏幕传多个值
         return 0;
-   }
-   ```
+    }
+
+    ---
+    #include <iostream>  
+    using namespace std;  
+    int main( ) {  
+        int age;  
+        cout << "Enter your age: ";  
+        cin >> age;  
+        cout << "Your age is: " << age << endl;     // << endl;   -> count << "\n";
+    }  
+    ```
 
    argc: arg count
    argv: arg value
@@ -125,7 +184,8 @@ C++：网络游戏开发、音视频技术、Socket网络通信，另外，苹�
 
     我们可以指定使用 C++11 来编译 main.cpp 文件
 
-        > g++ -g -Wall -std=c++11 main.cpp
+` g++ -g -Wall -std=c++11 main.cpp
+
 
 ## 注释
 
@@ -150,6 +210,187 @@ if 后可以是任意的条件语句。
 ```
 
 
+## c++ 对 c 的扩展
+
+1. :: 作用域运算符
+
+```
+#include <iostream>
+
+using namespace std;
+int a = 100;
+int main(void){
+
+    int a = 10;
+    cout << ::a << endl;        // 使用全局变量
+    exit(0);
+}
+```
+
+
+2. 命名空间
+
+    变量名，函数很可能相同
+
+    使用多个厂商的类库时
+
+    只能在全局范围内定义, 局部定义是错误的
+
+    可以嵌套
+
+
+
+    ```
+    namespace A{
+        int a = 10;
+    }
+    namespace B{
+        int a = 20;
+    }
+
+    void test(){
+        cout << "A::a ->" << A::a << endl;
+        cout << "B::a ->" << B::a << endl;
+    }
+
+    --- 嵌套
+
+    namespace A{
+        int a = 100;
+
+        namespace B{
+            int a = 200;
+        }
+    }
+
+    void test(){
+        cout << A::B::a << endl;
+    }
+
+    ```
+
+    命名空间是开放的， 可以随时加入新成员
+
+    ```
+    namespace A{
+        int a = 100;
+    }
+
+    namespace A{            // 一样的声明定义就是添加
+        int b = 200;
+    }
+    ```
+
+    命名空间也可以存放函数
+
+    ```
+    namespace A{
+        int a = 100;
+        void test(){
+            cout << a << endl;
+        }
+    }
+
+    void main(){
+        A::say();
+    }
+    ```
+
+    命名空间中的函数可以在命名空间外部定义
+
+    ```
+    namesapce A{
+        void say();             // 但是要在内部进行声明
+    }
+
+    A::void say(){
+        cout << "hello" << endl;
+    }
+    ```
+
+    无名命名空间, 意味着命名空间中的标识符只能在本文件内部访问，相当于给这个标识符加上了 static
+
+    ```
+    namespace {
+        int a = 10;
+        void say(){
+            cout << "namespace" << endl;
+        }
+    }
+
+    void test(){
+        cout << "a:" << a << endl;
+    }
+    ```
+
+    命名空间别名
+    ```
+    namespace VERY_LONG_NAME{
+        int a = 10;
+    }
+    void test(){
+        namespace A = VERY_LONG_NAME;
+        cout << A::a << endl;
+    }
+    ```
+
+## using 声明
+
+    ```
+    namespace veryLongName{
+        int a = 10;
+        void say(){ cout << "hello" << endl; }
+    }
+
+    void main(){
+        using namespace veryLongName;
+        say();
+    }
+
+    ---
+
+    void main(){
+        int a = 10;
+        using namespace veryLongName;
+        say();                              // 这个还是优先使用 a = 10;(局部)
+    }
+    ```
+
+    容易造成冲突
+
+
+使用命名空间中的具体成员
+
+    using namespace veryLong::a;            // 如果是上面一样的例子，报重复定义
+
+
+函数重载
+```
+using namespace A{
+    void say(){}
+    void say(int a){}
+    void say(int a, int b){}
+}
+
+void main(){
+    using A::say;                 // 所有重载函数就都可以使用, 没有 namespace 关键字
+    say();
+    say(1);
+    say(1,2);
+}
+```
+
+    cpp 中， 函数名和参数名组合在一起决定入口, 而 c 中函数名决定入口
+
+    std::cout << << std::endl;
+
+minGW (mini GNU for windows)
+
+## 常量
+
+1. #define
+
+2. const 修饰的变量
 
 
 ## 变量
@@ -309,7 +550,35 @@ C语言中是使用 malloc 和 free 两个函数来进行动态内存的申请�
 
 ## 数据类型
 
-### 1. 数组
+### 0. 浮点数
+
+float a = 1.3f;
+
+如果不加 f, 会先认为是 double , 然后进行转换
+整型数后边不能加f
+
+### 1. 字符串类型
+
+1. 延用 c 语言
+    
+    char a[] = "xxx";
+
+2. cpp 的
+    
+    string a = "xxx";
+
+### 2. bool
+
+bool a = true/false;
+
+    true:
+        '0'
+
+    flase:
+        0
+        0.0
+
+### 3. 数组
 
 1. 字符数组
     
@@ -317,7 +586,41 @@ C语言中是使用 malloc 和 free 两个函数来进行动态内存的申请�
     cout << char << endl;
 
 
-### 2. 结构体 struct
+随机数
+    rand()
+    rand()%100  [0,99]
+
+
+打印数组名地址
+
+```
+int a[] = {1,2,3,4,5};
+cout << a << endl;
+```
+
+2. 二维数组
+
+    int a[2][3];
+    int a[2][3] = {1,2,3,4,5,6};
+    int a[][3] = {1,2,3,4,5,6};
+    int a[2][3] = {{1,2,3},{4,5,6}};
+    
+    数组地址 a
+    第一行地址 a[0]
+    第一行第一列地址 &a[0][0]
+
+### 指针
+
+空指针
+    int *p = NULL;
+
+    空指针不可访问
+
+
+野指针
+
+
+### 4. 结构体 struct
 
     ```
     struct Student{¬
@@ -617,6 +920,13 @@ switch语句的case标签中定义变量的问题：
     x
 
 ## 函数
+
+1. 无参无返
+2. 无参有返
+3. 有参无返
+4. 有参有返
+
+
 
 不允许嵌套定义
 
