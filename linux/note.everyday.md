@@ -455,3 +455,54 @@ Linux下系统实际启动的进程名，是avahi-daemon
 
 
 内省(IntroSpector)是Java 语言针对 Bean 类属性、事件的一种缺省处理方法。　
+
+
+
+
+---
+
+2022-04-08
+
+https://blog.csdn.net/weixin_33367083/article/details/114323657
+mac 挂载 nfs 需要服务器开启 insecure 选项
+    (/etc/exports) 这里的配置文件必须要加入 insecure 参数,否则Mac OS 一直报找不到服务器的错误。
+    /nfsdata 192.168.22.1/26(rw,sync,insecure,no_root_squash)
+
+    apt install nfs-kernel-server
+
+
+windows 挂载 linux 系统
+
+    [DiskInternals Linux Reader](https://www.diskinternals.com/linux-reader/)
+
+    Data Recovery Software
+
+
+mac 安装字体
+
+    前往 / 应用程序 / 字体册 /
+        菜单栏的文件 / 添加字体 / 打开(选择字体)
+
+
+ps打开老是未响应 等待时间长
+
+    进入ps cc 的安装文件夹，找到CRWindowsClientService.exe 删除掉试
+
+    这个问题由 AdobeCreative Cloud辅助程序引起！
+    Adobe Creative Cloud用于支持软件运行的相关功能，这个出现异常，可能是禁止网络或者延迟运行引起的，一般选择重新安装Adobe Creative Cloud即可解决！Adobe Creative Cloud同时检测软件的正版授权问题！
+    简单处理方法：
+    一、采用【Process 程序进程管理大师】把其拉入黑名单，彻底禁止运行！
+    二、进入AdobePhotoshop CC 2019的安装文件夹，找到CRWindowsClientService.exe文件，右键【压缩并删除它】！
+
+
+centos7挂载samba
+    yum install cifs-utils
+    mount -t cifs -o username=“root”,password=“” //ip/共享文件夹名字 /挂载点
+
+    https://blog.csdn.net/ly2020_/article/details/90647086
+
+    SMB（Server Message Block）又称CIFS(Common Internet File System),一种应用层
+    网络传输协议（微软（Microsoft）和英特尔(Intel)在1987年制定的协议），由微软
+    开发，主要功能是使网络上的机器能够共享计算机文件、打印机、串行端口和通讯等
+    资源。
+

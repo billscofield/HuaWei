@@ -14,6 +14,8 @@
 2. ` Unpack houdini-19*.tar.gz (tar -xzvf)
     Run "./houdini.install" (without "") and follow instructions ..
 
+    ./houdini.install --auto-install --accept-EULA 2021-10-13
+
 3. Before Starting Houdini, you must first set up the shell environment.
 
     At a C shell prompt (csh, tcsh, bash), type the following:

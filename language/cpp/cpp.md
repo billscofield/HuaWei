@@ -4,7 +4,7 @@
 
 最初叫做 c with class
 
-支持了面向对象变成和泛型编程的支持
+支持了面向对象变成和**泛型编程**的支持
 
 C++ 是一种静态类型的、编译式的、通用的、大小写敏感的、不规则的编程语言，支持过
 程化编程、面向对象编程和泛型编程。
@@ -385,6 +385,372 @@ void main(){
     std::cout << << std::endl;
 
 minGW (mini GNU for windows)
+
+
+
+cpp语法检查增强1
+
+``` c 可以，但是 cpp 报错
+#include <stdio.h>
+#include <stdlib.h>
+
+int a = 10;                 // 有赋值， 是定义, c 是弱语法语言, C++ 是强语法语言
+int a;                      // 没有赋值， 是声明, 但是在函数中不能这么做
+
+int main(void){
+    printf("%d\n",a);
+    exit(0);
+}
+```
+
+cpp语法检查增强2
+
+c 语言中，函数形参可以不写类型, cpp 不可以
+
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+void say(i){
+    printf("%d\n",i);
+}
+
+int main(void){
+    int a = 10;
+    say(a);
+    exit(0);
+}
+
+```
+
+c 函数没有参数建议写 void
+
+
+cpp 更严格的类型转换
+
+    cpp 不同类型的变量一般是不能直接赋值的，需要相应的强转。
+
+    ```
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    typedef enum COLOR{ GREEN, RED, YELLOW  } color;
+
+    int main(){
+        color mycolor = GREEN;
+        mycolor = 10;
+        printf("%mycolor:%d\n",mycolor);
+    }
+    ```
+
+
+
+结构体 struct 的增强
+
+    1. c 中定义结构体变量需要使用 struct 关键字， cpp 可以不加
+
+    2. c 中 struct 只能定义成员变量， 不能定义成员函数，
+        cpp 中 struct 既可以定义成员变量，也可以定义成员函数
+
+    ```
+    #include <stdio.h>
+    #include <stdlib.h>
+
+    struct stu{
+        int num;
+        char name[32];
+    };
+
+    int main(){
+        struct stu danny = {100,'danny'};
+    }
+
+    --- c++ 
+
+    #include <iostream>
+    using namespace std;
+
+    struct stu{
+        int num;
+        char name[32];
+    };
+
+    int main(){
+        struct stu danny = {1,"danny"};
+        cout << danny.name << endl;
+    }
+
+
+    --- cpp 定义成员函数
+
+    #include <iostream>
+
+    using namespace std;
+
+    struct stu{
+        int num;
+        char name[32];
+        void say(){
+            cout << "this is say" << endl;
+        };
+    };
+
+    int main(){
+        struct stu danny = {1,"danny"};
+        danny.say();
+    }
+    
+    ```
+
+
+新增 bool 关键字
+
+    c89没有 bool类型，include <stdbool.h>; c99 有 bool 类型
+    
+    标准 cpp 的 bool 类型有两种内建的常量 true(转换为整数1) 和 false (转换为整数0)
+
+    占用1个字节大小
+
+    给 bool 赋值时， 非零值自动转换为 true(1), 零值会自动转换为 false(0)
+
+
+三目运算符增强
+
+    c 中，返回值为右值
+
+    **cpp 中，返回值是变量本身(引用), 为左值，可以对其赋值**
+
+    ```
+    #include <iostream>
+    using namespace std;
+
+    int main(){
+        int a = 10;
+        int b = 100;
+        a > b ? a : b = 1000;
+        cout << b << endl;
+    }
+    ```
+
+    只能放在右边的是右值
+
+    左值(Lvalue) L 代表 Location, 表示内存可以寻址，可以赋值
+    右值(Rvalue) R 代表 Read, 就是可以知道它的值
+
+    ` int temp = 10;
+
+    temp 在内存中有地址，10没有，但是可以 read 到它的值
+
+
+## C++ 中的 const 的扩展
+    
+const 最初在 cpp 中采用，而后才被引进 c 语言
+
+c 语言中, 不能改变的普通**变量**
+    只读变量,分配内存, 不能通过变量名进行赋值(写操作)
+
+    但是可以通过地址进行写操作
+
+    ` const int a =10; 类型是  cont int *, 所以要： int *p = (int * ) a;
+
+    const 修饰的是变量名, 不是这块内存
+
+    ```
+    #include <stdio.h>
+    
+    int main(void){
+        const int a = 100;      // 这个变量不能是全局变量，否则报段错误( 全局变量在**文字常量区**,是只读的 ; 局部变量分配在栈区，栈区是可读可写的)
+        int *p =(int *) &a;
+        *p = 10;
+        printf("%p -> %d\n",&a, a);
+    }
+    ```
+    c语言的 const 修饰全局变量的时候默认是**外部连接的(其他源文件可以使用)**
+
+    ```
+    a.c
+    #include <stdio.h> const int a = 10;
+    
+    b.c
+    #include <stdio.h>
+    extern const int a;
+    ```
+
+cpp 中的 const
+
+    c 中，一个 const 总是需要一块内存空间，在 c++ 一个 const 不一定分配内存空间
+
+    在 cpp 中， 是否为 const 常量分配内存空间依赖于如何使用。一般来说，如果一个 const 仅仅用来把一个名字用一个值代替(就像 define 一样), 那么该存储空间就不必创建
+
+    **出现在所有函数之外的 const 作用于当前文件(在文件外不可见), 默认为内部连接，cpp 中其他的标识符一般默认为外部连接**
+    
+    const 修饰的全局变量，默认是内部连接(c 是外部连接)
+
+    在另外一个文件中:
+        
+        ` extern int a;             // 错误, 内部连接
+        
+        ` extern int a = 100;       // 这样就不会报错，认为是定义, 只读变量定义
+
+    如果必须要在其他文件中使用:
+        要在定义处 声明为外部连接
+        
+        ` extern const int num = 100;
+        
+        这样就可以在其他文件中使用了
+
+
+    开辟空间的情况
+
+        0. 基础数据类型放到符号表
+        
+        1. 当对 a 取地址的时候，系统才会给 a 开辟空间!!!
+        
+        ```
+        #include <iostream>
+        using namespace std;
+        void say(){
+            const int a = 100;      // a 存在于符号常量表中
+            // 当对 a 取地址的时候，系统才会给 a 开辟空间!!!
+            int *p = (int *)&a;
+            *p = 99;
+            cout << a << endl;
+        }
+        int main(void){
+            say();
+        }
+        ```
+        
+        区别对待
+         
+            对于基础数据类型，也就是 const int a = 10; 这种，编译器会把它放到符号表中，不分配内存，当对其取地址时，会分配内存
+            
+            符号表类似宏，key-value
+            
+            所以在 cpp 中， const int a 可以看作是常量
+        
+        2. 当以变量的方式初始化 const 修饰的变量，系统会为其开辟空间, 而不会放到符号表
+            
+            int b = 10;
+            const int a = b;
+            
+            可以用 指针修改
+        
+        3. 对于自定义数据类型，比如类对象，结构体, 系统会为其分配空间
+            
+        ```
+        struct person{
+            int num;
+            char name[32];
+        }
+        
+        const person tom={11,'tom'};
+        cout << tom.num << " " << tom.name << endl;
+        person *p = (person *)&p
+        p->num = 20;                                // 不能通过 tom.num = 20 来修改
+        ```
+
+尽量用 const 替换 define
+    
+    方便排查问题, 预处理阶段就会完成替换
+
+宏的作用于是文件, 而 const 要根据情况而定,
+    1. 大括号
+        const 在这个域中
+        define 从定义开始到结束, 如果在函数中，函数不必运行
+
+    宏不能作为命名空间的成员, const 可以
+
+
+
+## 引用
+
+cpp 中能用引用绝不用指针
+
+引用是 cpp 对 c 的重要扩充。 在 cpp 和 c 中，指针的作用基本都是一样的, 但是 cpp
+增加了另外一种给函数传递地址的途径，这就是按引用传递(pass-by-reference), 他也存
+在于其他一些编程语言中，并不是 cpp 的发明
+
+变量实际上是一段连续内存空间的别名
+
+引用可以作为一个**已定义的变量的别名**
+
+int a = 10;
+int &b = num;       // 必须初始化, b 是 a 的别名
+
+引用一旦初始化就不能再次修改(只有在定义的时候表示引用)
+
+    int a = 10;
+    int &b = num;
+    int A = 100;
+    b = A;          // 这个是将 A(100) 赋值给 a;
+
+[引用和指针的区别](https://zhuanlan.zhihu.com/p/140966943)
+
+
+引用作用于数组,给数组起别名
+
+    方法一:
+        int a[5] = {1,2,3,4,5};
+        int (&mya)[5] = a;              // 优先级
+
+    方法二:(配合 type)
+        int a[5] = {1,2,3,4,5};
+            typedef int TYPE_ARR[5];
+            TYPE_ARR &myA = a;
+
+
+            ```
+            void swap(int &a, int &b){
+                int temp = a;
+                a = b;
+                b = temp;
+            }
+            ```
+
+引用作为函数的返回值
+
+    给函数的返回值取别名
+    
+    ```
+    int& mydata(){
+        int num = 10;
+        return num;
+    }
+
+    void main(){
+        int $res = mydata();        // res 是 num 的别名
+    }
+    ```
+
+    ---
+
+    函数的返回值是引用时，不要返回局部变量，这个变量会是非法的
+    或加 static
+
+    当函数返回值作为左值，那么函数的返回值类型必须是引用
+
+    ```
+    int& say(){
+        static int a = 10;
+        cout << static << endl;
+    }
+
+    say() = 200;
+    say();
+    ```
+
+    运算符重载时用的较多
+
+
+引用的本质
+
+    本质是常量指针
+
+    ```
+    int * const ref = &val;         // const 修饰 ref 指针， 指针就不能保存其他地址
+    ```
+
 
 ## 常量
 

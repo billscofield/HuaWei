@@ -582,3 +582,8 @@ apt install -y percona-toolkit
 
 apt install -y brasero
 apt install -y k3b
+
+
+
+
+pip install percol

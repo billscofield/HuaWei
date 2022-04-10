@@ -5,6 +5,10 @@
 
 夸平台的 C++ 图形用户界面应用程序框架.
 
+qt库
+    PyQ5 是干儿子
+    Pyside2 是亲儿子
+
 ## Qt 的发展
 
 1. 1991 年 QT 最早由芬兰**奇趣科技**开发
@@ -60,8 +64,9 @@
 
 在线安装, onlineinstall 版本号
 
+## 工具链
 
-## Qt Creator
+### 1. Qt Creator
 
 集成开发环境
 可管理项目代码、具有可视化设计界面
@@ -98,6 +103,50 @@ F4
     第二个单词开始首字母大写
 
 **每一个类文件都对应一个同名的头文件, 类型,头文件和类命名相同**
+
+/opt/Qt/6.2.4/gcc_64/include/QtWidgets/QApplication
+    ` #include "qapplication.h"
+
+
+开启 vim
+
+    
+
+### 2. qt 帮助手册
+
+[link](https://www.bilibili.com/video/BV1Wf4y1Y7uh?spm_id_from=333.999.0.0)
+
+1. assistant 命令
+    qt network
+    qt sql
+
+    Index -> qapplication
+
+    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x.h
+    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x           -> #include "x.h"
+
+    The **QObject** class is the base class of all Qt objects
+
+    inherit
+
+    QObject class       // 最顶层的
+
+### 3. qmake(构建器)
+
+### 4. designer
+
+### 5. uic(Qt转换器)
+
+.ui 文件不能直接用
+
+uic a.ui -o a.h
+
+### 6. rcc(qt 资源编译器)
+
+### 7. moc(qt元对象编译器)
+
+语法扩展转换为标准cpp的文件
+
 
 
 ## Qt 框架
@@ -149,22 +198,6 @@ QT下 cannot find -IGL的解决办法
 
     > apt install libgl1-mesa-dev
 
-
-
-## qt 帮助手册
-
-[link](https://www.bilibili.com/video/BV1Wf4y1Y7uh?spm_id_from=333.999.0.0)
-
-1. assistant 命令
-    qt network
-    qt sql
-
-    Index -> qapplication
-
-    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x.h
-    > /opt/Qt/6.2.2/gcc_64/include/QtCore/x           -> #include "x.h"
-
-    The **QObject** class is the base class of all Qt objects
 
 
 ## Qt Widgets Application
@@ -273,7 +306,7 @@ connect(信号的发送者, 具体信号, 信号的接收者,信号的处理(槽
     3. 可以有参数,可以重载
 
 ```teacher.h
-signals:
+signals:                // 只需要些定义，也只能写定义
     void hungry();
 ```
 
@@ -304,6 +337,39 @@ connect(tea,&Teacher::hungry,stu,&Student::treat);
 
 
 
+---
+
+```
+class XX:public QObject{
+    Q_OBJECT
+
+    signals:
+        void slot_funct(...);           信号函数只需声明，不能写定义
+};
+
+
+class XX:public QObect{
+    Q_OBJECT
+
+    public slots:
+        void slot_func(...){...}        // slot function
+};
+
+槽函数可以连接到某个信号上，当信号被发射时，槽函数将被触发和执行，另外槽函数也可以当作普通的成员函数直接调用
+
+连接
+    QObject::connect(const QObject * sender, const char * signal, const QObject * receiver, const char * method)
+
+    sender: 信号发送对象指针
+    signal: 要发送的信号函数，可以使用 "SIGNAL()" 宏新型类型转换
+    receiver: 信号的接收对象指针
+    method: 接收信号后要执行的槽函数，可以使用"SLOT()" 宏进行类型转换
+```
+
+信号和槽函数
+    1. 1 对 1
+    2. n 对 1
+    3. 两个信号可以直接连接(信号级联), 信号传递、级联
 
 #### 图形化
 
@@ -403,3 +469,43 @@ QT 对 c++ 字符串的封装
     QString str1;
     str1 = str1.asprintf("%s","welcome");
     ```
+
+
+
+## 手工
+
+1. 创建项目文件夹
+
+    mkdir Hello
+
+2. 进入项目文件夹，写源代码
+
+    vi main.cpp
+
+3. 构建工程
+    
+    qmake -project      // 生成工程文件(Hello.pro)
+
+    需要添加构建选项， QT += widgets    头文件和库文件
+
+4. 创建 Makefile
+
+    执行 qmake , 可以根据上一步的工程文件自动生成 Makefile
+
+5. 编译链接
+    
+    执行 make, 即可完成编译和链接
+
+    修改源代码后直接执行 make 即可
+
+6. 测试
+
+    执行 ./Hello   默认名字和工程名字一样
+
+
+
+new 对象如果制定了父窗口指针，可以不写 delete, 在父窗口对象销毁时，会自动销毁
+
+
+
+
