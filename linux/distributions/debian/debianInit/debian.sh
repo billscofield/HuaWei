@@ -249,6 +249,7 @@ cd /git/software/vim/ || exit
   --enable-gtk2-check \
   --enable-gtk3-check \
   --enable-gnome-check \
+  # 试试 -enable-gui=gtk3 \
   --enable-gui=gtk2 \
   --enable-cscope \
   --enable-luainterp \
@@ -291,6 +292,10 @@ git clone https://gitee.com/billscofield/taglist.git                ~/.vim/bundl
 git clone https://gitee.com/billscofield/vim-gitgutter.git          ~/.vim/bundle/vim-gitgutter
 git clone https://gitee.com/billscofield/vim-fugitive.git           ~/.vim/bundle/vim-fugitive
 git clone https://gitee.com/billscofield/vim-surround.git           ~/.vim/bundle/vim-surround
+
+# Vi IMproved - enhanced vi editor (dummy package)
+# to achive gtk syntax highlight
+apt install vim-gtk
 
 
 

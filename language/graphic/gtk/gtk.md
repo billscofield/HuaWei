@@ -21,9 +21,20 @@ Windows: MinGW
 
     pkg-config --cflags --libs gtk+-3.0
 
+代码编辑器
+
+    // to achive gtk syntax highlighting
+    apt install vim-gtk
+
+    为了在编写代码时不出现一些报错信息，将下列信息包含在了 .zshrc 中， 也是通过 pkg --cflags 得到的
+
+    ```
+    export C_INCLUDE_PATH=/usr/include/gtk-3.0:/usr/include/at-spi2-atk/2.0:/usr/include/at-spi-2.0:/usr/include/dbus-1.0:/usr/lib/x86_64-linux-gnu/dbus-1.0/include:/usr/include/gtk-3.0:/usr/include/gio-unix-2.0:/usr/include/cairo:/usr/include/pango-1.0:/usr/include/fribidi:/usr/include/harfbuzz:/usr/include/atk-1.0:/usr/include/cairo:/usr/include/pixman-1:/usr/include/uuid:/usr/include/freetype2:/usr/include/libpng16:/usr/include/gdk-pixbuf-2.0:/usr/include/libmount:/usr/include/blkid:/usr/include/glib-2.0:/usr/lib/x86_64-linux-gnu/glib-2.0/include
+    ```
+
 图形界面
 
-    ? apt-get install glad
+    apt-get install glad
 
 一些gtk官方的例子来
 
