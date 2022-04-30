@@ -293,6 +293,10 @@ git clone https://gitee.com/billscofield/vim-gitgutter.git          ~/.vim/bundl
 git clone https://gitee.com/billscofield/vim-fugitive.git           ~/.vim/bundle/vim-fugitive
 git clone https://gitee.com/billscofield/vim-surround.git           ~/.vim/bundle/vim-surround
 
+git clone https://gitee.com/billscofield/gtk-vim-syntax.git         ~/.vim/
+mkdir ~/.vim/after && mv ~/.vim/gtk-vim-syntax/c.vim.example ~/.vim/after/c.vim
+mv ~/.vim/syntax ~/.vim/bundle
+
 # Vi IMproved - enhanced vi editor (dummy package)
 # to achive gtk syntax highlight
 apt install vim-gtk

@@ -158,3 +158,5 @@ stag命令
 
 
 
+gtk:
+    ctags --c-kinds=+p --fields=+S -R /usr/include/gtk-3.0

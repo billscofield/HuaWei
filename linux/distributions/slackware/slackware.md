@@ -32,3 +32,15 @@ slackpkg install xxx
         选择 install from a slackware CD or DVD
 
     3. 选择安装包
+
+
+
+---
+
+## 分区
+
+1. efi
+    
+
+2. root
+

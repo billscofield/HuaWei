@@ -34,7 +34,7 @@ Windows: MinGW
 
 图形界面
 
-    apt-get install glad
+    apt-get install glade
 
 一些gtk官方的例子来
 
