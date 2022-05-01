@@ -133,8 +133,29 @@ C语言标准长期以来几乎没有变化，Qt要适应C++标准，应该要�
 
 ## action
 
+https://zetcode.com/gui/gtk2/firstprograms/
+
 
 g_print
+
+
+makefile
+
+```
+.PHONY = clean
+CC = gcc
+MAINC = demo01.c
+EXEC = demo01_elf
+
+CFLAGS = `pkg-config --cflags --libs gtk+-3.0`  // 不能用 $() 这种方式
+
+main:
+    $(CC) -o $(EXEC) $(MAINC) $(CFLAGS)
+
+clean:
+    rm -rf $(EXEC)
+
+```
 
 ### First programs in GTK+
 
@@ -209,3 +230,806 @@ int main(int argc, char *argv[]) {
 
 If we do not position the window ourselves, the **window manager** will
 position it for us. In the next example, we will center the window.
+
+The gtk_window_set_title function sets a window title. If we do not set a title
+ourselves, the GTK+ will use a name of a source file as a title.
+
+
+### The application icon
+
+Most window managers display the icon in the left corner of the titlebar and
+also on the taskbar.
+
+```
+#include <gtk/gtk.h>
+
+GdkPixbuf *create_pixbuf(const gchar * filename) {
+
+    GdkPixbuf *pixbuf;
+    GError *error = NULL;
+    pixbuf = gdk_pixbuf_new_from_file(filename, &error);
+
+    if (!pixbuf) {
+        fprintf(stderr, "%s\n", error->message);
+        g_error_free(error);
+    }
+
+    return pixbuf;
+}
+
+int main(int argc, char *argv[]) {
+
+    GtkWidget *window;
+    GdkPixbuf *icon;
+
+    gtk_init(&argc, &argv);
+
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+    gtk_window_set_title(GTK_WINDOW(window), "Icon");
+    gtk_window_set_default_size(GTK_WINDOW(window), 230, 150);
+    gtk_window_set_position(GTK_WINDOW(window), GTK_WIN_POS_CENTER);
+
+    icon = create_pixbuf("web.png");  
+    gtk_window_set_icon(GTK_WINDOW(window), icon);
+
+    gtk_widget_show(window);
+
+    g_signal_connect(G_OBJECT(window), "destroy",
+            G_CALLBACK(gtk_main_quit), NULL);
+
+    g_object_unref(icon);    
+
+    gtk_main();
+
+    return 0;
+}
+```
+
+1. The gdk_pixbuf_new_from_file function creates a new pixbuf by loading an
+   image from a file. The file format is detected automatically. If NULL is
+   returned, then an error will be set.
+
+2. The gtk_window_set_icon displays the icon for the window. The create_pixbuf
+   creates a GdkPixbuf from a PNG file.
+
+   ```
+   icon = create_pixbuf("web.png");
+   gtk_window_set_icon(GTK_WINDOW(window), icon);
+   ```
+
+3. The g_object_unref decreases the reference count of the pixbuf object. When
+   its reference count drops to 0, the object is finalized (i.e. its memory is
+   freed).
+
+   ` g_object_unref(icon);
+
+### 窗口大小
+
+1. gtk_widget_set_size_request
+
+```
+gtk_widget_set_size_request(
+    GtkWidget* widget,
+    gint width,
+    gint height
+)
+```
+
+    Sets the minimum size of a widget; that is, the widget’s size request will
+    be at least width by height. You can use this function to force a widget to
+    be larger than it normally would be.
+
+    In most cases, gtk_window_set_default_size() is a better choice for
+    toplevel windows than this function; setting the default size will still
+    allow users to shrink the window. Setting the size request will force them
+    to leave the window at least as large as the size request. When dealing
+    with window sizes, gtk_window_set_geometry_hints() can be a useful function
+    as well.
+
+2. gtk_window_set_default_size
+
+```
+void
+gtk_window_set_default_size (
+    GtkWindow* window,
+    gint width,
+    gint height
+)
+```
+
+    The default size of a window only affects the first time a window is shown;
+    if a window is hidden and re-shown, it will remember the size it had prior
+    to hiding, rather than using the default size.
+
+    Windows can’t actually be 0x0 in size, they must be at least 1x1, but
+    passing 0 for width and height is OK, resulting in a 1x1 default size.
+
+3.  gtk_window_set_resizable
+
+```
+void
+gtk_window_set_resizable (
+    GtkWindow* window,
+    gboolean resizable
+)
+```
+
+Windows are user resizable by default.
+
+4. gtk_window_resize
+
+```
+void
+gtk_window_resize (
+    GtkWindow* window,
+    gint width,
+    gint height
+)
+
+```
+
+    gtk_window_resize() always affects the window itself, not the geometry
+    widget.
+
+
+5. gtk_window_set_geometry_hints    // [dʒiˈɑːmətri] 几何; [hɪnt] 提示
+6. gtk_window_set_default_geometry
+
+
+7.  gtk_window_set_position
+
+```
+void
+gtk_window_set_position (
+    GtkWindow* window,
+    GtkWindowPosition position
+)
+
+GTK_WIN_POS_NONE                No influence is made on placement.
+GTK_WIN_POS_CENTER              Windows should be placed in the center of the screen.
+GTK_WIN_POS_MOUSE               Windows should be placed at the current mouse position.
+GTK_WIN_POS_CENTER_ALWAYS       Keep window centered as it changes size, etc.
+GTK_WIN_POS_CENTER_ON_PARENT    Center the window on its transient(短暂的) parent (see gtk_window_set_transient_for()).
+```
+
+
+
+### widget show
+
+1.  gtk_widget_show_all (
+
+```
+void
+gtk_widget_show_all (
+    GtkWidget* widget
+)
+```
+
+    Recursively shows a widget, and any child widgets (if the widget is a
+    container) .
+
+2.  gtk_widget_show
+
+```
+void
+gtk_widget_show (
+    GtkWidget* widget
+)
+```
+
+3. gtk_widget_hide
+
+5. 
+
+
+
+
+### Tooltip
+
+A tooltip is a small rectangular window, which gives a brief information about
+an object. It is usually a GUI component; it is part of the help system of the
+application.
+
+
+
+### 数据类型
+
+1. 整数类型
+    
+    gint8, guint8, gint16, guint16, gint32, guint32, gint64, guint64
+
+2. gshort， glone, gint 和 short, long, int 相同
+
+3. gboolean: TRUE/FALSE
+
+4. gchar 和 char 相同
+
+5. gfloat, gdouble 和 float,double 完全相同
+
+6. 指针 gpointer 和 void * 相同
+    
+    const gpointer == const void *
+
+
+
+### 控件
+
+容器控件
+    只能容纳一个控件
+        如窗口,按钮
+
+    能容纳多个控件
+        如布局控件
+
+非容器控件
+    如标签，行编辑
+
+
+### 按钮
+
+1. gtk_button_new_with_label
+
+2. gtk_check_button_new_with_label
+
+3. gtk_radio_button_new_with_label
+
+4. gtk_toggle_button_new_with_label
+
+5. gtk_button_get_label
+
+    Fetches the text from the label of the button, as set by
+    gtk_button_set_label(). If the label text has not been set the return value
+    will be NULL. This will be the case if you create an empty button with
+    gtk_button_new() to use as a container.
+
+
+6. gtk_container_add
+
+
+使能
+
+```
+void gtk_widget_set_sensitive (
+    GtkWidget* widget,
+    gboolean sensitive
+)
+```
+
+Sets the sensitivity of a widget. A widget is sensitive if the user can
+interact with it. Insensitive widgets are “grayed out” and the user can’t
+interact with them. Insensitive widgets are known as “inactive”, “disabled”, or
+“ghosted” in some other toolkits.
+
+
+```
+void
+gtk_container_add (
+    GtkContainer* container,
+    GtkWidget* widget
+)
+```
+
+    Adds widget to container.
+
+    Typically used for simple containers such as GtkWindow, GtkFrame, or
+    GtkButton;
+
+    for more complicated layout containers such as GtkBox or GtkGrid, this
+    function will pick default packing parameters that may not be correct.  So
+    consider functions such as gtk_box_pack_start() and gtk_grid_attach() as an
+    alternative to gtk_container_add() in those cases.
+
+    A widget may be added to only one container at a time; you can’t place the
+    same widget inside two different containers.
+
+    Note that some containers, such as GtkScrolledWindow or GtkListBox, may add
+    intermediate children between the added widget and the container.
+
+
+
+### 信号与回调
+
+窗口关闭时触发的常用信号
+    destroy
+    delete_event
+
+按钮常用信号
+    clicked
+    pressed
+    released
+
+
+1. g_signal_connect (
+
+```
+gulong g_signal_connect (
+    gpointer instance,
+    const gchar *detailed_signal,
+    GCallback c_handler,
+    gpointer data
+)
+```
+
+instance            - The instance to connect to.
+detailed_signal     - A string of the form “signal-name::detail”.
+c_handler           - The GCallback to connect.
+data                - Data to pass to c_handler calls. 传给回调函数的数据
+
+
+```
+g_signal_connect(
+    window,
+    "destroy",
+    GCallback(gtk_main_quit),
+    NULL
+)
+
+
+#include <gtk/gtk.h>
+
+void sayHello(GtkButton* button,int * argv){
+    printf("hello %d\n",*argv);
+    
+}
+
+int main(int argc, char* argv[]){
+    GtkWidget * window;
+    GtkWidget * button;
+
+    gtk_init(&argc, &argv);
+
+    window = gtk_window_new(GTK_WINDOW_TOPLEVEL);
+
+    button = gtk_button_new_with_label("hello world");
+    gtk_container_add((GtkContainer*)window, button);
+
+    int a = 3;
+
+    g_signal_connect(window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
+    g_signal_connect(button,"clicked",G_CALLBACK(sayHello),&a);
+
+    gtk_widget_show_all(window);
+    gtk_main();
+
+    return 0;
+}
+```
+
+
+## 布局
+
+1. 水平布局 GtkHBox
+
+2. 垂直布局 GtkVBox
+
+3. 表格布局 GtkTable
+
+4. 固定布局 GtkFixed
+
+5. GtkBox
+
+
+### 1. GtkHBox
+
+```
+GtkWidget* gtk_hbox_new (
+    gboolean homogeneous,   // [ˌhoʊməˈdʒiːniəs]  同性质的, 大小一致
+    gint spacing            // 控件之间的间隔
+)
+
+---
+
+GtkWidget * hbox = gtk_hbox_new(TRUE,5);
+gtk_container_add((GtkContainer *)window,hbox);
+gtk_container_add((GtkContainer *)hbox,button1);
+gtk_container_add((GtkContainer *)hbox,button2);
+
+```
+
+### 2. GtkVBox
+
+```
+GtkWidget* gtk_vbox_new (
+    gboolean homogeneous,
+    gint spacing
+)
+
+```
+
+
+### 3. GtkTab
+
+```
+GtkWidget* gtk_table_new (
+    guint rows,
+    guint columns,
+    gboolean homogeneous
+)
+
+GtkTab 不用 gtk_container_add
+
+void gtk_table_attach_defaults (
+    GtkTable* table,                    //
+    GtkWidget* widget,                  //
+    guint left_attach,                  //
+    guint right_attach,                 //
+    guint top_attach,                   //
+    guint bottom_attach                 //
+)
+
+
+
+  0      1    2
+    +----+----+
+    | A  | B  |
+  1 +----+----+
+    | C  | D  |
+  2 +----+----+
+    |    E    |
+  3 +----+----+
+
+
+    用的是边界, 例如
+
+        A:  0,1,0,1 (先左右，后上下)
+        B:  1,2,0,1
+        C:  0,1,1,2
+        D:  1,2,1,2
+        E:  0,2,2,3
+
+
+```
+
+
+
+### 4. GtkFixed
+
+```
+GtkWidget* gtk_fixed_new ( void)
+
+
+void gtk_fixed_put (
+    GtkFixed* fixed,
+    GtkWidget* widget,
+    gint x,
+    gint y
+)
+
+```
+
+
+widget  GtkWidget
+
+    The widget to add.
+
+    The data is owned by the caller of the function.
+
+x   gint
+    The horizontal position to place the widget at.
+
+y   gint
+    The vertical position to place the widget at.
+
+### 5. GtkBox
+
+```
+GtkWidget* gtk_box_new (
+    GtkOrientation orientation,
+    gint spacing
+)
+
+
+
+void gtk_box_pack_start (
+    GtkBox* box,
+    GtkWidget* child,
+    gboolean expand,
+    gboolean fill,
+    guint padding
+)
+
+```
+
+### 6. 网格布局 GtkGrid
+
+```
+GtkWidget* gtk_grid_new (
+    void
+)
+
+void gtk_grid_attach (
+    GtkGrid* grid,
+    GtkWidget* child,
+    gint left,
+    gint top,
+    gint width,
+    gint height
+)
+```
+
+
+### 6. 综合布局
+
+行编辑(文本框)
+
+```
+GtkWidget* gtk_entry_new ( void)
+```
+
+显示模式
+
+```
+void gtk_entry_set_visibility (
+    GtkEntry* entry,
+    gboolean visible                // FALSE 为密码模式
+)
+```
+
+you probably want to set GtkEntry:input-purpose to GTK_INPUT_PURPOSE_PASSWORD
+or GTK_INPUT_PURPOSE_PIN to inform input methods about the purpose of this
+entry, in addition to setting visibility to FALSE.
+
+
+```
+void gtk_entry_set_text (
+    GtkEntry* entry,
+    const gchar* text
+)
+
+Sets the text in the widget to the given value, replacing the current contents.
+
+```
+
+
+
+
+void gtk_entry_buffer_set_text (
+    GtkEntryBuffer* buffer,
+    const gchar* chars,
+    gint n_chars
+)
+
+Sets the text in the buffer.
+
+This is roughly equivalent to calling gtk_entry_buffer_delete_text() and
+gtk_entry_buffer_insert_text().
+
+Note that n_chars is in characters, not in bytes.
+
+
+
+
+guint gtk_entry_buffer_delete_text (
+    GtkEntryBuffer* buffer,
+    guint position,
+    gint n_chars
+)
+
+Deletes a sequence of characters from the buffer. n_chars characters are
+deleted starting at position. If n_chars is negative, then all characters until
+the end of the text are deleted.
+
+If position or n_chars are out of bounds, then they are coerced to sane values.
+
+Note that the positions are specified in characters, not bytes.
+
+
+
+
+
+guint gtk_entry_buffer_insert_text (
+    GtkEntryBuffer* buffer,
+    guint position,
+    const gchar* chars,
+    gint n_chars
+)
+
+Inserts n_chars characters of chars into the contents of the buffer, at
+position position.
+
+If n_chars is negative, then characters from chars will be inserted until a
+null-terminator is found. If position or n_chars are out of bounds, or the
+maximum buffer text length is exceeded, then they are coerced to sane values.
+
+Note that the position and length are in characters, not in bytes.
+
+
+信号
+    activate 回车触发
+
+
+## 图片按钮
+
+图片控件
+
+    0. gtk_button_new();
+
+        button 也是一个控件， gtk_button_new_with_label 已经有了
+
+    1. gtk_image_new_from_file
+
+        ```
+        GtkWidget* gtk_image_new_from_file (
+            const gchar* filename
+        )
+        ```
+        
+        Creates a new GtkImage displaying the file filename. If the file isn’t
+        found or can’t be loaded, the resulting GtkImage will display a “broken
+        image” icon. This function never returns NULL, it always returns a
+        valid GtkImage widget.
+
+    2. gtk_button_set_image
+
+        ```
+        void gtk_button_set_image (
+            GtkButton* button,
+            GtkWidget* image
+        )
+        ```
+        
+        Set the image of button to the given widget. The image will be
+        displayed if the label text is NULL or if GtkButton:always-show-image
+        is TRUE. You don’t have to call gtk_widget_show() on image yourself.
+        
+        会有一个边界线，设置透明可以使消失
+
+
+设置按钮透明背景色
+
+    gtk_button_set_relief
+
+    ```
+    void gtk_button_set_relief (
+        GtkButton* button,
+        GtkReliefStyle relief
+    )
+    ```
+
+
+### 图片资源对象 GdkPixbuf
+
+1. 图片资源对象的创建
+
+```
+GdkPixbuf * gdk_pixbuf_new_from_file(
+    const gchar *filename,
+    GError **error
+)
+```
+2. 设置图片的大小
+
+```
+GdkPixbuf *gdk_pixbuf_scale_simple(
+    const GdkPixbuf *src,
+    int dest_width,
+    int dest_height,
+    GdkInterpType interp_type
+)
+```
+
+    GdkInterpType 是一个枚举变量，标志图片的加载速度和质量，常用 GDK_INTERP_BILINEAR
+
+3. gtk_image_new_from_pixbuf(A,B)
+
+
+4. 释放资源
+
+    void g_object_unref(GtkObject *object);
+
+5. 重新设置一张图片
+
+```
+void gtk_image_set_from_pixbuf(
+    GtkImage *image,
+    GdkPixbuf *pixbuf
+)
+```
+
+6. gtk_image_new_from_pixbuf(A,B)
+
+
+
+### 进度条
+
+```
+GtkWidget* gtk_progress_bar_new (
+    void
+)
+
+
+void gtk_progress_bar_set_fraction (
+    GtkProgressBar* pbar,
+    double fraction                     // 分数，小数
+)
+
+Causes the progress bar to “fill in” the given fraction of the bar.
+
+The fraction should be between 0.0 and 1.0, inclusive.
+```
+
+
+### 滚动窗口 GtkScrolledWindow
+
+
+1. Creates a new scrolled window.
+
+```
+GtkWidget* gtk_scrolled_window_new (
+    GtkAdjustment* hadjustment,
+    GtkAdjustment* vadjustment
+)
+```
+
+
+
+1. Sets the scrollbar policy for the horizontal and vertical scrollbars.
+
+```
+void gtk_scrolled_window_set_policy (
+    GtkScrolledWindow* scrolled_window,
+    GtkPolicyType hscrollbar_policy,
+    GtkPolicyType vscrollbar_policy
+        GTK_POLICY_ALWAYS               the scrollbar is always present;
+        GTK_POLICY_NEVER                the scrollbar is never present;
+        GTK_POLICY_AUTOMATIC            the scrollbar is present only if needed
+)
+```
+
+
+Sets the border width of the container.
+
+```
+void gtk_container_set_border_width (
+    GtkContainer* container,
+    guint border_width
+)
+
+```
+
+The border width of a container is the amount of space to leave around the
+outside of the container. The only exception to this is GtkWindow; because
+toplevel windows can’t leave space outside, they leave the space inside. The
+border is added on all sides of the container. To add space to only one side,
+use a specific GtkWidget:margin property on the child widget, for example
+GtkWidget:margin-top.
+
+
+
+
+### 分栏列表
+
+### 定时器
+
+Sets a function to be called at regular intervals, with the default priority,
+G_PRIORITY_DEFAULT
+
+```
+guint g_timeout_add (
+    guint interval,             // milliseconds
+    GSourceFunc function,       // Function to call.
+    gpointer data               // Data to pass to function.
+                                   The argument can be NULL.
+                                   The data is owned by the caller of the function.
+)
+```
+
+
+移除计时器
+
+Removes the source with the given ID from the default main context. You must
+use g_source_destroy() for sources added to a non-default main context.
+
+The ID of a GSource is given by g_source_get_id(), or will be returned by the
+functions g_source_attach(), g_idle_add(), g_idle_add_full(), g_timeout_add(),
+g_timeout_add_full(), g_child_watch_add(), g_child_watch_add_full(),
+g_io_add_watch(), and g_io_add_watch_full().
+
+
+
+```
+gboolean g_source_remove (
+    guint tag
+)
+```
+
