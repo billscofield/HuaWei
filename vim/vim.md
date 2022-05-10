@@ -1,22 +1,26 @@
+据说Emacs是神的编辑器，而Vim是编辑器之神
+
 ## [History of Emacs and vi Keys](http://xahlee.info/kbd/keyboard_hardware_and_key_choices.html)
 
 ### 1. 为什么 Vim 使用 hjkl 移动光标
 
 [link](http://xahlee.info/kbd/ADM-3A_terminal.html)
 
-ADM-3A Terminal, first shipped in 1976.
+typewriter
+
+**ADM-3A Terminal**, first shipped in 1976.
 This is the machine that begot the vi editor.
 
 
-ADM-3A设备使用HJKL键在vi编辑器及其后代中移动光标。它在这四个键上印有光标移动箭
-头。Vim是源自Vi也是使用相同的HJKL键作为方向键。
+ADM-3A 设备使用 HJKL 键在 vi 编辑器及其后代中移动光标。它在这四个键上印有光标移
+动箭头。Vim 是源自 Vi 也是使用相同的HJKL键作为方向键。
 
-ADM-3A是一个早期视频显示终端在1976年引入的,这是由利尔西格勒(Lear-Siegler)制造,
-具有12英寸的屏幕显示的80个字符12个或24行。它创下了995美元的新行业低单价。由于计
-算机通信速度的快速提高，以及由于需要廉价的操作员控制台而向市场推出的新型小型计
-算机系统，它很快在商业上取得了成功。
+ADM-3A 是一个早期视频显示终端在1976年引入的,这是由**利尔西格勒(Lear-Siegler)**
+制造,具有12英寸的屏幕显示的80个字符12个或24行。它创下了995美元的新行业低单价。
+由于计算机通信速度的快速提高，以及由于需要廉价的操作员控制台而向市场推出的新型
+小型计算机系统，它很快在商业上取得了成功。
 
-### 2. 为什么要用字符 ~ 来表示home目录
+### 2. 为什么要用字符 ~(tilde) 来表示home目录
 
 同样是 ADM-3A, 这种机器上波浪号和“home”键（用于把光标移动到最左端）正好在同一个
 键上。
@@ -46,6 +50,8 @@ UNIX                ed
     ed 现在是 POSIX 规范的一部分，所以如果你有一个符合 POSIX 的系统，你的电脑上
     就安装了 ed 。
 
+    可移植操作系统接口(Portable Operating System Interface of UNIX)
+
     ed 是一个真正的行编辑。它被广泛应用于电传打字机时代。
 
 George Coulsuris    em
@@ -53,12 +59,15 @@ George Coulsuris    em
     在 1975 年，一个名叫 George Coulouris 的人在伦敦玛丽皇后学院的 Unix 系统上
     开发了一个改进版 ed 。Coulouris 利用他在玛丽女王学院的视频显示器开发他的编
     辑器。与 ed 不同的是，Coulouris 的程序允许用户编辑在屏幕中的一行代码，通过
-    一次次击键的方式来操作行（想象一下在 Vim 中每次编辑一行）。 Thompson 拜访玛
-    丽女王学院时，看到 Coulouris 已经写好的程序，驳斥道他不需要在编辑文件的时候
-    看到它的状态。受此启发，Coulouris 将他的程序命名为 em(editor for mortals
-    [ˈmɔːrtl])，"为凡人而生的编辑器"。
+    一次次击键的方式来操作行（想象一下在 Vim 中每次编辑一行）。
+
+    Thompson 拜访玛丽女王学院时，看到 Coulouris 已经写好的程序，驳斥道他不需要
+    在编辑文件的时候看到它的状态。受此启发，Coulouris 将他的程序命名为
+    em(editor for mortals [ˈmɔːrtl])，"为凡人而生的编辑器"。
 
 Bill Joy            ex/vi
+
+    开创了 Sun 公司，Java, Solaris 系统, spark cpu, BSD Unix
 
     在伯克利，Coulouris 遇到了 Bill Joy，一名伯克利软件发行公司（BSD）的研究生。
     Coulouris 斯向Joy 展示了 em， Joy 以 Coulouris 的源代码为基础，为扩展 ed 建
@@ -84,7 +93,9 @@ Bram Moolenaar      vim
     而后来由于加入的特性越来越多，也越来越受到人们的喜爱和欢迎，因此他也顺势将
     Vim 的名字全称改为了 Vi IMproved，意为 Vi 的增强版本
 
+    Open Source Software
 ## 
+
 
 :h vimtutor
 :h user-manual
