@@ -238,3 +238,18 @@ Sysprep 命令行选项
 10. answerfile
 
     指定要使用的答案文件的路径和文件名。
+
+
+
+## 备份系统
+
+dism (Deployment Image Servicing and Management)
+
+dism /capture-image 
+     /imagefile:c:\win10refimg.wim
+     /capturedir:c:\
+     /name:"win10 reference image"
+
+/imagefile command determine that path which the image will save it.
+
+/Capturedir specify the directory which the image was applied.

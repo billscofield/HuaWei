@@ -7,11 +7,64 @@ powershell 是 cmd 的扩展
 
 PS: Power Shell
 
+Windows Management Framework(windows 管理框架, WMF)
+
+    跨平台
+
+
+dotnet framework
+
+    
 
 CMD中输入 powershell
 
 
 $psveriontable   // 版本
+    echo $psveriontable
+
+    win7 是 2.0 本本
+
+    win8, 2012 是 3.0 版本
+
+    win10 是 4.0 版本
+
+远程管理
+
+    是通过 http/https 协议
+
+    WinRM 协议
+
+## 开发工具
+
+1. visual studio
+
+2. Powershell ise
+
+
+
+
+## 
+
+get-service     动词-名词
+    -name alg
+
+
+get-help
+    get-help get-service
+
+    update-help
+        -UICulture zh-cn
+
+
+[-name] <string>        必须的
+
+[-name <string>]        非必须的
+
+[-name <string>[]]      非必须的, 接受多个 string 类型的参数
+
+
+get-verb        获取动词的列表
+
 
 
 ## 数学运算
