@@ -280,7 +280,7 @@ git clone https://gitee.com/billscofield/nerdcommenter              ~/.vim/bundl
 git clone https://gitee.com/billscofield/vim-go                     ~/.vim/bundle/vim-go
 git clone https://gitee.com/billscofield/vim-indent-guides          ~/.vim/bundle/vim-indent-guides
 git clone https://gitee.com/billscofield/tagbar                     ~/.vim/bundle/tagbar
-git clone https://gitee.com/billscofiled/vim-airline                ~/.vim/bundle/vim-airline
+git clone https://gitee.com/billscofiled/vim-airline  jjj              ~/.vim/bundle/vim-airline
 git clone https://gitee.com/billscofield/vim-airline-themes         ~/.vim/bundle/vim-airline-themes
 git clone https://gitee.com/billscofield/vim-multiple-cursors       ~/.vim/bundle/vim-multiple-cursors
 git clone https://gitee.com/billscofield/webapi-vim                 ~/.vim/bundle/webapi-vim

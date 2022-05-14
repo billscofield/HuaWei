@@ -369,3 +369,15 @@ LC_ALL=
 发现是 C, 更改为和 Linux 一样的
     
     ` export LCA_ALL=en_US.UTF-8
+
+##  autojump
+
+1. 安装zsh：sh -c "$(curl -fsSL https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+2. 将zsh设置成默认的shell：chsh -s /bin/zsh (重启shell)
+3. echo $SHELL可以查看用的哪个shell（bash or zsh）
+4. 安装autojump：brew install autojump（确保有brew）
+5. 使用vim .zshrc打开.zshrc（有些人会找不到.zshrc这个文件，其实安装了zsh才会有.zshrc ，在默认打开的终端目录下。可以打开终端并且ls -a查看）。
+
+    a. 找到 plugins=，在后面添加autojump：plugins=(git autojump)
+    b. 新开一行，添加：[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; . $(brew --prefix)/etc/profile.d/autojump.sh
+    c. :wq保存退出，重启终端。
