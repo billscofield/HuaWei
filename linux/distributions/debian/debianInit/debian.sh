@@ -203,6 +203,9 @@ apt install -y zathura
 #apt update
 #apt install -y typora
 
+# marktext
+# https://github.com/marktext/marktext/blob/develop/docs/LINUX.md
+
 
 
 
@@ -535,6 +538,12 @@ apt install -y dlocate
 # rpm2cpio - tool to convert RPM package to CPIO archive
 apt install -y rpm2cpio
 
+
+# POSIX Programmer's Manual
+# this is non-free, so you  need to add non-free to your aptfile
+# deb http://mirrors.tuna.tsinghua.edu.cn/debian/ bullseye main contrib non-free
+
+apt install manpages-posix manpages-posix-dev
 
 
 

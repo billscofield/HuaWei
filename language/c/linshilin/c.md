@@ -17,11 +17,42 @@ short, long, long long, unsigned 修饰符
 long a = 100L;          因为100是 int 型的
 long long a = 400LL;
 
-char 没有规定是不是有符号的
+char 标准没有规定是不是有符号的
 
 float: 4bytes, 6位精度
     1           8       23
     符号位， 小数位，指数位
+
+    double          8Byte
+    long double     16Byte
+
+    **精度不是跟类型相关的, 浮点数最小精度有一个公式**
+
+    非零即真
+
+
+
+## 指针数组
+
+```
+char (*p)[N] 和 char *p[N]
+
+[]的优先级高于*
+
+char *p[N]
+    指针数组，数组有N个元素
+    p是一个有N个元素的数组，元素的类型是 char *
+
+char (*p)[N]
+    指向一维数组的指针，一维数组只能有N个元素
+    p是一个指针，指向一个有 N 个 char 元素的数组
+
+
+原文链接：https://blog.csdn.net/weixin_44020995/article/details/123378138
+```
+
+
+
 
 
 ## 跨平台
@@ -36,6 +67,12 @@ float: 4bytes, 6位精度
 |   
 |               int32_t j;
 |               这样在所有平台都是32位了
+
+    int32_t
+    int16_t
+    int64_t
+    uint32_t
+
 
 指针
 
@@ -60,6 +97,8 @@ printf("%hhd\nt")  char      half half
 printf 变参函数, 取决于格式化个数
     int printf(const char *format, ...);
 
+    printf("%f",float)
+    printf("%lf",double)
 
 
 **键盘 -> kernel -> 标准 I/O 缓冲区 -> scanf("%d",&a); -> 放入指定的内存**
@@ -70,12 +109,34 @@ printf 变参函数, 取决于格式化个数
 
     如果输入的数据非法，搬运工 scanf 则立刻返回0, 数据没有被搬走
 
+
+    +--------+
+    | Kernel |      <----- 键盘
+    +--------+      |
+    |        |     \|/
+    | User   |      |
+    | +---+  |
+    | | B |  |      标准IO缓冲区buffer(stdio)
+    | +---+  |
+    |        |
+    | scanf  |
+    |        |
+    +--------+
+
     ```
     int a;
     while(1){
         int ret = scanf("%d",&a);
+
+        if(ret == 2 && getchar() == '\n')
+            break;
+
+        printf("try again...");
         
-        while(getchar() != '\n')
+        while(getchar() != '\n')       // 清空非法字符
+        {
+            ;
+        }
     }
     ```
 
@@ -496,48 +557,111 @@ strcat(s1,s2)
 strncat(s1,s2,5)
 
 
+字符数组名是常量，所以除了在声明时初始化，其他地方不能初始化,只能修改某个值
+
+```
+char *p  = "hello";     // 常量
+char a[] = "world";     // 字符数组
+
+strcpy(p,"hi");         // not ok: [1]    1362364 segmentation fault  ./a.out
+strcpy(a,"hi");         // ok
+```
+
 
 ## 指针
 
-    ```
-    int *p;
 
-    *p 要放一个 int 类型的地址
+```
+int *p;
 
-
-    int **q;
-
-    *q
-    和数组一样，* 是个**指针标记**, 要放一个(int *)地址到 q 里边
-
-    一个什么样的地址呢? 
-    int *   的地址
+*p 要放一个 int 类型的地址
 
 
+int **q;
 
-    一个变量的类型：在定义的位置，把变量本身去掉，就是他的类型
+*q
+和数组一样，* 是个**指针标记**, 要放一个(int *)地址到 q 里边
 
-        int *p  的类型就是 int *
+一个什么样的地址呢? 
+int *   的地址
 
 
 
-    float f[5] = {1,2,3,4,5};
-    float f   [5] = {1,2,3,4,5};
-    float (*p) [5];                     // **必须要有小括号**
-    p = &f;                             // 指向的是整个 f[5]
+一个变量的类型：在定义的位置，把变量本身去掉，就是他的类型
 
-    f[2] = 20;
-    (*p)[2] = 20;
+    int *p  的类型就是 int *
 
-    ---
-    float f[5] = {1,2,3,4,5};
-    float *p = f;
-    f[1];
-    ```
+
+
+float f[5] = {1,2,3,4,5};
+float f   [5] = {1,2,3,4,5};
+float (*p) [5];                     // **必须要有小括号**
+p = &f;                             // 指向的是整个 f[5]
+
+f[2] = 20;
+(*p)[2] = 20;
+
+---
+float f[5] = {1,2,3,4,5};
+float *p = f;
+f[1];
+```
+
+
+指针在C语言中所涉及的运算有四种:
+
+```
+1. 指针标记
+
+2. 赋值，强转
+
+3. 取值
+
+4. 解引用
+
+```
+
+星号的四种用法
+
+```
+1. 指针标记
+
+2. 解引用
+
+3. 乘法运算
+
+4. 多行注释
+```
+
+
+
+1. 常量指针
+
+```
+const int *p;
+int const *p;
+```
+
+2. 指针常量
+
+```
+int *const p;
+```
+
+3. 常量(指针常量)
+
+```
+const int *const p;
+```
+
+
 
 ### 函数指针(存放函数的指针)
 
 ```
+char *argv[]
+
+
 int sump(int a, float b);
 int (*p) (int a, flaot b);              // 和数组一样
 p = &sump;
@@ -545,6 +669,8 @@ p = &sump;
 sump(1,2);
 (*p)(1,2);
 ```
+
+数据是有类型的，数据是有单位的
 
 
 ### 二级指针
@@ -591,21 +717,31 @@ p2 = &p;
 
 void  可以赋值给任何类型
 
-` double *p = malloc(20 * sizeof(double));
+```
+double *p = malloc(20 * sizeof(double));
+
+void *p = mallow(20);
+*p = 1                  // 不可以哈，因为还没有类型
+    
+```
 
 
 
 ### 空指针
 
+```
 就是0地址
 
 int *p = NULL;      // NULL 宏
-int *p = 0;         // 
+int *p = 0;         // 可读性很差
 
-int *a = {1,2,3};   // 这样不行, why???, 直接这么样用，应该是一个块, 而不是数组，但是 "xsb" 这肯定是个数组
+int *a = {1,2,3};   // 这样不行, why???, 直接这么样用，应该是一个代码块, 而不是数组，但是 "xsb" 这肯定是个数组
 
 
 Linux 规定 0地址 - 0x08048000 (32bit)不可访问，没有任何敏感数据
+
+
+```
 
 
 ### 数组和指针的转换 + 多维数组
@@ -619,52 +755,59 @@ Linux 规定 0地址 - 0x08048000 (32bit)不可访问，没有任何敏感数据
 
     int *p = a;
 
-    printf("%ld\n",sizeof(a));          // 20
+    printf("%ld\n",sizeof(a));          // 20, 是这个数组
     printf("%ld\n",sizeof(p));          // 4   指针就是指针
 
     其他都是一样的
     ```
+
+int a[2][3]
+    int a[2]
+    int (a[2]) [3]
 
 
 ### const
 
 最不名副其实的关键字
 
-const int a;        // 只读的变量
+const int a;        // 名称: 只读的变量
 int const b;
+
+    define 的话没有类型，直接替换
 
 ```
 char c = 'w';
 
 
-1. 使得不能通过p 来修该其目标
+1. 使得不能通过 p 来修该其目标
 
-const char *p = &c;         // const 就是来修饰 char 的
-char const *p = &c;         // const 就是来修饰 char 的
+    const char *p = &c;         // const 就是来修饰 目标 的
+    char const *p = &c;         // const 就是来修饰 目标 的
 
 
+    const 修饰的是中间的箭头, **不能通过 p 来修改 c**
 
-const 修饰的是中间的箭头, **不能通过 p 来修改 c**
+    +------+            +-----+
+    |0xaaaa|----------->| 'w' |
+    +------+            +-----+
+        p                  c
 
-+------+            +-----+
-|0xaaaa|----------->| 'w' |
-+------+            +-----+
-    p                  c
+        * 是指针标志, p 是地址, const 修饰的是 *p, 即值不能变
 
 
 
 2. 使得 p 本身不能被修改
 
-char *const p = &c;         // const 修饰 p 的
+    char *const p = &c;         // const 修饰 p 的, 所以 p 不能变
 
-+-------------+
-|   +------+  |         +-----+
-|   |0xaaaa|--|-------->| 'w' |
-|   +------+  |         +-----+
-|       p     |            c
-|             |
-+-------------+
-    const
+    +-------------+
+    |   +------+  |         +-----+
+    |   |0xaaaa|--|-------->| 'w' |
+    |   +------+  |         +-----+
+    |       p     |            c
+    |             |
+    +-------------+
+        const
 ```
 
 
@@ -675,6 +818,8 @@ char *const p = &c;         // const 修饰 p 的
 #include <stdio.h>
 
 int main(int argc, char *argv[]){
+int main(int argc, char * (*argv) ){
+int main(int argc, char **argv){
 
     pirntf("argc: %d\n",argc);
 
@@ -702,6 +847,8 @@ readelf -S a.out
 ### 作用域 链接类型 存储期(生命周期)
 
 1. 作用域(scope)
+
+    空间角度
     
     1. 代码快作用域(局部变量)
 
@@ -760,6 +907,8 @@ readelf -S a.out
         
         静态数据,程序退出才会清空， 优先使用局部变量，堆内存
 
+        全局变量默认是外部链接的
+
     2. 内部链接类型(仅仅本文件可见)
      
         1. 隐藏
@@ -772,37 +921,39 @@ static ivoid say(void){;}
 
     3. 无链接类型
         
-        运行时才确定的变量(局部变量)
+        **运行时才确定的变量(局部变量)**
         
         连接时就要确定地址，还没有运行，就已经存在了
 
-    函数都是静态的
-    变量可以使静态的也可以是动态的
+    函数都是静态的数据
 
-    少用静态数据，程序结束才可以回收
+    变量可以使静态的数据也可以是动态的数据
+
+    少用静态数据
+        容易产生呢个冲突
+        一直存在内存中，程序结束才可以回收
 
 
 3. 存储期(生命周期)
+
+    时间角度 
 
     什么时候分配的内存，什么时候回收的内存
 
     1. 自动存储期,被存放在栈上
 
-    ```
-    
-    ```
 
     2. 静态存储期，被存放在**数据段中**
-
-        全局变量, 加不加 static 都是静态数据，放在数据段
+        
+        全局变量, 加不加 static 都是静态数据，放在数据段, .data .rodata
         
         static 局部变量
 
     3. 动态存储期，被存放在堆中
-
+        
         malloc(20)
         free();
-
+            归还这片内存的所有权
 
 
 ### 进程内存布局详细剖析
@@ -811,17 +962,20 @@ static ivoid say(void){;}
 #include <stdio.h>
 #include <stdlib.h>
 
-int global1 = 30;   // .data 数据段
-int global2;        // .bss 数据段
+int global1 = 30;   // .data 段
+int global2;        // .bss 段
 
-int main(int argc, char * argv[]){          // .text 正文段
+int main(int argc, char * argv[]){          // .text 段
 
     int a = 100;            // 栈
     int *p = malloc(20);    // 堆
+
+    static int b = 20;      // .data 段
+    static int c;           // .bss 段
     
     printf("hello");        // 标准 IO 缓冲区
     sleep(1);
-    fflush(stdout);
+    fflush(stdout); 或者 printf("\n");
 
     return 0;
 
@@ -833,11 +987,11 @@ nm - list symbols from object files
 readelf -S a.out
 
 |                                                                           +---------------------------------
-|                                                                           |   运行时栈
+|                                                                           |   运行时栈(局部变量)
 |                                                                           |- - - - - - - - - - - - - ------
 |                                                                           |       |
 |                                                                           |      \|/
-|                                                                           |
+|                                                                           |           标准IO缓冲区
 |                                                                           |
 |                                                                           |      /|\
 |                                                                           |       |
@@ -845,25 +999,28 @@ readelf -S a.out
 |                                                                           |   运行时堆
 |                                                                           |
 |                                                                           |
-|       .bss(Block Started by Symbol)                                                                |
-|
-|           BSS段属于静态内存分配
-|
-|           该段用于存储未初始化的全局变量或者是默认初始化为0的全局变量，
-|           它不占用程序文件的大小，可是占用程序执行时的内存空间。
-|
+|       5. .bss(Block Started by Symbol)                                    |
+|                                                                           |
+|           BSS段属于静态内存分配                                           |
+|                                                                           |
+|           该段用于存储未初始化的全局变量或者是默认初始化为0的全局变量，   |
+|           它不占用程序文件的大小，可是占用程序执行时的内存空间。          |
+|                                                                           |
 |           自动生成的                                                      |
 |                                                                           |
-|           未初始化的静态数据                                              |
+|           1. 未初始化的静态数据                                           |
 |               全局变量                                                    |
 |               static修饰的局部变量                                        |
 |                                                                           |
 |               静态数据没有初始化的情况下，会被自动初始化为零              |
 |               char a[1000];                                               |
 |                                                                           |
+|           2. 初始化为零的静态数据                                         |
+|                                                                           |
 |       ---
+|
 |       
-|       4. .data                                                                程序运行时，1234 拷贝到内存
+|       4. .data                                                                **程序运行时，1234 拷贝到内存**
 |           已初始化的静态数据
 |           
 |           用于存储初始化的全局变量，初始化为0的全局变量出于编译优化的策略还是被保存在BSS段
@@ -880,26 +1037,75 @@ readelf -S a.out
 |       1. .init
 |           启动代码，每个程序都一样的
 |           传递环境变量等给我们的程序
+|           
 |       
 
 
 ```
 
 
+要使用外部的一个函数
+    当前文件, 对于这个外部函数,声明时 extern 可写可不写
 
-
-
-对于函数  exter 可写可不写
-对于变量，一定要写
+要使用外部的一个变量
+    当前文件, 对于这个外部变量，声明是 extern 一定要写
 
 
 ## static
 
-static 全局变量
+1. static 修饰全局变量
+
     本文件私有
 
-static 函数
+    全局变量始终是存在静态区的, 有没有 static 没影响
+
+    改变的是全局变量的链接类型
+
+2. static 修饰函数
+
     本文件私有
+
+3. static 修饰局部变量
+    
+    本来是自动存储期，在栈上
+
+    有了static 就是静态存储期，存在 .data或者 .bss段
+
+    改变的是变量的存储期
+
+
+### free 函数唯一的参数是一个指针，而指针实际上是一个地址（整数）
+
+堆内存分配器大致可能有十余种算法实现，但归根结底都要在这个地址上做文章。内存分
+配的本质就是管理地址空间。
+
+一个比较常见的实现，是在 malloc 的时候多分配 sizeof(size_t) 的内存，在这个
+size_t 里面保存实际尺寸，并且在返回的时候，把地址向右偏移 sizeof(size_t)。free
+的时候，先把入参地址向左偏移 sizeof(size_t)，就得到了实际分配地址，而此处解引用
+就能得到实际尺寸。于是这块内存就可以回收到管理结构中了。伙伴算法应该就是这样做
+的。
+
+    +-----------------+-----------------------------+
+    | 多分配的 size_t | 实际穿的参数(我们需要的)    |
+    +-----------------+-----------------------------+
+
+断错误: 访问非法的内存地址
+
+bzero, explicit_bzero - zero a byte string
+
+` void bzero(void *s, size_t n);
+
+The  bzero()  function erases the data in the n bytes of the memory starting at
+the location pointed to by s, by writing zeros (bytes containing '\0') to that
+area.
+
+
+malloc
+
+calloc
+
+realloc
+    有可能涉及数据的迁移
 
 
 
@@ -909,7 +1115,29 @@ static 函数
 
 永远不能返回形参，局部变量的地址
 
-argument, parameter
+实参argument    形参parameter
+
+    两者是相对独立的
+
+    
+## 数组形参 函数的类型 
+
+是指针，指向首元素的指针
+
+
+void fun(char a[2][3])
+void fun(char (a[2]) [3])
+void fun(char (a[]) [3])
+void fun(char (*a) [3])         // 指向 int [3] 的指针
+    **[3] 中的数字 3 是不能省略的， 因为是 指针a 的类型 char [3]**
+
+    ```
+    char * argv[]
+
+    char * (argv[])
+
+    char * (*argv)
+    ```
 
 
 
@@ -1404,3 +1632,13 @@ include
         
         ar rcs libxxx.a a.o
         ar rcs libxxx.a *.o
+
+
+
+
+
+---
+
+
+
+变量声明为变量在内存准备好空间

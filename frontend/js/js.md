@@ -1,14 +1,22 @@
 
-## 
+# js
+
 编译型语言
+
     优点: 速度快
+
     缺点: 移植性不好
+
     C, C++
 
 解释型语言
-    优点: 速度慢
-    缺点: 移植性好
+
+    缺点: 速度慢
+
+    优点: 移植性好
+
     特点: 单线程
+
     javascript, php, python
 
     单线程:同一时间做一件事叫
@@ -41,6 +49,7 @@
 
 
 
+
 ECMAScript
 
 DOM 操作文档
@@ -48,8 +57,11 @@ DOM 操作文档
 BOM 操作浏览器
 
 
+## JS 的两个特点
 
-单线程：轮转时间片, 每个任务去争抢时间片, 和吃饭吃菜一样
+1. 解释性
+
+2. 单线程：轮转时间片, 每个任务去争抢时间片, 和吃饭吃菜一样
 
 
 IE          trident
@@ -61,10 +73,10 @@ Safari      webkit
 
 
 
-<script> 可以写在任何位置
+<script type="text/javascript"> 可以写在任何位置</script>
 
 
-<script src='out.js'>   //外部的生效
+<script  type="text/javascript" src='out.js'>   //外部的生效
     in  //内部的失效
 </script>
 
@@ -75,9 +87,11 @@ document.write('helloworld')
 ## 基本语法
 
 强类型,弱类型
+
     容忍隐式类型转换
 
 静态类型,动态类型
+
     可以更换类型
     a = 'h'
     a = 1
@@ -85,9 +99,10 @@ document.write('helloworld')
 弱类型, 动态类型
 
 ### 原始类型
+
 Number
-    int     没有
-    float   没有
+    int     没有, typeof  是 number
+    float   没有, typeof  是 number
 String      优先级比number高, '123'+2 = 1232 只有是+连接的时候, '23' * 3 是number 
 Boolean     true/false
 undefined   没有赋值的(不会报错), 没有定义的(会报错)
@@ -108,6 +123,7 @@ typeof 返回
     Number(null)        -> 0
     Number(undefined)   -> NaN
     Number('123abc')    -> NaN
+    Number(true)        -> 1
     **Number 不管你输入是什么，都要转为数字，不行的话就NaN**
 
     parseInt()  把输入转为整型
@@ -217,28 +233,44 @@ heap 堆
     堆内存: 栈内存中放堆内存的地址
 
 
+https://www.jb51.net/article/214562.htm
+
+**在变量对象中的数据发生复制行为时，系统会自动为新的变量分配一个新值。
+
+引用类型的复制同样也会为新的变量自动分配一个新的值保存在变量对象中，但不同的是，
+这个新的值，仅仅只是引用类型的一个地址指针。
+
 
 
 ## 错误
+
 1. 语法错误
+
     一行都不会执行
 
 1. 逻辑错误
+
     一个<script>中的错误 不会影响 另一个<script>的执行
 
 
 
 
 ## 运算符
+
 1. +
+
     数学运算
+
     字符串连接
 
 1. /
+
     0/0 返回 NaN        数字类型
+
     1/0 返回 Infinity   数字类型
 
 1. %
+
     取模
 
 
@@ -392,6 +424,7 @@ console.log(max)
 
 
 ## 对象
+
 var info = {
     name:'liujiao',
     age:30,         //最后一个逗号可有可无
@@ -402,6 +435,7 @@ info['name']
 
 
 ## 数学
+
 Math.sqrt()
 变量.toFixed(小数位数)
 
@@ -436,10 +470,12 @@ isNaN()
 函数参数可以不一致
 
 形参比实参多
+
     多余的形参值为undefined
 
 实参比行参多
-    可以, 多余的实参放到了 arguments 实参列表中
+
+    可以, arguments 实参列表中
     形参的长度: 函数名.length
 
     function say(a,b){
@@ -470,6 +506,7 @@ return
     
 
 ## 预编译
+
 一切声明的全局变量均归 window 所有, 即全局的域
 未经声明的变量归 window 所有
 

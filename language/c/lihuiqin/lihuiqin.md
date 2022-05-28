@@ -831,7 +831,22 @@ void 指针类型
         int i,j;
         float f;
         char ch;
-    }
+    };
+
+
+    无名结构体
+    struct simple_st{
+        int i,j;
+        float f;
+        char ch;
+    }a,b,c,*p;
+
+    无名结构体并初始化
+    struct simple_st{
+        int i,j;
+        float f;
+        char ch;
+    }a,b={,,},c,*p;
     ```
 
 3. 嵌套定义
@@ -855,15 +870,16 @@ struct student_st{
         int year;
         int month;
         int day;
-    };
-    collage_date;
+    }collage_date;                      // 这里是定义, 必须要写
     int chinese;
 };
 ```
 
 4. 定义变量(变量，数组，指针), 初始化及成员引用
 
-    成员引用
+    和数组一样，声明初始化，或者声明+单个赋值
+
+    1. **成员引用**
         变量名.成员名
 
         ```
@@ -883,15 +899,17 @@ struct student_st{
         }
         ```
 
-    可以只初始化部分元素
+    **可以只初始化部分元素**
     
     ```
-    struct student_st liu = {.math=99};
+    struct student_st liu = {.math=99};     // "." 引用当前结构体中的某个成员
     ```
 
-    还可以用指针, 使用箭头 
+    2. **还可以用指针, 使用箭头**
+        
         指针->成员名
-        (*指针).成员名
+        
+        (*指针).成员名                      // 就不是第一个成员了
     
     ```
     struct student_st liu = {.name="liu"}
@@ -900,6 +918,7 @@ struct student_st{
     ```
 
     数组
+        
         ```
         struct student_st liu[2] = {{.name="liu"},{.name="wang"}};
         p = &liu[0];            //
@@ -910,19 +929,19 @@ struct student_st{
 
 5. 占用内存空间大小
 
-    内存对齐, 占据大小为 address/sizeof(成员)
+    内存对齐, 占据大小为 address % sizeof(成员)
     ```
     struct simp_st{
-        int i;              0/sizeof(int)   ok->占用4Byte
-        char ch;            4/sizeof(char)  ok->占用1Byte
-        float f;            5/sizeof(float) no  空
-                            6/sizeof(flaot) no  空
-                            7/sizeof(flaot) no  空
-                            8/sizeof(flaot) ok ->占用4Byte
+        int i;              0 % sizeof(int)   ok->占用4Byte
+        char ch;            4 % sizeof(char)  ok->占用1Byte
+        float f;            5 % sizeof(float) no  空
+                            6 % sizeof(float) no  空
+                            7 % sizeof(float) no  空
+                            8 % sizeof(float) ok ->占用4Byte
     };                      所以一共占用13
     ```
 
-    但是也可以不对齐
+    但是也可以不对齐(例如网络传输的时候,socket)
     ```
     struct simp_st{
         int i;              0/sizeof(int)   ok->占用4Byte
@@ -932,8 +951,10 @@ struct student_st{
     ```
 
 6. 传参
+
+    1. 值
     
-    指针方式
+    2. 指针方式
        truct simp_st a;
        truct simp_st *p = &a;
        func(p);
@@ -1151,7 +1172,61 @@ union test_un *p = &test_un;
 
 ## 静态库与动态库
 
+man string.h            // POSIX Programmer's Manual
 
+静态库不占用运行时间
+
+动态库会占用运行时间
+
+
+1. 静态库
+    libxx.a
+    xx 名字
+
+    ar - create, modify, and extract from archives
+
+    ar -cr libxx.a yyy.o
+        会生成两个文件， .a 和 .h, 分别放到对应的目录
+
+    /usr/local/include      .h
+    /usr/local/lib          二进制的库
+
+    使用
+        gcc -L/usr/local/lib -o main main.o -lxx
+            -l 必须写在最后
+
+2. 动态库
+
+    ldd - print shared object dependencies
+
+    libxx.so
+
+    gcc -shared -fpic -o libxx.so yyy.c
+
+    
+    配置文件
+        /etc/ld.so.conf
+            include /etc/ld.so.conf.d/*.conf
+            /etc/ld.so.conf.d
+                ├── fakeroot-x86_64-linux-gnu.conf
+                ├── libc.conf
+                └── x86_64-linux-gnu.conf
+                    /usr/local/lib/x86_64-linux-gnu¬
+                    /lib/x86_64-linux-gnu¬
+                    /usr/lib/x86_64-linux-gnu¬
+
+        更改完后要运行  /sbin/ldconfig 进行生效
+
+    使用
+        gcc -I/usr/local/include -L/usr/local/lib -o xxx -lxx
+
+
+    非root用户发布
+        1. cp libxx.so ~/lib
+        2. export LD_LIBRARY_PATH=~/lib
+
+    
+    貌似只有标准库才不用写 -lxxx
 
 
 
