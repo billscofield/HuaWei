@@ -15,3 +15,14 @@ systemctl restart autofs
 
 vi /etc/auto.rhome
     testuser -rw,sync   10.0.0.1:/working
+
+
+
+## problems
+
+1. showmount -e 127.0.0.1 报错，提示：clnt_create: RPC: Program not registered
+
+service rpcbind stop
+service nfs stop
+service rpcbind start
+service nfs start

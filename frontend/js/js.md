@@ -1,6 +1,12 @@
 
 # js
 
+后端 Nodejs
+桌面程序 Electron
+APP Cordova
+控制硬件-物联网 Ruff
+游戏开发 coscos2d-js
+
 编译型语言
 
     优点: 速度快
@@ -51,10 +57,19 @@
 
 
 ECMAScript
+    欧洲计算机制造商协会
 
 DOM 操作文档
 
 BOM 操作浏览器
+
+
+
+浏览器:
+    渲染引擎
+        chrome:blink 老版本的 webkit
+    JS引擎
+        chrome 的 V8
 
 
 ## JS 的两个特点
@@ -71,6 +86,11 @@ Opear       presto
 Safari      webkit
 
 
+
+
+行内
+内嵌
+外部
 
 
 <script type="text/javascript"> 可以写在任何位置</script>
@@ -285,14 +305,16 @@ var a = 2,
 
 b %= a + 3; 返回3, 右边作为一个整体
 
-
-window.prompt("请输入")
+windows.alert()
+window.prompt("请输入"[,"默认值"])
+console.log()
 
 类型转换
     parseInt
     
 
 
+name 这个标识符有特殊含义，尽量不要用
 
 
 ## 条件语句
@@ -444,6 +466,15 @@ Math.sqrt()
 
 isNaN()
     先将参数转化为Number,然后看是否是NaN
+
+
+```
+function random(min, max) {
+  const num = Math.floor(Math.random() * (max - min + 1)) + min;
+    return num;
+    
+}
+    ```
 
 
 
