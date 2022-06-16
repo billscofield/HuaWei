@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+#content{
+    width: 300px;
+    height: 200px;
+    border: 1px solid green;
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h3>该页面是测试 ajas 的基本使用</h3>
+    <button id='btn'>点我发送请求</button>
+    <div id="content">
+
+    </div>
+
+
+    <script>
+        const btn = document.querySelector('#btn');
+        const content = document.querySelector('div');
+        btn.onclick = ()=>{
+            //1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest();
+
+            // xhr 有5中状态 [0,4]
+            // 0, 初始状态
+            // 1, 已经open,未send, 还可以修改
+            // 2, 已经send
+            // 3. 已经回来部分数据
+            // 4, 数据全部接收完毕
+            // 0到1 是一次变更，所以一共是4次变更
+
+            //console.log(xhr.readyState);     // readyState 未改变前的状态为零
+            xhr.onreadystatechange = ()=>{
+                // console.log("@");    // 一共会输出4次, 0 到1 输出1 不会输出0
+                if(xhr.readyState === 4){
+                    console.log("数据已经接收完毕");
+                    console.log("response 数据为:"+ xhr.response);
+                    // 模板字符串
+                    content.innerHTML=`<h3>${xhr.response}</h3>`;
+                }
+            }
+
+            //2. 指定请求的 method, url
+            xhr.open('GET','http://10.0.5.18:8080/test_get');
+            //3. 发送请求
+            xhr.send()
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生 xhr post 请求</title>
+    <style>
+#content{
+    width: 300px;
+    height: 200px;
+    border: 1px solid green;
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h3>xhr的5种状态</h3>
+    <button id='btn'>点我发送原生 post 请求</button>
+    <div id="content">
+    </div>
+
+    <script>
+        const btn = document.querySelector('#btn');
+        const content = document.querySelector('div');
+        btn.onclick = ()=>{
+            // 1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest();
+
+            // 绑定监听
+            xhr.onreadystatechange = ()=>{
+                if(xhr.readyState === 4 && (xhr.status >=200 && xhr.status < 300 )){
+                    console.log("数据已经接收完毕");
+                    console.log("readyState:4 = ", xhr.response);
+                    content.innerHTML=`<h3>${xhr.response}</h3>`;
+                }
+            }
+            //2. 返回 json 数据
+            xhr.open('GET','http://10.0.5.18:8080/test_get3');
+
+            //2. 带 query 参数的 post 请求
+            //xhr.open('POST','http://10.0.5.18:8080/test_post2?name=zhangsan&age=10');
+            //2.2 带 params 参数的 post 请求
+            //xhr.open('POST','http://10.0.5.18:8080/test_post2/zhangsan/18');
+            //2.3 带 body 参数的 post 请求, 要把参数放在 xhr.send 里边
+            //xhr.open('POST','http://10.0.5.18:8080/test_post3');
+
+            // 追加响应头用于标识携带请求体参数的编码形式:urlencoded
+            //xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+            //xhr.send('name=zhangsan&age=18')            // urlencoded 编码
+
+            /*
+            // 追加响应头用于标识携带请求体参数的编码形式:json
+            xhr.setRequestHeader('Content-type','application/json');
+            const person = {name:'zhangsan',age:19};
+            xhr.send(JSON.stringify(person))           // 携带 json 编码形式的请求体参数 
+            */
+
+            //3. 发送请求
+            xhr.send()
+        }
+    </script>
+</body>
+</html>

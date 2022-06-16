@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>原生 xhr get 请求</title>
+    <style>
+#content{
+    width: 300px;
+    height: 200px;
+    border: 1px solid green;
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h3>xhr的5种状态</h3>
+    <button id='btn'>点我发送请求</button>
+
+    <div id="content">
+    </div>
+
+
+    <script>
+        const btn = document.querySelector('#btn');
+        const content = document.querySelector('div');
+        btn.onclick = ()=>{
+            // 1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest();
+
+            // 绑定监听
+            xhr.onreadystatechange = ()=>{
+                if(xhr.readyState === 4 && (xhr.status >=200 && xhr.status < 300 )){
+                    console.log("数据已经接收完毕");
+                    console.log("readyState:4 = ", xhr.response);
+                    content.innerHTML=`<h3>${xhr.response}</h3>`;
+                }
+            }
+
+            /*
+            //2. 指定请求的 method, url
+            xhr.open('GET','http://10.0.5.18:8080/test_get');
+            //query参数. urlencoded 编码:  a=b&aa=bb&cc=cc 这种形式的
+            xhr.open('GET','http://10.0.5.18:8080/test_get?name=zhangsan&age=19');
+            // params 参数   形如:  /xx/xxx/zhangsan/18
+            */
+            // 给人一种路由的错觉
+            xhr.open('GET','http://10.0.5.18:8080/test_get2/hangsan/19');
+
+            //3. 发送请求
+            xhr.send()
+        }
+    </script>
+</body>
+</html>

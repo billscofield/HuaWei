@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>xhr的5种状态</title>
+    <style>
+#content{
+    width: 300px;
+    height: 200px;
+    border: 1px solid green;
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <h3>xhr的5种状态</h3>
+    <button id='btn'>点我发送请求</button>
+
+    <div id="content">
+    </div>
+
+
+    <script>
+        const btn = document.querySelector('#btn');
+        const content = document.querySelector('div');
+        btn.onclick = ()=>{
+            const xhr = new XMLHttpRequest();
+            // xhr 有5中状态 [0,4]
+            // 0, 初始状态
+            // 1, 已经open,未send, 还可以修改
+            // 2, 已经send
+            // 3. 已经回来部分数据
+            // 4, 数据全部接收完毕
+            // 0到1 是一次变更，所以一共是4次变更
+
+            xhr.onreadystatechange = ()=>{
+                // 1, 已经open,未send, 还可以修改
+                if(xhr.readyState === 1){
+                    // 设置请求头
+                    xhr.setRequestHeader('demo',123);
+                    alert('1');
+                    // 此时可以查看浏览器的 network / xhr, 还没有发送请求
+                }
+                if(xhr.readyState === 2){
+                    // 报错，不能修改已经发送的数据
+                    //xhr.setRequestHeader('demo',234);
+                }
+                if(xhr.readyState === 3){
+                    // 响应头已经全部回来
+                    // 小数据已经接收完毕，大数据还有待进一步接收
+                    console.log("readyState:3 = ",xhr.response);
+                    //console.log("3 g = ", xhr.getAllResponseHeaders()); // 所有响应头
+                    console.log("3 g = ", xhr.getResponseHeader('content-length'));
+                }
+
+                //if(xhr.readyState === 4){
+                    // http 状态码 2xx : 成功
+                    // http 状态码 3xx : 
+                    // http 状态码 401 : 未授权
+                if(xhr.readyState === 4 && (xhr.status >=200 && xhr.status < 300 )){
+                    console.log("数据已经接收完毕");
+                    console.log("readyState:4 = ", xhr.response);
+                    // 模板字符串
+                    content.innerHTML=`<h3>${xhr.response}</h3>`;
+                }
+            }
+
+            //2. 指定请求的 method, url
+            xhr.open('GET','http://10.0.5.18:8080/test_get');
+            //3. 发送请求
+            xhr.send()
+        }
+    </script>
+</body>
+</html>
