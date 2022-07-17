@@ -7,7 +7,7 @@
 
     ruby 方式已经废弃，使用 shell 方式
 
-
+    ` /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     
 
 2. 配置brew国内

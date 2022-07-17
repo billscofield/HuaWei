@@ -60,6 +60,16 @@
 5. To start Houdini FX, type "houdinifx".
 
 
+端口号:
+    1715 : houdini-lm   (Licese服务器上的)
+    1714 : hserver      (client上的)
+
+
+如果将 houdini 安装在共享存储上，并且在本地也安装了, hkey-bin 的默认服务器指向
+
+/opt/hfs17/houdini/sbin/sesinetd.startup 中有个服务器地址
+
+
 ## 关于 active
 
 /root/.sesi_licenses.pref 已经修改, 但还是隔一段时间就会掉 license

@@ -84,6 +84,26 @@ pyenv uninstall 3.6.7   卸载python
     <3>.执行pyenv install 3.6.4
 
 
+    ```
+    v=3.8.5; curl -L https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -o ~/.pyenv/cache/Python-$v.tar.xz; pyenv install $v
+
+
+    我们也可以创建一个方法，放到 ~/.bashrc 文件中，以后方便直接使用
+
+    function pyinstall() {
+        v=$1
+        echo '准备按照 Python' $v
+        curl -L https://npm.taobao.org/mirrors/python/$v/Python-$v.tar.xz -o ~/.pyenv/cache/Python-$v.tar.xz
+        pyenv install $v
+    }
+
+    $ pyinstall 3.8.0
+
+    ```
+
+
+
+
     以本文说的情况为例：
         执行 pyenv install anaconda3-4.1.0 -v 获取下载链接
         用wget从下载链接中获取文件 Anaconda3-4.1.0-Linux-x86_64.sh

@@ -58,3 +58,18 @@ switch-client commands have any effect)
 > bind r source-file ~/.tmux.conf \; display "Reloaded!"
 
 注意有一个\
+
+---
+
+
+
+
+mkdir ~/.tmux/
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/tmux-plugins/tmux-resurrect.git
+git clone https://github.com/tmux-plugins/tmux-continuum.git
+
+
+将下边的语句添加到 .tmux.conf 中
+run-shell ~/.tmux/tmux-resurrect/resurrect.tmux
+run-shell ~/.tmux/tmux-continuum/continuum.tmux
