@@ -65,10 +65,14 @@ switch-client commands have any effect)
 
 
 mkdir ~/.tmux/
-git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-git clone https://github.com/tmux-plugins/tmux-resurrect.git
-git clone https://github.com/tmux-plugins/tmux-continuum.git
+git clone https://github.com/tmux-plugins/tpm       ~/.tmux/plugins/tpm
+git clone https://gitee.com/billscofield/tpm.git    ~/.tmux/plugins/tpm
 
+git clone https://github.com/tmux-plugins/tmux-resurrect.git
+git clone https://gitee.com/billscofield/tmux-resurrect.git
+
+git clone https://github.com/tmux-plugins/tmux-continuum.git
+git clone https://gitee.com/billscofield/tmux-continuum.git
 
 将下边的语句添加到 .tmux.conf 中
 run-shell ~/.tmux/tmux-resurrect/resurrect.tmux

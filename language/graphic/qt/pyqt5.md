@@ -1,4 +1,4 @@
-
+/
 
 ## [Qt History](https://wiki.qt.io/Qt_History)
 
@@ -345,6 +345,8 @@ Containers
 
         
 2. ui 文件转换
+
+    python -m PyQt5.uic.pyuic demo.ui -o demo.py
 
     方法一: designer -> Form -> View Python code
     

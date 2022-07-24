@@ -1,3 +1,18 @@
+## 
+
+pip install pyside2
+    包含 qt 库， designer 等工具
+
+
+
+## designer 安装
+
+1. 通过安装 anaconda
+
+2. 通过安装官方的工具
+
+3. 通过安装 pyqt5-tools
+    pyuic5
 
 ## .ui 文件
 

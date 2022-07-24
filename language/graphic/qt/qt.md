@@ -9,6 +9,13 @@ qt库
     PyQ5 是干儿子
     Pyside2 是亲儿子
 
+    PySide2 是Qt的 亲儿子 ， PyQt5 是Qt还没有亲儿子之前的收的 义子 （Riverbank
+    Computing这个公司开发的）。
+
+    那为什么 PyQt5 这个义子 反而比 PySide2 这个亲儿子更出名呢？
+    原因很简单：PySide2 这亲儿子最近（2018年7月）才出生。
+    但是亲儿子毕竟是亲儿子，Qt准备大力培养，PySide2 或许更有前途。
+
 ## Qt 的发展
 
 1. 1991 年 QT 最早由芬兰**奇趣科技**开发
@@ -506,6 +513,37 @@ QT 对 c++ 字符串的封装
 
 new 对象如果制定了父窗口指针，可以不写 delete, 在父窗口对象销毁时，会自动销毁
 
+
+pip install pyinstaller
+
+pyinstaller main.py --noconsole --hidden-import PySide2.QtXml
+
+    main.py 包含了 QApplication 的
+
+    --noconsole 运行的时候不出现命令行窗口
+
+    build
+    dist
+        项目名称 > 可执行文件
+
+    ui 文件需要手动拷贝到上边的那个目录
+
+
+### 图标
+
+主窗口图标
+
+    from PySide2.QtGui import QIcon
+
+    app.setWindowIcon(QIcon('logo.png'))
+
+    拷贝到程序执行目录
+
+应用程序图标
+
+    ico 文件
+
+    pyinstaller main.py --noconsole --hidden-import PySide2.QtXml --icon="logo.ico"
 
 
 
