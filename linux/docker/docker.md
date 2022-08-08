@@ -38,24 +38,111 @@ docker.com/tryit/
 
 
 Namespaces  命名空间
+    linux内核的一项功能，对内核资源进行隔离
+
     编程语言
         封装->代码隔离
     操作系统
         系统资源的隔离
         进程、网络、文件系统...
 
-    有5种隔离
-        1. PID (Process ID) 进程隔离
+    有5种隔离, 新版本提供了6种
+        1. MNT (Mount)      管理挂载点      (linux 2.4.19 kernel 提供)
+            mnt namespace
+            隔离不同进程和进程组看到的挂载点
+            
+            unshare : 是 util-linux 工具包中的一个工具，可以实现创建并访问不同类型的 Namespace
+            ```
+            unshare --mount --fork /bin/bash
+            mkdir /tmp/tmpfs
+            mount -t tmpfs -o size=20m tmpfs /tmp/tmpfs
+            df -h | grep tmpfs
+            
+            在开一个终端执行 df -h | grep tmpfs 发现并没有
+            
+            在当前命令行窗口查看当前进程的 Namespace 信息
+            ls -l /proc/self/ns
+            
+            新打开一个命令行窗口执行上述命令，发现只有 mnt 的namespace 值不一样
+            
+            ```
+
+        2. PID (Process ID) 进程隔离        (linux 2.6.24 kernel 提供)
+            pid namespace
             容器有自己独立的进程表和1号进程
-        1. NET (Network)    管理网络接口
+            
+            ```
+            # 创建一个 bash 进程，并且新建一个 PID Namespace
+            unshare --pid --fork --mount-proc /bin/bash
+            ps aux          // 当前1号进程为 bash
+            ```
+
+        3. NET (Network)    管理网络接口    (linux 2.6.29 kernel 提供)
+            net namespace
             容器有自己独立的网络信息
-        1. IPC (InterProcess Communication) 管理跨进程通信的访问
+            
+            ```
+            ip a
+            unshare --net --fork /bin/bash
+            ip a
+            ```
+
+        4. IPC (InterProcess Communication) 管理跨进程通信的访问 (linux 2.6.19 kernel 提供)
+            pid namespace
             在ipc通信时，需要加入额外信息来标示进程
-        1. MNT (Mount)      管理挂载点
-        1. UTS (Unix Timesharing System)    隔离内核和版本标识
-            独立的 hostname 和 domain
+            
+            pid namespace 和 ipc namespace 一起使用可以实现同一 IPC Namespace
+            内的进程彼此可以通信，不同 IPC Namesapce 的进程不能通信
+            
+            ipcs -q     // 查看系统间通信队列列表
+            ipcmk -Q    // 创建系统间通信队列
+            
+            ```
+            # 创建一个 ipc namespace
+            unshare --ipc --fork /bin/bash
+            
+            ipcs -q
+            ipcmk -Q
+            ipcs -q
+            
+            新打开一个命令行窗口
+            ipcs -q                 // 发现是没有的
+            ```
+
+        5. UTS (Unix Timesharing System)    隔离内核和版本标识 (linux 2.6.19 kernel 提供)
+            uts namespace
+            隔离hostname 和 domain(域名)
+            
+            ```
+            # 创建一个 UTS Namespace
+            unshare --mount --fork /bin/bash
+            
+            # 使用 hostname 设置主机
+            hostname -b xxx
+            # 查看主机名
+            
+            # 新打开一个命令行窗口查看
+            ```
+
+        6. User Namespace(user)             (linux 3.8 kernel 提供)
+            隔离用户和用户组
+            
+            ```
+            # 可以不使用 root 用户
+            unshare --user -r /bin/bash
+            id
+            reboot      // Permission denied
+            ```
+
+        1. Control group(cgroup) Namespace  (linux 4.6 kernel 提供)
+            隔离 Cgroups 根目录
+            
+        1. Time Namespace       (linux 5.6 kernel 提供)
+
 
 Control Groups(cgroups) 控制组
+    一种 Linux 内核功能
+    可以限制和隔离进程的资源使用情况(CPU, RAM, I/O， 网络等)
     管理命名空间隔离的资源
 
     资源限制
@@ -65,6 +152,112 @@ Control Groups(cgroups) 控制组
     资源使用记录
 
     /sys/fs/cgroup
+
+    资源限制
+    优先级
+    审计
+    控制
+
+
+    子系统(subsystem)
+        是内核的一个组件，一个子系统代表一类资源调度控制器
+    控制组
+        一组进程和一组带有参数的子系统的关联关系
+    层级树(hierarchy)
+        由一些列控制组安装树状结构排列组成的
+        子控制组默认拥有父控制组的属性
+
+    mount -t cgroups        // centos7
+    mount | grep cgroup     // debian 11
+
+    
+    ```对CPU的限制
+    mkdir /sys/fs/cgroup/cpu/mydocker           // debian11 没有这个路径
+    该目录下会自动创建很多文件
+
+    cfs_period_us
+        表示一个cpu带宽，单位为微秒。系统总CPU带宽： cpu核心数 * cfs_period_us
+        cpu分配的周期(微秒），默认为100000)
+        
+    cpu.cfs_quota_us
+        cfs 是完全公平调度器的缩写, 默认 -1，即无限制
+        单位为微秒, 最小值为1ms(1000)，最大值为1s
+        
+        如果设为50000，表示占用50000/100000=50%的CPU
+
+    tasks
+        被限制进程的 pid
+    
+
+    限制只能使用1个CPU（每100ms能使用100ms的CPU时间，即可以使用一个cpu）  
+    # echo 100000 > cpu.cfs_quota_us    /* quota  = 100ms */  
+    # echo 100000 > cpu.cfs_period_us   /* period = 100ms */
+
+    限制使用3个CPU（内核）（每100ms能使用300ms的CPU时间，即可以使用两个cpu）  
+    # echo 300000 > cpu.cfs_quota_us    /* quota  = 300ms */  
+    # echo 100000 > cpu.cfs_period_us   /* period = 100ms */
+
+    限制使用1个CPU的30%（每100ms能使用30ms的CPU时间，即可以使用30%的cpu）  
+    # echo 30000 > cpu.cfs_quota_us     /* quota  = 30ms */  
+    # echo 100000 > cpu.cfs_period_us   /* period = 100ms */
+
+
+    ---
+
+    对内存的限制
+
+    mkdir -p /sys/fs/cgroup/memory/mydocker
+    echo 1073741824 > memory.limit_in_bytes     // 1GBytes
+    echo $$ > task
+
+    # 完整测试一轮, 1表示只测一轮. 每项测试, 按顺序对应的编号为0, 1, 2, ... 一共有16项
+    memtester 1500M 1
+
+
+    ```
+
+    memtester
+        wget http://pyropus.ca/software/memtester/old-versions/memtester-4.5.0.tar.gz
+        tar xvf memtester-4.5.0.tar.gz
+        cd memtester-4.5.0
+        make
+
+
+
+    cgroups 虽然可以实现资源的限制，但是不能保证资源的使用
+
+
+    网络
+
+        Docker 从2013年诞生，到后来逐渐成为了容器的代名词, 从1.7版本开始，把网
+        络和存储从 Docker 中以插件的形式剥离开来，并分别为其定义了标准
+        
+        Docker 定义的网络模型标准称之为 CNM(Container Network Model)
+
+        包含三个元素
+            1. 沙箱 sandbox
+                网络堆栈的配置，路由，网络接口等网络资源的管理
+            
+            2. 接入点 endpoint
+                代表容器的网络接口，接入点的实现通常是 Linux 的 veth 设备对
+            
+            3. 网络 network
+                一组可以相互通信的接入点，它将多接入点组成一个子网，并且多个接入点之间可以相互通信
+
+        Libnetwork 通过插件的形式为 Docker 提供网络功能
+        Libnetwork 开源，通过 Golang 编写, 完全遵循 CNM 网络规范， 是 CNM 的官方实现
+
+
+
+
+
+
+
+
+联合文件系统
+    又叫 UnionFS, 是一种通过创建文件层进程操作的文件系统
+    窗用的联合文件系统有 AUFS, Overlay 和 Devicemapper 等
+
 
 Chroot
 
@@ -125,6 +318,327 @@ Docker hub
         包括 /usr, /bin 等目录，这些和 kernel 无关, 和不同的发行版本相关
 
 
+
+## 三大核心
+
+镜像
+容器: 镜像的运行实体
+仓库
+    公共镜像仓库
+    私有镜像仓库
+
+容器标准
+容器编排标准
+    swarm
+    kubernetes
+    Mesos
+
+OCI 开放容器标准（Open Container Initiative)
+    容器运行时标准(runtime spec)
+    容器镜像标准(image spec)
+
+有各种客户端
+
+dockerd 负责响应和处理来自客户端的请求，然后将 Docker 客户端的请求转化为 Docker 的具体操作
+
+服务端经理多次重构
+
+
+组建
+    runC: 用来运行容器的轻量级工具, 是真正用来运行容器的
+    containerd: 通过 containerd-shim 启动并管理 runC
+
+
+
+docker run -d busybox sleep 3600
+ps aux | grep dockerd
+pstree -l -a -A <PID>
+
+
+
+
+镜像操作
+    docker pull
+    docker run
+    docker rmi
+    docker image ls
+    docker tag          // 重命名镜像, 推送镜像名称到其他镜像仓库
+
+    docker build        // 基于 dockerfile 构建
+    docker commit       // 给予已有容器构建
+
+
+docker pull
+    docker pull [Registry]/[Repository]/[Image]:[Tag]
+    Registry: 注册服务器
+    Repository: 镜像仓库, 默认 library
+    Image: 镜像名称
+    Tag: 镜像标签, 默认 newest
+
+
+docker tag
+    docker tag [SOURCE_IMAGE][:TAG]    [TARGET_IMAGE][:TAG]
+
+    docker tag busybox lagoudocker/busybox
+    docker push lagoudocker/busybox                 // 默认的 docker.io
+
+
+
+私有镜像仓库
+    docker run -d -p 5000:5000 --name registry registry:2.7
+    docker ps
+    docker tag busybox localhost:5000:/busybox
+    docker push localhost:5000/busybox
+
+    将镜像持久化到主机目录
+    docker run -v /var/lib/registry/data:/var/lib/registry -d -p 5000:5000 --name registry registry:2.7
+
+    必须是https
+
+    假设申请到的证书文件是 regisry.lagoudocker.io.crt 和 regisry.lagoudocker.io.key
+
+    ```
+    docker run -d \
+    --name registry \
+    -v /var/lib/registry/data:/var/lib/registry \
+    -v /var/lib/registry/certs:/certs \
+    -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
+    -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/regisry.lagoudocker.io.crt \
+    -e REGISTRY_HTTP_TLS_KEY=/certs/regisry.lagoudocker.io.key \
+    -p 443:443 \
+    registry:2.7
+    ```
+
+    Harbor 是一个企业级的镜像管理软件
+
+
+
+
+
+
+docker commit   // 从运行中的容器
+
+    docker run --rm --name=busybox -it busybox sh
+    touch hello.txt && echo "xx">>hello.txt
+
+    在另一个 terminal 中:
+    docker commit busybox busybox:hello
+
+    docker image ls
+
+
+docker build
+    每一层都会生成一个镜像层，并且拥有唯一的id
+
+
+
+    ```
+    FROM centos:7
+    COPY nginx.repo /etc/yum.repos.d/nginx.repo
+    RUN yum install -y nginx
+    EXPOSE 80
+    ENV HOST=mynginx
+    CMD ["nginx","-g","daemon off;"]            前台运行
+    ```
+    
+
+    ???tree /var/lib/docker/overlay
+
+
+
+    如果 Dockfile 使用不当会引发很多问题:
+        1. 镜像偷奸时间过长，甚至镜像构建失败
+        2. 镜像层数过多，导致镜像文件过大
+
+    dockerfile 原则
+        1. 单一职责
+            容起的本质是进程，每个容器只负责单一业务进程
+            
+        2. 提供注释信息
+            
+        3. 保持容器最小化
+            避免安装无用的软件包
+            
+        4. 合理选择基础镜像
+            容器的核心是应用，只要基础镜像能满足应用的运行环境即可
+
+        5. 尽量使用构建缓存
+            
+            不经常改变的放在前面
+            经常变动的放在后边
+
+        6. 时区
+            debian
+                RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+                RUN echo "Asia/Shanghai" >>/etc/timezone
+            centos
+                RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+        7. 国内源
+            COPY CentOS7-Base-163.repo /etc/yum.repos.d/CentOS7-Base.repo
+
+        8. 最小化镜像层数
+            yum install -y net-tools make
+
+
+    较复杂时可以使用\, 并排序
+        RUN yum install -y automake \
+            curl \
+            python \
+            vim
+
+    entrypoint cmd
+
+    WORKDIR 来指定工作路径
+
+    
+    .dockerignore 文件
+    ```
+    #           | 注释
+    */tmp*      | 匹配当前目录下任何以 tmp 开头的文件或文件夹
+    *.md        | .md 为后缀的任意文件
+    tem?        | 以 tem 开头并且以任意字符结尾的文件, ?: 表示任意一个字符
+    !README.md  | ! 表示排除
+                +
+                | *.md
+                | !README.md    表示除了 README.md 外所有以 .md 结尾的文件
+
+    ```
+
+
+
+
+
+尽管 namespace 已经提供了非常多的资源隔离类型，但是**仍有部分关键内容没有被完全
+隔离**, 其中包括一些系统的关键性目录(如 /sys, /proc 等)
+
+
+docker 是基于 Linux 的多种 Namespace 实现的
+
+User Namespace
+    主要是用来作容器内用户和主机的用户隔离的
+    从1.10版本开始，使用 User Namespace 实现了 容器中的 root 用户映射到主机上的非 root 用户
+
+
+
+
+
+宿主机及时升级内核漏洞
+
+使用 capabilities 划分权限
+
+如非特殊可控情况，--privileged 不允许设置为 true
+    其它特殊权限可以使用 --cap-add 参数适当添加
+
+安全容器解决方案
+    AppArmor
+    SELinux
+    GRSecurity
+
+
+docker run 资源限制
+    --cpus=1
+    -m=1024m
+    --pids-limit=1000
+
+
+安全容器
+    安全容器中的每个容器都运行在一个单独的微型虚拟机中，拥有独立的操作系统和内
+    核并且有虚拟化层的安全隔离
+
+    Kata Container
+
+
+
+
+
+
+
+生命周期
+    docker create -it --name=busybox busybox
+    docker start busybox        // 基于已经创建好的容器启动
+    docker run busybox          // 直接基于镜像新建一个容器并启动
+
+    docker run -it --name=busybox busybox
+
+    docker stop     首先发送 sigterm 给容器的1号进程，如果其可以处理 sigterm 则等待其处理完毕后 stop
+        如果不能处理 sigterm， 则发送 sigkill 强制终止容器
+        -t, --time=10      Seconds to wait for stop before killing it
+
+    处于运行中的容器可以通过多种命令进入
+        1. docker attach busybox            // 多个终端是同步的
+        2. docker exec -it busybox bash     // 每个都是独立的不干扰的
+
+    docker rm 停止的容器
+    docker rm -f 运行中的容器
+
+
+    容器迁移
+    docker export CONTAINER > busybox.tar        // 导出一个容器到文件
+    docker import [OPTION] file | URL [REPOSITORY[:TAG]]          // 变成本地机器镜像
+        docker import busybox.tar    busybox:test
+        docker run -it busybox:test sh
+
+
+
+容器监控原理和 cAdvisor
+    容器是短期存活的，并且可以动态调整
+    本质是进程
+    容器的创建和销毁会比传统虚拟机更急频繁
+
+    现有的监控方案
+        docker stats
+        开源的sysdig
+        cAdvisor
+        Prometheus
+
+    docker stats 容器
+        CONTAINER           CPU %               MEM USAGE / LIMIT    MEM %               NET I/O             BLOCK I/O           PIDS
+    
+    cAdvisor 是谷歌开源的, k8s 也使用 cAdvisor 作为监控容器的默认工具
+
+    ```
+    VERSION=v0.36.0 # use the latest release version from https://github.com/google/cadvisor/releases
+    sudo docker run \
+        --volume=/:/rootfs:ro \
+        --volume=/var/run:/var/run:ro \
+        --volume=/sys:/sys:ro \
+        --volume=/var/lib/docker/:/var/lib/docker:ro \
+        --volume=/dev/disk/:/dev/disk:ro \
+        --publish=8080:8080 \
+        --detach=true \
+        --name=cadvisor \
+        --privileged \
+        --device=/dev/kmsg \
+        google/cadvisor:$VERSION
+
+    ---
+    docker run --volume=/:/rootfs:ro --volume=/var/run:/var/run:rw --volume=/sys:/sys:ro --volume=/var/lib/docker/:/var/lib/docker:ro --volume=/dev/disk/:/dev/disk:ro --publish=8080:8080 --detach=true --name=cadvisor --privileged --device=/dev/kmsg lagoudocker/cadvisor:v0.37.0
+    ```
+    
+    Docker是基于Namespace、Cgroups和联合文件系统实现的。其中Cgroups不仅可以用于
+    容器资源的限制，还可以提供容器的资源使用率。无论何种监控方案的实现，底层数
+    据都是来源于Cgroups。
+
+    Cgroups的目录在/sys/fs/cgroup, 这个目录下包含了Cgroups的所有内容，以此用来
+    对不同资源进行限制。例如CPU、内存、PID、磁盘IO等
+
+    ls -l /sys/fs/cgroup/
+
+    /sys/fs/cgroup/system.slice/docker-<DOCKER-ID>
+
+    /sys/fs/cgroup/system.slice/docker-4cc7bf754183f64a8a19f0d5207dfafd5a63d963395d0d4dd64bb9fafe8a999b.scope
+
+
+    memory.current
+
+    网络
+        docker inspect 9018944648bf | grep -i pid
+        cat /proc/4816/net/dev
+
+
+
+
 ## 网络
 
 ### Docke 网络驱动模型
@@ -132,6 +646,15 @@ Docker hub
 https://www.bilibili.com/video/BV16E41187y4?from=search&seid=10413634710931696721
 
 1. bridge(默认)
+
+    veth 是 Linux 中的虚拟设备接口，都是成对出现的，可以用来链接虚拟网络设备
+    例如 veth 可以用来连接两个 Net Namespace, 从而使得两个 Net Namespace 之间可以互相访问
+
+    Linux bridge 是一个虚拟设备，是用来连接网络的设备，可以用来转发两个 Net Namespace 内的流量
+
+
+
+
 
     网桥类型网络，就是 NAT 网络
 
@@ -175,7 +698,14 @@ https://www.bilibili.com/video/BV16E41187y4?from=search&seid=1041363471093169672
 
     ip a 信息和宿主机完全一样
 
-1. none
+    不会为容器创建新的 网络配置和 Net Namespace
+    Docker 容器中的进程直接共享主机的网络配置，可以直接使用主机的网络信息
+
+1. null
+    创建了 Net Namespace , 但是没有创建任何网卡，路由
+    --net=none
+    ipconfig
+    route
 
 1. overlay
     
@@ -187,11 +717,24 @@ https://www.bilibili.com/video/BV16E41187y4?from=search&seid=1041363471093169672
 1. macvlan
 
 
+1. container
+
+    允许一个容器共享另一个容器的网络命名空间
+
+    docker run -d --name=busybox1 busybox sleep 3600
+    docker run -it --net=container:busybox1 --name=busybox2 sh
+
+
 docker network list     列出网络模型
 
 docker inspect <Docker-ID>  | grep NetworkSettings
 
 docker network --help
+
+
+Libnetwork 的工作流程是完全围绕 CNM 的三个要素进行的
+k8s 最终选择了 CNI 作为容器网络的定义标准
+
 
 
 ### bridge
@@ -232,6 +775,58 @@ Docker 创建容器的时候, 会执行下面的操作
     2. 宿主机的虚拟接口接到 docker 的网桥上，名称为 vethXXX
     3. 虚拟网络接口名称为 eth0
     4. 从宿主机的网桥上获取IP地址
+
+
+## 持久化
+
+卷(volume) 本质是文件或目录
+
+方法一： 直接创建卷
+    docker volume create myvolume       // 默认是 local 模式, 
+    docker run -d --name=nginx --mount source=myvolume,target=/usr/share/nginx/html nginx
+
+方法二: run 时自动创建
+
+    docker run -d --name=nginx -v /usr/share/nginx/html nginx
+    docker volume ls
+
+    docker volume inspect <VOLUME>
+
+
+docker volume rm <VOLUME>
+    正在使用的 volume 不能被删除
+
+
+共享卷
+
+    ```
+    1. 共享卷
+    docker volume create log-vol
+    默认在 /var/lib/docker/volumes 下
+    并在每个对应的卷的目录下创建一个 _data 目录, 然后把 __data 目录绑定到容器中
+    实际是操作_data 目录
+
+    2. 生产者
+    docker run --mount source=log-vol,target=/tmp/log --name=log-producer -it busybox
+
+    3. 消费者
+    docker run --volumes-from log-producer  -it --name consumer busybox
+    ```
+
+    -v HOST_PATH:CONTAINER_PATH
+
+## 联合文件系统
+
+Union File System, Unionfs
+
+它可以把多个目录内容联合挂载到同一目录下，从而形成一个单一的文件系统
+
+AUFS 是 docker 最早使用的文件系统，多用于 ubuntu 和 debian
+但由于它没有包含在Linux内核主线中，所有很多Linux发行版并不支持AUFS
+
+一般来说，Debian/Ubuntu都支持AUFS，而Redhat/CentOS都不支持AUFS
+
+只有顶层的容器layer是可读写的，而下面的layer都是只读的
 
 
 

@@ -128,6 +128,17 @@ docker映射端口和挂载目录
     docker help
 
 
+### centos7
+
+yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+yum install docker-ce docker-ce-cli containerd.io
+yum list docker-ce --showduplicates | sort -r
+yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io
+systemctl restart docker
+docker run hello-world
+
+
+
 
 ## docker-io       
 

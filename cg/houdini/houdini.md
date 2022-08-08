@@ -312,5 +312,138 @@ hselect-bin source houdinicore-bin
 
 
 
+## license server
+
+The license server (sesinetd) 
+
+When a Houdini product needs a license, it communicates with **hserver**, which is
+a helper program running on the client. Hserver communicates with the license
+server (sesinetd).
+
+It is the license server (sesinetd) that grants licenses to valid clients and
+collects licenses when Houdini applications terminate.
+
+If there is no hserver running on the client, Houdini will not start.
+
+On Linux and Mac OSX, hserver is started automatically when you start a Houdini
+application, or it can be started manually.
+
+On Windows, both hserver and the license server are started as Services named
+HoudiniServer and HoudiniLicenseServer respectively.
+
+https://www.sidefx.com/faq/question/how-houdini-licensing-works/
 
 
+---
+
+The hserver program is automatically started and used by Houdini on the client machine.
+
+If you have setup the Houdini environment, you can tell hserver to look to the remote server:
+
+hserver -S hostname
+
+where hostname is the name of your license server.
+
+
+the Houdini environment
+
+cd path to Houdini installation
+source houdini_setup
+
+
+第一次启动 houdini 时, .sesi_license.pref=IPA, houdini 会调用 hserver , hserver 会调用这个IPA
+hserver 在后台运行
+此时更改 .sesi_license.pref=IPB
+关掉 houdini， IPA 的license 被回收
+打开 houdini, 因为 hserver 还是用的 IPA, 所有继续从 IPA 获取 license
+hserver -l
+
+
+如果 某个用户的 .sesi_license.pref 为空， 这个用户启动 houdini 的时候，这个 .sesi_license.pref 会被填写上 server=计算机名称
+
+---
+
+
+[What are other methods to set the license server on the client?](https://www.sidefx.com/faq/question/what-are-other-methods-to-tell-the-client-to-look-to-the-license-server/)
+
+    1. The client hserver program.
+    2. A hidden file.               // linux 的 .sesi_license.pref
+    3. Windows registry entry.      // windows 注册表
+    4. Using a DNS service record.
+        _sesi-lm._tcp   IN      SRV     0 0 1715 your-license-server-name.yourdomain.com.
+        应该得安装 avahi-daemon
+
+
+
+
+
+
+License Server Log
+    /var/log/sesinetd.log
+
+### 安装
+
+18
+./houdini.install --install-license --no-install-houdini --accept-EULA 2020-05-05
+
+19
+./houdini.install --install-license --no-install-houdini --no-install-avahi --accept-EULA 2021-10-13
+
+会出现一个选择界面，F
+
+
+
+    --accept-EULA 2021-10-13
+
+    --install-license | --no-install-license¬
+       Select or deselect sesinetd (license server) for installation
+
+    --install-avahi | --no-install-avahi¬
+       Select or deselect Avahi for installation (Runs package management tool \`apt-get\` or \`yum\` to install Avahi)
+
+    --install-houdini | --no-install-houdini¬
+       Select or deselect Houdini and the HDK for installation
+
+    注意给 /usr/lib/sesi/license 的权限 644, 要有r
+
+
+### hserver
+
+-l [ --info  ]                         Request information about a running hserver
+-h [ --host  ] arg                     Specify a remote host to query
+
+    hserver -h 10.0.0.1 -l
+
+
+--connect-timeout-ms arg (=-1)         Max amount of time to try and connect to the server
+
+--print-options                        output the current option values
+
+
+License Server Chaining
+    hserver -S "sesinetd1;sesinetd2"        // 必须有双引号
+
+
+How do I enable hserver logging
+    Restart hserver after modifying the options file.
+
+    Add these options to the hserver options file:
+    (linux: /mnt/usr/hfs18.5.506/houdini/hserver.opt)
+
+    logfile=C:\hserver.log
+    debugMode=1
+    enableHttp=1
+
+    Modify the logfile to the path where you would like the file to be written to.
+
+    Please refer to www.sidefx.com/docs/houdini/ref/utils/hserver.html#optfile
+
+
+
+
+
+hserver.opt
+
+    logFile = ""
+    debugMode = 1
+    logToSystem = 1

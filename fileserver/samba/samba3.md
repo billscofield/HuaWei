@@ -341,7 +341,7 @@ fstab文件永久挂载
     //192.168.1.1/share    /mnt    cifs    rw,username=abc,password=abc    0    0
     //192.168.1.1/share    /mnt    cifs    default,username=abc,password=abc    0    0
     //192.168.1.1/share    /mnt    cifs    username=abc,password=abc    0    0
-    //192.168.1.1/share    /mnt    cifs    credentials=/etc/smb.txt    0    0           //防止密码被别人看到, cred 也可以, 需要安装 cifs-utils 包
+    //192.168.1.1/share    /mnt    cifs    credentials=/etc/smb.txt    0    0           //防止密码被别人看到, cred 也可以, 需要安装 **cifs-utils** 包
         cat /etc/smb.txt
         username=alice  或者 user=alice
         password=alice  或者 pass=alice
