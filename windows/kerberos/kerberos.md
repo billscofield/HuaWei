@@ -200,8 +200,7 @@ AD 使用了一种结构化的数据存储方式，并以此作为基础对目�
 
     1. client 向 Kerberos 服务请求，希望获取访问某个 server 的权限。Kerberos 得
        到了这个消息，首先得判断 client 是否是可信赖的。 这就是 AS 服务完成的工
-       作，通过在 AD 中存储黑白名单来区分 client。成功后，返回 AS 返回 TGT 给
-       client.
+       作，通过在 AD 中存储黑白名单来区分 client。成功后，AS 返回 TGT 给client.
 
     2. client 得到 TGT 后， 继续想 Kerberos 请求, 希望获得访问 server 的权限,
        kerberos 又得到了消息，通过 client 消息中的 TGT, 判断出了 client 拥有这
