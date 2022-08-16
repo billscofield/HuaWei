@@ -2,49 +2,76 @@
 
 ## awk
 
-    awk '{pattern + action}' {filename}
+awk 的多种实现
+    1. awk
+    2. mawk
+    3. nawk
+    4. gawk
+        apt install gawk
 
-    awk '{print}' a.txt 全部输出 同 cat a.txt
+    ```
+    ➜  Documents update-alternatives --config awk
+    There are 2 choices for the alternative awk (providing /usr/bin/awk).
 
-    行从1开始，列从1开始
+    Selection    Path            Priority   Status
+    ------------------------------------------------------------
+    * 0            /usr/bin/gawk    10        auto mode
+      1            /usr/bin/gawk    10        manual mode
+      2            /usr/bin/mawk    5         manual mode
 
-    匹配 filename 的每一行执行 action
-    
-    ---
+    Press <enter> to keep the current choice[*], or type selection number: 1
 
-    awk '{print $1,$2,$3}' a.txt
-        1个逗号就是空格，两个逗号就是错误
-        手动写的空格是无用的，和html类似，html好歹还有一个有用，awk一个都没用
-        ,: 输出分隔符，默认是空格
-        "\t" 
-        外部必须用单引号
+    ```
 
-    awk '{print $1"\t"$2}' a.txt
+what is auto mode and manual mode of update-alternatives?
 
-    输入分隔符
-        -F " "
-            -F fs --field-separator=fs
-    输出分隔符
-        默认是",",可以换成自己想要的任意的字符
-        awk '{print $1"-"$2}' 
+    [link](https://newbedev.com/difference-between-auto-mode-and-manual-mode-in-update-alternatives#:~:text=In%20a%20nutshell%2C%20update-alternatives%3A%201%20in%20Auto%20Mode%2C,value%20of%20the%20alternatives%2C%20hence%20the%20name%20%22manual%22.)
 
-    ---
-    
-    分隔符，默认空格,格式化输出
-        -F  //输入分隔符
-            1. -F:
-            1. -F"add"
-    
-        {print $1,$NF} 第一列和最后一列
-            -F. {print $1":"$NF}  //格式化输出，.作为分隔符
 
-        egrep --color "([0-9]{1,3}\.){3}[0-9]" b.txt | awk -F. '{print "Hello-"$1"-"$2"-"$3"-"$4"-keep-smile"}'
 
-        egrep --color "([0-9]{1,3}\.){3}[0-9]"  a.txt | head -2
+awk '{pattern + action}' {filename}
 
-        egrep --color "([0-9]\.){1,3}[0-9]{1,3}" a.txt | tail -2 | awk -F. '{print $1"-"$2"-"$3"-"$4}'
+awk '{print}' a.txt 全部输出 同 cat a.txt
 
-    ---
+行从1开始，列从1开始
+
+匹配 filename 的每一行执行 action
+
+---
+
+awk '{print $1,$2,$3}' a.txt
+    1个逗号就是空格，两个逗号就是错误
+    手动写的空格是无用的，和html类似，html好歹还有一个有用，awk一个都没用
+    ,: 输出分隔符，默认是空格
+    "\t" 
+    外部必须用单引号
+
+awk '{print $1"\t"$2}' a.txt
+
+输入分隔符
+    -F " "
+        -F fs --field-separator=fs
+输出分隔符
+    默认是",",可以换成自己想要的任意的字符
+    awk '{print $1"-"$2}' 
+
+---
+
+分隔符，默认空格,格式化输出
+    -F  //输入分隔符
+        1. -F:
+        1. -F"add"
+
+    {print $1,$NF} 第一列和最后一列
+        -F. {print $1":"$NF}  //格式化输出，.作为输入分隔符
+
+    egrep --color "([0-9]{1,3}\.){3}[0-9]" b.txt | awk -F. '{print "Hello-"$1"-"$2"-"$3"-"$4"-keep-smile"}'
+
+    egrep --color "([0-9]{1,3}\.){3}[0-9]"  a.txt | head -2
+
+    egrep --color "([0-9]\.){1,3}[0-9]{1,3}" a.txt | tail -2 | awk -F. '{print $1"-"$2"-"$3"-"$4}'
+
+---
 
     awk '{print $1,$2}'     //不写文件名，则是从标准输入读取
 
@@ -60,13 +87,19 @@
         the input record number in the current input file.
         两个文件显示的时候，每个文件的行号都是独立的，不再是拼接在一起的
 
+        1               1
+        2               2
+        3               1
+        4               2
+        5               3
+
     NF number of field,列
         这一行有几列，也就是最后一列
         awk '{print NF "\t" $0}' b.txt
 
-        awk '{print $1}' 文件   打印文件的第一列 只能用单引号
-        awk '{print $NF}' 文件   打印文件的倒数第一列,最大数
-        awk '{print $(NF-1)}' 文件   打印文件的倒数第二列
+        awk '{print $1}' 文件           打印文件的第一列 只能用单引号
+        awk '{print $NF}' 文件          打印文件的倒数第一列的值,最大数
+        awk '{print $(NF-1)}' 文件      打印文件的倒数第二列
 
 
     awk 'BEGIN{FS=","}{print NR "\t" $1,$2}' b.txt //定义全局变量FS(输入时的分隔符)为",",BEGIN必须为大写
@@ -89,6 +122,7 @@
     隐藏某一列的内容
 
         awk '{$3="XXX";print NR "\t" $0}' a.txt
+            如何替换指定行呢???
     
         上边的 awk 'BEGIN{OFS=","}{print $1,$2}' b.txt 也可以写成
                awk '{OFS=",";print $1,$2}' b.txt
@@ -97,10 +131,11 @@
         脚本中的每个语句的末尾尽量写上";"
 
 ### 自定义变量
+
     awk '{a=1;b=2;print a+b}'
-    awk '{a="hello";b="world";print a b}'  //a b 字符串拼接,不能用+,得零; 类似JavaScript，调用Number(),
+    awk '{a="hello";b="world";print a b}'  //a b 字符串拼接,不能用+,得到零; 类似JavaScript，调用Number(),
         awk '{a="4";b="hello";print a+b}' 的结果为 4
-        awk '{a="4";b="4hello";print a+b}' 的结果为 8
+        awk '{a="4";b="4hello";print a+b}' 的结果为 8, + 都会转为数字
 
     awk '{a=1;b=2;c=3;print (a b)+3}'   //结果为15
         支持
@@ -114,23 +149,31 @@
         ```
 
 ### 正则
-    awk '/abc/{print $0}' b.txt
-    ! 表示不匹配
-    awk '!/abc/{print $0}' b.txt
 
-    我的建议是条件写在括号中，脚本也是
-        awk '(/^[a-z]{4}$/){print NR,$0}' a.txt
+建议 gawk
 
-        脚本
-            (/^[a-z]{4}$/){print NR,$0}
-    
+awk '/abc/{print $0}' b.txt
+! 表示不匹配
+awk '!/abc/{print $0}' b.txt
+
+
+我的建议是条件写在括号中，脚本也是
+    awk '(/^[a-z]{4}$/){print NR,$0}' a.txt
+
+    脚本
+        (/^[a-z]{4}$/){print NR,$0}
+
 
 
 ### 一般用法
+
 awk [-F | -f | -v ] 'BEGIN {} //{command1;command2} END {}' file
--F  指定输入分隔符
--f  调用脚本
--v  定义变量
+
+    -F  指定输入分隔符
+    -f  调用脚本
+    -v  定义变量
+        awk -v a=3 -v b=2 '{print (a * b)}'
+
 
 pattern空模式
 
@@ -166,13 +209,15 @@ awk ...
 awk 'END{}' file
 
 #### 引用变量
+
 name=xian
 awk '{print "'$name'"}' 同 shell中echo $name
 
     脚本中如何引用shell变量呢?
 
 #### 格式化输出
-awk '{printf "%s\n,$1}' a.txt
+
+awk '{printf "%s\n",$1}' a.txt
 
 %20s    右对齐，20个字符
 %-20s   左对齐
@@ -180,6 +225,7 @@ awk '{printf "%s\n,$1}' a.txt
 
 
 #### awk脚本
+
 test.awk
 BEGIN{
     print "---------"
@@ -200,15 +246,9 @@ awk -F":" 'BEGIN{print "-----"}($3=100 && $NF=="/sbin/nologin"){print NR"\t"$1"\
 
 
 
-
-
-
-
-
-
-
 ## sed (Stream Editor) 行编辑器
-    脚本中修改一般用sed,平常用vim
+
+脚本中修改一般用sed,平常用vim
 
     sed 's/old/new/g' a.txt 
         -i 修改到文件,貌似默认是修改到内存
@@ -222,11 +262,16 @@ awk -F":" 'BEGIN{print "-----"}($3=100 && $NF=="/sbin/nologin"){print NR"\t"$1"\
 
 -i  不再预览，操作硬盘文件
     -i.bak  对文件进行备份,-i后面的就是备份的文件的文件名后缀
+
 -e  多点编辑
 
 -r 正则
+    -E, -r, --regexp-extended
+
     sed -r 's/\<root\>/rooter/gi' a.txt
         \< 和 \> 正则表达式的边界,类似//
+
+dpaics
 
 d   delete
     删除行
@@ -240,11 +285,13 @@ c
     替换指定行
     sed '2chello' a.txt
     sed '2c\hello' a.txt
+
 s   替换
     sed '2,3s/root/roat/i'
     sed 's/root/roat/g'
 ~   步进
     sed '1~2p' a.txt //输出1，3，5...
+
 
 
 模式空间（Pattern space）

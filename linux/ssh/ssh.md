@@ -30,7 +30,7 @@ man 5 ssh_config
 
     默认如下:
 
-    Host *
+        Host *
 
 
 ssh -i ./id_rsa 用户@IP

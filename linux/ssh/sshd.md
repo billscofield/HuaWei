@@ -48,7 +48,11 @@ ListenAdress 0.0.0.0
 
     Specifies whether compression is enabled after the user has authenticated
     successfully.  The argument must be yes, delayed (a legacy synonym for
-    yes) or no.  The de‐fault is yes.
+    yes) or no.  The default is yes.
+        
+        yes:
+        delayed:
+        no:
 
 
 
@@ -71,9 +75,45 @@ GSSAPI ( Generic Security Services Application Programming Interface ) 是一套
 
 1. GSSAPIAuthentication
 
-    Specifies whether user authentication based on GSSAPI is allowed.  The
-    default is no.
+    Specifies whether user authentication based on GSSAPI is allowed.
 
+    The default is no.
+
+
+    http://jaminzhang.github.io/linux/GSSAPI-related-options-in-ssh-configuration/
+
+    昨天看了一个脚本中关于配置 SSH 的部分，遇到 GSSAPI 相关配置，这个之前没怎么
+    见过。 于是查了下，解释如下：
+
+    GSSAPI：Generic Security Services Application Program Interface，GSSAPI 本
+    身是一套 API，由 IETF 标准化。
+
+    其最主要也是著名的实现是基于 Kerberos 的。一般说到 GSSAPI 都暗指 Kerberos 实现。
+
+    GSSAPI 是一套通用网络安全系统接口。该接口是对各种不同的客户端服务器安全机制
+    的封装，以消除安全接口的不同，降低编程难度。
+
+    上面说的 GSSAPI 相关具体配置是什么？主要是 GSSAPIAuthentication，这个默认值
+    为 yes。
+
+    网上搜索 GSSAPI 的关键字，就会出现一大堆 SSH 登录慢的网页中有说到修改这个
+    GSSAPIAuthentication 为 no，可以加快 SSH 登录。
+
+    为何呢？
+
+    SSH 默认开启了 GSSAPIAuthentication 认证，
+
+    一般 SSH 依次进行的认证方法的是 publickey, gssapi-keyex, gssapi-with-mic,
+    password， 这个你可以ssh -v开启 debug 模式在连接日志看到。   一般用户只使用
+    password 认证方式，但前面 3 个认证过程系统还是会尝试，这就浪费时间了，也就
+    造成 SSH 登录慢。
+    
+    关于 GSSAPI 相关的认证，消耗的时间比较多，具体可以查看 SSH 连接日志。
+
+    GSSAPI 主要是基于 Kerberos 的，因此要解决这个问题也就变成要系统配置有
+    Kerberos， 一般用户是没有配置 Kerberos的，反正我是没见过这种方式 SSH 登录的。
+    所以那就直接把 SSH 服务端的 GSSAPIAuthentication 直接关掉吧，客户端也可以关
+    掉。
 
 
 

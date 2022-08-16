@@ -1,5 +1,7 @@
 ## awk gawk
 
+[link](https://blog.51cto.com/wuyanc/2506734)
+
 awk 是一门语言, 有变量
 
 1977年开发出来
@@ -28,17 +30,17 @@ Alfred Aho, Brian Kernighan, Peter Weinberger
 
 ### 语法
 
-awk 选项 '命令' 文件名      // 当引用变量时，用双引号，同sed
+awk 选项 '匹配 命令' 文件名      // 当引用变量时，用双引号，同sed
 
 
 ### 选项
 
--F: 字段分隔符, 默认是空格或者制表符
+-F: 输入字段分隔符, 默认是空格或者制表符
 
     多个分隔符的情况
 
         awk -F'[: ]' '/inet/'
-
+        
         awk -F'[: ]+' '/inet/'
 
 

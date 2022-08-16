@@ -2,14 +2,21 @@
 
 output a string repeatedly until killed
 
-感觉很没用？其实它是很有用的,安装程序的时候，有的程序需要你不断地按y和回车，安装进程才能继续工作。yes命令可以解救你！它帮你输入y和回车
+感觉很没用？其实它是很有用的,安装程序的时候，有的程序需要你不断地按y和回车，安
+装进程才能继续工作。yes命令可以解救你！它帮你输入y和回车
 
 ```
 yes | sh boring_installation.sh
 
 ```
 
-如今，这个命令被放在GNU coreutils中，当前这个版本用了整整128行代码来完成这个功能，你可以在github上找到它的源码：https://github.com/coreutils/coreutils/blame/master/src/yes.c。已经过了25年，这个命令居然仍然在更新中！最近一次更新大概在一年前。它的效率非常高
+如今，这个命令被放在 GNU coreutils 中，当前这个版本用了整整128行代码来完成这个
+功能，你可以在github上找到它的源码：
+
+    https: //github.com/coreutils/coreutils/blame/master/src/yes.c
+
+已经过了25年，这个命令居然仍然在更新中！最近一次更新大概在一年前。它的效率非常
+高
 
 http://www.sohu.com/a/199363999_470018
 
@@ -21,21 +28,25 @@ ${-}
     当前shell的选项标志, 具体什么意思???
 
         569JNRXZghiklms
-
+        
         i 代表交互式shell
-
+        
         ```
         echo "---"
         echo ${-}   //输出hB
         echo "---"
         ```
 
-登陆shell执行startup文件为：/etc/profile、~/.bash_profile、~/.bashrc（这里只是从现象上得出的推论，这种推论是有问题的，稍后讨论），而非登陆shell执行的startup文件仅为：~/.bashrc。
+登陆shell执行startup文件为：/etc/profile、~/.bash_profile、~/.bashrc（这里只是
+从现象上得出的推论，这种推论是有问题的，稍后讨论），而非登陆shell执行的startup
+文件仅为：~/.bashrc。
 
 
 登录shell：是需要用户名、密码登录后才能进入的shell（或者通过--login”选项生成的shell）。
 
-非登录shell：当然就不需要输入用户名和密码即可打开的Shell，例如：直接命令“bash”就是打开一个新的非登录shell，在Gnome或KDE中打开一个“终端”（terminal）窗口程序也是一个非登录shell。
+非登录shell：当然就不需要输入用户名和密码即可打开的Shell，例如：直接命令“bash”
+就是打开一个新的非登录shell，在Gnome或KDE中打开一个“终端”（terminal）窗口程序也
+是一个非登录shell。
 
 执行exit命令，退出一个shell（登录或非登录shell）；
 执行logout命令，退出登录shell（不能退出非登录shell）。
@@ -163,5 +174,5 @@ none login shell
     ~/.bashrc
 
 验证是否是login shell
-echo $0
+    echo $0
 输出结果有 "-"前导符的是login shell,例如 -bash,-zsh,-su

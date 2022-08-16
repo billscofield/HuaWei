@@ -13,13 +13,11 @@ Linux可划分为以下四部分：
 
 ## 内核主要负责以下四种功能：
 
-1. 系统内存
+1. **硬件**设备
+2. **文件系统**
+3. 系统**内存**
+4. **软件**程序
 
-1. 软件程序
-
-1. 硬件设备
-
-1. 文件系统
 
 ### 系统内存管理
 
@@ -94,79 +92,98 @@ tty代表电传打字机（teletypewriter  [telɪ'taɪpraɪtə]']）。这是一
 的是一台用于发送消息的机器。
 
 setterm
--background black、red、green、yellow、blue、
-magenta、cyan或white
-将终端的背景色改为指定颜色
+    -background
+        black
+        red
+        green
+        yellow
+        blue、
+        magenta
+        cyan
+        white
+    将终端的背景色改为指定颜色
 
--foreground black、red、green、yellow、blue、
-magenta、cyan或white
-将终端的前景色改为指定颜色
+    -foreground
+        black
+        red
+        green
+        yellow
+        blue、
+        magenta
+        cyan
+        white
+    将终端的前景色改为指定颜色
 
--inversescreen on或off 交换背景色和前景色
--reset 无 将终端外观恢复成默认设置并清屏
-
+    -inversescreen on或off
+        交换背景色和前景色
+    -reset 无
+        将终端外观恢复成默认设置并清屏
 
 
 bash手册并不是按部就班的学习指南，而是作为快速参考来使用的。
 
 Linux手册页惯用的节名
-Name            显示命令名和一段简短的描述
-Synopsis        命令的语法
-Configuration   命令配置信息
-Description     命令的一般性描述
-Options         命令选项描述
-Exit Status     命令的退出状态指示
-Return Value    命令的返回值
-Errors          命令的错误消息
-Environment     描述所使用的环境变量
-Files           命令用到的文件
-Versions        命令的版本信息
-Conforming To   命名所遵从的标准
-Notes           其他有帮助的资料
-Bugs            提供提交bug的途径
-Example         展示命令的用法
-Authors         命令开发人员的信息
-Copyright       命令源代码的版权状况
-See Also        与该命令类型的其他命令
+    Name            显示命令名和一段简短的描述
+    Synopsis        命令的语法
+    Configuration   命令配置信息
+    Description     命令的一般性描述
+    Options         命令选项描述
+    Exit Status     命令的退出状态指示
+    Return Value    命令的返回值
+    Errors          命令的错误消息
+    Environment     描述所使用的环境变量
+    Files           命令用到的文件
+    Versions        命令的版本信息
+    Conforming To   命名所遵从的标准
+    Notes           其他有帮助的资料
+    Bugs            提供提交bug的途径
+    Example         展示命令的用法
+    Authors         命令开发人员的信息
+    Copyright       命令源代码的版权状况
+    See Also        与该命令类型的其他命令
 
 如果不记得命令名怎么办？可以使用关键字搜索手册页。语法是：man -k 关键字。例
 如，要查找与终端相关的命令，可以输入man -k terminal
+    apropos : search the manual page names and descriptions
 
 
 Linux手册页的内容区域
-1 可执行程序或shell命令
-2 系统调用
-3 库调用
-4 特殊文件
-5 文件格式与约定
-6 游戏
-7 概览、约定及杂项
-8 超级用户和系统管理员命令
-9 内核例程
+    1 可执行程序或shell命令
+    2 系统调用  System calls (functions provided by the kernel)
+    3 库调用    Library calls (functions within program libraries)
+    4 特殊文件  Special files (usually found in /dev)
+    5 文件格式与约定    File formats and conventions, e.g. /etc/passwd
+    6 游戏
+    ??? 7 概览、约定及杂项  Miscellaneous (including macro packages and conventions), e.g. man(7), groff(7)
+    8 超级用户和系统管理员命令
+    9 内核例程  Kernel routines [Non standard]
 
-在现实内容的左上角和右上角，单词后的括号中有一个数字, 这表示所显示的手册页来自内容区域几
+
+在现实内容的左上角和右上角，单词后的括号中有一个数字, 这表示所显示的手册页来自
+内容区域几
 
 一个命令偶尔会在多个内容区域都有对应的手册页。
 
 你将会发现Linux使用正斜线（/）而不是反斜线（\）在文件路径中划分目录。在Linux中，
 反斜线用来标识转义字符，
 
-Linux将文件存储在单个目录结构中，这个目录被称为虚拟目录（virtual directory）。虚拟目录将
-安装在PC上的所有存储设备的文件路径纳入单个目录结构中，
-路径本身并没有提供任何有关文件究竟存放在哪个物理磁盘上的信息
+Linux将文件存储在单个目录结构中，这个目录被称为虚拟目录（virtual directory）。
+虚拟目录将安装在PC上的所有存储设备的文件路径纳入单个目录结构中，路径本身并没有
+提供任何有关文件究竟存放在哪个物理磁盘上的信息
 
 
-在Linux PC上安装的第一块硬盘称为根驱动器。根驱动器包含了虚拟目录的核心，其他目录都是从那里开始构建的。
+在Linux PC上安装的第一块硬盘称为**根驱动器**。根驱动器包含了虚拟目录的核心，其
+他目录都是从那里开始构建的。
 
 
 /run 运行目录，存放系统运作时的运行时数据
 /srv 服务目录，存放本地服务的相关文件
 /sys 系统目录，存放系统硬件信息的相关文件
 
-常见的目录名均基于  文件系统层级标准（filesystem hierarchy standard，FHS）。
-FHS偶尔会进行更新。你可能会发现有些Linux发行版仍在使用旧的FHS标准，而另外一
-些则只实现了部分当前标准。要想保持与FHS标准同步，请访问其官方主页：
-http://www.pathname.com/fhso
+常见的目录名均基于**文件系统层级标准（filesystem hierarchy standard，FHS）**。
+FHS偶尔会进行更新。你可能会发现有些Linux发行版仍在使用旧的FHS标准，而另外一些则
+只实现了部分当前标准。要想保持与FHS标准同步，请访问其官方主页：
+    http://www.pathname.com/fhso
 
 ls -F 轻松区分文件和目录
 
@@ -174,14 +191,16 @@ ls -F 轻松区分文件和目录
 俗语“less is more”得来），它实为more命令的升级版。
 
 
-x或BSD风格的参数混用来定制输出。GNU长参数中一个着实让人
-喜爱的功能就是--forest参数。它会显示进程的层级信息，并用ASCII字符绘出可爱的图表。
+x或BSD风格的参数混用来定制输出。GNU长参数中一个着实让人喜爱的功能就是--forest参
+数。它会显示进程的层级信息，并用ASCII字符绘出可爱的图表。
 
 du 会以磁盘块为单位来表明每个文件或目录占用了多大存储空间。
 
 
 dd = Disk Dump 
     convert and copy a file
+
+    there is a command called dumy, which is used to backup a total disk
 
 
 df = Disk Free
