@@ -32,6 +32,47 @@ make && make install
     -s signal       : send signal to a master process: stop, quit, reopen, reload
 
 
+### 编译选项
+
+1. --prefix=path
+
+    定义一个目录，存放服务器上的文件 ，也就是nginx的安装目录。默认使用
+    /usr/local/nginx。
+
+2. --sbin-path=path
+
+    设置nginx的可执行文件的路径，默认为 prefix/sbin/nginx.
+
+3. --conf-path=path
+
+    设置在nginx.conf配置文件的路径。nginx允许使用不同的配置文件启动，通过命令行
+    中的-c选项。默认为prefix/conf/nginx.conf.
+
+4. --pid-path=path
+
+    设置nginx.pid文件，将存储的主进程的进程号。安装完成后，可以随时改变的文件名
+    ， 在nginx.conf配置文件中使用 PID指令。默认情况下，文件名 为
+    prefix/logs/nginx.pid.
+
+5. --error-log-path=path
+
+    设置主错误，警告，和诊断文件的名称。安装完成后，可以随时改变的文件名 ，在
+    nginx.conf配置文件中 使用 的error_log指令。默认情况下，文件名 为
+    prefix/logs/error.log.
+
+6. --http-log-path=path
+
+    设置主请求的HTTP服务器的日志文件的名称。安装完成后，可以随时改变的文件名 ，
+    在nginx.conf配置文件中 使用 的access_log指令。默认情况下，文件名 为
+    prefix/logs/access.log.
+
+7. --lock-path=path
+
+    指向lock文件（nginx.lock）（安装文件锁定，防止安装文件被别人利用，或自己误
+    操作。）
+
+
+
 
 ## 信号量
 
