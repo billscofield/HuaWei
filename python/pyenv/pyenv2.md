@@ -17,6 +17,8 @@ Through a process called rehashing, pyenv maintains shims in that directory to m
 
 git clone https://github.com/pyenv/pyenv.git ~/.pyenv
 
+当 pyenv install -l 发现没有新需要的 python 版本时，更新 pyenv , 要去 gitee 强制更新
+
 然后配置环境变量
 如果你使用 bash，就依次执行如下命令：
 echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc

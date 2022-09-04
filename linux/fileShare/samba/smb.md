@@ -180,6 +180,11 @@ samba-client    客户端          debian: smbclient
 
 /etc/samba/smb.conf
 
+smbcontrol smbd reload-config       // 重新加载配置文件
+
+    Use smbcontrol (man page) to reload the config with the lowest downtime and
+    lowest-possible impact on services already using your shares. 
+
 systemctl status **smb**
 
 netstat -tlnpu | grep smb

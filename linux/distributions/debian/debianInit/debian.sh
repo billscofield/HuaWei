@@ -192,6 +192,10 @@ apt install -y asciinema
 # customized.
 apt install -y zathura
 
+
+# epub
+apt install -y sigil
+
 # Xournal++
 # 手写可以
 

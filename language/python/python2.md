@@ -5,6 +5,156 @@
 在Python中，一行就是一行。如果你愿意，也可加上分号，但不会有任何影响（除非后面
 还有其他代码），况且大家通常都不这样做。
 
+
+    | 输入-----> 处理 ------> 输出------>
+    |            |  |
+    |            |  |
+    |            |  |
+    |            暂存
+
+
+BS/CS架构
+    
+    client 是输入和输出，而 Server 是处理
+
+大规模协同系统
+    输入：物联网（传感器）
+    输出：AI，机器人
+    处理：云集算服务器
+    存储：云存储
+    传输：5G，WiFi，蓝牙
+
+应用
+技术
+工程
+科学
+
+小规模个性化 -> 小规模标准化 -> 大规模标准化 -> 大规模个性化
+
+PyQt
+PySide
+wxPython
+PyGTK
+
+
+https://www.python.org/downloads/
+    会说明哪个版本是 security 的
+
+
+import this     // Python 之禅...
+
+
+import keyword
+print(keyword.kwlist)
+print(keyword.iskeyword)
+
+
+字符拼接
+    print('a','b',200,sep='.')      // 默认是空格
+
+    print("hello",end='')
+
+输入
+    input("xxx")
+
+
+
+
+## 进制
+
+bin(10)      // '0b1010'
+oct(10)      // '0o12'
+hex(10)      // '0xa'
+
+a = bin(10)
+print(a)        // 默认打印10进制
+
+
+复数
+    a = 3+1j
+    b = complex(3,1)
+
+自动类型转换
+    bool -> int -> float -> complex
+
+强制类型转换
+    int(a)
+    float(a)
+    bool(a)
+    complex(a)
+
+False
+    1. 0
+    2. 0.0
+    3. 0j
+    4. ''
+    5. False
+    6. ()
+    7. []
+    8. set()
+    9. dict()
+    10. NONE
+
+运算符
+    1. 算数运算符
+    ```
+    +
+    -
+    *
+    /   默认是小数
+    **
+    %   取余
+    //  取整
+        -5//3 -> -2
+    divmod()    // 同时获得商和余数
+        a,b=divmod(5.3)
+    
+    ```
+
+    2. 比较运算符
+        ==          // 没有 ===
+        !=
+        >
+        <
+        >=
+        <=
+
+    3. 赋值运算符
+        =
+        算数运算符=
+
+
+    4. 位运算符
+        &
+        |
+        ^       // 异或
+        ~       // 取反
+        <<
+        >>
+
+    5. 逻辑运算符
+        and             // 没有 && || !
+        or
+        not
+
+        not > and > or
+
+    6. 成员运算符
+        in
+        not in
+
+    7. 身份运算符(对象)
+        is
+        is not
+        id(x)
+
+        a=1000;
+        b=1000;
+        a is b;     // 在不同的 os 是不一样的, 整型数在不同平台下的解释器的缓存空间是不一样的
+                    // 交互模式下 [-5,256]
+                    // pycharm 下 [-无穷, +无穷]
+
+
 ### 除法
 
 除法运算的结果为小数，即浮点数（float或floating-point number）。
@@ -200,7 +350,7 @@ list()
 不能给不存在的元素赋值，因此如果列表的长度为2，就不能给索引为100的元素赋值。
 
 删除元素
-    del
+    del // 系统的通用方法
 
 使用切片赋值还可在不替换原有元素的情况下插入新元素。
 
@@ -216,16 +366,22 @@ list()
 1. index
     方法index在列表中查找指定值第一次出现的索引。
 
+    .index(target,start,end)        [)
+
 2. count
+
     方法count计算指定的元素在列表中出现了多少次
 
     [1,2,3,4,5,6,1,2].count(1)
+
 
 3. append
 
 4. extend
 
     方法extend让你能够同时将多个值附加到列表末尾
+
+    list(a) + list(b)
 
 5. insert
 
@@ -246,6 +402,8 @@ list()
 7. remove
 
     方法remove用于删除第一个为**指定值**的元素。
+
+    没有这个值会报错
 
 8. clear方法
 
@@ -268,7 +426,11 @@ list()
 
     两个不同的方向
 
+    pop(index)      // index 默认最后一个
+
 10. reverse
+
+    原地修改
 
 11. sort
 
@@ -276,6 +438,8 @@ list()
     顺序排列，而不是返回排序后的列表的副本。
 
     且不返回任何值
+
+    .sort(reverse=True)     // 降序
 
 12. sorted
 
@@ -295,23 +459,65 @@ list()
     sort(key=函数[,reverse=True/False])
 
 
+
+### random
+
+import random
+
+random.randint(start,end)           // [start,end]
+
+
+### copy
+
+>>> a=1111111111111111
+>>> id(a)
+139688038364272
+>>> a=222222222222
+>>> id(a)
+139688038363856
+
+
+
+
+import copy
+
+y = copy.deepcopy(x)
+
+
 ### 元组：不可修改的序列
 
+tuple()
+
 空元组用两个不包含任何内容的圆括号表示
+    a = ()
+    a = ('a',)
 
 如何表示只包含一个值的元组呢？这有点特殊：虽然只有一个值，也必须在它后面加上逗
 号。
     (1,)
     2,
+    2,3,4
 
 
 
 ### 字符串
 
-```
-print("%s %s" % ("hello","world"))
+1. %
 
 ```
+print("%s %s" % ("hello","world"))
+print("%d\n"%1)
+print("%d %d\n"%(1,2))
+
+```
+
+2. format函数
+
+键值对
+字典
+列表
+
+
 
 编写新代码时，应选择使用字符串方法format，它融合并强化了早期方法的优点。
 
@@ -476,6 +682,107 @@ X 与x相同，但使用大写字母
  -3.1
 ```
 
+字典变量展开
+
+```
+>>> resp={"a":"aa","b":"bb"}
+>>> print("{a} is {b}".format(**resp))
+aa is bb
+
+```
+
+列表
+
+lista = ['a','b','c']
+str = "webname:{0[0]}, url:{0[1]} time:{1}}".format(lista,2020)
+print(str)
+
+
+print("A:{:.2d}".format(4.1415))
+
+千分位
+    print("{:,}".format(10000000))
+
+科学计数法
+    print("{:.2e}".format(10000000))
+
+百分数
+    print("{:.1%}".format(1))       // .1 是保留一位小数   输出 100.0%
+    print("{:%}".format(1))         // 默认保留6位小数     输出 100.000000%
+
+
+```
+str="hello"
+print("{:*>10}".format(str))        // * 可以换成其他填充字符
+    ******helo
+print("{:*<10}".format(str))
+    helo******
+print("{:*^10}".format(str))
+    ***helo***
+```
+
+
+
+
+3. **f-string**
+
+    速度最快
+
+    ```
+    name="world"
+    age=11
+    print(f"你好,{name} 今年{age}岁了")
+    print(F"你好,{name} 今年{age}岁了")
+
+    ---
+
+    str="helo"
+    print(f"{str:*^10}")
+
+    ---
+
+    print(f"{'abc'.upper()}")
+
+
+    teacher="张老师"
+    days = 3
+    message = (
+        f"{'请假条':^20}\n"
+        f"{teacher},您好:\n"
+        f"我想请假{days}天，可以吗？"
+        )
+
+    ```
+
+    {}转义
+        print(f"{{86}}")        // 两个{ 是一个 {
+
+
+    
+
+没有字符，都是字符串
+
+m = 'i\' a student'           // 单引号也可以转义
+n = r'c:\temp\a'
+    \\
+    \oyy                        // 八进制数
+
+len(m)
+    正向索引
+    反向索引                    // step 为负数时，start 要为后边的数字，end 要为前边的数字
+        print(a[-1:-5:-1])
+
+拼接
+    print('a','b')
+
+    str= "ehllo" + str
+
+    str2 = "很长的字符串" \
+           "很长的字符串" \
+           "很长的字符串" 
+
+
+
 
 #### 字符串方法
 
@@ -559,24 +866,99 @@ X 与x相同，但使用大写字母
     'thiz iz an inkredible tezt'
     ```
 
+
+str1.capitalize()
+
+大小写转换
+统计和查找
+
+
 #### 判断字符串是否满足特定的条件
 
-isalnum
-isalpha
-isdecimal
-isdigit
+isalnum         // 字符串至少有一个字符并且所有字符都是字母或数字
+isalpha         // 英文字母, 123 是数字, 至少有一个字符并且所有字符都是字母
+
+isdecimal       // 是否是纯数字组成
+isdigit         // 字符串只包含数字
+isnumeric       // 字符串中只包含数字字符
+    有小数点的都是False
+
+decimal     
+"1"(true)   全角"1"(True)   "123.0"(False)        "$1234"(False)   b"1"(字节没有资格方法,报错)      "Ⅳ(False 罗马数字,汉字四)"
+digit
+"1"(true)   全角"1"(True)   "123.0"(False)        "$1234"(False)   b"1"(True, 是字节)               "Ⅳ(False 罗马数字,汉字四)"
+numeric
+"1"(true)   全角"1"(True)   "123.0"(False)        "$1234"(False)   b"1"(True, 是字节)               "Ⅳ(True 罗马数字,汉字四)"
+
+
+isdigit()
+    True: Unicode数字， byte数字(单字节)  全角数字(双字节)
+    False: 汉字数字, 罗马数字
+    Error: 无
+
+
+isdecimal()
+    True: Unicode数字，全角数字(双字节)
+    False: 汉字数字, 罗马数字
+    Error: byte数字(单字节)
+
+isnumeric()
+    True: Unicode数字，全角数字(双字节), 汉字数字，罗马数字
+    False: 无
+    Error: byte数字(单字节)
+
+
+
 isidentifier
 islower
-isnumeric
 isprintable
-isspace
+isspace         // "    "  "\t\v\n\r\f"
 istitle
 isupper
+
+max()
+    返回字符串中编码最大的字符
+min()
+    返回字符串中编码最小的字符
+
+ord('a')
+chr(97)
+
+a="hello中"
+a_utf8 = a.encod("UTF-8")
+a_gbk = a.encod("GBK")
+print(a_utf8,type(a_utf8))                  // type is bytes
+print(a_gbk,type(a_gbk))                    // type is bytes
+print(a_utf8.decode('UTF-8','strict'))
+print(a_gbk.decode('GBK','strict'))
+
+
+空列表
+    a = []
+    a = list()
+
+    len()
+    max()
+    min()
+    sum()
+
+字符串和数值不能比较
+    min(0,False)     -> 0
+    min(False,0)     -> False   不是覆盖
+
+
+列表推导式
+    [x+2 for x in range(5)]
+
+
+
 
 
 ## 字典
 
-每个键与其值之间都用冒号（:）分隔，项之间用逗号分隔
+a = {}      // 空字典
+
+每个键与其值之间都用**冒号（:）**分隔，项之间用逗号分隔
 
 空字典（没有任何项）用两个花括号表示，类似于下面这样：{}。
 
@@ -646,10 +1028,13 @@ nebook
     >>> dict.fromkeys(['name', 'age'], '(unknown)') 
     {'age': '(unknown)', 'name': '(unknown)'}
 
+    keys = ['a','b','c']
+    {}.fromkeys(keys,"value")       --> {'a': 'value', 'b': 'value', 'c': 'value'}
+
 4. get
 
     方法get为访问字典项提供了宽松的环境。通常，如果你试图访问字典中没有的项，将
-    引发错误。
+    引发错误。get方法不会报错
 
     使用get来访问不存在的键时，没有引发异常，而是返回None。你可指定“默认”
     值，这样将返回你指定的值而不是None。
@@ -687,6 +1072,10 @@ nebook
     {'y': 2}
     ```
 
+    返回删除的键值对
+
+    .pop('x', 没有键时的返回值)
+
 8. popitem
 
     方法popitem类似于list.pop，但list.pop弹出列表中的最后一个元素，而popitem随
@@ -721,6 +1110,88 @@ nebook
 
     方法values返回一个由字典中的值组成的字典视图。不同于方法keys，方法values返
     回的视图可能包含重复的值。
+
+
+### set 集合
+
+a = set([1,2,3,3])
+
+空集合 set()
+
+不能存放字典，列表等 unhashable type
+
+.add(x)
+
+.update('abcde')
+    将指定的序列依次加入到集合中
+
+    >>> a = set()
+    >>> a
+    set()
+    >>> a.update("hello")
+    >>> a
+    {'h', 'l', 'o', 'e'}
+
+
+.clear()
+
+.remove('x')        // 仅仅有一个参数，没有默认值
+
+.discard('x',没有找到的返回值)
+    
+
+.pop()
+    随机弹出一个并返回
+
+
+
+集合的运算
+
+    1. 并集
+
+        &(union)
+
+        res = s1 | s2
+        s1.union(s2)
+
+    2. 交集(intersection)
+
+        |
+        res = s1 & s2
+        s1.intersection(s2)
+
+    3. 差集
+
+        -(differenct)
+        res = s1 - s2
+        s1.difference(s2)
+
+    4. 异或集(symmetric_difference)
+        
+        ^
+        res = s1 ^ s2
+        s1.symmetric_difference(s2)
+
+    5. 子集
+        a = {1,2}
+        b = {1,2,3}
+        a <= b
+
+        s.issubset(b)
+        b.issuperset(a)
+
+        < 真子集
+
+    6. 是否是非交集
+        
+        .isdisjoint
+        不相交返回 True
+
+冰冻集合 frozenset()
+    可以把序列转换为冻冰集合
+    冰冻集合一旦创建，就不能进行任何修改，只能用于集合
+
+
 
 ## 第 5 章 条件、循环及其他语句
 
@@ -757,6 +1228,34 @@ elif 子句
 s：相同运算符
 
 in：成员资格运算符
+
+
+for i in range(1,4);        // [start,end)  start+step ... end  step 是有符号的, 如果不能达到end, 则为空
+    print(i)
+
+for i in "hello":
+
+len(list)
+
+for i in (len(n)):
+    print(f"{}位置，元素{n[i]}")
+
+
+while else
+
+```
+for i in range(3):
+    cmd = input("xxx")
+    if cmd == 'exit':
+        break
+    print(cmd)
+else:                       // 循环中断(break,<ctrl-c>)的情况下不执行
+    print("您输入了3次命令")
+```
+
+
+
+
 
 
 ##### 断言
@@ -889,6 +1388,12 @@ eval
 
 ## 函数
 
+
+内置函数
+标准库函数
+第三方库函数
+用户自定义函数
+
 放在函数开头的字符串称为文档字符串（docstring），将作为函数的一部分存储起来。
 
 
@@ -920,10 +1425,19 @@ Calculates the square of the number x.
 
 位置参数, 关键字参数和默认值
     关键字参数最大的优点在于，可以指定默认值
+    混用的时候，关键字参数要写在位置参数后边
+
+    关键字参数之后不能再使用位置参数, 就必须使用关键字方式进行赋值
+
 
 收集参数
 
+
     ```
+    *args
+    **kwargs
+
+
     def print_params(*params): 
         print(params)
     ``` 
@@ -977,7 +1491,14 @@ Calculates the square of the number x.
     >>> print_params_4(1, 2, 3, 5, 6, 7, foo=1, bar=2)
     ```
 
-分配参数
+分配参数(参数分解)
+
+    可以是 list, tuple, set 
+
+
+
+
+
 
 ```
 通过在调用函数（而不是定义函数）时使用运算符*实现的
@@ -1001,6 +1522,10 @@ Well met, Sir Robin!
 
 ```
 
+
+
+
+
 ```
 def story(**kwds): 
     return 'Once upon a time, there was a {job} called {name}.'.format_map(kwds)
@@ -1009,7 +1534,24 @@ print(story(job='king', name='Gumby'))
 
 ```
 
+
+**命名关键字参数**(必须用关键字形式赋值)
+
+```
+def say(a,b,c,*,name,age):          // * 后边的参数必须用关键字形式赋值
+    pass
+
+say(1,2,3,name="hello",age=11)
+```
+
+
+---
+
+
+locals()    // 在函数内的所有变量...
+
 全局变量
+
     必要时可使用globals()['parameter']来访问
 
     ```
@@ -1020,6 +1562,9 @@ print(story(job='king', name='Gumby'))
     在函数内部给变量赋值时，该变量默认为局部变量，除非你明确地告诉Python它是全
     局变量。那么如何将这一点告知Python呢？
 
+
+
+!!!
     >>> x = 1 
     >>> def change_global(): 
         global x 
@@ -1035,3 +1580,665 @@ print(story(job='king', name='Gumby'))
     apply(func[, args[, kwargs]]) 调用函数（还提供要传递给函数的参数）
 
 
+
+
+## 文件操作
+
+文件打开与关闭
+
+mode
+encoding='utf-8'
+
+文件读写
+
+f = open('a.txt','w',encoding='GBK')
+f = open('a.txt','w',encoding='UTF-8')
+
+
+通过设置 open() 函数的 buffering 参数可以关闭缓冲区，这样数据不就可以直接写入文
+件中了？对于以二进制格式打开的文件，可以不使用缓冲区，写入的数据会直接进入磁盘
+文件；但对于以文本格式打开的文件，必须使用缓冲区，否则 Python 解释器会
+ValueError 错误。例如：
+
+f = open("a.txt", 'w',buffering = 0)
+f.write("写入一行新数据")
+
+运行结果为：
+
+```
+Traceback (most recent call last):
+  File "C:\Users\mengma\Desktop\demo.py", line 1, in <module>
+    f = open("a.txt", 'w',buffering = 0)
+    ValueError: can't have unbuffered text I/O
+```
+
+
+write
+    f.write("\n".join(a))
+
+writelines()
+    a = ['a\n','b\n','c\n']     // 不能少 \n
+    f.writelines(a)
+
+如果向文件写入数据后，不想马上关闭文件，也可以调用文件对象提供的 flush() 函数，它可以实现将缓冲区的数据写入文件中
+
+**使用 writelines() 函数向文件中写入多行数据时，不会自动给各行添加换行符。上面
+例子中，之所以 b.txt 文件中会逐行显示数据，是因为 readlines() 函数在读取各行数
+据时，读入了行尾的换行符。**
+
+
+
+read
+    read()
+        没有指定读取的字符数，表示读取文件中所有的数据
+
+    read(NumChars)
+        **读取几个字符, 不论是中文还是英文**
+
+    readline
+        读取文件中的一行
+
+    readlines
+        list, 包含换行符
+    
+    tell
+        **字节**数目, 读完了多少字节，读完字节的末尾，而不是下一个字节
+        "你好"    f.read(1), f.tell() 返回3, 一个汉字占用3个字节, 也和编码有关
+
+    seek(offset[,whence]), **指定的是字节**
+        定位到某个位置
+
+        \n 是两个字符,两个字节
+
+        offset: 偏移量
+            
+        whence: 从哪里开始
+            默认是文件头
+            0: 文件开头
+            1: 当前位置
+            2: 文件末尾
+
+    f.truncate()    // 从指针的位置到结束的字符全部删除，只保留之前的内容
+    f.truncate(count) // 保留从开始到 count 个的**字符**
+
+
+mode
+    读取
+        r
+
+    写入
+        追加: a
+        修改原内容: w
+
+    读取和写入
+        是否修改原来的内容(truncat 截断)
+            否
+                开头开始写，会进行覆盖: r+ (写多少覆盖多少)
+                末尾: a+
+            是
+                w+(全部清除，然后写)
+    b 二进制
+
+r 没有该文件会报错
+a, w 没有文件，会创建文件
+
+
+二进制文件的复制
+
+```
+fin = open('a.png',mode='rb')
+fout = open('b.png',mode='wb')
+
+while True:
+    data = fin.read(100)
+    if data:
+        fout.write(data)
+    else:
+        break
+---
+    if data != b'':
+        fout.write(data)
+```
+
+    \x 十六进制
+    b'\xff\xd8'
+
+
+缓冲区
+    1. 文件关闭时
+    2. 程序正常结束时
+    3. 缓冲区满
+    4. 手动flush
+
+
+文件对象
+
+```
+f = open('a.txt',mode = 'r', encoding = 'utf-8')
+
+for i in f:
+    print(i, end = "")
+
+f.close()
+
+f.name
+f.mode
+f.writable()
+f.readable()
+```
+
+
+
+## 错误(error)和异常(exception)
+
+运行期检测到的错误叫做异常
+
+
+```
+try:
+    a = input("Plz input numA:")
+    b = input("Plz input numB:")
+    res = float(a) / float(b)
+    print("res:",res)
+except:
+    print("error")                  // 针对异常的处理
+
+print("程序正常执行流程")
+
+
+---
+
+try:
+    print(a)
+except NameError:
+    print("发生了",NameError)
+except ValueError:
+    print("发生了",ValueError)
+
+
+print("程序正常执行流程")
+
+
+---
+
+try:
+
+except xx:
+
+except BaseException:           // 所有错误类的父类
+
+
+--- 
+
+Exception < BaseException
+
+捕获一场信息
+
+try:
+
+except Exception as e:
+    print(e,type(e))        //  str(e): float division by zero
+
+    print(str(e))           //  repr(e): ZeroDivisionError('float division by zero',)
+
+
+```
+
+
+try:
+    pass
+except xxx :
+
+else:
+    没有出错的情况
+finally:
+    出没出错都要有的情况
+
+
+with open("a",'r') as one, open('b','w') as two:
+    for data in one:
+        two.write(data)
+
+
+自定义异常
+
+    raise: 抛出异常，抛出异常后，所在函数后面的代码不再执行
+
+    ```
+    x = 10;
+    if x > 5:
+        raise Exception('X 不能大于5')      // 从业务的角度
+
+    ---
+
+    class AgeError(Exception):
+        def __init__(self,errorInfo):
+            Exception.__init__(self)
+            self.errorInfo = errorInfo
+    
+        def __str__(self):
+            return str(self.errorInfo) + ",年龄范围错误！应该在 1 - 120 之间"
+    
+    try:
+        age = intput("Plz input your age:")
+        if age < 1 or age > 120:
+            raise AgeError(age)
+        else:
+            print("正确的年龄:", age)
+    except AgeError as e:
+        print(str(e))
+    ```
+
+
+断点位置是还未执行的行
+
+    step into (F7)  单步执行
+        可以查看 open 的执行
+    step into mycode
+        针对 open 类的内置函数，不会进去，同 step into
+
+    setp over ()    将子函数当作一条语句，不会进入子函数内部
+    setp out  ()    
+    run to cursor   执行到下一个断点
+
+
+
+## 模块和包
+
+包: 文件夹
+
+模块(module): 文件
+
+函数或者类: 内容
+
+
+
+### 1. 模块
+
+```
+import math
+print(type(math))       // module
+```
+
+
+自定义模块
+
+``` module1.py
+def add(a,b):
+    print("my module1:add")
+    return f"{a} + {b} = { a + b }"
+```
+
+```demo.py
+import module1
+
+print(module1.add(1,2))
+
+```
+
+print(__name__,type(__name__))
+    如果是脚本方式执行的话就是 __main__ <class 'str'>
+    如果是被调用的话，就是模块的名称
+
+多次导入同一个模块，只执行一次
+
+模块搜索路径
+    1. 内置模块
+    2. 当前模块所在目录
+    3. 环境变量 PYTHONPATH (默认包含 python 的安装路径)
+    4. Python 安装路径下的 lib 目录
+    5. lib 文件夹下的 site-packages 文件夹(第三方模块)
+    6. sys.path.append() 追加的目录
+
+    import sys
+    sys.path    // 就是上边的所有路径
+
+    sys,math,time 模块 
+
+    print(sys.builtin_module_names)         // 默认包含在解释器当中
+
+指定搜索路径
+    
+    import os
+    print(__file__)                         // 当前模块的路径
+    os.path.dirname(__file__)               // 模块的父路径
+
+    ```
+    import sys
+    import os
+    MYLIBPATH = os.path.dirname(__file__) + r'/lib'
+    sys.append(MYLIBPATH)
+    ```
+
+    ```
+    from myModule import add, div
+    from myModule import *
+    from myModule import add as myadd
+    import myModule as m
+    ```
+
+### 2. 包
+
+默认有一个 __init__.py, 包标识符
+
+包可以嵌套
+
+import 包名.包名.模块名
+print(包名.包名.模块名.name)            // 绝对导入
+print(包名.包名.模块名.test())
+
+
+from 包名.包名 import 模块名
+模块名.test()
+
+from 包名.包名.模块名 import 函数, 变量
+
+
+包和模块的导入，实质上是引用了 __init__.py 文件
+    可以在 __init__.py 中写入 import 某个模块, 某个函数
+
+
+    ```
+    file1
+    __all__ = ['a', 'b']            // 对外开放的, 仅仅对 import * 有效， 如果显示指定导入 c , 也是可以看到的
+    a = 1
+    b = 2
+    c = 3
+
+
+    file2
+    from file1 import *
+    就只有 a 和 b, 没有 c
+    ```
+
+
+导入自身文件夹下的 
+    from . ijmport moduleA          // **不能当作脚本执行了，只能被当作模块被其他脚本调用**
+
+
+## class
+
+类指针
+
+### 类属性
+
+
+
+
+### 类方法
+
+1. 实例方法
+    有 self
+
+2. 静态方法不能有 self
+    使用类名直接访问的方法
+
+    @staticmethod
+    def say():
+        pass
+
+3. 类方法
+    使用类名直接访问的方法
+
+    @classmethod
+    def say(cls):               // cls
+
+4. init 方法
+    
+    def __init__(self,name,age):
+        self.name = name
+        self.age = age
+
+
+
+### 动态绑定属性和方法
+
+class Student():
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+    
+    def eat(self):
+        print(self.name)
+
+liming = Student('liming',11)
+liming.gender = 'girl'
+
+
+
+## 面向对象
+
+1. 封装
+    self.__age = age
+
+    stu = Student('liming')
+    dir(stu)
+        没有 __age, 但是有一个 _Student__age, 可以使用这个访问 __age   stu._Student__age
+
+    完全靠自觉...
+
+2. 继承
+
+    class 子类(父类1, 父类2...)
+
+    支持多继承
+
+    一个类如果没有继承任何类，则默认继承 object
+
+    定义子类时，必须在其构造函数中调用父类的构造函数
+
+    ```
+    class Person(object):
+        def __init__(self,name,age):
+            self.name = name
+            self.age = age
+
+        def info(self):
+            print(f"{self.name} {self.age}")
+
+    class Student(Person):
+        def __init__(self,name,age,score):
+            super().__init__(name,age)
+            self.score = score
+    ```
+
+    方法重写
+
+    ```
+    class Person(object):
+        def __init__(self, name, age):
+            self.name = name
+            self.age = age
+
+    def info(self):
+        print(f"{self.name} {self.age}")
+
+
+    class Student(Person):
+        def __init__(self, name, age, score):
+            super().__init__(name, age)
+            self.score = score
+
+        def info(self):
+            super().info()
+            print("我是学生")
+
+
+    class Teacher(Person):
+        def __init__(self, name, age, teachyear):
+            super().__init__(name, age)
+            self.teachyear = teachyear
+    ```
+
+
+    __str__ 返回一个对象的描述
+        print(stu)
+
+
+    ```
+    class Student:
+        def __init__(self,name,age):
+            self.name = name
+            self.age = age
+
+        def __str__(self):
+            return 'hello'
+
+    stu = Student('li',11)
+    print(stu)
+    ```
+
+3. 多态
+
+```
+class Animation(object):
+    def eat(self):
+        print("Animation can eat")
+
+
+class Dog(Animation):
+    def eat(self):
+        print("dog eating")
+
+
+class Cat(Animation):
+    def eat(self):
+        print("Cat eating")
+
+
+class Person:
+    def eat(self):
+        print("Person eating")
+
+
+def fun(obj):
+obj.eat()
+
+
+fun(Cat())
+```
+
+
+
+特殊方法和属性
+
+    __dict__
+        获得类对象或实例对象所绑定的所有属性和方法的字典
+        dir
+
+    __class__
+        实例是那个类
+
+    __bases__
+        父类的元组
+
+    __base__
+        多继承时，最前边的那个
+
+    __mro__
+        类的继承层次结构
+        (<class '__main__.A'>, <class '__main__.Cat'>, <class '__main__.Dog'>, <class '__main__.Animation'>, <class 'object'>)
+
+
+
+    __subclasses__()
+        直接子类的数量，不包含孙子辈的
+
+    __len__()
+        通过重写 __len__() 方法，让内置函数 len() 的参数可以是自定义类型
+
+        ```
+        a = [1,2,3,4,5]
+        len(a)
+        a.__len__()
+
+        ---
+
+        class Student:
+            def __init__(self,name):
+                self.name = name
+            def __len__(self):
+                return len(self.name)
+        ```
+
+
+    __add__()
+        通过重写 __add__() 方法，可使用自定义对象具有 "+" 功能
+
+        ```
+        a = 10
+        b = 20
+        c = a + b
+        //c = a.__add__(b)
+
+        ---
+
+        class Student:
+            def __init__(self,name):
+                self.name = neam
+            
+            def __add__(self,other)
+                return self.name + other.name
+            
+        stu1 = Student('zhangsan')
+        stu2 = Student('lisi')
+
+        stu1 + stu2                 
+        ```
+
+    __new__()
+        用于创建对象
+
+        ```
+        class Person(object):
+            def __new__(cls, *args, **kwargs):                                          // !!!
+                print("__new__被调用了，cls的id值为{}".format(id(cls)))                 // 1
+
+                obj = super().__new__(cls)                                              // !!!
+                print("创建的对象的 id 值为{}".format(id(obj)))                         // 2
+                return obj
+                
+            def __init__(self,name):
+                print("__init__被调用了，self 的 id 值是{}".format(id(self)))           // 3
+                self.name = name
+
+        print('object 这个类对象的 id 为{}'.foramt(id(object)))                         // 4
+        print('Person 这个类对象的 id 为{}'.foramt(id(Person)))                         // 5
+
+        p1 = Person('zhangsan')
+        print('p1 这个实例对象的 id 为{}'.foramt(id(p1)))                               // 6
+
+        // 结果 1 - 5 | 2 - 3 - 6 | 4
+        ```
+
+    __init__()
+        对创建的对象进行初始化
+
+
+
+Since Python 3.0, all strings are stored as Unicode in an instance of the str
+type. Encoded strings on the other hand are represented as binary data in the
+form of instances of the bytes type. Conceptually, str refers to text, whereas
+bytes refers to data. Use str.encode() to go from str to bytes, and
+bytes.decode() to go from bytes to str.
+
+```
+>>> text = "Fu\u00dfb\u00e4lle"
+>>> data = b" sind rund"
+>>> text + data
+Traceback (most recent call last):
+File "<stdin>", line 1, in <module>
+TypeError: Can't convert 'bytes' object to str implicitly
+>>> text + data.decode("utf-8")
+'Fußbälle sind rund'
+>>> text.encode("utf-8") + data
+b'Fu\xc3\x9fb\xc3\xa4lle sind rund'
+```
+
+
+https://www.runoob.com/python/python-func-super.html
+
+    super(FooChild,self) 首先找到 FooChild 的父类（就是类 FooParent），然后把类
+    FooChild 的对象转换为类 FooParent 的对象
+
+    python3 可以不写(FooChild,self)
