@@ -381,3 +381,9 @@ LC_ALL=
     a. 找到 plugins=，在后面添加autojump：plugins=(git autojump)
     b. 新开一行，添加：[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] &amp;&amp; . $(brew --prefix)/etc/profile.d/autojump.sh
     c. :wq保存退出，重启终端。
+
+
+
+## Keychain Access
+
+smb 记录的密码在这里
