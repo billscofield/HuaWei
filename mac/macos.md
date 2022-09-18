@@ -624,3 +624,15 @@ brew install fzf
 终端下的文件管理器
 
 brew install ranger
+
+
+### 取消密码
+
+pwpolicy -clearaccountpolicies
+
+依次打开「系统偏好设置」->「用户与群组」->「左下角解锁再点击更改密码」；
+
+输入完命令后即可解除必须设置4位数或以上的开机密码了
+
+
+

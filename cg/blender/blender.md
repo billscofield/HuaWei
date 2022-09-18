@@ -1,4 +1,13 @@
- #
+ 游戏
+    3Dmax, maya blender Cinema4D zbrush
+
+ 工业
+    proe solidworks inventor ug
+
+ 建筑设计
+    sketchup rhino revit
+
+ [斑斓中国](blendercn.org)
 
  ## 流程
 
@@ -521,3 +530,10 @@ vscode
     ```
     }
 
+
+
+
+
+
+
+###
