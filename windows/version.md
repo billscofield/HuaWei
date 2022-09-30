@@ -18,3 +18,9 @@ volumelicensingfororganizations”的简称，中文即“团体批量许可证�
     VOL可以安装多台机器，不像零售版只能安装一台。
 
     而且不用激活——和普通的零售版在使用上基本没有区别。
+
+
+## Win10最后一个LTSC版本-Win10最新企业版 LTSC 2021
+
+Windows10 Enterprise LTSC 2021是基于Windows 10 21H2为基础，并在其基础上精简了部
+分没用的功能

@@ -382,9 +382,11 @@ apt install -y multitail
 #fcitx-autostart
 #reboot
 #fcitx-configtool or fcitx-config-gtk3
+apt install fcitx5 fcitx5-chinese-addons
 
 # ibus
-apt install -y ibus ibus-pinyin
+#apt install -y ibus ibus-pinyin
+
 
 # 切换到ibus框架
 im-config
@@ -393,7 +395,7 @@ im-config
 
 # 然后需要切换为 python2 
 
-ibus-setup
+#ibus-setup
 
 # 配置 urxvt 支持 ibus
 # Urxvt.inputMethod:ibus

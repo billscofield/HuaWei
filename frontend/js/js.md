@@ -81,9 +81,9 @@ BOM 操作浏览器
 
 IE          trident
 Firefox     Gecko
-Chrome      webkit/blink
-Opear       presto
-Safari      webkit
+Chrome      webkit/          Blink
+Safari      webkit(和google共同开发)
+Opear       presto(已不用) / Blink
 
 
 
@@ -104,6 +104,13 @@ Safari      webkit
 document.write('helloworld')
 
 
+## 标志符
+
+字母
+数字
+下划线
+$
+
 ## 基本语法
 
 强类型,弱类型
@@ -120,6 +127,8 @@ document.write('helloworld')
 
 ### 原始类型
 
+不可改变的原始值
+
 Number
     int     没有, typeof  是 number
     float   没有, typeof  是 number
@@ -132,12 +141,47 @@ null        占位(这个是小写)
 typeof 返回
     number
     string
-    boolean
+    boolean             true/false
     undefined
 
     object(null 是 object)
     function
+
+
+NaN
+
+    JavaScript (and most other languages) treat NaN as a number so your code
+    doesn’t throw an error when you end up with a NaN. Within your application,
+    you may not necessarily want the code to crash if you end up in a situation
+    where NaN has been returned.
+
+    For example, if you created a calculator app and the user entered √-1, you
+    wouldn’t want that to crash your app.
+
+
     
+    "Not a Number" is a value that does not represent a real number, despite
+    having number type.
+
+    **NaN is useful to represent faulty operations on numbers.**
+
+
+
+    In JavaScript, NaN is short for "Not-a-Number".
+
+    In JavaScript, NaN is a number that is not a legal number.
+
+    The Number.isNaN() method returns true if the value is NaN, and the type is a Number.
+
+
+    isNaN() method returns true if a value is Not-a-Number.
+    Number.isNaN() returns true if a number is Not-a-Number.
+
+    In other words:
+        isNaN() converts the value to a number before testing it.
+
+
+
 
 类型转换
     Number(null)        -> 0
@@ -146,13 +190,17 @@ typeof 返回
     Number(true)        -> 1
     **Number 不管你输入是什么，都要转为数字，不行的话就NaN**
 
+
     parseInt()  把输入转为整型
     parseInt(true)      -> NaN
     parseInt('12ab')    -> 12
+    **start with a numeric value**
 
-    乘以 / % 都会使操作数变为Number
+
+    乘以 / % 都会先将操作数变为Number, 然后进行计算
     var a = 1 == '1';   //隐式转换
 
+    !!!
     undefined == null   //true
     undefined >0 or undefined == 0 or undefined < 0 均为false
     null >0 or null == 0 or  null< 0 均为false
@@ -195,6 +243,10 @@ alert(Number(numberTrans));   //0
 
 
 
+.parseint('1010101',2)  
+.toString(16)
+
+
 
 **Number(object)**
 **parseInt(string,radix)**      源字符串是 radix 进制
@@ -218,6 +270,8 @@ toString()
     console.log(0b11 === 3)
     console.log(0o10 === 8)
     console.log(0x10 === 16)
+
+    undefined 和 null 没有 toString方法
 
 Boolean()
 
@@ -406,6 +460,26 @@ for(var i = 3;i<101;i++){
 
 
 
+所有质数
+var count = 0;
+for(var i = 2; i< 13;i++){
+    for(var j = 1;j < Math.sqrt(i); j++){
+        if(i % j == 0){
+                    count++;
+                            
+        }
+            
+    }
+    if(count == 1){
+            console.log(i)
+                
+    }
+        count = 0;
+        
+}
+
+
+
 
 
 
@@ -417,8 +491,23 @@ for(var i = 2;i<=10;i++){
 }
 console.log(temp)
 
+---
 
+```
+var a = 1;
+var b = 1;
+var res;
+var n = 6;
+for(var i = 0;i<n-2;i++){
+    res = a + b;
+    a = b;
+    b = res;
+}
 
+console.log(res)
+```
+
+---
 
 var first = 1;
 var second = 1;
@@ -459,7 +548,7 @@ info['name']
 ## 数学
 
 Math.sqrt()
-变量.toFixed(小数位数)
+变量.toFixed(小数位数) 四舍五入
 
 
 
@@ -507,7 +596,10 @@ function random(min, max) {
 实参比行参多
 
     可以, arguments 实参列表中
-    形参的长度: 函数名.length
+
+    **形参的长度: 函数名.length**
+
+    **是惨的长度: arguments.length**
 
     function say(a,b){
         shican = say.length;
@@ -524,12 +616,19 @@ function random(min, max) {
     arguments 是实参列表，和传入的实参个数相同，而不是和形参个数相同
 
 
+
+
+    !!!
     ```
     function say(a,b){
+        b = 110;
         console.log(arguments[1])
     }
 
-    say(1)  输出 undefined      //arguments 对应实参
+    say(1)  输出 undefined      //arguments 对应实参, 但是如果 arguments[1]=110,console.log(b),是110
+
+    a,b 是形参，
+    arguments 是实参, arguments 确定了之后，形参应该是没办法在进行绑定了
 
     ```
    
@@ -652,6 +751,12 @@ console.log(demo())
 
 
 ---
+
+var a = function say(){...}
+a.name -> say
+
+var a = function(){...}
+a.name -> a
 
 
 立即执行函数
@@ -1341,6 +1446,8 @@ typeof {}   返回 object
 
 ### 数组
 
+可以放多种数据类型的数据
+
 var a = new Array(10)       //10个undefined 的数组
 var a = new Array(10.1)     //wrong
 
@@ -1355,6 +1462,7 @@ a[20] = 10
 
 
 ### 改变原数组
+
 push    返回数组的新长度, 可以加多个
 pop     剪切最后一个
 
