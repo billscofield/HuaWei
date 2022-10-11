@@ -151,7 +151,7 @@ Some useful pyenv commands are:
 
 如果不存在，执行如下操作
 git clone https://github.com/yyuu/pyenv-virtualenv.git ~/.pyenv/plugins/pyenv-virtualenv
-echo ‘eval “$(pyenv virtualenv-init -)”’ >> ~/.bash_profile
+echo 'eval "$(pyenv virtualenv-init -)"' >> ~/.bash_profile
 source ~/.bash_profile
 
 2.创建虚拟环境

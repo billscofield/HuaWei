@@ -106,6 +106,15 @@ ul
         dot         实心圆
         square      实心方块
 
+    li 的 list-style 会继承 ul 的, 所以设置 ul 的
+    list-style-position
+
+li
+    display:list-item;
+    display的属性值为list-item的标签也属于块状元素
+
+    ul
+        div     // display:list-item; list-style-type:circle;
 
 ol
     type
@@ -172,23 +181,46 @@ figure
 
 video
     src=""                      mp4, webm 等格式
-    controls="controls"         显示控件, 只有两种状态,**bool 属性可以不写属性值**
+    controls="controls"         显示控制控件, 只有两种状态,**bool 属性可以不写属性值**
+                                在各个浏览器里样式不太一样，一般不用这个，而是用 js 实现
     autoplay                    bool属性
+                                google 必须添加 muted 属性才可以 autoplay
     muted                       bool属性，静音播放
     loop                        bool属性，循环播放
+    width
+    height
+    preload                     auto/none; 是否预先加载视频(如果有了 autoplay, 则忽略该属性)
+    poster                      ='images/img' 等待时的加载的画面
+
+
+
+    <video src="a.mp4" autoplay></video>
 
 
     <video controls>                这样写有更好的兼容性视频格式
         <source src="a.mp4">
         <source src="a.webm">
+        您的浏览器不支持视频标签
     </video>
+
+    目前只支持3种格式:
+        mp4(推荐)
+        webm
+        ogg
 
 audio
     src=""                      mp3
     controls="controls"         显示控件, 只有两种状态,**bool 属性可以不写属性值**
     autoplay                    bool属性
+                                google chrome 也禁用了
     muted                       bool属性，静音播放
     loop                        bool属性，循环播放
+
+
+
+    mp3(都支持)
+    wav
+    ogg
 
 
 marquee([mɑːrˈkiː] 移动字幕效果)     滚动标记
@@ -404,6 +436,11 @@ form
 
 
 
+
+
+
+
+
 ### 容器元素
 
 div
@@ -452,12 +489,13 @@ h1 是否可以包含 p 元素
 
 ### CSS
 
-层叠性
-继承性
-优先级
+三大特性
+    层叠性
+    继承性
+    优先级
 
 
-1. 内联/行内
+1. 内联/行内/行间
     <h1 style="color:red; background:white">
 
 2. 内部样式表
@@ -571,6 +609,7 @@ h1 是否可以包含 p 元素
     文字间隙
 
 11. text-align
+    要给父元素设置
 
     left/right/center
 
@@ -643,7 +682,7 @@ color:red !important;
     十: class、属性、伪类
     个: 标签，伪元素
 
-3. 重置样式
+3. CSS重置样式
 
     减少浏览器在默认行高度、边距和标题字体大小等方面的不一致性。
 
@@ -689,6 +728,7 @@ color:red !important;
 盒子类型
     1. 行盒: display 为 inline 的元素
     2. 块盒: display 为 block 的元素
+        list-item
 
 行级元素的说法是错误的，表现是CSS的功能
 
@@ -739,6 +779,14 @@ border 同padding一样，不会占据空间
 margin: 水平有效，垂直无效
 
 
+当元素没有设置 width 属性时，padding 就不会撑开盒子
+    width:100%; padding:10px; 也会撑开盒子, 出现滚动条(因为默认 width 是content-box)
+
+
+body 默认 margin:8px;
+
+
+大量文字就用 p
 
 ### 行块盒
 
@@ -776,12 +824,12 @@ display:inline-block   行内块
 **视觉格式化模型(布局规则)**: 页面中多个盒子排列的规则
 
 视觉格式化模型大体上将页面盒子的排列分为3种方式
-    1. 常规流
+    1. 常规流/文档流/标准流
     2. 浮动
     3. 定位
 
 
-### 1. 常规流
+### 1. 常规流/文档流/标准流
 
 所有元素，默认情况下都是常规流布局
 
@@ -849,7 +897,7 @@ float:
 盒子排列
     1. 靠左排列
     2. 靠右排列
-    3. 浮动盒子在包含块中排列时，会避开常规盒子
+    3. 浮动盒子在包含块中排列时，会避开常规盒子(浮动只会影响**浮动后边**的标准流元素)
     4. **常规块盒在排列时，无视浮动盒子(所以顺序很重要)**
     5. 行盒在排列时，会避开浮动盒子
         照片+文字环绕
@@ -865,18 +913,49 @@ float:
             clear:left;
         }
 
+
+        ::after,::before{display:table;} 转换为块级元素并且**在一行显示**
+
+            +---------------------------------+
+            | +------+ +----+ +----+ +-------+|
+            | |before| | xx | | xx | | after ||
+            | +------+ +----+ +----+ +-------+|
+            +---------------------------------+
+
         clear:left
             该元素必须排列在前边所有浮动元素的下方
+
+    7. 浮动的盒子顶端对齐
+    8. 浮动后变为 display:inline-block
+    9. 由标准流的父元素约束
+
+
+
+清除浮动
+    1. 额外标签(块元素，clear:both)
+    2. 父元素 overflow: hidden/auto(自动滚动条)/scroll
+        触发BFC使父级元素自适应为子元素的高度
+    3. :after 伪元素
+    4. 双伪元素 :before, :after
+        :before清除掉collapse造成的影响, margin collapse, 父元素有 margin-top
+
 
 
 ### 3. 定位 position
 
-手动控制元素在包含块中的精准位置
+**手动控制元素在包含块中的精准位置**
 
+定位组成
     1. static(default)
     2. relative
     3. absolute
     4. fixed
+
+    边偏移
+        top
+        left
+        right
+        bottom
 
 定位元素会脱离文档流(relative 除外)
 
@@ -885,15 +964,20 @@ float:
     文档流中元素计算自动高度时，会忽略脱离了文档流的元素
 
 
+0. static
+    不能使用边偏移
+
 1. relative
 
     避免设置冲突的值，以left,top为准
 
+    不脱离常规文档流
+
 2. absolute
 
-    宽高为auto时，适应内容
+    宽高为auto时，适应内容, 收缩shrink
     包含块变化: 找祖先元素中最近的定位元素，该元素的**填充盒(padding-box)**为其包含块
-        如果找不到，则整个网页为其包含块
+        如果找不到，则整个网页(document)为其包含块
 
 3. fixed
 
@@ -913,11 +997,44 @@ float:
         只有定位元素设置 z-index 才有效
         常规元素会覆盖 z-index 为负数的定位元素
 
+    sticky粘性定位技巧
+        固定在版心右侧位置
+
+        left:50%;
+        margin-left:1/2 版心宽度
+
+
 absolute,fixed
-    一定是块盒, 会自动加上 display:block
+    **一定是块盒, 会自动加上 display:block**
     一定不是浮动
     没有margin合并
 
+
+只有定位的盒子有 z-index 属性
+
+绝对定位居中
+    绝对定位的盒子是不能通过 margin: 0 auto; 水平居中的
+
+    position:absolute;
+    left:50%;
+    margin-left:-一半自己的宽度
+
+    top:50%;
+    margin-top:-一半自己的高度
+
+
+案例
+
+    焦点图(轮播图)
+
+    +-----------+
+    |           |
+    |<         >|
+    |           |
+    |    ...    |
+    +-----------+
+
+定位的元素慎用 overflow:hidden
 
 
 ### 二级菜单(决定定位)
@@ -990,7 +1107,10 @@ visibility:hidden
         
         top,right,bottom,left           // 距离上右下左的距离
 
-        spirit 图
+        精灵图/雪碧图/spirit 图
+
+            减少IO请求
+
             width:30px;
             height:30px;
             background-postion: -30px -30px;
@@ -1109,5 +1229,579 @@ fieldset
     a 例外, 可以放块元素
 
 
-???vertical-align: middle;
-    div中的文字没有效果
+**vertical-align: middle;**
+
+    图片，表单，文字的垂直居中, 只有行内元素，行内块元素
+
+    **图片，文字： 默认是 base 对齐**
+
+    textarea 是行内块
+
+**图片底部空白的问题**
+    div>img
+
+    方法一： img{vertical-align:bottom}  不是 base即可
+    方法二： img{display:block;}         只有行内，行内块元素才有 vertical-align 属性
+
+
+通栏
+
+
+
+
+## 切图
+
+1. 图层切图
+
+    ctrl e 合并图层
+
+    右键图层 / 快速导出为png
+
+2. 切片工具 C
+
+    文件 / 导出 / 存储为 Web 所用格式 / jpeg / 存储 / **选中的切片**
+
+    png 需要将背景隐藏
+
+    移动切片
+        切片移动工具
+
+3. ps 插件 Cutterman (必须是安装版，查看方法: 窗口/扩展功能/item 如果是可以使用的就ok)
+    
+    收费工具
+
+    www.cutterman.cn/zh/cutterman
+
+
+CSS 属性书写顺序
+
+    建议遵循以下顺序:
+
+    1. 布局定位属性
+        
+        display / position / float / clear / visibility / overflow
+
+    2. 自身属性
+        
+        width / height / margin / padding / border / background
+
+    3. 文本属性
+
+        color / font / text-decoration / text-align / vertical-align / white-space / break-word
+
+    4. 其他属性(css3)
+        
+        content / cursor / border-radius / box-shadow / text-shadow / background:linear-gradient
+
+
+## 字体图标
+
+本质是文字,不会失真
+
+可以更改颜色
+
+比图片轻量级
+
+1. 下载
+    icomoon.io
+        icomoon app / 选择 / Generate Font / Download
+    iconfont.cn
+
+2. 引用
+
+    把 fonts 目录放在根目录
+
+    通过css方式引用 style.css 中的第一段代码
+
+    demo.html 是展示页面
+
+    span {font-family: icomoon;}
+
+    <span></span> 这里是复制 demo.html 中的方块
+
+    <span>\编码</span>
+    
+3. 追加
+    
+    还是打开 icomoon , import icons 选择 之前已经下载过的selection.json, 我们之
+    前用的自体就已经被导入了，然后继续追加选择，重新下载替换就可以了
+
+
+
+## 鼠标样式
+
+cursor
+    default 白色箭头
+        <p style='cursor:default'></p>
+    pointer     小手
+    move        十字移动
+    text        文字
+    not-allowed 禁止
+
+
+
+表单轮廓线outline
+    蓝色的轮廓线
+
+    outline:none
+
+    input{outline:none}
+
+
+文本域禁止右下角拖拽
+    
+    textarea { resize:none; }
+
+
+
+单行文本省略号
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+
+多行文本省略号
+
+
+
+
+
+## 布局技巧
+
+1. margin负值
+    
+    淘宝 多个商品边框1像素
+    margin-left:-1px;
+
+    第一个元素左移，第二个渲染，然后左移，所以可以覆盖，不会出现bug
+    右边的 li 的边框的左边框压住左边的 li 的右边框
+
+    relative 会压住常规流
+    ul li:hover {
+        position:relative;
+        border-color:red;
+    }
+
+    如果每个 li 都有 relative 定位, 可以用 z-index, 因为其他的 z-index 都是 auto
+
+    ul li:hover {
+        z-index:1;
+        border-color:red;
+    }
+
+
+2. 文字围绕浮动元素
+
+    +-------------------+   图片浮动即可
+    |+-------+          |
+    ||       |          |
+    || 图片  |   文字   |
+    ||       |          |
+    |+-------+          |
+    +-------------------+
+
+3. 用行内块做页码导航
+
+    .box{
+        text-align:center;
+    }
+    .box a{
+        display:inline-block;
+        widht:20px;
+        height:20px;
+        line-height:20px;
+    }
+
+4. 三角形
+
+
+
+
+
+## html5 新特性
+
+head
+nav
+article
+section
+aside
+footer
+
+|   +---------------------------------+
+|   | +-----------------------------+ |
+|   | |             head            | |
+|   | +-----------------------------+ |
+|   | +-----------------------------+ |
+|   | |              nav            | |
+|   | +-----------------------------+ |
+|   | +-------------+  +------------+ |
+|   | |             |  |            | |
+|   | | article     |  | aside      | |
+|   | | +-------+   |  |            | |
+|   | | |section|   |  |            | |
+|   | | +-------+   |  |            | |
+|   | |             |  |            | |
+|   | +-------------+  +------------+ |
+|   | +-----------------------------+ |
+|   | |             footer          | |
+|   | +-----------------------------+ |
+|   +---------------------------------+
+
+
+input type
+    search
+    email
+    url
+    date
+    time
+    month
+    week
+    number
+    tel         ???这个好像不好用
+    color
+
+
+
+表单属性
+
+    <input
+        required
+        placeholder
+
+            input::placeholder{color:red;}
+
+        autofocus
+        autocomplete="on/off"    必须有name
+            当键入时，浏览器基于之前键入的值，进行候选
+
+        multiple    多选
+
+
+css3
+    1. 属性选择器
+    ```
+    <input type='text' value='123' ...>
+    <input type='text' ...>
+
+    input[value] {}     input 中有 value 属性的元素
+
+    ---
+
+    input[value="xxx"] {}     input 中 value='xxx' 的元素
+
+    ---
+
+    div[class^="ico"] {}      所有class的属性值以 ico 开头的元素
+
+    ---
+
+    div[class$="ico"] {}      所有class的属性值以 ico 结尾的元素
+
+    ---
+
+    div[class*="ico"] {}      所有class的属性值中有 ico 的元素
+        权重: div + 属性 = 1 + 10 = 11
+        div.icon1
+
+    ```
+
+
+    2. 结构伪类选择器(当前元素父元素的子元素)
+
+    ```
+    E 是后代选择器
+
+    E :first-child            匹配父元素E中的第一个子元素
+    E x:first-child           x 的父元素下的第一个x元素
+
+    E :last-child             匹配父元素E中的最后一个子元素
+    E x:last-child            
+
+    E :nth-child(n)           匹配父元素E中的第n个子元素
+    E x:nth-child(n)          
+
+        n 可以是数字
+          可以是**关键字**: even(偶数)  odd(奇数)   隔行变色
+          可以是公式, 从0开始，依次加1
+          ol li:nth-child(n){ }     所有子元素
+          ol li:nth-child(2n){ }    所有偶数子元素
+          ol li:nth-child(2n+1){ }  所有奇数数子元素
+          ol li:nth-child(5n){ }    所有...
+          ol li:nth-child(n+5){ }   第五个开始
+          ol li:nth-child(-n+5){ }  前5个(-0+5, -1+5, -2+5,...)
+
+
+
+    ul>li*10
+
+    ul :first-child
+    ul li:first-child
+    li:first-child
+
+
+
+
+    :first-of-type          指定元素排序, nth-child 是所有子元素排序
+    :last-of-type
+    :nth-of-type(n)
+
+
+    section div:first-child(1)
+        步骤一: :first-child(1)
+        步骤二: 是div, 如果不是div 就失败了
+
+    section div:first-of-type(1)
+        步骤一: div
+        步骤二: :first-of-type
+    ```
+
+
+
+    3. 伪元素选择器
+        不需要 HTML 标签，简化 HTML 结构
+
+        ::before
+        ::after
+
+        老式的写法是一个冒号
+
+        div::before
+            div 里边的最前面
+
+
+        使用场景
+            1. 配合自体图标
+
+            2. 图片遮罩层
+                .tudou:hover::before{}
+
+            3. 清除浮动
+
+
+## 盒模型
+
+calc 函数
+
+子元素永远比父元素小30px
+
+.son{
+    width:calc(100% - 30px);
+}
+
+
+
+
+
+## css3 滤镜 
+
+1. filter 滤镜
+
+    filter: 函数();
+
+    blur(5px); 模糊处理
+
+
+
+## css3 过渡
+
+经常配合 :hover 使用
+
+transition: 要过渡的属性 花费时间 运动曲线 何时开始
+    时间: 必须写单位 s
+    曲线: easy
+
+
+```
+div{
+    width:100px;
+    height:100px;
+    background-color:red;
+    transition: width 1s, height 2s;           写在这里，而不是 hover, 逗号分隔多个属性
+    transition: all 1s;
+}
+
+div:hover{
+    width:800px;
+    height:200px;
+    background-color:green;
+}
+```
+
+
+免费空间
+    free.3v.do
+
+
+## 2D转换
+
+不会影响其它元素的位置
+对行内元素没有效果
+百分比单位是相对于自身元素的
+
+transform, 变形
+    translate   移动, 类似定位
+    rotate      旋转
+    scale       缩放
+
+
+### translate
+
+transform: translate(100px, 50px)
+transform: translateX(100px)
+transform: translateY(50px)
+
+
+水平居中(结合 position):
+    transform: translate(-50%,-50%); 代替 margin-top 和 margin-left
+
+
+### rotate
+
+transform: rotate(45deg);       顺时针
+transform: rotate(-45deg);      逆时针
+
+### **设置中心点**
+
+    transform-origin
+    transform-origin: x y;
+
+    transform-origin: 50% 50%;  default
+
+        像素
+        方为名词
+            left bottom
+            right top
+            center
+
+
+    transition:all 1s;
+    transform-origin: left bottom;
+    transform-origin: 50px 50px;
+
+
+    三维
+
+    transform-origin: x y z;
+
+### 缩放 scale
+
+transform: scale(x,y);
+
+transform: scale(2);        x,y 都缩放为2
+
+
+
+transform: tranlate(50px,50px) rotate(10deg) scale(x,y);
+    顺序会有比较大的影响, 先写位移
+
+
+
+## 动画
+
+1. 用 keyframes 定义动画
+
+```
+@keyframes 动画名称{
+    0%{                                 // 可以用 from 替换
+        transform: translateX(0x);
+    }
+
+    100%{                               // 可以用 to 替换
+        transform: translateX(1000x);
+    }
+}
+
+```
+
+2. 使用动画
+
+```
+div {
+    animation-name: 动画名称;
+    animtion-duration: 持续时间;
+}
+```
+
+
+
+@keyframes      
+1. animation-name
+2. animation-duration          完成所需时间
+3. animation-timing-function
+    ease    低速开始，加快，减慢
+    linear  匀速
+    ease-in
+    ease-out
+    ease-in-out
+    steps(几个步长)
+        打字机效果
+
+4. animation-delay             何时开始
+    0s
+
+5. animation-iteration-count   播放次数
+    infinite    无限循环
+    1(default)
+
+6. animation-direction         是否反方向播放
+    normal      返回从新开始
+    alternate   轮流的
+
+7. animation-fill-mode         结束后的状态（位置）
+    backwards       回到初始位置
+    forwards        停在结束状态状态
+
+8. animation-play-state        动画运行或暂停
+    paused  暂停
+
+
+动画简写
+    animation: 动画名称 持续时间 | 运动曲线 何时开始 播放次数 是否反方向 结束状态
+
+
+## 3D 转换
+
+1. 3D移动 translate3d
+
+    transform: translateX()
+    transform: translateY()
+    transform: translateZ()     一般只用 px, 需要结束透视
+
+    简写
+    transform: translateX(x) translateY(y) translateZ(z);
+    transform: translate3d(xpx,ypx,zpx)
+
+2. 透视 perspective
+
+    **写在被观察元素的父盒子上,可以写在祖先元素上**
+
+    ```
+    body{
+        perspective:200px;
+    }
+
+    div{
+        transform: translate3d(0,0,100px);
+    }
+    ```
+
+
+    视距: 人眼到屏幕的距离
+    z轴:  物体在Z轴上的距离
+
+    视距 - z轴
+
+3. 3D旋转 rotate3d
+
+    transform: rotateX(10deg)       向后倒为正, 左手法则
+    transform: rotateY(10deg)       左手法则, 大拇哥指向正方向，四指指向正方向
+    transform: rotateZ(10deg)
+    transform: rotate3d(x,y,z,Ndeg);
+        transform: rotate3d(1,1,0,45deg);   x,y 的矢量
+
+4. 3d呈现 transform-style
+    
+    控制子元素是否开启三维立体环境
+    transform-style: flat           子元素不开启3D立体空间(default)
+    transform-style: preserve-3d    子元素开启3D立体空间
+    代码写在直接父级元素上
+

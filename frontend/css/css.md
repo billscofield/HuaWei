@@ -73,8 +73,9 @@ display
         * 如果 inline-block 元素内有文字，则和 inline-block 内的文本 对齐
     1. list-item
     1. table
-        * display:table
-        * **table-layout 表格布局**
+        1. display:table
+            table就是一个盒子，加上 border 即可看明白
+        2. **table-layout 表格布局**
             * fixed 在固定表格布局中，水平布局仅取决于表格宽度、列宽度、表格边框宽度、单元格间距，**而与单元格的内容无关。**
                 * 通过使用固定表格布局，用户代理在接收到第一行后就可以显示表格。
                 * 列宽由表格宽度和列宽度设定。
@@ -231,12 +232,18 @@ padding-right
 padding-bottom
 padding-left
 
+## table
+
+
+border-collapse:collapse;
+
 ## 边框
 
-border:&lt;line-width&gt; \|\| &lt;line-style&gt; \|\| &lt;color&gt;
-  * border-width: &lt;length&gt; \| thin \| medium \| thick
-  * border-style:none(default) \| hidden \| dotted \| dashed \| solid \| double \| groove \| ridge \| inset \| outset
-  * border-color
+border:line-width line-style line-color
+    顺序可以乱，没有固定顺序
+    1. border-width: length | thin | medium | thick
+    2. border-style:none(default) | hidden | dotted | dashed | solid | double | groove | ridge | inset | outset
+    3. border-color
 
 border-top
 border-right
@@ -244,39 +251,53 @@ border-bottom
 border-left
 
 border-radius
-  * border-top-left-radius
-  * border-bottom-right-radius
-      * 设置或检索对象使用圆角边框。提供2个参数，2个参数以“/”分隔，每个参数允许设置1~4个参数值，第1个参数表示水平半径，第2个参数表示垂直半径，如第2个参数省略，则默认等于第1个参数
-      * 水平半径：如果提供全部四个参数值，将按上左(top-left)、上右(top-right)、下右(bottom-right)、下左(bottom-left)的顺序作用于四个角。 
+    1. border-top-left-radius
+    2. border-bottom-right-radius
 
-      * 如果只提供一个，将用于全部的于四个角。
-      * 如果提供两个，第一个用于上左(top-left)、下右(bottom-right)，第二个用于上右(top-right)、下左(bottom-left)。
-      * 如果提供三个，第一个用于上左(top-left)，第二个用于上右(top-right)、下左(bottom-left)，第三个用于下右(bottom-right)。
-      * 垂直半径也遵循以上4点。
-  * 圆角大值特性，值很大的时候，只会使用能够渲染的圆角大小渲染
-  * 圆角等比例特性，就是水平半径和垂直半径的比例是恒定不变的。
+        1. 设置或检索对象使用圆角边框。提供2个参数，2个参数以“/”分隔，每个参数
+           允许设置1~4个参数值，第1个参数表示水平半径，第2个参数表示垂直半径，
+           如第2个参数省略，则默认等于第1个参数
+
+        2. 水平半径：如果提供全部四个参数值，将按上左(top-left)、上右
+           (top-right)、下右(bottom-right)、下左(bottom-left)的顺序作用于四个角。 
+
+        3. 如果只提供一个，将用于全部的于四个角。
+
+        4. 如果提供两个，第一个用于上左(top-left)、下右(bottom-right)，第二个用
+           于上右(top-right)、下左(bottom-left)。
+
+        5. 如果提供三个，第一个用于上左(top-left)，第二个用于上右(top-right)、
+           下左(bottom-left)，第三个用于下右(bottom-right)。
+
+        6. 垂直半径也遵循以上4点。
+
+  3. 圆角大值特性，值很大的时候，只会使用能够渲染的圆角大小渲染
+  4. 圆角等比例特性，就是水平半径和垂直半径的比例是恒定不变的。
 
 ---
 
 box-shadow
-    * x-shadow	必需。水平阴影的位置。允许负值
-    	 y-shadow	必需。垂直阴影的位置。允许负值。
-    	 blur	    可选。模糊距离。
-    	 spread	可选。阴影的尺寸。
-    	 color	    可选。阴影的颜色。
-    	 inset	    可选。将外部阴影 (outset) 改为内部阴影。
+        x-shadow	必需。水平阴影的位置。允许负值
+        y-shadow	必需。垂直阴影的位置。允许负值。
+        blur        可选。模糊距离。影子的虚实
+        spread      可选。阴影的尺寸。默认0, 正增大，负减小
+        color	    可选。阴影的颜色。
+        inset	    可选。将外部阴影 (outset) 改为内部阴影。不可以写 outset
+
+        不占据空间
 
 text-shadow
-    * x-shadow	必需。水平阴影的位置。允许负值。
-    	 y-shadow	必需。垂直阴影的位置。允许负值。
-    	 blur	可选。模糊的距离。	测试
-    	 color	可选。阴影的颜色。
-    * 注意
-        * 可以写多个，如
+    x-shadow	必需。水平阴影的位置。允许负值。
+    y-shadow	必需。垂直阴影的位置。允许负值。
+    blur	可选。模糊的距离。	测试
+    color	可选。阴影的颜色。
 
-            ```
-            text-shadow:1px 1px 0 red,1px -1px 0 green;
-            ```
+    注意
+        可以写多个，如
+
+        ```
+        text-shadow:1px 1px 0 red,1px -1px 0 green;
+        ```
 ---
 
 border-image
@@ -984,11 +1005,13 @@ CSS 3 动画案例
 |选择器|权重|
 |:-:|:-|
 |!important|Infinity|
-|行间|1.0.0.0|
-|ID|0.1.0.0|
+
+|行间| 1.0.0.0|
+|ID| 0.1.0.0|
 |class、属性、伪类| 0.0.1.0|
-|标签选择器|0.0.0.1|
-|通配符|0.0.0.0|
+|标签选择器,伪元素| 0.0.0.1|
+
+|通配符和**继承**|0.0.0.0|
 
 注意
     1. !important 要写在每一个属性的后边。
@@ -1061,6 +1084,7 @@ div{
 
 
 ## 清除浮动
+
 有疑问???为什么table可以清除，而block不可以。table是很远古的东西,
 
 ```
