@@ -14,17 +14,26 @@
  +->2008 html5 草案发布
     2014.10 html5 正式发布
 
-蒂姆 伯纳斯 李
+蒂姆 伯纳斯 李(Tim Berners-Lee)
     万维网之父
     html设计者
     w3c 创始人
 
 
-w3c world wide web consortium 万维网联盟
+w3c world wide web consortium(/ kənˈsɔːtiəm /联合企业，财团)万维网联盟
 
     1994年10月在麻省理工学院计算机科学实验室成立
 
+whatwg
+    超文本应用技术工作组(Web Hypertext Application Technology Working Group)；
+    超文本应用程序技术工作组
 
+    WHATWG（Web Hypertext Application Technology Working GroupWeb 超文本应用程
+    序技术工作组）是一个负责维护与开发 Web 标准的社区，他们的工作成果包括 DOM、
+    Fetch API，和 HTML。一些来自 Apple、Mozilla，和 Opera 的员工在 2004 年建立
+    了 WHATWG。
+
+    https://html.spec.whatwg.org/multipage/#toc-semantics
 
 
 ！DOCTYPE，一个文档类型标记是一种标准通用标记语言的**文档类型声明**，它的目的是
@@ -33,6 +42,17 @@ w3c world wide web consortium 万维网联盟
     
     <!DOCTYPE> 声明不区分大小写; 文档类型声明
 
+## 开发工具
+
+dreamweaver
+sublime
+webstorm
+hbuilder
+vscode
+    open in browser
+    live server
+    auto rename tag
+    easy less
 
 ## 注释
 
@@ -54,6 +74,7 @@ runoob.com
 <html lang='en'>
 
     cmn-hans
+    告诉浏览器或者搜索引擎这是一个英文网站，本页面采用英文来显示，会出现翻译成中文否, 但是我的没有,why???
 
 
 body
@@ -63,12 +84,21 @@ body
         平铺
 
 
+    仅仅设置body的背景色, body里只有一行文字
+    body 还是一行高，只不过 html 采用了和 body 一样的颜色
+
+
 font
     <font color="" size=''>
 
+p
+    默认 margin:1/2自体大小 0;
+
 em i
 strong b
+
 ins(insert) u(underline)   下划线
+
 del s   删除线
 sub 下标
 sup 上标
@@ -80,6 +110,19 @@ hr
     默认居中
 
 pre 要顶格写
+
+wbr(Word Break Opportunity) 
+
+    ```
+    <p>
+        http://this.is.a.really.long.example.com/With/deeper/level/pages/deeper/level/pages/deeper/level/pages/deeper/level/pages/deeper/level/pages
+    </p>
+
+    <p>
+        http://this<wbr />.is<wbr />.a<wbr />.really<wbr />.long<wbr />.example<wbr />.com/With<wbr />/deeper<wbr />/level<wbr />/pages<wbr />/deeper<wbr />/level<wbr />/pages<wbr />/deeper<wbr />/level<wbr />/pages<wbr />/deeper<wbr />/level<wbr />/pages<wbr />/deeper<wbr />/level<wbr />/pages
+    </p>
+    ```
+
 
 实体字符
     &lt;
@@ -96,14 +139,19 @@ pre 要顶格写
 
 span
 
+base
+    <base target="_blank">
+    <base href='https://www.baidu.com'>
+
+
 ul
     只能放 li 元素，不能再放其他的标签
     li 之间是可以放其他标签的
 
     type            html4.01 已经废弃, 但是好像还可以用
-        disc        实心圆
+        disc        实心圆(默认)
         circle      空心圆
-        dot         实心圆
+        dot         **ul 也会是1234带编号的实心方块(chrome)**, 只有正序，没有倒序(reversed)
         square      实心方块
 
     li 的 list-style 会继承 ul 的, 所以设置 ul 的
@@ -116,6 +164,23 @@ li
     ul
         div     // display:list-item; list-style-type:circle;
 
+    
+    导航栏每个li后边的分隔线一般用::after, position 定位
+
+    ```
+    ::after{
+        display:block;      会换行到 li 下边
+        content:'';
+        width:2px;
+        height:1em;
+        background:red;
+        position:absolute;
+        top:5px;
+        right:0;
+    }
+    li:
+    ```
+
 ol
     type
         i           小写罗马数字
@@ -126,8 +191,12 @@ ol
 
     start='数字'
 
+    start=N reversed    减法
 
-dl                  定义列表
+
+dl  自定义列表
+
+    底部栏
     dt      块标记, title
     dd      这个会有一个缩进,是块标记, description, dd 的个数没有限制
 
@@ -141,24 +210,45 @@ img
     title='xxx'     鼠标放上去时显示的文字, 如果没有alt, 图片又不存在，就会显示title的内容
     width
     height
-    align='left/right'       要放在块级别元素如 div 中, 但是 body 中也可以。。。, 没有 center
+    align='left/right'       要放在块级别元素如 div 中, 但是 body 中也可以。。。, 没有 center, **实际是 float**
+        Aligns the image with its surrounding context. Use the float and/or vertical-align CSS properties instead of this attribute. Allowed values:
+
+        top
+        Equivalent to vertical-align: top or vertical-align: text-top
+
+        middle
+        Equivalent to vertical-align: -moz-middle-with-baseline
+
+        bottom
+        The default, equivalent to vertical-align: unset or vertical-align: initial
+
+        left
+        Equivalent to float: left
+
+        right
+        Equivalent to float: right
 
     文字不会在图片下方
 
+    **img float 后，会有个 vertical-align:top**
+        以使文本环绕
 
-    hspace          // img 左右和其他元素的距离, 实际是margin HTML5 不支持。HTML 4.01 已废弃。 规定图像左侧和右侧的空白。
+
+    hspace          // img 左右和其他元素的距离, 实际是margin, HTML5 不支持。HTML 4.01 已废弃。 规定图像左侧和右侧的空白。
     vspace          // img HTML5 不支持。HTML 4.01 已废弃。 规定图像顶部和底部的空白。
     border='0'      HTML5 不支持。HTML 4.01 已废弃。
 
 
     热点
-        <img src='xx' usemap='#图片名称'
+    ```
+        <img src='xx' usemap='#图片名称'>           注意有个 #, 是指向 name , 即使 map 有不同的 id
         <map name="图片名称">
             <area shape='rect' coords="左上角坐标，右下角坐标" href="http:xxx" target="_blank">
             <area shape='rect' coords="1,1,50,50" href="http:xxx" target="_blank">
             <area shape='circle' >
             <area shape='poly coords=' '>       多边形
         </map>
+    ```
 
 
         href: hyper reference(引用)
@@ -174,9 +264,63 @@ figure
     figcaption  标题
 
     <figure>
-        <figcaption><h2>helloworld</h2></figcaption>
+        <img ...>
+        <figcaption><h2>helloworld</h2></figcaption>        // 一般写在 img 后边
         <p>...</p>
     </figure>
+
+
+bdo 标签用来覆盖默认的文本方向。 BiDirectional(双向的；双向作用的) Override
+    dir='ltr/rtl'
+
+    ```
+    <p>该段落文字从左到右显示。</p>  
+    <p><bdo dir="rtl">该段落文字从右到左显示。</bdo></p>
+
+
+    <p> hi <bdo dir='rtl'>obala</bdo> - 1st</p>
+    <p> hi <bdi> <bdo dir='rtl'>obala</bdo> </bdi> - 1st</p>
+    ```
+
+bdi Bi-directional Isolation
+    标签允许您设置一段文本，**使其脱离其父元素的文本方向设置**, 一般是语言，如阿拉伯语
+    Browsers implement the Unicode Bidirectional Algorithm to handle this.
+
+
+    ```
+
+    No bdi with RTL text
+
+    This example lists the winners of a competition using <span> elements only,
+    and one of the winners has a name consisting of RTL text.
+
+    In this case the "- 1", which consists of characters with neutral or weak
+    directionality, will adopt the directionality of the RTL text, and the
+    result will be garbled:
+
+    <ul>
+        <li><span class="name">اَلأَعْشَى</span> - 1st place</li>
+        <li><span class="name">Jerry Cruncher</span> - 2nd place</li>
+    </ul>
+    1 - اَلأَعْشَى st place
+    Jerry Cruncher - 2nd place
+
+
+    Using bdi with LTR and RTL text
+
+    This example lists the winners of a competition using <bdi> elements. These
+    elements instruct the browser to treat the name in isolation from its
+    embedding context, so the example output is properly ordered:
+
+    <ul>
+        <li><bdi class="name">اَلأَعْشَى</bdi> - 1st place</li>
+        <li><bdi class="name">Jerry Cruncher</bdi> - 2nd place</li>
+    </ul>
+    أَعْشَى - 1st place
+    Jerry Cruncher - 2nd place
+
+
+    ```
 
 
 video
@@ -224,6 +368,7 @@ audio
 
 
 marquee([mɑːrˈkiː] 移动字幕效果)     滚动标记
+    (Deprecated)
     跑马灯
     direction
         up(向上)/down(向下), left/right
@@ -244,11 +389,15 @@ embed 嵌入
     <embed src='a.mp3'></embed>     mp3
     <embed src='a.swf'></embed>     swf
 
-锚点
+    <embed type="video/webm" src="/media/cc0-videos/flower.mp4" width="250" height="200">
+
+a 锚点
 
     ```
     <a name="top">
     <a href="#top">
+
+    id相同，前者优先，先到先得
 
     也可跨越不同的页面
     <a href="./news.html#top"
@@ -263,6 +412,15 @@ embed 嵌入
             _self
             _blank
         title 提示
+
+    如果 href 是文件，则是下载
+
+
+    让一个超链接点击后不链接到任何地方，而鼠标移上去仍然显示手指形状的图标，就用javascript:void(0)。
+
+    然后真实执行的操作，是在这个a标签后面加onclick="xxxxx"。
+
+
 
 路径
     站内资源
@@ -282,7 +440,16 @@ meta
     <meta name='description' content='xxx'>
     <meta name='author' content='xxx'>
     <meta http-equiv='refresh' content='30'>        // 每30秒刷新当前页面
+
+        If the http-equiv attribute is set, the <meta> element is a pragma
+        directive, providing information equivalent to what can be given by a
+        similarly-named HTTP header.
+        如果设置了 http-equiv 属性，meta 元素则是编译指令，提供的信息与类似命名的 HTTP 头部相同。
+
         它可以向浏览器传回一些有用的信息，以帮助正确和精确地显示网页内容
+
+
+        x-ua-compatible If specified, the content attribute must have the value "IE=edge". User agents are required to ignore this pragma.(编译指示)
 
         1. Expires(期限) 
             说明：可以用于设定网页的到期时间。一旦网页过期，必须到服务器上重新传输。 
@@ -342,8 +509,11 @@ ol  type='1'     //默认
 
     start='2'
 
-ul type='circle'
-   type= 
+ul type=
+    disc
+    'circle'
+    dot
+    square
 
     css
         list-style:none;
@@ -362,13 +532,14 @@ a(anchor)
 
 form
     收集信息; 表单域，表单空间，提示信息
+
+    表单域
+
     action=
 
-
-
-    maxlength
-        input
-
+    input
+        maxlength 最大字符数
+        css -> outline:
 
     method='post'
     method='get'
@@ -386,19 +557,19 @@ form
             password
             
             radio
-                label 绑定
+                label 绑定 使用 id 属性
                 第一种方式:
                 
                 <input type="radio" id="radioA" name="radio1" /><label for="radioA">这是radioA</label>
                 <input type="radio" id="radioB" name="radio1" /><label for="radioB">这是radioB</label>
                  
                 
-                 第二种方式:
+                第二种方式:
                 
-                 <label><input type="radio"  name="radio2">这是radioA</label>
-                 <label><input type="radio"  name="radio2">这是radioB</label>
+                <label><input type="radio"  name="radio2">这是radioA</label>
+                <label><input type="radio"  name="radio2">这是radioB</label>
 
-                 checked
+                checked
             
             checkbox
                 checked
@@ -408,6 +579,13 @@ form
                     <option value=''>a</option>
                 </select>
             
+                <select name="city" id="">
+                    <optgroup label="河北">
+                        <option value="">邯郸市</option>
+                        <option value="">邢台市</option>
+                    </optgroup>
+                </select>
+
             submit      提交
             image       也是提交
                 src=''
@@ -430,6 +608,9 @@ form
             <textarea rows=' ' cols=' '></textarea>
                 没有 placeholder, 提示内容写在标签之间
                 实际上不是用 cols 和 rows 的, 都是用css来处理的
+
+                
+                textarea { resize:none; }
             
         name    传给服务器的值
         value   传给服务器的值
@@ -524,10 +705,12 @@ h1 是否可以包含 p 元素
 1. color
     1. 预设值
     2. rgb:
-        RGB(222,1,1)
+        RGB(222,1,1,.1)
         #rrggbb
 
 2. background-color
+    background-image
+
 
 3. font-size
     
@@ -556,6 +739,8 @@ h1 是否可以包含 p 元素
 5. font-family
 
     font-family: consolas, 微软雅黑, Arial, sans-serif
+        'Microsoft YaHei'
+        monospace: 单一间隔；划一字距，等宽字体
 
     sans-serif: 非衬线自体
     serif: 用于印刷, 如宋体
@@ -564,7 +749,8 @@ h1 是否可以包含 p 元素
     
     normal
     italic      // 斜体, em
-    oblique     // 
+    oblique     // / əˈbliːk /
+
 
     i 元素一般用来做一个图标(icon)
 
@@ -573,20 +759,25 @@ h1 是否可以包含 p 元素
     strong: 
 
     font-style, font-variant, font-weight, font-stretch, font-size, line-height, and font-family.
+    font-style,  font-weight,  font-size/line-height, font-family.
         
-        font-size/line-height
+        必须有的: font-size/line-height font-family
+            line-height 是 纯数字会继承这个数字
+
     
 
 文本属性
 
 7. text-decoration
-    
-    del     
-    s       过期
 
     overline            // 上边
     line-through
     underline
+    
+    del     
+    s       废弃
+    ins
+
 
 8. text-indent
     首行缩进
@@ -596,9 +787,15 @@ h1 是否可以包含 p 元素
 
     可以是负数
 
+    要块盒和行块盒上
+
 9. ???line-height
     
     纯数字: 相对于当前文字大小, 不用 em, 事关继承
+
+    上间距
+    文字
+    下间距
 
     和 height 相等，则居中
     < height, 偏上
@@ -609,9 +806,16 @@ h1 是否可以包含 p 元素
     文字间隙
 
 11. text-align
-    要给父元素设置
+
+    **要给父元素设置**
 
     left/right/center
+
+#### emmet
+
+Zen-o
+
+
 
 #### 选择器
 
@@ -632,8 +836,6 @@ h1 是否可以包含 p 元素
 
     焦点
         :focus
-
-
 
 
 7. 伪元素选择器
@@ -1080,7 +1282,9 @@ opacity [0,1]
 
 cursor:url("images/a.ico"), auto;       如果前边那个不生效，使用 auto
 
-visibility:hidden
+visibility:
+    visible(default)
+    hidden
 
 !!!背景图
 
@@ -1094,10 +1298,9 @@ visibility:hidden
     background-image:url("images/images.jpg")
 
     background-repeat:no-repeat
-    background-repeat-x:repeat
     background-repeat:repeat-x
 
-    background-sizea:
+    background-size:
         contain         // 不改比例， 全部显示
         cover           // 
         数值/百分比     // 水平  垂直
@@ -1106,6 +1309,7 @@ visibility:hidden
         center top                      // 水平居中，垂直top
         
         top,right,bottom,left           // 距离上右下左的距离
+        默认是居中对齐
 
         精灵图/雪碧图/spirit 图
 
@@ -1139,6 +1343,121 @@ CSS 不能完全控制其属性
 iframe name='xxx'
 a target='xxx'
 
+
+## table
+
+不同的语言对于cellspacing具有完全不同的语法，例如在CSS中使用"**border-spacing**"属性，而在HTML中使用“cellspacing”。
+默认2px
+
+```
+<table cellspacing='20'>
+
+table{
+    cell-spacing:20px;
+    border-collapse:collapse;   设置表格的边框是否被合并为一个单一的边框
+}
+```
+
+较旧版本的HTML支持cellpadding命令，但更高版本的HTML5不允许使用cellpadding，因此替代CSS用于在需要时提供相同的格式。
+
+可以设置 vertical-align
+
+```
+<table align='center'>
+
+```
+
+
+
+### colgroup
+
+```
+<table border="1">
+<colgroup>
+    <col span="2" style="background-color:red">    span=number  规定列组应该横跨的列数
+    <col style="background-color:yellow">
+</colgroup>
+
+<tr>
+    <th>ISBN</th>
+    <th>Title</th>
+    <th>Price</th>
+</tr>
+<tr>
+    <td>3476896</td>
+    <td>My first HTML</td>
+    <td>$53</td>
+</tr>
+</table>
+```
+
+<colgroup> 标签用于对表格中的列进行组合，以便对其进行格式化。
+
+通过使用 <colgroup> 标签，可以向整个列应用样式，而不需要重复为每个单元格或每一行设置样式。
+
+注释：只能在 <table> 元素之内，在任何一个 <caption> 元素之后，在任何一个 <thead>、<tbody>、<tfoot>、<tr> 元素之前使用 <colgroup> 标签。
+
+
+使用 position:relative 进行精确定位
+
+
+
+### blockquote
+
+```
+<figure>
+    <blockquote cite="https://www.huxley.net/bnw/four.html">
+        <p>Words can be like X-rays, if you use them properly—they’ll go through anything. You read and you’re pierced.</p>
+    </blockquote>
+    <figcaption>—Aldous Huxley, <cite>Brave New World</cite></figcaption>
+</figure>
+```
+
+定义一个摘自另一个源的块引用：
+
+
+### cite
+
+使用 <cite> 标签来定义作品的标题
+
+```
+<img src="img_the_scream.jpg" width="220" height="277" alt="The Scream">
+<p><cite>The Scream</cite> by Edward Munch. Painted in 1893.</p>
+```
+
+### q
+
+```
+<p>WWF's goal is to: 
+<q>Build a future where people live in harmony with nature.</q>
+We hope they succeed.</p>
+```
+
+标记一个短的引用
+
+
+### abbr
+
+```
+The<abbr title="World Health Organization">WHO</abbr> was founded in 1948.
+```
+
+
+### ruby rb rt
+
+```
+<ruby>
+    汉 <rp>(</rp><rt>Han</rt><rp>)</rp>
+    字 <rp>(</rp><rt>zi</rt><rp>)</rp>
+</ruby>
+```
+
+<ruby> 标签定义 ruby 注释（中文注音或字符）。
+
+在东亚使用，显示的是东亚字符的发音。
+
+将 <ruby> 标签与 <rt> 和 <rp> 标签一起使用：
+<ruby> 元素由一个或多个需要解释/发音的字符和一个提供该信息的 <rt> 元素组成，还包括**可选的 <rp> 元素**，定义当浏览器不支持 "ruby" 元素时显示的内容
 
 
 ## 表单元素
@@ -1226,6 +1545,7 @@ fieldset
 
 文字类元素中不要放块元素
     p > div
+    h > div
     a 例外, 可以放块元素
 
 
@@ -1302,6 +1622,8 @@ CSS 属性书写顺序
 
 比图片轻量级
 
+### icomoon
+
 1. 下载
     icomoon.io
         icomoon app / 选择 / Generate Font / Download
@@ -1326,6 +1648,14 @@ CSS 属性书写顺序
     还是打开 icomoon , import icons 选择 之前已经下载过的selection.json, 我们之
     前用的自体就已经被导入了，然后继续追加选择，重新下载替换就可以了
 
+
+### iconfont
+
+https://www.iconfont.cn/
+
+可以变更大小，要不然大的图标会有bug
+
+复制 demo_index.html 中的css
 
 
 ## 鼠标样式
@@ -1569,13 +1899,33 @@ css3
 
 
         使用场景
-            1. 配合自体图标
+            1. 配合字体图标
 
             2. 图片遮罩层
                 .tudou:hover::before{}
 
             3. 清除浮动
 
+
+
+
+
+## box-shadow
+
+h-shadow    必需的。水平阴影的位置。允许负值
+v-shadow    必需的。垂直阴影的位置。允许负值
+blur        可选。模糊距离
+spread      可选。阴影的大小
+color       可选。阴影的颜色。在CSS颜色值寻找颜色值的完整列表
+inset       可选。从外层的阴影（开始时）改变阴影内侧阴影
+
+
+## text-shadow
+
+h-shadow    必需的。水平阴影的位置。允许负值
+v-shadow    必需的。垂直阴影的位置。允许负值
+blur        可选。模糊距离
+color       可选。阴影的颜色。在CSS颜色值寻找颜色值的完整列表
 
 ## 盒模型
 
@@ -1586,8 +1936,6 @@ calc 函数
 .son{
     width:calc(100% - 30px);
 }
-
-
 
 
 
@@ -1804,4 +2152,342 @@ div {
     transform-style: flat           子元素不开启3D立体空间(default)
     transform-style: preserve-3d    子元素开启3D立体空间
     代码写在直接父级元素上
+
+
+
+
+
+
+
+## 移动端
+
+### 视口 viewport
+
+浏览器显示页面内容的屏幕区域, 分为 布局视口、视觉视口和理想视口
+
+1. 布局视口 layout viewport
+
+    早期的网页都是为电脑写的，为了将电脑上的网页放到手机上，设置了布局视口
+
+    980px, 大多书网页都能在手机上呈现，只不过元素看上去很小
+
+2. 视觉视口
+
+    视觉视口是指用户正在看到的网站的区域，这个区域的宽度等同于移动设备的浏览器
+    窗口的宽度
+
+    当我们在手机中缩放网页的时候，操作的是视觉视口，而布局视口仍然保持原来的宽度。
+
+3. 理想视口
+
+    理想视口是指对设备来讲最理想的视口尺寸。采用理想视口的方式，可以使网页在移
+    动端浏览器上获得最理想的浏览和阅读的宽度。
+
+    在理想视口情况下，**布局视口的大小和屏幕宽度是一致的**，这样就不需要左右滚
+    动页面了。
+
+    在开发中，为了实现理想视口，需要给移动端页面添加标签配置视口，通知浏览器来
+    进行处理。
+
+
+meta 视口标签
+
+```
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-sclae=1.0, minium-scale=1.0">
+
+    user-scalable=no    // 不允许用户缩放
+
+    视口宽度应该和设备宽度一致
+    不允许用户自行缩放
+    视口默认比例为1.0
+    最大比例1.0
+    最小比例1.0
+```
+
+
+### 二倍图
+
+物理像素
+
+物理像素比
+
+PC端页面， 1px 就是1个物理像素
+
+**1px 能显示的物理像素点的个数，称为物理像素比或屏幕像素比**
+    iphone 12 pro   4032×3024
+        但是 400宽度 就占满了, 3024/400 = 7.56, 7.56个物理像素显示一个像素
+    iphone8     1334x750
+        但是375px 就占满了, 750/375 = 2
+
+    google chrome 浏览器上 F12 显示的是虚拟像素点，是由多个物理像素点组成的, 例
+    如 iphone8的 375x667; iphone 12 pro 的 390x844
+
+
+Retina 可以把更多的物理像素压缩至一块屏幕，从而达到更高的分辨率，提高显示的细腻程度
+
+
+50x50的图片放在 iphone 8 上会变为2倍,100x100,就会模糊，此时我们放一个100x100的图片，手动缩小为 50x50
+
+就是根据设备的实际像素来找图片
+
+
+背景缩放
+    background-size 宽 高;
+
+    background:url(a.jpg);
+    backgorund-size:100px 200px;        可能会变形
+    backgorund-size:100px;              等比缩放
+    backgorund-size:50%;                相对父元素的宽度
+        cover:      不变形完全覆盖,会显示不全
+        contain:    不变形扩展至最大尺寸, 不能完全覆盖, 会有空白区域
+
+
+    切图 cutterman 多被图
+
+
+### 移动端开发选择
+
+1. 单独制作移动端页面(主流)
+
+    推荐 normalize.css 初始化
+
+2. 响应式布局
+
+    制作麻烦，花很大精力去调
+
+
+
+### 几个特殊样式
+
+a 点击时是高亮显示的，会有一个背景色, -webkit-tap-hightlight-color:transparent;
+
+input{
+    -webkit-appearance: none;       // 去掉外观样式
+}
+
+
+禁止长按页面时的弹出菜单
+    img,a{
+        -webkit-touch-callout: none;
+    }
+
+
+
+
+### 移动端布局
+
+单独开发
+    1. 流式布局（宽度百分比布局）
+    2. flex 弹性布局(推荐)
+    3. less + rem + 媒体查询
+    4. 混合布局
+
+
+响应式兼容移动端
+    1. 媒体查询
+    2. bootstrap
+
+
+### 流式布局
+
+m.jd.com
+
+就是百分比布局，非固定像素布局
+
+通过盒子的宽度设置成百分比来根据屏幕的宽度进行伸缩，不受固定像素的限制，内容向两侧填充
+
+是移动 web 开发中比较常见的布局方式
+
+max-width:
+min-width: 320px;
+
+body{
+    width:100%;
+    min-width:320px;
+    max-width:640px;
+    font-family: -apple-system, Helvetica, sans-serif;
+}
+
+
+### 2倍精灵图
+
+精灵图缩小为一半进行测量
+background-size 也一半
+
+
+.dpj 图片格式，jd 出品
+.webp 图片格式, google 出品
+
+
+
+
+
+
+img 比 div 尺寸大，才不会考虑 div 
+
+
+
+## rem em
+
+em : 相对于父元素的文字大小
+
+rem : 相对于html元素的文字大小
+
+## 媒体查询
+
+@media mediatype and | no t| only (media feature)
+
+mediatype
+    all
+    print
+    screen
+
+    @media screen and (max-width:800px){
+
+    }
+
+
+媒体查询引入资源
+    
+    <link rel="stylesheet" href="" media="screen and (min-width:320px)">
+
+
+## less
+
+```a.less
+@color:pink;
+body{
+    background-color:@color
+}
+```
+
+
+### less 编译
+    vscode 插件: easy less
+
+
+### 嵌套
+    
+```
+.header {
+    width:200px;
+    background-color: pink;
+    a {
+        color:#fff;
+
+        &:hover{
+
+        }
+    }
+
+}
+```
+
+
+    &：伪类,伪元素，交集需要加 &
+
+
+### 注释
+
+//
+
+### 运算
+
+    ```
+    @border:5px;
+    @border:5px + 5;
+
+    div{
+        width:10px * 2;
+        width:100px - 50;
+        width:10px;
+        border:@border solid green;
+    }
+
+    ```
+
+**运算符左右要有空格**
+
+单位：只要有一个有单位即可
+**如果两个都有单位，且不一样，以第一个为准**
+
+
+## rem 适配方案
+
+高度宽度都等比例变化
+
+
+## favicon 图标
+
+放在网站根目录下
+
+**没有配置域名，当以绝对路径访问项目时，不能正常引入favicon.ico**
+
+
+## seo
+
+search engine optimization
+
+页面必须有3个标签来符合 SEO 优化
+
+TDK
+    title
+    description
+    keyword
+
+
+
+
+
+
+## 品优购案例
+
+客户沟通
+签订合同
+预付定金 30%
+初稿审核
+前台页面设计/后台功能开发
+测试验收
+上线培训
+后期维护
+
+
+首页
+列表页
+注册页
+
+命名用下划线
+
+
+
+
+### 
+
+一个元素里只用一套 position:absolute 吧, 做shortcut 时的感悟, 又分割线，又下拉三角的
+
+
+
+
+## border-imaage
+
+
+top right bottom left
+
+border-image-source
+
+border-image-slice
+
+border-image-width
+
+border-image-repeat
+    repeat  平铺
+    round   铺满
+    stretch(default)
+
+
+    ```
+    border-image-source:url()
+    border-image-slice:30 30 30 30;     //没有单位
+    border-image-width: 30px;           // 可以大于 border-width, 不会占据空间
+    ```
 
