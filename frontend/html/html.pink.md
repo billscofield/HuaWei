@@ -2309,6 +2309,82 @@ body{
 }
 
 
+### flex 布局
+
+布局原理:
+    flex 是 flexible box 的缩写，意味弹性布局, 任何一个容器都可以指定为弹性布局
+
+    当为父盒子设为 flex 布局以后，子元素的 float、clear和 vertical-align 属性将失效
+    伸缩布局 = 弹性布局 = 伸缩盒布局 = 弹性盒布局 = flex布局
+
+    采用 flex 布局的元素，称为 flex 容器(flex container), 简称“容器”, 它的所有
+    子元素自动成为容器成员，称为 Flex 项目,简称“项目”
+
+    项目默认横向排列，也可以纵向排列
+
+    通过给父盒子添加 flex 属性来控制子元素的排列
+
+父元素属性
+    flex-direction: 设置主轴方向
+    flex-wrap:  子元素是否换行
+
+    justify-content: 主轴上的子元素排列方式
+
+    align-content:  侧轴上的子元素的排列方式（多行）
+    align-items:    侧轴上的子元素的排列方式（单行）
+
+    flex-flow:      复合属性，相当于同事设置了 flex-direction flex-wrap
+        flex-flow: column wrap;
+
+    主轴和侧轴
+        默认主轴是x, 侧轴是y
+        元素跟着主轴来排序
+
+        flex-direction:
+            row
+            row-reverse     翻转，从右向左
+            column
+            column-reverse
+
+    主轴上的排列方式
+        justify-content:
+            flex-start(default)
+            flex-end            右对齐
+            center              居中对齐
+            space-around        平分剩余空间
+            space-between       两边贴边，然后再平分剩余空间
+            space-evenly        每个 gap 都一样大
+
+    默认情况下，项目都排在一条线上，子元素不换行，宽度不够则缩小子元素的宽度来添加
+        flex-wrap:
+            no-wrap
+            wrap
+
+    align-items:  侧轴上的子元素的排列方式（单行）
+        flex-start  从上到下
+        flex-end    从下到上
+        center      居中
+        stretch     拉伸(默认)
+            子元素不能设置对应方向的宽度和高度
+
+    align-content:  侧轴上的子元素的排列方式（多行）
+        子项排列中出现换行的情况
+      flex-start
+      flex-end
+      center
+      space-around      平分剩余空间
+      space-between     子项在侧轴先贴边，再平分
+      stretch           
+
+子元素属性
+    flex        子项目占的剩余空间的份数, default 0
+    align-self  控制子项自己在侧轴上的排列方式
+    order       定义了子项的排列顺序(前后顺序)
+        default 0
+        越小越靠前
+
+
+
 ### 2倍精灵图
 
 精灵图缩小为一半进行测量
