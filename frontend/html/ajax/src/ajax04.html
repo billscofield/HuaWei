@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            border: 1px solid green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>ajax test with query</h3>
+
+    <button id="btn">点我发送POST请求 之 json 格式</button>
+    <div></div>
+
+    <script>
+        var btn = document.querySelector('button')
+        var div = document.querySelector('div')
+
+        btn.addEventListener('click', function () {
+            // 1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest()
+
+            // 绑定监听
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
+                    console.log('4时候的响应体', xhr.response)
+                    // div.innerText = xhr.response
+                    div.innerHTML = `<ul>
+                        <li>name: ${xhr.response['name']}</li>
+                        <li>age: ${xhr.response['age']}</li>
+                        </ul>`
+
+                }
+            }
+            // 2. 指定发送请求的 url, method, query参数
+            // query 参数, urlencoded 编码: 形如 key=value&key=value
+            // xhr.open('GET', 'http://127.0.0.1:8080/test_get?name=alice&age=18')
+
+            // params 参数 形如 /xx/xxx/alice/18
+            // xhr.open('GET', 'http://127.0.0.1:8080/test_get/alice/18')
+
+            // 3. 不带参数的 post 请求
+            // xhr.open('POST', 'http://127.0.0.1:8080/test_post')
+
+            // 4. 带 query 参数的 post 请求
+            // xhr.open('POST', 'http://127.0.0.1:8080/test_post?name=alic&age=20')
+
+            // 5. 带 params 参数的 post 请求
+            // xhr.open('POST', 'http://127.0.0.1:8080/test_post/alic/20')
+
+            // 6. 带请求体的 post 请求
+            // 请求内容写在 send() 里
+            /*
+            xhr.open('POST', 'http://127.0.0.1:8080/test_post')
+            xhr.setRequestHeader('Content-type', 'application/json')
+            const person = { name: 'alice', age: 18 }
+            xhr.send(JSON.stringify(person))
+            */
+
+
+            // 7. 带 query 参数的 post 请求 post
+            xhr.open('GET', 'http://127.0.0.1:8080/test_get_json')
+
+            // 自动解析, 如果返回的不是 json , 则为 null
+            xhr.responseType = 'json'
+
+            // 3. 发送请求
+            xhr.send()
+        })
+    </script>
+
+</body>
+
+</html>

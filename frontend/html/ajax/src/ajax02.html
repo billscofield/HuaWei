@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            border: 1px solid green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>ajax test with query</h3>
+
+    <button id="btn">点我发送请求</button>
+    <div></div>
+
+    <script>
+        var btn = document.querySelector('button')
+        var div = document.querySelector('div')
+
+        btn.addEventListener('click', function () {
+            // 1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest()
+
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
+                    console.log('4时候的响应体', xhr.response)
+                    div.innerText = xhr.response
+                }
+            }
+            // 2. 指定发送请求的 url, method, query参数
+            // query 参数, urlencoded 编码: 形如 key=value&key=value
+            // xhr.open('GET', 'http://127.0.0.1:8080/test_get?name=alice&age=18')
+
+            // params 参数 形如 /xx/xxx/alice/18
+            xhr.open('GET', 'http://127.0.0.1:8080/test_get/alice/18')
+            // 3. 发送请求
+            xhr.send()
+        })
+    </script>
+
+</body>
+
+</html>

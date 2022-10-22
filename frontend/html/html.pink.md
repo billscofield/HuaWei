@@ -1,3 +1,21 @@
+## 网页的构造
+
+一个网页主要包括以下三个部分
+
+    1. 文本内容(text content)
+    2. 对其他文件的引用( references to other files )
+    3. 标记(markup)
+
+HTML元素描述的是内容是什么，而非看起来是什么样
+
+标签的组成
+    元素
+    属性
+    值
+
+    空元素不包含任何文本内容，如 img
+    属性值两边的引号是可选的，但建议写上
+
 ## history brief
 
 1993 标签语言第一版
@@ -42,6 +60,8 @@ whatwg
     
     <!DOCTYPE> 声明不区分大小写; 文档类型声明
 
+    http-equiv="X-UA-Compatible" content='IE=dege'
+
 ## 开发工具
 
 dreamweaver
@@ -49,10 +69,14 @@ sublime
 webstorm
 hbuilder
 vscode
-    open in browser
     live server
     auto rename tag
     easy less
+    open in browser         文件的方式，而不是网站的方式
+    chinese(simplified) Language Pack fro VS Code
+
+    ctrl +
+    ctrl -
 
 ## 注释
 
@@ -65,9 +89,7 @@ vscode
 WEB标准
 
 
-
 ## html 属性
-
 
 runoob.com
 
@@ -75,7 +97,6 @@ runoob.com
 
     cmn-hans
     告诉浏览器或者搜索引擎这是一个英文网站，本页面采用英文来显示，会出现翻译成中文否, 但是我的没有,why???
-
 
 body
     <body bgcolor='#ff0'>
@@ -92,10 +113,12 @@ font
     <font color="" size=''>
 
 p
-    默认 margin:1/2自体大小 0;
+    默认 margin:字体大小 0;
 
-em i
-strong b
+em  重点,如 come <em>here</em>
+i
+strong  强调语气, 如 <strong>This is important</strong>
+b
 
 ins(insert) u(underline)   下划线
 
@@ -149,9 +172,9 @@ ul
     li 之间是可以放其他标签的
 
     type            html4.01 已经废弃, 但是好像还可以用
-        disc        实心圆(默认)
+        disc        唱片，实心圆(默认)
         circle      空心圆
-        dot         **ul 也会是1234带编号的实心方块(chrome)**, 只有正序，没有倒序(reversed)
+        dot         1. 2. **ul 也会是1234带编号的实心方块(chrome)**, 只有正序，没有倒序(reversed)
         square      实心方块
 
     li 的 list-style 会继承 ul 的, 所以设置 ul 的
@@ -214,24 +237,21 @@ img
         Aligns the image with its surrounding context. Use the float and/or vertical-align CSS properties instead of this attribute. Allowed values:
 
         top
-        Equivalent to vertical-align: top or vertical-align: text-top
+            Equivalent to vertical-align: top or vertical-align: text-top
 
         middle
-        Equivalent to vertical-align: -moz-middle-with-baseline
+            Equivalent to vertical-align: -moz-middle-with-baseline
 
         bottom
-        The default, equivalent to vertical-align: unset or vertical-align: initial
+            The default, equivalent to vertical-align: unset or vertical-align: initial
 
         left
-        Equivalent to float: left
+            Equivalent to float: left
 
         right
-        Equivalent to float: right
+            Equivalent to float: right
 
-    文字不会在图片下方
-
-    **img float 后，会有个 vertical-align:top**
-        以使文本环绕
+    文字不会在图片下方, 不会被图片覆盖
 
 
     hspace          // img 左右和其他元素的距离, 实际是margin, HTML5 不支持。HTML 4.01 已废弃。 规定图像左侧和右侧的空白。
@@ -241,12 +261,12 @@ img
 
     热点
     ```
-        <img src='xx' usemap='#图片名称'>           注意有个 #, 是指向 name , 即使 map 有不同的 id
+        <img src='xx' usemap='#图片名称'>           **注意有个 #, 是指向 name** , 即使 map 有不同的 id
         <map name="图片名称">
             <area shape='rect' coords="左上角坐标，右下角坐标" href="http:xxx" target="_blank">
             <area shape='rect' coords="1,1,50,50" href="http:xxx" target="_blank">
-            <area shape='circle' >
-            <area shape='poly coords=' '>       多边形
+            <area shape='circle' coords='100,100,20' href='xxx'>
+            <area shape='poly' coords=' '>       多边形
         </map>
     ```
 
@@ -262,11 +282,12 @@ img
 figure
     将 img 和相关内容的容器
     figcaption  标题
+    一般包含 h1~h6
 
     <figure>
         <img ...>
-        <figcaption><h2>helloworld</h2></figcaption>        // 一般写在 img 后边
         <p>...</p>
+        <figcaption><h2>helloworld</h2></figcaption>        // 一般写在最后或最前
     </figure>
 
 
@@ -359,7 +380,6 @@ audio
                                 google chrome 也禁用了
     muted                       bool属性，静音播放
     loop                        bool属性，循环播放
-
 
 
     mp3(都支持)
@@ -557,7 +577,7 @@ form
             password
             
             radio
-                label 绑定 使用 id 属性
+                label 绑定 **使用 id 属性**
                 第一种方式:
                 
                 <input type="radio" id="radioA" name="radio1" /><label for="radioA">这是radioA</label>
@@ -1346,8 +1366,16 @@ a target='xxx'
 
 ## table
 
-不同的语言对于cellspacing具有完全不同的语法，例如在CSS中使用"**border-spacing**"属性，而在HTML中使用“cellspacing”。
-默认2px
+不同的语言对于cellspacing具有完全不同的语法，例如在CSS中使用
+"**border-spacing**"属性，而在HTML中使用“cellspacing”。默认2px
+
+border-spacing:0
+border-collapse:collapse;
+
+
+cellspacing=0
+cellpadding=0
+
 
 ```
 <table cellspacing='20'>

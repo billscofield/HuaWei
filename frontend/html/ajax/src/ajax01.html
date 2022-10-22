@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            width: 300px;
+            height: 300px;
+            border: 1px solid green;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>ajax test</h3>
+
+    <button id="btn">点我发送请求</button>
+    <div></div>
+
+    <script>
+        var btn = document.querySelector('button')
+        var div = document.querySelector('div')
+
+        btn.addEventListener('click', function () {
+            // 1. 创建 xhr 实例对象
+            const xhr = new XMLHttpRequest()
+
+            // xhr 内部有5种状态，分别为0,1,2,3,4
+            // 0: 实例初始化完毕
+            // 1: open 已经调用，send还未调用，还可以修改请求头的内容
+            // 2: send 已经调用，
+            // 3: 已经回来一部分数据，较大的数据有待进一步接收，请求头肯定回来了
+            // 4: 数据全部接收完毕
+            xhr.onreadystatechange = () => {
+                // console.log(xhr.readyState)
+                if (xhr.readyState == 1) {
+                    xhr.setRequestHeader('demo', 'hello')
+                }
+                if (xhr.readyState == 2) {
+                    // 会报错
+                    // xhr.setRequestHeader('demo','hello')
+                }
+                if (xhr.readyState == 3) {
+                    console.log('3时候的响应体:' + xhr.response)
+                    console.log('3时候所有的响应头:', xhr.getAllResponseHeaders())
+                    console.log('3时候的某个响应头:', xhr.getResponseHeader('content-length'))
+                }
+                // xhr.status 表示响应的HTTP状态码
+                if (xhr.readyState == 4 && xhr.status >= 200 && xhr.status < 300) {
+                    console.log('4时候的响应体', xhr.response)
+                    div.innerText = xhr.response
+                }
+            }
+            // 2. 指定发送请求的 url, method
+            xhr.open('GET', 'http://127.0.0.1:8080/test_get')
+            // 3. 发送请求
+            xhr.send()
+        })
+    </script>
+
+</body>
+
+</html>
