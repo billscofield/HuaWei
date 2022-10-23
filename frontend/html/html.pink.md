@@ -2409,7 +2409,7 @@ body{
       flex-start
       flex-end
       center
-      space-around      平分剩余空间
+      space-around      平分剩余空间/ margin-box
       space-between     子项在侧轴先贴边，再平分
       stretch           
 
