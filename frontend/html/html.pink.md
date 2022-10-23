@@ -730,7 +730,16 @@ h1 是否可以包含 p 元素
 
 2. background-color
     background-image
-
+    
+    颜色: linear-gradient(方向, 颜色1 百分比开始位置 百分比结束位置, 颜色2 百分比开始位置,百分比结束位置 ,...)
+        方向:
+            to top left
+            0deg     向上
+            90deg    向右
+            180deg   向下
+            270deg   向左
+            
+        background:linear-gradient(to top, red 20%, blue 20% 50%, green 50%)
 
 3. font-size
     
