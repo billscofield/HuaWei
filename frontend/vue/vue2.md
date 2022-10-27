@@ -334,7 +334,7 @@ methods:{
 
     @keyup='func'
 
-    @keyup.enter='func'
+    @keyup.enter='func'             // 只有 enter 键才会触发
 
     https://cn.vuejs.org/v2/api/#v-on
 
@@ -578,6 +578,11 @@ let app = new Vue({
 
 ## 网络应用 axios
 
+https://www.axios-http.cn/
+
+Axios 是一个基于 promise 的网络请求库，可以用于浏览器和 node.js
+
+
 axios: 功能强大的网络请求库
 
 <script src='https://unpkg.com/axios/dist/axios.min.js'></script>
@@ -590,9 +595,20 @@ axios.get(地址?查询字符串).then(function(response){},function(err){})
 
 ### post 请求
 
-axios.post(地址,参数对象).then(function(){},function(err){})
+axios.post(地址,参数对象).then(function(response){},function(err){})
     axios.post(地址,{key:value,key2:value2}).then(function(){},function(err){})
 
 
+
+    https://autumnfish.cn/api/user/reg
+    https://autumnfish.cn/api/joke/list?num=3
+
+
+
+
+
+
+
+## 前端工程化 webpack
 
 

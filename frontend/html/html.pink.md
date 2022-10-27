@@ -978,6 +978,14 @@ box-sizing:
         padding-box
         content-box
 
+background-origin 规定了指定背景图片background-image 属性的原点位置的背景相对区域。
+    初始值  padding-box
+    background-origin: padding-box
+    background-origin: border-box
+    background-origin: content-box
+
+    background-origin: inherit
+
 溢出处理
 
     overflow:
@@ -1982,7 +1990,14 @@ calc 函数
 
     filter: 函数();
 
-    blur(5px); 模糊处理
+        blur(px)    高斯模糊
+        brightness(%)   0% 全黑; 100% 无变化; >100% 更亮
+        contrast(%)     0% 全黑; 100% 无变化; >100% 对比度更低
+
+    filter: blur(5px); 模糊处理
+
+
+
 
 
 

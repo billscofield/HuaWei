@@ -331,3 +331,45 @@ man pam_shells
 
 
 
+查看应用程序是否支持 PAM 验证功能，使用ldd命令进行查看动态链接库中有木有 libpam 和 libpam.misc名称;
+
+    ldd `which sshd` | grep -i "libpam"
+        libpam.so.0 => /lib64/libpam.so.0 (0x00007fa969d54000)
+
+
+
+
+默认PAM 的各个模块路径: /lib/security/ 和 /lib64/security/ 以动态库文件的形式存在文件名格式一般为pam_xxx.so(取决于操作系统位数);
+默认PAM 配置文件路径:/etc/pam.conf(在时下的发行版可能没有) 或者 /etc/pam.d/ 单个应用;
+
+
+工作类别  控制模式      模块路径        模块参数
+Type     Control-flag   Module-path     Module-arguments
+
+
+
+
+    - 意思是如果找不到这个模块，导致无法被加载时，这一事件不会被记录在日志中。
+      这个功能适用于那些认证时非必需的、安装时可能没被安装进系统的模块。
+
+
+
+
+PAM配置文件有下面两种写法:
+
+    1. 写在/etc/pam.conf文件中，但centos6之后的系统中，这个文件就没有了。
+
+    2. 将PAM配置文件放到/etc/pam.d/目录下,其规则内容都是不包含 service 部分的，
+       即不包含服务名称，而/etc/pam.d 目录下文件的名字就是服务名称。如： vsftpd,
+       login等，只是少了最左边的服务名列。如：/etc/pam.d/sshd
+
+
+
+
+
+
+/etc/pam.d/common-auth
+    auth    [success=1 default=ignore]      pam_unix.so nullok
+    auth    requisite                       pam_deny.so
+    auth    required                        pam_permit.so
+
