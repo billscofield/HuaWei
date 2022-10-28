@@ -98,6 +98,8 @@ setTimeout(function(){
 
 容易导致 xss 攻击
 
+{{ xxx }} xxx 是啥，就显示啥
+
 
 ### v-pre: 原意,跳过编译过程
 
