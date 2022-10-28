@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./axios.min.js"></script>
+    <script src="./vue.js"></script>
+    <style>
+        .content {
+            width: 500px;
+            height: 500px;
+            outline: 1px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="text" v-model="num">
+        <button class="get" @click="get">get</button>
+        <button class="post" @click="post">post</button>
+
+        <div class="content">
+            <ol>
+                <li v-for="(item,index) in items">{{ item }}</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        /*
+        var get = document.querySelector('.get')
+        get.onclick = function () {
+            axios.get('https://autumnfish.cn/api/joke/list?num=3')
+                .then(function (response) {
+                    console.log(response.data.data[0])
+                })
+        }
+        */
+        var app = new Vue({
+            el: '#app',
+            data: {
+                num: 1,
+                items: ['a']
+            },
+            methods: {
+                get: function () {
+                    var items_temp = this.items
+                    var num_temp = this.num
+                    // console.log(typeof(this.items))
+                    axios.get('https://autumnfish.cn/api/joke/list?num=' + num_temp)
+                        .then(function (response) {
+                            items_temp.splice(0, items_temp.length)
+                            console.log(response)
+                            for (var i = 0; i < response.data.data.length; i++) {
+                                items_temp.push(response.data.data[i])
+                                // console.log(response.data.data[i])
+                            }
+                        }, function (err) {
+                            console.log("attention: " + err)
+                        })
+                },
+                post:function(){
+                    axios.post('https://autumnfish.cn/api/user/reg',{username:'hello'})
+                    .then(function(response){
+                        console.log(response)
+                    },function(err){
+                        console.log(err)
+                    })
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>

@@ -5,6 +5,12 @@
 成字体信息的缓存，然后应用程序就可以立即使用这些新安装的字体。
 
 
+## some good fonts
+
+DejaVu Sans Mono
+
+
+
 ## TTF or OTF
 
 1. TTF（TrueType） 

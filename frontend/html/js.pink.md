@@ -438,6 +438,8 @@ fn();//undefined
                 a.toString()                // 形如 '1,4,5,6'   逗号分隔
                 a.join('分隔符')            // 默认 逗号
 
+                
+                s.splice(index,count)       // 原地操作，返回被删掉的数组
 
         string
             string.length
@@ -1723,3 +1725,37 @@ XMLHttpRequest  AJAX的所有操作都是通过该对象进行的
     3. 设置请求信息
 
     4. 发送请求
+
+
+
+
+## 前端工程化
+
+模块化(js 的模块化)
+
+组件化(服用现有的UI结构,样式，行为)
+
+规范化(目录结构的划分，编码规范，接口规范,文档规范化)
+
+自动化(自动构建，自动部署，自动化测试)
+
+早期的前端工程化解决方案
+    grunt
+    gulp
+
+现在主流的前端工程化解决方案
+    webpack
+    parcel
+
+
+代码压缩混淆，处理浏览器JS兼容性, 性能优化等
+
+```
+mkdir webpack && cd webpack
+npm init -y
+npm install jquery -S           // -S(--save) 要记录到 package.json 中
+mkdir src
+touch src/index.html
+touch src/index.js
+
+```

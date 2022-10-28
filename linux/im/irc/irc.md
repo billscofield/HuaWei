@@ -57,6 +57,11 @@ apt install weechat
 
 ```
 
+/server add libera irc.libera.chat -ssl
+
+
+
+
 ### 设置自定义的IRC服务器选项
 
 WeeChat使用所有服务器的默认值（“后置方式”），如果你不为服务器选项指定一个特定的值。这些默认设定为 `"irc.server_default.*"`。
