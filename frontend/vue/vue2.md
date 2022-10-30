@@ -6,6 +6,40 @@ mustache  [ˈmʌstæʃ; məˈstɑːʃ] 胡子 语法
 
 一般是两个空格缩进
 
+用于构建用户界面的渐进式 JS 框架
+
+    渐进式: 简单的ok, 复杂的多引用插件什么的就可以
+
+15年 vue1.0 Evangelion 新世纪福音战士
+16年 vue2.0 Ghost in the Shell 攻壳特工队
+20年 vue3.0 One Piece 海贼王
+
+组件化
+    1. .vue文件
+        html 片段
+        css
+        js
+
+    2. 声明式编码
+        无需直接操作 DOM
+            数据 -> DOM -> 效果
+
+    3. 虚拟DOM
+
+
+a.js
+a.js.map
+    我们引入的 a.js 一般只有一行, map 是第几行
+    F12 / 齿轮 / Preferences /
+        Enable JavaScript source maps 关掉
+        Enable CSS source maps 关掉
+
+
+
+开发者工具
+    设置中: Allow access to file URLs
+    否则 F12 中没有 Vue 选项卡
+
 ## 
 
 el: 挂载点
@@ -69,7 +103,7 @@ setTimeout(function(){
 
 <script>
     let app = new Vue({
-        el: "#app",
+        el: "#app",                 // 配置对象，不能瞎写
         data: {
             message:"hello"
         }
@@ -532,6 +566,13 @@ V  :view
 DOM             Vue                      Data
 
 
+Although not strictly associated with the MVVM pattern, Vue’s design was partly
+inspired by it. As a convention, we often use the variable vm (short for
+ViewModel) to refer to our Vue instance.
+
+https://v2.vuejs.org/v2/guide/instance.html
+
+
 <script>
 
 const obj = {
@@ -607,6 +648,24 @@ axios.post(地址,参数对象).then(function(response){},function(err){})
 
 
 
+
+
+跨域问题
+    前台方案 proxy
+    
+    ```
+    devServer: {
+proxy: {
+           '/api': {
+                                       target: '<url>',
+                                                                   changeOrigin: true
+                                                                                           
+           }
+                               
+       }
+                       
+    }
+    ```
 
 
 

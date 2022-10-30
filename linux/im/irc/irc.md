@@ -45,7 +45,9 @@ cd ..
 
 ### Linux
 
-推荐使用 weechat
+quassel
+    GUI的
+
 
 ```
 apt install weechat
@@ -309,3 +311,8 @@ https://cloud.tencent.com/developer/article/1346341
 
 关于 certificate
     https://superuser.com/questions/1370210/weechat-only-connects-to-irc-server-with-ssl-if-ssl-verify-option-is-switched
+
+
+
+
+

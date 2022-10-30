@@ -1,5 +1,7 @@
 ## Vuejs
 
+javascript 框架
+
 vue 和 vuejs 是一样的
 
 angularjs 是第一版本， 第二版本 叫 angular
@@ -33,6 +35,12 @@ Vue 全家桶
 
 ## Vue.js 安装
 
+
+vue2
+    https://v2.cn.vuejs.org/
+vue3
+    
+
 方式一:
 
     CDN 引入
@@ -51,6 +59,22 @@ Vue 全家桶
     npm 安装
 
     npm install vue
+
+
+Vue.config  全局配置
+
+    productionTip
+
+    ```
+    You are running Vue in development mode.
+    Make sure to turn on production mode when deploying for production.
+    See more tips at https://vuejs.org/guide/deployment.html
+    ```
+
+    Vue.config.productionTip = false
+
+    发现不好用，直接在 vue.js 中更改
+    应该是加载顺序的问题，Vue加载的时候就输出了，我们确实改了，但是晚了
 
 
 ## Python开启HTTP服务
@@ -80,7 +104,7 @@ Python 3.x
 特点: 数据和页面完全分离
 
 
-    el: 要管理哪些元素, 元素的挂载位置
+    el: 要管理哪些元素, 元素的挂载位置, 不要挂在在 html body 元素上
 
     data: 模型数据
 
