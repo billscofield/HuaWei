@@ -55,3 +55,40 @@ XXX ---
     position: absolute / fixed / sticky
 
 
+
+### strut
+
+with a zero-width inline box with the elements's font and line height
+properties
+
+In case of an empty span (having display:inline ) the browser will generate 0
+line box.
+
+Same logic if you add an empty inline-block element. Even empty, an
+inline-block will trigger the creation of a line box.
+
+
+To use easy words, an inline-block element is still considered as an existing
+element and we need to generate a line box to hold it.
+
+An empty inline element will be considered by the browser as a non-existing
+element so we don't need any line box to hold something that doesn't really
+exist.
+
+Line boxes are created as needed to hold inline-level content within an
+**inline formatting context.**
+
+
+Line boxes are created as needed to hold inline-level content within an inline formatting context.
+Line boxes that contain
+
+    1. no text,
+    2. no preserved white space,
+    3. and do not end with a preserved newline
+
+    4. no inline elements with non-zero margins, padding, or borders,
+    5. and no other in-flow content (such as images, inline blocks or inline tables),
+
+must be treated as zero-height line boxes for the purposes of determining the
+positions of any elements inside of them, and must be treated as not existing
+for any other purpose .

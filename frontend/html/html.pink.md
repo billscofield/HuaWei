@@ -174,7 +174,7 @@ ul
     type            html4.01 已经废弃, 但是好像还可以用
         disc        唱片，实心圆(默认)
         circle      空心圆
-        dot         1. 2. **ul 也会是1234带编号的实心方块(chrome)**, 只有正序，没有倒序(reversed)
+        dot         **像素点**， 1. 2. **ul 也会是1234带编号的实心方块(chrome)**, 只有正序，没有倒序(reversed)
         square      实心方块
 
     li 的 list-style 会继承 ul 的, 所以设置 ul 的
@@ -1488,7 +1488,7 @@ The<abbr title="World Health Organization">WHO</abbr> was founded in 1948.
 ```
 
 
-### ruby rb rt
+### ruby rp rt
 
 ```
 <ruby>
@@ -1503,6 +1503,18 @@ The<abbr title="World Health Organization">WHO</abbr> was founded in 1948.
 
 将 <ruby> 标签与 <rt> 和 <rp> 标签一起使用：
 <ruby> 元素由一个或多个需要解释/发音的字符和一个提供该信息的 <rt> 元素组成，还包括**可选的 <rp> 元素**，定义当浏览器不支持 "ruby" 元素时显示的内容
+
+ruby 可以嵌套
+
+```
+<ruby>
+    <ruby>
+        你<rt>ni</rt>好<rt>hao</rt>
+    </ruby>
+    <rt lang='en'>hello</rt>
+</ruby>
+```
+
 
 
 ## 表单元素
@@ -1522,11 +1534,14 @@ input
         range       滑块
             min
             max
-        color       颜色选择
-        number      数字输入框，只能输入数字
-            min
-            max
             step
+        color       颜色选择
+
+        number      数字输入框，只能输入数字
+            min     +---------+
+            max     |       /\|
+            step    |       \/|
+                    +---------+
         radio
 
         checkbox

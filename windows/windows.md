@@ -253,3 +253,28 @@ dism /capture-image
 /imagefile command determine that path which the image will save it.
 
 /Capturedir specify the directory which the image was applied.
+
+
+
+
+
+## 审核模式
+
+
+进入审核模式方法：
+    1. 在 OOBE 屏幕上，按“ CTRL+SHIFT+F3”；
+    2. Windows 会将计算机重新启动到审核模式，系统准备 (Sysprep) 工具将会出现。
+
+退出审核模式方法：
+    1. 在系统下，请在运行（Windows按键+R）里输入sysprep，点确定；
+    2. 在打开的文件夹下双击sysperp.exe
+    3. 在弹出的界面，选择进入系统全新体验，点确定，系统自动重启进入OOBE模式。
+
+
+
+启动至审核模式会在内置管理员帐户中启动计算机，该帐户随后在 generalize 配置阶段
+会自动删除。将计算机配置为启动至审核模式后，在将计算机配置为启动至开箱即用体验
+(OOBE) 之前，该计算机默认会继续启动至审核模式。
+
+
+启动受密码保护的屏幕保护程序，将无法重新登录到系统。

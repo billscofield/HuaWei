@@ -1,3 +1,9 @@
+##
+
+高并发
+
+
+
 ## 全局对象
 
 console.log("")     //输出
@@ -18,9 +24,10 @@ var timer = setInterval(function(){
     },1000)   //循环计时器
 
 
-
+```
 conosle.log(__dirname)      //当前脚本目录
 conosle.log(__filename)     //当前文件绝对路径
+```
 
 
 
