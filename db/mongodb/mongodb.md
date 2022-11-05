@@ -17,7 +17,10 @@
     /etc/apt/sources.list.d/mongodb-org-5.0.list and as the “bullseye” version
     of MongoDB is still not released so we use the “buster” version of MongoDB.
 
+
 ` echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+
+    deb https://mirrors.tuna.tsinghua.edu.cn/mongodb/apt/debian bullseye/mongodb-org/5.0 main
 
 4. Refresh APT to accept the new changes
 
@@ -53,3 +56,44 @@ mongodb-database-tools-rhel70-x86_64-100.5.0.rpm
 use admin       // admin 是数据库
 db.createUser({user:"Admin", pwd:"Db0AdMiN1!", roles:[{role:"dbAdminAnyDatabase", db:"admin"}]})
 ```
+
+/etc/mongod.conf
+    security:
+    authorization: enabled
+
+systemctl restart mongod
+
+
+mongo -u madmin -p
+
+
+
+## MongoDB启动失败
+
+/tmp/mongodb-27017.sock，若存在，删除后重启mongodb。这个主要是因为不正确关闭
+mongodb导致的，正常关闭时这个文件会删除。
+
+
+
+
+
+
+
+
+## 图形化工具
+
+dbeaver
+
+navicat
+
+快到期之前，可以把之前连接的数据库通过 文件->导出连接，备份之前的数据库连接即可，下次激活后可以直接导入连接。Navicat Premium 16的试用期只有14天，执行下面两个命令，即可无限使用。
+
+1. 关闭Navicat程序
+2. 删除如下2个文件：
+
+    rm -rf ~/.config/navicat
+    rm -rf ~/.config/dconf/user
+
+    lsof | grep navicat | grep \\.config  #用于列出当前系统打开navicat的工具
+
+再次重新启动navicat即可。
