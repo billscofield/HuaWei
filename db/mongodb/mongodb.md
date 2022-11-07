@@ -1,5 +1,8 @@
 # How to install MongoDB on Debian 11
 
+非关系型数据库
+
+
 ## install
 
 1. Before adding the MongoDB repository to the system, it is necessary to
@@ -73,13 +76,6 @@ mongo -u madmin -p
 /tmp/mongodb-27017.sock，若存在，删除后重启mongodb。这个主要是因为不正确关闭
 mongodb导致的，正常关闭时这个文件会删除。
 
-
-
-
-
-
-
-
 ## 图形化工具
 
 dbeaver
@@ -97,3 +93,164 @@ navicat
     lsof | grep navicat | grep \\.config  #用于列出当前系统打开navicat的工具
 
 再次重新启动navicat即可。
+
+
+
+## (mongosh](https://www.mongodb.com/try/download/shell)
+
+macos 需要单独进行安装客户端
+
+mongos 15 is the interface between your application and a sharded cluster. As
+the error states, you need to pass in the --configdb parameter with your list
+of config servers.
+
+Are you instead meaning to run mognosh which is the new MongoDB shell command
+line interface? If so, have you downloaded 330 the tool yet? mongosh is not
+included with the server install.
+
+
+export PATH=/usr/local/mongodb/bin:$PATH
+数据存放路径：
+    sudo mkdir -p /usr/local/var/mongodb
+日志文件路径：
+    sudo mkdir -p /usr/local/var/log/mongodb
+接下来要确保当前用户对以上两个目录有读写的权限：
+    sudo chown runoob /usr/local/var/mongodb
+    sudo chown runoob /usr/local/var/log/mongodb
+
+使用以下命令在后台启动 mongodb：
+    mongod --dbpath /usr/local/var/mongodb --logpath /usr/local/var/log/mongodb/mongo.log --fork
+    --dbpath 设置数据存放目录
+    --logpath 设置日志存放目录
+    --fork 在后台运行
+
+如果不想在后端运行，而是在控制台上查看运行过程可以直接设置配置文件启动：
+    mongod --config /usr/local/etc/mongod.conf
+
+查看 mongod 服务是否启动：
+    ps aux | grep mongod
+
+mongodb使用了27017端口，因此在浏览器中打开http://localhost:27017 出现如下提示即说明连接成功了。
+    It looks like you are trying to access MongoDB over HTTP on the native driver port.
+
+
+cannot be opened because the developer cannot be verified的解决办法
+    xattr -d com.apple.quarantine 被拦截的执行文件
+
+
+
+## 使用
+
+### 命令行
+
+1. 显示所有数据库(并不是所有,空的不显示)
+    show dbs
+
+    admin
+    config
+    local
+
+2. 当前数据库
+    db
+
+3. 切换/创建数据库
+    use 库名            // 区分大小写
+
+4. 集合/数据表
+    查看当前库中有哪些集合
+    
+    show collections
+
+5. 数据
+    
+    1. 添加数据, 如果该集合不存在则自动创建
+
+    ```
+    db.集合s.insert({
+        name:'张三',
+        age:18,
+        gender:'boy'
+    })
+
+    自动创建一个 _id 字段
+    ```
+
+    show collections
+
+    2. 查看某个集合中的所有数据
+
+        db.集合.find()
+        db.集合.find().pretty()
+
+### 图形化
+
+
+
+### node
+
+npm install mongoose --save
+
+
+
+
+usersModel.create({
+    username:'abc',
+    password:'123'
+})
+
+
+usersModel.deleteOne({
+    username:'zhangsan'
+})
+
+usersModel.deleteMany({
+    username:'zhangsan'
+})
+
+usersModel.updateOne({
+    username:'lisi',password:'123'
+},
+
+{
+    username:'lisi',password:'234'
+})
+
+
+上述方法都是异步的，且这些方法的返回值都是 Promise 对象，因此需要通过  await  和 async 
+
+
+
+
+## 三层框架
+
+MVC 架构
+
+后端分为 3 层
+
+
+前端    ->    后端服务器    ->      数据库
+
+前端    ->        表现层 ->  服务层  -> 持久层      -> 数据库
+
+    表现层: 
+    服务层: 业务逻辑
+    持久层: 数据库
+
+
+
+1. routers/
+    require('./dao/database.js')
+
+2. service/
+    usersService.js
+
+    暴露给一层, 结果返回给自己
+    暴露给三层, 结果返回给自己
+
+3. dao/
+    database.js
+    models/
+        usersModel.js
+    usersDao.js
+        暴露给
+

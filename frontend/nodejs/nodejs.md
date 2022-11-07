@@ -1,16 +1,14 @@
-##
+## nodejs
 
 高并发
 
 
 
-## 全局对象
+### 全局对象
 
 console.log("")     //输出
-setTimeout(function(){console.log('hello')},3000)   //定时器
-setInterval(function(){console.log('hello')},3000)   //循环计时器
-
-
+setTimeout(function(){console.log('hello')},3000)       //定时器
+setInterval(function(){console.log('hello')},3000)      //循环计时器
 
 var time = 0
 var timer = setInterval(function(){
@@ -20,7 +18,6 @@ var timer = setInterval(function(){
             console.log("Game Over");
             clearInterval();
         }
-
     },1000)   //循环计时器
 
 
@@ -47,20 +44,18 @@ conosle.log(__filename)     //当前文件绝对路径
 
 
 回调函数
-function callFun(fun,name){
-    fun(name);
-}
+    function callFun(fun,name){
+        fun(name);
+    }
 
-function say(what){
-    console.log("Hello "+what);
-}
+    function say(what){
+        console.log("Hello "+what);
+    }
 
-callFun(say,'star');
-
+    callFun(say,'star');
 
 
 数组.length
-
 
 
 ## 模块
