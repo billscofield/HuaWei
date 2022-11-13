@@ -50,6 +50,16 @@ typeof 1                // number
 typeof(1)
 typeof(null)            // object
 
+    undefined === undefined
+    null === null
+
+
+instanceof
+
+
+
+
+
 
 黑色是字符型的
 蓝色是数字类型

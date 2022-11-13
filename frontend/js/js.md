@@ -1,6 +1,11 @@
 
 # js
 
+mosaic
+netscape navigator
+
+
+
 后端 Nodejs
 桌面程序 Electron
 APP Cordova
@@ -15,6 +20,7 @@ APP Cordova
 
     C, C++
 
+
 解释型语言
 
     缺点: 速度慢
@@ -25,7 +31,7 @@ APP Cordova
 
     javascript, php, python
 
-    单线程:同一时间做一件事叫
+    单线程:同一时间做一件事
 
     同步(synchronous):一定要等任务执行完了，得到结果，才执行下一个任务。
 
@@ -886,6 +892,8 @@ a   undefined
 'a'.charCodeAt()
 'abc'.charCodeAt(0)
 
+'abc'.charAt(0)
+
 
 
 
@@ -1465,15 +1473,19 @@ a[20] = 10
 
 push    返回数组的新长度, 可以加多个
 pop     剪切最后一个
+    a.push(1,2,3)
+    返回这个被删掉的元素
 
 shift   在前边剪切
 unshift 在前边加, 可以加多个
+    返回这个被删掉的元素
 
 reverse 逆转
 
 splice
     arr.splice(start,length,toAdd)
     **start 在第几项前边切一刀**
+    [
 
      ```
     var arr = [1,2,3,5]
@@ -1489,8 +1501,10 @@ sort
     默认是安装ascii的方法比较的
     1,10,2
 
-    前面的数-后面的数 ? 大于0 调换位置 : 小于0 不换位置
-    冒泡排序
+    前面的数-后面的数 ? 大于0 调换位置 : 小于0 不换位置, 即从小到大排序
+
+    return a-b 升序
+    return b-a 降序
 
     ```
     var arr = [1,4,10,3,9,-1]
@@ -1500,9 +1514,25 @@ sort
     ```
     
 
-不改变原数组
+### 不改变原数组
+
+concat
+    var c = a.concat(b)
+
+join
+    console.log(arra.join("#"))
+    默认","
 
 
+split
+    str.split()
+    var aa = '#a#b#c#d'
+    console.log(aa.split('#'))  ->  ['', 'a', 'b', 'c', 'd']
+
+toString
+
+slice
+    arr.slice(start,end)    [ )
 
 
 ### try catch
