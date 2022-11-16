@@ -14,6 +14,7 @@ NASM被认为是Linux平台上最受欢迎的汇编工具之一。
     apt install -y sasm
 
 3. // bochs - IA-32 PC emulator
+    386 simulator
 
     apt install -y bochs
 
