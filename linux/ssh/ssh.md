@@ -1,3 +1,6 @@
+https://www.ssh.com/academy/ssh
+
+
 Linux 到 windows:
 
     scp /linux目录/文件名 administrator@windowsIP:/d:/
@@ -8,10 +11,51 @@ ssh 默认的用户名 是当前系统你此时在用的用户名, 而不是 roo
     例如, 当你用 windows ssh 登录远程 linux 主机时, 发现用户名是 administrator
 
 
+**Identity keys** are private keys that an SSH client uses to authenticate itself
+when logging into an SSH server. 
+
+**Authorized keys** and identity keys are jointly called user keys. They relate to
+user authentication, as opposed to **host keys** that are used for host
+authentication.
+
+**Session keys**
+    
+    A session key in SSH is an encryption key used for encrypting the bulk of
+    the data in a connection. The session key is negotiated during the
+    connection and then used with a symmetric encryption algorithm and a
+    message authentication code algorithm to protect the data. For more
+    information, see the separate page on session keys.
+
+
+**Host Keys**
+
+    In OpenSSH, host keys are usually stored in the /etc/ssh directory, in
+    files starting with ssh_host_<rsa/dsa/ecdsa/ed25519>_key
+
+    Host keys are normally generated automatically when OpenSSH is first
+    installed or when the computer is first booted. The ssh-keygen program can
+    be used for generating additional host keys or for replacing existing keys.
+
+
+OpenSSH's limitation on the number of private keys
+
+    The OpenSSH server has a feature (I would call it a bug) that it counts
+    testing whether a particular key can be used for authentication as an
+    authentication attempt. This has the consequence that if the user has more
+    than five keys in .ssh, only some of them work. This often causes key-based
+    authentication to fail and is often difficult for users to figure out. The
+    way around this is to explicitly specify the private key to use using the
+    -i option. An alternative is to adjust the MaxAuthTries session on the
+    server, but this is not a full solution and it is undesirable to increase
+    the number of attempts for password authentication.
+
 ## ssh 客户端配置文件
 
 /etc/ssh/ssh_config
 ~/.ssh/config
+
+With OpenSSH, the location of identity keys is configured using the
+**IdentityFile** configuration option in the OpenSSH client configuration files,
 
 man 5 ssh_config
 
@@ -62,6 +106,26 @@ https://www.cnblogs.com/sysk/p/4871700.html
     ssh-copy-id 用户名@远程主机
 
     windows 没有 这条命令
+
+    -i
+
+        Specifies the identity file that is to be copied (default is
+        ~/.ssh/id_rsa). If this option is not provided, this adds all keys
+        listed by ssh-add -L. Note: it can be multiple keys and adding extra
+        authorized keys can easily happen accidentally! If ssh-add -L returns
+        no keys, then the most recently modified key matching ~/.ssh/id*.pub,
+        excluding those matching ~/.ssh/*-cert.pub, will be used.
+
+    -f
+
+        Don't check if the key is already configured as an authorized key on
+        the server. Just add it. This can result in multiple copies of the key
+        in authorized_keys files.
+
+    -n
+
+        Just print the key(s) that would be installed, without actually
+        installing them.
 
 方法二:
 
@@ -124,3 +188,9 @@ Subsystem   sftp    /usr/lib/openssh/sftp-server
 
 
 ssh -o StrictHostKeyChecking=no
+
+
+
+
+
+## Universal SSH Key Manager

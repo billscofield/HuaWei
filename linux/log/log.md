@@ -32,6 +32,26 @@ root     pts/1        192.168.200.254  Wed Aug 26 22:31 - 12:45 (1+14:13)
 /var/log/wtmp
 
 
+1. utmp
+
+    The “u” in utmp stands for user as it logs information regarding “who”
+    logged onto the system. This log also shows the terminals’ location through
+    which the system was logged in. It is a binary file which manages the users
+    logged into the system and records all the accounts such as the current
+    status of the system, managing and logging users’ logins, logouts,
+    terminals of logins, etc. These files are not simple text files but they
+    are in a binary form and are usually stored at /var/run/utmp.
+
+2. wtpm
+
+    The “w” in wtmp stands for “who”, meaning it tells us who the user is and
+    “when” the user logged in and logged out; it is all the history of the user
+    of utmp. The history is found at /var/log/wtmp and it shows all the past
+    recorded data of logins and logouts. As wtmp records all the logged in and
+    logged-out data of the user, it can be said that it preserves or maintains
+    all the actions and commands of utmp. Its command is “w” which
+    fundamentally shows the user’s login details and history.
+
 ### lastlog
 
 所有用户最后一次
@@ -41,6 +61,13 @@ root     pts/1        192.168.200.254  Wed Aug 26 22:31 - 12:45 (1+14:13)
 
 /var/log/btmp
 
+The “b” in btmp is for “bad” as it registers all the bad, failed, or error
+login attempts. It is similar to the wtmp file as it records and maintains the
+failed or bad login attempts and is located in the /var/log/btmp.  As it
+records the failed attempts at logins, it can be also used for security
+purposes. The btmp file is based in /var/log/btmp and it is generated
+automatically as soon as the system starts up. Sudo privileges are required to
+access the file and the “lastb” command is to read the files.
 
 
 last  searches  back through the /var/log/wtmp file (or the file designated by the -f option) and displays a list of all

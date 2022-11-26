@@ -15,9 +15,20 @@ apt install -y software-properties-common
 
 
 
-apt install -y git curl wget tmux tree iftop build-essential cmake
+# cmake llvm to install YouCompleteMe
+apt install -y git curl wget tmux tree iftop build-essential cmake llvm openssh-server
 
 apt install -y rsync inotify-tools
+
+
+# assembly
+apt install -y nasm
+
+
+
+# ls 的增强
+# exa -abghHl
+apt install -y exa
 
 
 

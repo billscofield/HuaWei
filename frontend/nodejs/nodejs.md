@@ -78,6 +78,21 @@ conosle.log(__filename)     //当前文件绝对路径
 
     案例
 
+
+    ```
+    index.html
+    <script src='./index.js' type='module'>
+
+    index.js
+        import('./a.js')
+
+    a.js
+        console.log('fuck')
+    ```
+
+
+
+
     ```
     index.html
         <script src="./index.js" type="module"></script>            // 必须有 type = 'module'
@@ -771,3 +786,16 @@ req.query
 
 
     x-www-form-urlencoded格式代码不需要写contentType,而json格式代码需要加上contentType: ‘application/json;charset=UTF-8’
+
+
+
+
+## commonjs 规范
+
+1. 模块引用
+
+
+2. 模块定义
+
+
+3. 模块标识

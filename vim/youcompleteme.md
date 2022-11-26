@@ -15,7 +15,7 @@ cd /root/.vim/bundle/YouCompleteMe/
 
 git submodule update --init --recursive
 
-apt install python3-dev build-essential cmake
+apt install python3-dev build-essential cmake llvm
 
 # 不建议使用 --clang-completer, 而是使用 --clangd-completer, 使用 clang 总是不成功, clangd 可以
 # https://clangd.llvm.org/

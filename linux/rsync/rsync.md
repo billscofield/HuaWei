@@ -2,7 +2,7 @@
 
 sync:同步
 
-    刷新文件系统缓存，强制将修改过得数据块写入磁盘，并且更新超级块性能有影响
+    刷新文件系统缓存，强制将修改过得数据块写入磁盘，并且更新超级块,性能有影响
 
 async:异步
 
@@ -25,6 +25,18 @@ rsync: remote synchronous
 依赖 ssh 的工具
 
     scp slogin sftp rsync
+
+## options
+
+-n  模拟复制过程
+-r  递归
+-l  复制软连接本身
+-p  保留权限
+-t  保留时间
+-g  保留组信息
+-o  保留所有者信息
+-D  --devices --specials
+
 
 ## 工作模式
 

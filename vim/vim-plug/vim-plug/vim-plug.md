@@ -1,6 +1,4 @@
 
-
-
 ## [vim-plugin](https://github.com/junegunn/vim-plug)
 
 安装
@@ -14,9 +12,16 @@
 
         mkdir ~/.vim
         cd ~/.vim
-        mkdir plugged plugin syntax colors doc autoload
+        mkdir plugged plugin syntax colors doc autoload // 只创建一个 autoload 即可, 如果是手动安装其他插件的话，会自动创建 plug 目录
         mv plug.vim  ~/.vim/autoload/plug.vim
 
+    自动化的方法:
+        ```
+        mkdir -p ~/.vim/autoload
+        wget https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        cp plug.vim ~/.vim/autoload
+        需要手动执行 :PlugInstall
+        ```
 
 
 ## ~/.vim文件夹下目录介绍

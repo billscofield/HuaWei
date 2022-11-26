@@ -387,3 +387,12 @@ LC_ALL=
 ## Keychain Access
 
 smb 记录的密码在这里
+
+
+
+## 显示完整路径
+
+defaults write com.apple.finder _FXShowPosixPathInTitle -bool TRUE;killall Finder
+
+如果需要取消路径显示，在终端命令行输入指令
+    defaults delete com.apple.finder _FXShowPosixPathInTitle;killall Finder

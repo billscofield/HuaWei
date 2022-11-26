@@ -2,6 +2,7 @@ links:
 
     https://www.cnblogs.com/xz816111/p/9479139.html
 
+单纯就RSA来说，公钥/私钥是通过随机大素数，成对生成的（自己看欧拉定理）。而不是通过私钥生成公钥。
 
 SSH（Secure Shell）是一套协议标准，可以用来实现两台机器之间的安全登录以及安全的
 数据传送，其保证数据安全的原理是非对称加密。
@@ -61,13 +62,13 @@ SSH（Secure Shell）是一套协议标准，可以用来实现两台机器之�
 |           |                                |                                                  |                                   |
 |           |                                |                                                  |                                   |
 |           |                                |                                                  |                                   |
-|           |  Res=ID ^ Public Key B         |                                                  |                                   |
+|           |  Res=ID ^ Public Key A         |                                                  |                                   |
 |           |               |                |                                                  |                                   |
 |           |  Public key B | 服务端公钥加密 |                                                  |           UmVzID0gSuQgXiBQ        |
 |           |              \|/               |                 UmVzID0gSuQgXiBQ                 |                  |                |
-|           |       UmVzID0gSuQgXiBQ         | ---------------------------------------------->  |   Private Key B  |  服务端私钥B   |
-|           |                                |                                                  |                 \|/               |
-|           |                                |                                                  |               Res^ID              |
+|           |       UmVzID0gSuQgXiBQ         | ---------------------------------------------->  |   Private Key B  |  服务端私钥B   |   A^B = C
+|           |                                |                                                  |                 \|/               |   C^A = B
+|           |                                |                                                  |               Res^ID              |   C^B = A
 |           |                                |                                                  |                  |                |
 |           |                                |                                                  |                  |                |
 |           |                                |                                                  |                 \|/               |
@@ -118,13 +119,18 @@ Are you sure you want to continue connecting (yes/no)?
 moduli      sshd_config       ssh_host_dsa_key.pub  ssh_host_ecdsa_key.pub  ssh_host_ed25519_key.pub  ssh_host_rsa_key.pub
 ssh_config  ssh_host_dsa_key  ssh_host_ecdsa_key    ssh_host_ed25519_key    ssh_host_rsa_key          ssh_import_id
 
-➜  ssh ssh-keygen -E md5 -lf ssh_host_rsa_key.pub
+➜  ssh-keygen -E md5 -lf ssh_host_rsa_key.pub
 2048 MD5:08:88:a8:5f:68:88:ce:8e:88:e6:b9:a3:ad:1b:88:9f root@raspberrypi (RSA)
+
+    -E      Specifies the hash algorithm used when displaying key fingerprints.  Valid options are: ``md5'' and ``sha256''.  The default is ``sha256''
+    -f      Specifies the filename of the key file
+    -l      Show fingerprint of specified public key file.
 
 
 
 ```
-
+key.public 要去掉 ssh-rsa AAAAB3... 中的 ssh-rsa 描述, 得到纯的 public, 仅仅去掉前边的 ssh-rsa, 不要删别的任何内容, 但是去掉之后 ssh-keygen -E md5 -lf 就不识别了
+base64 -d key.public | md5sum
 
 
 
@@ -220,23 +226,11 @@ SSH还常用来远程登录到别的机器，有两种常用的方法，第一�
 |   |                                   |                                                   |  |                             |  |
 |   |                                   |                                                   |  +-----------------------------+  |
 |   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
 |   |                                   |                 Login Request                     |      生成随机字符串: 12895        |
 |   |                                   |------------------------------------------------>  |                |                  |
 |   |                                   |                                                   |   Public Key A | 客户端公钥加密   |
 |   |                                   |                                                   |               \|/                 |
 |   |                                   |                                                   |         hahjfdkiourfakdf          |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
 |   |                                   |                                                   |                                   |
 |   |                                   |                 hahjfdkiourfakdf                  |                                   |
 |   |         hahjfdkiourfakdf          | <-----------------------------------------------  |                                   |
@@ -244,9 +238,6 @@ SSH还常用来远程登录到别的机器，有两种常用的方法，第一�
 |   | Private Key A | 客户端私钥解密    |                                                   |                                   |
 |   |              \|/                  |                                                   |                                   |
 |   |    随机字符串: 12895              |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
-|   |                                   |                                                   |                                   |
 |   |                                   |                随机字符串                         |                                   |
 |   |                                   | ----------------------------------------------->  |                                   |
 |   |                                   |                                                   |                                   |
@@ -254,7 +245,6 @@ SSH还常用来远程登录到别的机器，有两种常用的方法，第一�
 |   |                                   |                                                   |                                   |
 |   |                                   |                Login Response                     |                                   |
 |   |                                   | <-----------------------------------------------  |                                   |
-|   |                                   |                                                   |                                   |
 |   |                                   |                                                   |                                   |
 |   +-----------------------------------+                                                   +-----------------------------------+
 
@@ -278,3 +268,31 @@ SSH还常用来远程登录到别的机器，有两种常用的方法，第一�
 利用公钥登录的关键是必须手动将客户端的公钥添加到服务端，比如GitHub便有这一步骤，
 添加了之后便可无密码登录。
 
+
+## ssh-agent
+
+将私钥交给ssh-agent(密码管理器)保管, 就不用输入私钥的密码了
+
+实ssh-agent就是一个密钥管理器，运行ssh-agent以后，使用ssh-add将私钥交给
+ssh-agent保管，其他程序需要身份验证的时候可以将验证申请交给ssh-agent来完成整个
+认证过程。
+
+**ssh-agent is a program to hold private keys used for public key authentication.**
+
+Through use of environment variables the agent can be located and automatically
+used for authentication when logging in to other machines using ssh
+
+    手动启动:
+        ssh-agent $SHELL, 也可以指定 shell
+
+    自动启动:
+        ssh-agent
+        
+    手动添加私钥
+        ssh-add ~/.ssh/idrsa
+
+    查看加载的秘钥
+        ssh-add -l
+
+    关闭ssh-agetn
+        ssh-agent -k
