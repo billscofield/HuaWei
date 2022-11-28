@@ -51,6 +51,60 @@ yum groupremove     mariadb
 yum groupupdate     xxx
 
 
+## yum groups
+
+```
+yum groupinstall "System Administration Tools"
+
+Loaded plugins: langpacks, product-id, subscription-manager
+This system is not registered to Red Hat Subscription Management. You can use subscription-manager to register.
+There is no installed groups file.
+Maybe run: **yum groups mark convert (see man yum)**
+Warning: Group system-admin-tools does not have any packages to install.
+Maybe run: yum groups mark install (see man yum)
+No packages in any requested group available to install or update
+```
+
+Resolution
+
+    The yum has changed in Red Hat Enterprise Linux 7. The package group
+    "Office Suite and Productivity" has only the optional packages which by
+    default doesn't get installed. So we will need to pass the option to
+    install the optional packages too!
+
+    So to install the above package group, please run the following command.
+
+    ```
+    yum groupinstall "Office Suite and Productivity" --setopt=group_package_types=mandatory,default,optional
+    ```
+
+---
+
+
+https://fedoraproject.org/wiki/Features/YumGroupsAsObjects
+
+1. Detailed Description
+
+    Currently yum groups work as a simple substitution, so "yum group remove
+    foo" works as though you took every package from foo and passed it to "yum
+    remove".  This tends to not be what users expect, for example "yum group
+    install kde-desktop" and then "yum group remove kde-desktop" will end up
+    removing packages (like abrt-desktop). This feature changes that so that
+    groups are installed as real objects, meaning that when a user does "yum
+    group install foo" yum will mark that the packages from foo are being
+    installed (as before) but also that a group called foo is being installed
+    and that those packages are installed because of it. Later if the group is
+    removed, yum will remove the group and only those packages that were
+    installed because of the group install/upgrade commands.
+
+2. Benefit to Fedora
+
+
+
+## 
+
+
+
 yum search                      // 关注软件包的名称和内容描述
 
 

@@ -1,3 +1,7 @@
+https://www.tutorialspoint.com/tcl-tk/tcl_decisions.htm
+
+Tcl Tk 入门经典
+
 一个控制交互式程序的工具
 
 links

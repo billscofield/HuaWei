@@ -435,3 +435,15 @@ ssh otherhost <<-EOF
     ./some_other_action.sh 'some params'
 EOF
 ```
+
+
+## 远程执行 shell 获取返回值方法
+
+1. 变量赋值：
+    
+    result = $(ssh root@ip 'ip a')
+
+
+2. 直接追加到文件：
+
+    ssh root@$ip "cmd" >> ./log

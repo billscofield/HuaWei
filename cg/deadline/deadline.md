@@ -381,3 +381,41 @@ yum install -y mesa-libGL mesa-libGLU  (workstation)
 yum install -y rsync
 yum install -y iftop
 yum groupinstall -y "Development Tools"
+
+
+
+
+
+
+## links
+
+deadline Download Integrated submission script    command line
+
+https://www.awsthinkbox.com/blog/monitor-scripting-introduction
+
+https://www.awsthinkbox.com/blog/deadline-command-tool
+
+https://forums.autodesk.com/t5/3ds-max-forum/install-integrated-submission-script/td-p/6262926
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/app-maya.html#app-maya-integrated-submission-script-label
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/install-submitters.html#install-submitters-ref-label
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/manual-submission.html#
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/job-submitting.html#job-submitting-ref-label
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/install-client.html#linux
+
+https://www.awsthinkbox.com/blog/installing-deadline-from-the-command-line
+
+https://www.awsthinkbox.com/blog/deadline-command-tool
+
+https://github.com/ThinkboxSoftware/Deadline/tree/master/Installation
+
+https://docs.thinkboxsoftware.com/products/deadline/10.1/1_User%20Manual/manual/command.html
+
+https://docs.thinkboxsoftware.com/
+
+
+

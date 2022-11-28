@@ -50,3 +50,55 @@ it case you can't get it from the main site.
 
 The difference is that the mirrorlist is there to increase availability in case
 the base can't be reached.
+
+
+
+---
+
+
+软件包的安装
+    yum install package1                    安装指定的安装包
+    yum groups install group1               安装指定程序组
+    yum groups mark install group1          标记指定的程序组
+    yum install package1 --nogpgcheck       忽略gpg 检测
+    GPG，一种秘钥方式的签名，用来确定rpm包的来源是有效和安全
+    gpgcheck=0或1
+
+更新和升级
+    yum update package1         更新指定程序包
+    yum check-update            检查可更新的程序
+    yum upgrade package1        升级指定程序包
+    yum groups update group1    升级指定程序组
+    yum check-update            检测可用更新信息
+    yum update                  升级所有包括 kernel, 系统设置
+    yum upgrade                 升级所有包括旧有的软件
+
+查找和显示
+    yum info package1           显示指定安装包信息
+    yum list                    显示所有已经安装和可以安装的程序包
+    yum list package1           显示指定程序包安装情况
+    yum deplist packages        显示软件包依赖关系
+    yum groups info group1      显示指定程序组信息
+    yum search string           根据关键字 string 查找安装包
+    yum provides /路径/文件名   查看文件属于哪个软件包
+    Yum groups info [软件组名]  查看组软件包列表信息
+
+删除软件包
+    yum remove package1         删除指定程序包
+    yum groups remove group1    删除程序组group1
+    yum clean all               清除所有下载的 rpm 头文件及软件包（这个命令较危险）
+
+查看以前动作及恢复
+    yum history                 查看 yum 历史 ( 与 tail /var/log/yum.log 一致 )
+    yum history undo N          ( 撤销历史操作 , 恢复原有软件状态 )
+
+软件池的管理
+
+    显示所有本地池的信息
+        yum repolist all
+
+    开启指定的软件池
+        yum-config-manager --enable 软件池名
+
+    关闭指定的软件池
+        yum-config-manager --dsiable 软件池名

@@ -11,11 +11,11 @@ SSH（Secure Shell）是一套协议标准，可以用来实现两台机器之�
 有的客户端以及服务端都需要保存这套秘钥，泄露的风险很高，而一旦秘钥便泄露便保证不
 了数据安全。
 
-非对称加密解决的就是这个问题，它包含两套秘钥 - 公钥以及私钥，其中公钥用来加密，
+非对称加密解决的就是这个问题，它包含一对儿秘钥 - 公钥以及私钥，其中公钥用来加密，
 私钥用来解密，并且通过公钥计算不出私钥，因此私钥谨慎保存在服务端，而公钥可以随便
-传递，即使泄露也无风险。(也可以私钥加密，公钥解密)
+传递，即使泄露也无风险。(也可以私钥加密，公钥解密) 私钥签名
 
-保证 SSH 安全性的方法，简单来说就是客户端和服务端各自生成一套私钥和公钥，并且互
+保证 SSH 安全性的方法，简单来说就是客户端和服务端各自生成一对儿私钥和公钥，并且互
 相交换公钥，这样每一条发出的数据都可以用对方的公钥来加密，对方收到后再用自己的私
 钥来解密。
 
@@ -32,7 +32,23 @@ SSH（Secure Shell）是一套协议标准，可以用来实现两台机器之�
  +-------------------+                                                                             +------------------+
 
 
-## 链接创建
+在没有生成个人用户的密钥对时，ssh 已经生成了本主机的密钥对, 例如:/etc/ssh/ssh_host_rsa.key, 首次通信时的提示就是这个密钥对的指纹信息, 是否信任。
+
+所以加入到 hnow_hosts 的是主机的公钥，而不是个人的
+
+```
+/etc/ssh/sshd_config.d/*.conf files are included at the start of the configuration file, so options set there will override those in /etc/ssh/sshd_config.
+
+ IgnoreUserKnownHosts
+    Specifies whether sshd(8) should ignore the user's ~/.ssh/known_hosts
+    during HostbasedAuthentication and use only the system-wide known hosts
+    file /etc/ssh/known_hosts.  The default is“no”.
+```
+
+
+
+
+## 连接创建
 
 由上一张图可以看出来，两台机器除了各自的一套公、私钥之外，还保存了对方的公钥，因
 此必然存在一个交换各自公钥的步骤。实际上并不是简单的各自发送公钥，而是存在一些专

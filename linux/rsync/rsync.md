@@ -37,6 +37,12 @@ rsync: remote synchronous
 -o  保留所有者信息
 -D  --devices --specials
 
+-u          如果目标比源更新则不同步
+--delete    源没有，目标有，则删除
+--progress
+-L          transform symlink into referent file/dir        转换 symlink 为指向的 file/dir
+
+
 
 ## 工作模式
 

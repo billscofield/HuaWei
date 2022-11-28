@@ -41,6 +41,9 @@ algorithm will result in the same string. This way the client knows it already
 has a stored key and compare it during the handshaking process with the server.
 
 
+HashKnownHosts no
+
+
 
 ssh-keygen
 
@@ -76,15 +79,21 @@ ssh-keygen
 
 
 如果 known_hosts 文件是明文的，想要进行加密:
-    ssh-keygen -H -f /root/.ssh/known_hosts
+
+    ssh-keygen -H
         会将旧的没有加密的复制一份, 后缀为 .old
         新的 /root/.ssh/known_hosts 会是被机密的文件
 
 从 /root/.ssh/known_hosts 中删除加密的计算机
     ssh-keygen -R 10.0.0.1 -f known_hosts
 
-ssh-keyscan -H 10.0.0.1
+ssh-keyscan -F 10.0.0.1
     debian 11 默认用的 ecdsa 算法
+
+
+known_hosts 是未加密的
+    ssh-keygen -F <ip> -H
+    返回的是加密的 key
 
 ## ssh-keyscan - gather ssh public keys
 

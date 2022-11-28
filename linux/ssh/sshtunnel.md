@@ -19,16 +19,25 @@ host1 不可以访问 host2
 
 如何从 host1 连接上 host2 ?
 
+    host3 中间服务器
+
     ssh -L -g host1:port1:host2:port2  user@host3
 
 
 
-ssh连接来说，实现方式很简单，从host1 ssh到host3，再ssh到host2，也就是将host3作为跳板的方式。但是如果不是ssh，而是http的80端口呢？如何让host1能访问host2的80端口?
+ssh连接来说，实现方式很简单，从host1 ssh到host3，再ssh到host2，也就是将host3作
+为跳板的方式。但是如果不是ssh，而是http的80端口呢？如何让host1能访问host2的80端
+口?
 
 
 ssh支持本地端口转发，语法格式为：
 
+    ssh -L local_port:target_host:target_port  sshserver
     ssh -L [local_bind_addr:]local_port:remote:remote_port middle_host
+
+    -f 后台
+    -N 不打开远程shell, 只打隧道
+    -g 绑定到本机的所有 ip 上
 
 以上图为例，实现方式是在host1上执行：
 

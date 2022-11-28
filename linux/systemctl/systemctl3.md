@@ -188,3 +188,13 @@ Also        安装本服务的时候还要安装别的相关服务
 查看依赖关系                                        -                                           systemctl list-dependencies name.service
 杀掉进程                                            -                                           systemctl kill name.service
 
+
+
+
+
+## debian 没有 chkconfig 这个命令
+
+apt-cache show chkconfig
+    Can't select versions from package 'chkconfig' as it is purely virtual
+
+apt install -y sysv-rc-conf 代替

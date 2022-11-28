@@ -46,6 +46,11 @@ others:
 
     ` chmod 600 ~/.ssh/config
 
+### 加密known_hosts的主机名
+
+HashKnownHosts yes
+
+
 ### SSH Config File Structure and Patterns
 
 The SSH Config File takes the following structure:
@@ -214,11 +219,15 @@ Options defined in the /etc/ssh/ssh_config.
 If you want to override a single option, you can specify it on the command
 line. For example, if you have the following definition:
 
-```
+``` ~/.ssh/config
 Host dev
-HostName dev.example.com
-User john
-Port 2322
+    HostName dev.example.com
+    User john
+    Port 2322
+    ServerAliveInterval 60
+    ServerAliveCountMax 10
+
+    #/etc/ssh/ssh_config 中的配置是全局的，这个是个人的
 ```
 
 and you want to use all other options but to connect as user root instead of
@@ -243,3 +252,42 @@ servers without entering a password.
 
 By default, SSH listens on port 22. Changing the default SSH port adds an extra
 layer of security to your server by reducing the risk of automated attacks.
+
+
+
+
+
+ServerAliveInterval:
+
+    number of seconds that the client will wait before sending a null packet to
+    the server (to keep the connection alive).
+
+    The default is 0, indicating that these messages will not be sent to the
+    server.
+
+ClientAliveInterval:
+
+    number of seconds that the server will wait before sending a null packet to
+    the client (to keep the connection alive).
+
+Setting a value of 0 (the default) will disable these features so your
+connection could drop if it is idle for too long.
+
+Host myhostshortcut
+    HostName myhost.com
+    User barthelemy
+    ServerAliveInterval 60
+    ServerAliveCountMax 10
+
+The above setting will work in the following way,
+
+    The client will wait idle for 60 seconds (ServerAliveInterval time) and,
+    send a "no-op null packet" to the server and expect a response. If no
+    response comes, then it will keep trying the above process till 10
+    (ServerAliveCountMax) times (600 seconds). If the server still doesn't
+    respond, then the client disconnects the ssh connection.
+
+    ClientAliveCountMax on the server side might also help. This is the limit
+    of how long a client are allowed to stay unresponsive before being
+    disconnected. The default value is 3, as in three ClientAliveInterval.
+

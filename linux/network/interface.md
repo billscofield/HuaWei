@@ -106,3 +106,41 @@ net.ifnames 命名规范为：设备类型 + 设备位置 + 数字
 
 注: 新枚举从 1 开始。
 
+
+
+
+
+### 
+
+centos7
+
+ifcfg-lo回环接口配置文件，拷贝一份
+
+```
+DEVICE="enp0s3"
+BOOTPROTO="static"            // static, dhcp, none
+ONBOOT="yes"                // 是否开机自动启动网卡
+IPADDR=10.0.0.1
+PREFIX=16
+
+TYPE="Ethernet"             // 以太网
+NAME="enp0s3"               // 网卡设备名称
+DEFROUTE="yes"              // 默认路由
+UUID="d8d8d281-67f7-400c-9d47-b0d051178c3e"
+
+PROXY_METHOD="none"
+BROWSER_ONLY="no"
+IPV4_FAILURE_FATAL="no"     // 是否启用 ipv4 错误检测功能
+
+IPV6INIT="yes"              // 是否启用 ipv6
+IPV6_AUTOCONF="yes"
+IPV6_DEFROUTE="yes"
+IPV6_FAILURE_FATAL="no"
+IPV6_ADDR_GEN_MODE="stable-privacy"
+
+```
+
+You do not need to specify the network or broadcast address as this is
+calculated automatically by ipcalc.
+
+
