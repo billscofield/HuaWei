@@ -106,7 +106,7 @@ type : 模块类型
 
     auth        : 账号认证和授权，密码验证, 
     account     : 账号非认证类的功能，如有效期,可以从哪里登录等各种与账号相关的属性
-    session     : 一些附加操作
+    session     : ???一些附加操作, 环境准备?
     password    : 用户修改密码时密码复杂度检查机制等功能
     -开头的     : 因缺失模块而不能加载的模块，不记录错误信息到系统日志, 不太重要的模块
                 如 -session
@@ -123,9 +123,10 @@ type : 模块类型
         this module type provides two aspects of authenticating the user.
         Firstly, it establishes that the user is who they claim to be, by
         instructing the application to prompt the user for a password or other
-        means of identification.  Secondly, the module can grant group
-        membership or other privileges through its credential granting
-        properties.
+        means of identification.
+
+        Secondly, the module can grant group membership or other privileges
+        through its credential granting properties.
 
     session
         this module type is associated with doing things that need to be done
