@@ -37,6 +37,7 @@ MAINTAINER liujiao billscofield@126.com
     镜像维护者的姓名和邮箱地址
 
 RUN
+    RUN apt update && apt install -y ...
     RUN apt install -y vim
     RUN apt install net-tools
 
@@ -68,18 +69,31 @@ ENV         //环境变量
 
     用来在构建镜像过程中设置环境变量
 
+    构建时和运行时都可以用
 
-ADD         //拷贝+解压缩
+ARG
+    仅仅构建时用，运行时就消失了
+    
+
+
+ADD         //拷贝+解压缩, tar,gzip,bzip2,xs
     将宿主机目录下的文件拷贝进镜像且Add命令会自动处理URL和解压tar压缩包
-COPY        //拷贝
+    如果源文件是一个URL, 会下载该链接，放入目标路径，该权限为600
+        如果该URL还是个压缩包，并不会自动解压缩
+    官方更推荐使用 COPY
+
+COPY        //拷贝, 保留源文件的元数据,如权限时间等
+    
 
 
-VOLUME      //容器卷，数据持久化
+VOLUME      //容器卷，数据持久化, 挂载主机目录
+    VOLUME /data            容器运行时，自动挂载为匿名卷
+    VOLUME /data1 /data2
 
 
-CMD ["/bin/bash"]   //如果有这个，docker run -it 时就可以不写 /bin/bash
+CMD ["/bin/bash"]   //如果有这个，docker run -it 时就可以不写 /bin/bash, 但是手动写的会覆盖 CMD
     指定容器启动时要运行的命令
-    制定容器运行时默认的行为
+    指定容器运行时默认的行为
 
     容器运行时的命令
 
@@ -105,7 +119,7 @@ ENTRYPOINT
     ```
     FROM centos
     RUN yum install -y curl
-    CMD ["curl","-s","http://ip.cn"]
+    CMD ["curl","-s","http://ipinfo.io/ip"]
 
     ---
 
@@ -140,6 +154,26 @@ USER 指定用户
     USER <username>:gid             USER uid:groupname
 
 
+    ``` Dockerfile
+    FROM nginx
+    RUN echo "<meta charset=utf8>xxx" > /usr/share/nginx/html/index.html
+    ```
+    docker build .
+    docker tag xxid   my_nginx          // 更改 repository:tag   tag默认为latest
+
+
+
+
+    docker build -t 'liujiao/my_nginx' .
+    docker build --no-cache -t 'liujiao/my_nginx' .
+
+
+
+
+
+
+
+
 dockerfile 构建过程
     1. 从基础镜像运行一个容器
     2. 执行一条指令，对容器进行修改
@@ -149,6 +183,9 @@ dockerfile 构建过程
 
     删除中间层容器，而不会删除中间层镜像
     使用中间层镜像调试
+
+
+    
 
 构建缓存
 ```

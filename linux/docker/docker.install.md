@@ -1,10 +1,11 @@
 ## linux 安装方式
 
 检查
-    1. 内核 uname -r
+    1. 内核 uname -r > 3.10
     1. 存储驱动 ls -l /sys/class/misc/device-mapper
 
 1. 方法1 Ubuntu 的apt
+
     sudo apt install docker.io
     //source /etc/bash_completion.d/docker.io  //没有 docker.io 这个文件啊,也不用检查这个吧，哪个教程说要检查这个来的?
 
@@ -13,6 +14,7 @@
     **安装完成后，将当前用户添加到docker组，service docker restart  后docker ps不行,提示权限不足(权限的配置问题?)，重启可以了**
 
 1. **方法2** Docker维护的安装方式
+
     检查对https的支持状况 /usr/lib/apt/metods/https 文件是否存在
 
     docker 提供的shell脚本
@@ -40,6 +42,11 @@
 systemctl start docker
 
 service docker start
+
+
+
+
+
 
 
 
@@ -130,11 +137,46 @@ docker映射端口和挂载目录
 
 ### centos7
 
+
+cat <<EOF >/etc/sysctl.d/docker.conf
+net.bridge.bridge-nf-call-ip6tables=1
+net.bridge.bridge-nf-call-iptables=1
+net.ipv4.conf.default.rp_filter = 0
+net.ipv4.conf.all.rp_filter = 0
+net.ipv4.ip_forward=1
+EOF
+
+sysctl -p /etc/sysctl.d/docker.conf
+
+
+/proc/sys/net/bridge/bridge-nf-call-iptables does not exist
+    modeprobe br_netfilter
+    echo 1> /proc/sys/net/bridge/bridge-nf-call-iptables
+    echo 1> /proc/sys/net/bridge/bridge-nf-call-ip6tables
+
+
+
 yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+or
+curl -o /etc/yum.repos.d/docker-ce.repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker.repo
+
 yum install docker-ce docker-ce-cli containerd.io
+
 yum list docker-ce --showduplicates | sort -r
-yum install docker-ce-<VERSION_STRING> docker-ce-cli-<VERSION_STRING> containerd.io
+
+yum install docker-ce-<VERSION_STRING>
+    // docker-ce-cli-<VERSION_STRING>      containerd.io 这些不用安装了， 安装 docker-ce 时就安装了
+
+
+/etc/docker/daemon.json
+    {
+        "registry-mirrors":["https://reg-mirror.qiniu.com"]
+    }
+
+
+sytemctl daemon-reload
 systemctl restart docker
+
 docker run hello-world
 
 

@@ -13,11 +13,20 @@ docker-cn.com
 docker.com/tryit/
 
 
+
+
+Hypervisor又称为虚拟机监视程序。从根本上说，Hypervisor是软件和硬件堆栈的“管理
+者”。而“Hypervisor”来源于“Supervisor”这个单词。
+
+容器内的程序，就好比直接运行在苏主机上，能够使用苏主机最大的硬件资源
+
+
 ## Docker 历史¬
 
 2010年, 在美国成立了一家公司 dotCloud
 
-做一些 pass 的云集算服务, LXC 有关的容器技术
+做一些 pass 的云计算服务, LXC 有关的容器技术
+    LXC: linux 容器技术
 
 他们将自己的技术(容器化技术)命名为 Docker
 
@@ -29,6 +38,8 @@ docker.com/tryit/
 
 
 ## Docker 背景知识
+
+对进程进行封装隔离，
 
 用户空间
 
@@ -247,6 +258,8 @@ Control Groups(cgroups) 控制组
         Libnetwork 通过插件的形式为 Docker 提供网络功能
         Libnetwork 开源，通过 Golang 编写, 完全遵循 CNM 网络规范， 是 CNM 的官方实现
 
+        
+        docker0 这个网桥
 
 
 
@@ -321,9 +334,9 @@ Docker hub
 
 ## 三大核心
 
-镜像
+镜像: 一个只读模板, 或者 dockerfile
 容器: 镜像的运行实体
-仓库
+仓库: 
     公共镜像仓库
     私有镜像仓库
 
@@ -351,9 +364,24 @@ dockerd 负责响应和处理来自客户端的请求，然后将 Docker 客户�
 
 
 docker run -d busybox sleep 3600
-ps aux | grep dockerd
+ps aux | grep docker
 pstree -l -a -A <PID>
+    
+    /usr/bin/docker-proxy -proto tcp -host-ip 0.0.0.0 -host-port 80 -container-ip 172.17.0.2 -container-port 80
 
+
+
+                                                    Docker registry
+                                    push----->
+                                    <-----pull
+                build
+Dockerfile ------------->   
+                            tag
+                            commit
+                            stop/start/restart/run
+
+                                                  ----->save 导出为一个压缩文件
+                                                  <----load 
 
 
 
@@ -386,6 +414,7 @@ docker tag
 
 私有镜像仓库
     docker run -d -p 5000:5000 --name registry registry:2.7
+                    实体机:容器内
     docker ps
     docker tag busybox localhost:5000:/busybox
     docker push localhost:5000/busybox
@@ -402,6 +431,7 @@ docker tag
     --name registry \
     -v /var/lib/registry/data:/var/lib/registry \
     -v /var/lib/registry/certs:/certs \
+    --restart=always \
     -e REGISTRY_HTTP_ADDR=0.0.0.0:443 \
     -e REGISTRY_HTTP_TLS_CERTIFICATE=/certs/regisry.lagoudocker.io.crt \
     -e REGISTRY_HTTP_TLS_KEY=/certs/regisry.lagoudocker.io.key \
@@ -565,7 +595,7 @@ docker run 资源限制
         如果不能处理 sigterm， 则发送 sigkill 强制终止容器
         -t, --time=10      Seconds to wait for stop before killing it
 
-    处于运行中的容器可以通过多种命令进入
+    处于**运行中的容器**可以通过多种命令进入
         1. docker attach busybox            // 多个终端是同步的
         2. docker exec -it busybox bash     // 每个都是独立的不干扰的
 
@@ -933,6 +963,9 @@ Alias for docker image rm.
 删除全部镜像
 
     docker image rm $(docker image ls -qa)
+        -q 只显示id
+
+
 
 ### 查
 
@@ -974,16 +1007,22 @@ Alias for docker image rm.
         
         -q, --quiet           Only show numeric IDs(image id)     //用于script处理
 
+        --format "{{.ID}} {{.Repository}}"
+        --format "table {{.ID}}\t{{.Repository}}\t{{.Tag}}"
+
 
 1. 镜像搜索(搜索的还是docker-hub上的)
-
+    
+    https://index.io/v1/search?q=xxxxxxxxxxx$n=25
+    
     1. 方法1 docker hub 
         1. 注册
         1. 查找 ubuntu
         1. 网址 hub.docker.com
         
     1. 方法2 命令行
-        1. docker search [option] TERM
+        1. docker search [option] TERM      // 看你的源是哪个了，有的支持搜索，有的不支持
+
             默认是从 docker hub 中搜索
             
             1. --no-trunc   //不截断,do not truncate output(主要针对description)
@@ -1099,7 +1138,7 @@ docker run IMAGE COMMAND
         -p  主机端口:容器端口
         -p  ip:主机端口:容器端口
 
-    -P  随机端口
+    -P  随机宿主机端口
 
     --rm    Automatically remove the container when it exits
 
@@ -1177,13 +1216,13 @@ Options:
 
 1. 详细查看容器
 
-docker container inspect [id或name]   
+    docker container inspect [id或name]   
 
-dcoker inspect 
+    dcoker inspect 
     
-    Return low-level information on Docker objects
+        Return low-level information on Docker objects
 
-    查看存储信息: docker inspect <ID> | grep "Mounts"
+        查看存储信息: docker inspect <ID> | grep "Mounts"
 
 
 1. docker top 
@@ -1191,7 +1230,7 @@ dcoker inspect
     Display the running processes of a container
 
 
-1. docker-stats - Display a live stream of container(s) resource usage statistics
+1. docker-stats - Display a live stream of container(s) **resource usage statistics**
 
     docker stats 容器   // 看 cpu 内存使用
 
@@ -1316,6 +1355,9 @@ docker rm [容器名]  //不能删除正在运行的容器
         
         Remove anonymous volumes associated with the container
 
+docker run -it ...
+docker run -it --rm centos ping baidu.com
+docker run -d ...
 
 
 删除多个容器
@@ -1357,7 +1399,7 @@ docker container exec -it [实例名] ifconfig
 
 docker container exec -it [实例名] bash
 
-    创建了一个新的bash, exit 退出不会exit container
+    **创建了一个新的bash, exit 退出不会exit container**
 
     不是所有容器都有bash，但一般都有sh,所以 start 不起来换shell
 
@@ -1655,7 +1697,10 @@ oracle 不适合使用docker,oracle太大了
 
 1. docker container    容器
     增加可写层
-    写时复制(copy on write)
+    写时复制(copy on write): /etc/是rootfs 提供的，但是如果修改的时候不是改的 rootfs, 而是最上层的可写层, 下边的都是只读的
+
+        删除/etc/issue 是在容器层中记录删除操作，还是不会影响下层
+        
 
 1. docker registry 仓库
     保存用户构建的镜像
@@ -1723,6 +1768,9 @@ man docker-search
         主机随机一个端口, 可以使用
             docker ps
             docker port CONTAINER
+
+            docker-port - List port mappings or a specific mapping for the container
+
         查看具体主机端口
             containerPort
                 docker run -p 80 --name nginxtest -it ubuntu
@@ -1795,6 +1843,8 @@ curl http://127.0.0.1:端口 并不能访问
         find ./ -name respositories.json
             respositories.json 也存了些信息
 
+        /var/lib/docker/image/overlay2/imagedb/content/sha256        json 文件
+
 列出镜像
         tag:标签名, 一个repository钟的镜像是以 tags 来进行区分的，repository + tag 就进行了唯一标识
             repository:tag 构成了完整的镜像名子
@@ -1828,6 +1878,7 @@ curl http://127.0.0.1:端口 并不能访问
 
     --format=""
         Pretty-print images using a Go template
+        docker inspect xxx --format {{.NetworkSettings.IPAddress}}
 
     -h, --help[=false]
         help for images
@@ -1894,7 +1945,7 @@ curl http://127.0.0.1:端口 并不能访问
 构建镜像
     1. 方法1 docker commit   //通过容器构建, 提交容器副本使之成为一个新的镜像
 
-        docker commit [options] CONTAINER名字 [REPOSITORY[:TAG]] (镜像名)
+        docker commit [options] CONTAINER名字 [REPOSITORY[:TAG]] (新的镜像名)
             
             -a --author [string]
                 
@@ -2199,6 +2250,16 @@ docker run -it -v 宿主机目录:容器内目录
 -v 宿主机路径:容器内路径:ro         // 只能从宿主机进行操作
 
 -v 宿主机路径:容器内路径:rw
+
+
+
+容器里没有后台进程，要在前台运行
+
+CMD systemctl restart nginx             是错误的, 是起不来的
+CMD ["nginx", "-g", "daemon off"]
+
+
+
 
 
 
