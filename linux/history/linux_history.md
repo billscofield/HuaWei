@@ -1,5 +1,10 @@
 
-电能生磁的现象叫做电流的磁效应， 由丹麦物理学家奥斯特(1777-1851)发现, 著有论文《磁针电抗作用实验》
+portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
+
+
+
+电能生磁的现象叫做电流的磁效应， 由丹麦物理学家奥斯特(1777-1851)发现, 著有论文
+《磁针电抗作用实验》
 
 莫尔斯(1791-1872), 发明电报
 
@@ -161,6 +166,15 @@
 
         2001 Mac OS X 基于 FreeBSD
 
+    BSD 版本的 Unix 一直在学术环境中占据主导地位
+    但最终发展成为 System V 版本的 AT&T 的 Unix 则成为商业领域的主宰
+
+    AT&T发布最后一个正式版本 System V Release 4(SVR4)时，System V Unix 已经吸收
+    了 BSD 的大多数重要的优点
+
+    1984年开始，AT&T 逐渐可以将 Unix 商业化, 而伯克利 Unix 的开发工作在 1993 年
+    BSD4.4 版本完成以后就逐渐收缩以致终止了
+
 1. 关于 ARPANET
 
     美国国防部项目 ARPANET 就是以 BSD Unix 作为研究系统的，ARPANET发展为了今天
@@ -195,6 +209,14 @@
 
     1. CY GUN S
 
+
+    Usenet (/ˈjuːznɛt/) is a worldwide distributed discussion system available
+    on computers. It was developed from the general-purpose Unix-to-Unix Copy
+    (UUCP) dial-up network architecture. Tom Truscott and Jim Ellis conceived
+    the idea in 1979, and it was established in 1980.
+
+1. Andrew Tanenbaum 《操作系统：设计与实施》
+
 1. 1990年地一个GNU核心 Hurd 完成开发
 
 1. 1991.10 Linus Torvalds 发布Linux 内核
@@ -210,6 +232,11 @@
 1. 1994.3.14 Linux 1.0内核发布
 
     主版本号 + 次版本号 + 修订版本号
+
+    linux 讨论区从 comp.os.minix 中独立出来成为 alt.os.linux(The name ALT was coined, which is a recursive acronym meaning ALT Linux Team)
+    随后又更名为 comp.os.linux
+    又出现了 comp.os.linux.redhat, comp.os.linux.suse, comp.os.linux.debian
+
 
 1. 1995 Bob Young 创办 Red Hat
 

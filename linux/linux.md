@@ -22,13 +22,12 @@ mount以及telnet。有些人将 BusyBox 称为 Linux 工具里的瑞士军刀�
 
 ## Libc
 
-libc的名字来源于历史，指 C开发包的函数库 ，包括头文件和基本C库libc.a，最初的
+libc的名字来源于历史，指 C 开发包的函数库 ，包括头文件和基本C库libc.a，最初的
 libc由发明C语言那些人写的，后来随着C移植到不同平台，libc也有了多个版本，可能是
 为了兼容吧，很多头文件和libc.a的文件名都没有变（很好的传统）。
 
 现在libc泛指C函数库， 而用的最广，功能最强的当然是GNU LibC，简称glibc，各发行版
 Linux用的就是glibc。
-
 
 libc的动态库版本叫做是libc.so，通常是/usr/lib/libc.so，glibc的libc.so其实不是
 .so文件，而是一个ld Script，这没有关系，gnu ld 会正确处理的。
@@ -3598,12 +3597,48 @@ FORMAT 中有几个，后面的argument 就几个为一组
 
 
 ## tweak
+
 扭; 拧; 扯; 稍稍调整(机器、系统等);
 
 ubuntu-tweak
 
 unity
-团结一致; 联合; 统一; 完整; 完美; 和谐; 协调;
+    团结一致; 联合; 统一; 完整; 完美; 和谐; 协调;
 
 
 桌面特效配置软件 compiz compizConfigSettingsManager
+
+
+## review
+
+命令解释器 Command-language interpreter
+
+转义字符(metacharacters) 又特殊含义的字符
+    1. 单引号忽略转义字符
+    2. \ 标识忽略下一个转义字符
+    3. 双引号忽略 $ ` \  以外的其他转义字符
+
+通配符(wildcards) 是转义字符的子集
+
+
+$TERM
+$LANG
+    en_US.UTF-8
+
+hello="nice to meet you"
+echo ${hello}
+unset hello
+
+readonly hello      // 将某个变量标记为只读
+    后续执行过程中就不能对其值进行改变
+
+    显示全部只读变量：[root@linuxcool ~]# readonly
+    显示全部拥有只读属性的数组：[root@linuxcool ~]# readonly -a
+    显示全部拥有只读属性的关联数组：[root@linuxcool ~]# readonly -A
+    显示全部拥有只读属性的函数：[root@linuxcool ~]# readonly -f
+
+export 给子shell
+
+
+
+
