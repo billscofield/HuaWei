@@ -308,7 +308,12 @@ SHA-3
 ### 数字签名
 
 可以对数据进行完整性验证(数据有没有被篡改)
+
 可以验证消息所有者
+
+签名就是在信息的后面再加上一段内容（信息经过hash后的值），可以证明信息没有被修
+改过。hash值一般都会加密后（也就是签名）再和信息一起发送，以保证这个hash值不被
+修改。
 
 数字签名的过程
     服务端生成一个密钥对，发布公钥
@@ -326,6 +331,15 @@ SHA-3
     1. 对原始数据进行 hash 运算
     2. 并用A的公钥解密签名 得到散列值
     3. 比较二者
+
+
+服务器从大家都信任的第三方机构申请一个身份证书。
+客户端和服务器建立连接之前，会请求获得服务器申请的证书。
+服务器把证书发给客户端。
+客户端拿着证书跟第三方机构验证身份，验证通过则建立通信。
+
+
+
 
     
 
@@ -592,15 +606,18 @@ windows 查看证书
 ``` 模拟 www.baidu.com 似有网站
 mkdir /baidu.com
 
-openssl genrsa -out baidu.com.key 2048
+生成服务器私钥。
+    openssl genrsa -out baidu.com.key 2048
 
 生成 csr 文件
+根据服务器私钥文件生成证书请求文件，这个文件中会包含申请人的一些信息，所以执行
+下面这行命令过程中需要用户在命令行输入一些用户信息，随便填写，一路回车即可。
 
-openssl req -new -key baidu.com.key --out baidu.com.csr
-输入相关CSR信息
+    openssl req -new -key baidu.com.key --out baidu.com.csr
+    输入相关CSR信息
 
 查看 csr 文件内容
-openssl req -text -noout -verify -in baidu.com.csr
+    openssl req -text -noout -verify -in baidu.com.csr
 
 ```
 
@@ -616,3 +633,76 @@ openssl x509 -in baidu.com.crt -text -noout
     Subject 证书持有者的信息
 
 ```
+
+
+
+
+---
+
+1. 生成服务器私钥。
+
+    openssl genrsa -out server.key 1024
+
+
+2. 根据服务器私钥文件生成证书请求文件，这个文件中会包含申请人的一些信息，所以执
+   行下面这行命令过程中需要用户在命令行输入一些用户信息，随便填写，一路回车即可。
+
+    openssl req -new -key server.key -out server.csr
+
+
+3. 生成CA机构的私钥，命令和生成服务器私钥一样，只不过这是CA的私钥
+
+    openssl genrsa -out ca.key 1024
+
+
+4. 生成CA机构自己的证书申请文件
+
+    openssl req -new -key ca.key -out ca.csr
+
+
+5. 生成自签名证书，CA机构用自己的私钥和证书申请文件生成自己签名的证书，俗称自签
+   名证书，这里可以理解为根证书。
+
+    openssl x509 -req -in ca.csr -signkey ca.key -out ca.crt
+
+
+6. 根据CA机构的自签名证书ca.crt或者叫根证书生、CA机构的私钥ca.key、服务器的证书
+   申请文件server.csr生成服务端证书。
+
+    openssl x509 -req -CA ca.crt -CAkey ca.key -CAcreateserial -in server.csr -out server.crt
+
+上面的过程其实是模拟了各大https证书厂商生成https证书的过程，其中涉及到了根证书
+等等一些概念，如果你不是太明白也没有关系，我们还有B方案，我只想要证书，不想搞得
+太深，那么请使用如下方法，简便快捷。
+
+
+
+---
+
+
+1. 生成服务器私钥：
+
+    openssl genrsa -out server.key 1024
+
+2. 根据私钥和输入的信息生成证书请求文件：
+
+    openssl req -new -key server.key -out server.csr
+
+3. 用第一步的私钥和第二步的请求文件生成证书：
+
+    openssl x509 -req -in server.csr -out server.crt -signkey server.key -days 3650
+
+
+
+为什么第二种方式比第一种简单并且步骤还少呢?这里简单介绍一下，第一种方式是模拟
+https厂商生成https证书的简易过程，https证书厂商一般都会有一个根证书，这里我们模
+拟生成了https厂商根证书，也就是第一种方法的3、4、5步骤。
+
+在实际应用中，这些步骤对用户来说是不可见的，这里只是简单模拟，通常证书申请用户
+只需要将服务器的公钥(注意不是私钥)和服务器证书申请文件交给https证书厂商即可，之
+后https厂商会通过邮件回复一个服务器公钥证书，拿到这个证书和自己生成的服务器私钥
+就可以搭建https应用了。
+
+第二种方法比较简单，是因为我们自己生成证书在本地测试，我们既是https厂商的角色也
+是用户角色，我们直接用自签名证书当做服务器证书就可以了，简单快捷，不过这里只适
+用于测试。

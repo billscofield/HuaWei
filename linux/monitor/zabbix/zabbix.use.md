@@ -1,4 +1,8 @@
 
+```
+rsync://repo.zabbix.com/mirror/
+rsync -vrt rsync://repo.zabbix.com/mirror/zabbix/*   /lca/mirrirs/zabbix/
+```
 
 ## 添加主机
 

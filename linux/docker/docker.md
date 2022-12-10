@@ -699,6 +699,10 @@ https://www.bilibili.com/video/BV16E41187y4?from=search&seid=1041363471093169672
         "dns": ["10.20.1.2","10.20.1.3"]
     }
 
+    http: server gave HTTP response to HTTPS client 的解决
+        {"insecure-registries":["仓库ip:port"]}
+        systemctl restart docker
+
     ```
 
     宿主机: brctl show 查看网桥信息
