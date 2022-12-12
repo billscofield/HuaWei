@@ -259,6 +259,11 @@ documents digitally signed by the corresponding private key.
     散列值
     指纹
     摘要
+        MD4、MD5：MD5生成 128 位固定长度的 hash 值，已经被破解
+        SHA-1：生成 164 位固定长度的 hash 值，已经被破解
+        SHA-2：生成 224、256、384、512 位的 hash 值
+        SHA-3：全新的算法和标准
+
 
 MD4/MD5
     散列值是 16Byte
@@ -635,9 +640,9 @@ openssl x509 -in baidu.com.crt -text -noout
 ```
 
 
-
-
 ---
+
+图形化工具 XCA
 
 1. 生成服务器私钥。
 
@@ -706,3 +711,8 @@ https厂商生成https证书的简易过程，https证书厂商一般都会有�
 第二种方法比较简单，是因为我们自己生成证书在本地测试，我们既是https厂商的角色也
 是用户角色，我们直接用自签名证书当做服务器证书就可以了，简单快捷，不过这里只适
 用于测试。
+
+
+
+
+

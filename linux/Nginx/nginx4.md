@@ -6,6 +6,11 @@ OpenResty 是基于 Nginx 和 Lua 实现的 Web 应用网关，继承了大量�
 
     Nginx的山寨
 
+Kong网关
+    基于 OpenResty
+
+Tengine
+    由 taobao 发起的 Web 服务器项目
 
 查看版本
     nginx -v
