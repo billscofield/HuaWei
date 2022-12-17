@@ -23,6 +23,21 @@ cd /usr/share/nmap/script/    nmap 脚本路径
 版本检测功能 amap 好一些
 
 
+https://nmap.org/book/man.html
+    Target Specification
+    Host Discovery
+    Port Scanning Basics
+    Port Scanning Techniques
+    Port Specification and Scan Order
+    Service and Version Detection
+    OS Detection
+    Nmap Scripting Engine (NSE)
+    Timing and Performance
+    Firewall/IDS Evasion and Spoofing
+    Output
+    Miscellaneous Options
+
+
 ### 更新脚本库
 
 nmap --script-updatedb

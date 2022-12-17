@@ -257,6 +257,12 @@ apt install -y python3-dev
 
 cd /git/software/vim/ || exit
 
+# vim9 的安装需要 C++ compiler
+apt install -y apt install gobjc++
+
+# 安装 liblua5.4-dev, 否则安装不上 lua 扩展
+# --with-lua-prefix=/usr/include/lua5.3 这个不用
+
 ./configure --with-features=huge \
   --with-x \
   --enable-rubyinterp \

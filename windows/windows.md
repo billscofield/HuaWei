@@ -260,14 +260,18 @@ dism /capture-image
 
 ## 审核模式
 
-
 进入审核模式方法：
+
     1. 在 OOBE 屏幕上，按“ CTRL+SHIFT+F3”；
+
     2. Windows 会将计算机重新启动到审核模式，系统准备 (Sysprep) 工具将会出现。
 
 退出审核模式方法：
+
     1. 在系统下，请在运行（Windows按键+R）里输入sysprep，点确定；
+
     2. 在打开的文件夹下双击sysperp.exe
+
     3. 在弹出的界面，选择进入系统全新体验，点确定，系统自动重启进入OOBE模式。
 
 
@@ -278,3 +282,19 @@ dism /capture-image
 
 
 启动受密码保护的屏幕保护程序，将无法重新登录到系统。
+
+
+    进入系统全新体验(OOBE)：准备服务器，就像初次开机一样。
+    通用：从镜像中删除SID信息
+    关机：Sysprep任务执行完毕之后会立刻关机。
+
+
+Sysprep存在的一些限制
+
+    1. 在单个系统镜像上，您可以运行8次Sysprep。在运行这个工具8次之后，您需要重
+       新创建您的系统镜像。
+
+    2. 如果在生成系统镜像之前安装或更新Microsoft Store应用程序，Sysprep可能会失败。
+
+
+https://learn.microsoft.com/zh-CN/windows-hardware/manufacture/desktop/sysprep--system-preparation--overview?view=windows-11#unsupported-scenarios

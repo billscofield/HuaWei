@@ -1,8 +1,115 @@
+
 links:
 
     https://www.cnblogs.com/createyuan/archive/2014/03/31/3636098.html
 
-    
+    https://www.tcpdump.org/
+
+
+Tcpdump requires libpcap, which is a library for network packet capture. If
+it's not installed, it will be automatically added as a dependency.
+
+tcpdump
+    --list-interfaces (or -D for short) to see which interfaces are available for capture
+
+
+TCP Flags Flags [P.] 
+    S   |   SYN     |   Connection Start
+    F   |   FIN     |   Connection Finish
+    P   |   PUS     |   HData push
+    R   |   RST     |   Connection reset
+    .   |   ACK     |   Acknowledgment
+
+    [S.] for a SYN-ACK packet.
+
+
+seq 196:568
+
+    the sequence number of the data contained in the packet. For the first
+    packet captured, this is an absolute number. Subsequent packets use a
+    relative number to make it easier to follow. In this example, the sequence
+    is seq 196:568, which means this packet contains bytes 196 to 568 of this
+    flow.
+
+
+This is followed by the Ack Number: ack 1. In this case, it is 1 since this is
+the side sending data. For the side receiving data, this field represents the
+next expected byte (data) on this flow. For example, the Ack number for the
+next packet in this flow would be 568.
+
+
+The next field is the window size win 309, which represents the number of bytes
+available in the receiving buffer, followed by TCP options such as the MSS
+(Maximum Segment Size) or Window Scale. 
+
+
+Finally, we have the packet length, length 372, which represents the length, in
+bytes, of the payload data. The length is the difference between the last and
+first bytes in the sequence number.
+
+
+
+You can create more complex expressions by grouping filter with parentheses. In
+this case, enclose the entire filter expression with quotation marks to prevent
+the shell from confusing them with shell expressions:
+
+```
+tcpdump -i any -c5 -nn "port 80 and (src 192.168.122.98 or src 54.204.39.132)" 
+```
+
+
+Changing packet size in the capture file
+
+    By default, when capturing packets into a file, it will save only 68 bytes
+    of the data from each packet. Rest of the information will be thrown away.
+
+        tcpdump -w file.cap -s 0
+
+
+Printing content of the packet
+
+    -x command line switch will make tcpdump to print each packet in
+    hexadecimal format. Number of bytes that will be printed remains somewhat a
+    mystery. As is, it will print first 82 bytes of the packet, excluding
+    ethernet header. You can control number of bytes printed using -s command
+    line switch.
+
+    In case you want to see ethernet header as well, use -xx. It will cause
+    tcpdump to print extra 14 bytes for ethernet header.
+
+
+tcpdump src net 67.207.148.0 mask 255.255.255.0
+tcpdump src net 67.207.148.0/24
+
+
+less and greater qualifiers tell tcpdump that you are interested in packets
+whose length is less or greater than value you specified.
+
+    tcpdump -ni eth1 greater 1000
+
+    Will capture only packets whose size is greater than 1000 bytes.
+
+
+
+tcpdump -XX greater 100 and \(src host google.com or src host microsoft.com\)
+
+and and or keywords in tcpdump filter language have same precedence and
+evaluated left to right. This means that without brackets, tcpdump could have
+captured packets from microsoft.com disregarding packet size. With brackets,
+tcpdump first makes sure that all packets are greater than 100 bytes and only
+then checks their origin.
+
+Note the backslash symbol (“\”) before brackets. We have to place them before
+brackets because of shell. Unix shell has special understanding of what
+brackets used for. Hence we have to tell shell to leave these particular
+brackets alone and pass them as they are to tcpdump. Backslash characters do
+exactly this.
+
+
+
+
+
+
 
 promiscuous [prəˈmɪskjuəs]  adj. 混杂的；杂乱的
 
@@ -197,15 +304,25 @@ OUI，即Organizationally unique identifier，是“组织唯一标识符”，�
 
 -r file
 
-Read packets from file (which was created with the -w option or by other tools that  write  pcap  or pcap-ng files).  
-Standard input is used if file is ``-''.
+    Read packets from file (which was created with the -w option or by other
+    tools that  write  pcap  or pcap-ng files).  Standard input is used if file
+    is ``-''.
 
--A      Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
+-A
 
--X      When parsing and printing, in addition to printing the headers of each packet, 
-        print the data of each packet (minus its link level header) in hex and ASCII.  This is very handy for analysing new protocols.
+    Print each packet (minus its link level header) in ASCII.  Handy for capturing web pages.
 
--XX     When parsing and printing, in addition to printing the headers of each packet, print the data of each packet, including its link level header, in hex and ASCII.
+-X
+
+    When parsing and printing, in addition to printing the headers of each
+    packet, print the data of each packet (minus its link level header) in hex
+    and ASCII.  This is very handy for analysing new protocols.
+
+-XX
+
+    When parsing and printing, in addition to printing the headers of each
+    packet, print the data of each packet, including its link level header, in
+    hex and ASCII.
 
 
 
@@ -235,31 +352,57 @@ tcp报文 flags 为24(push + ack)
 
 表达式
 
-可以通过手册页来详细阅读 #man  pcap-filter
+    而在单个过滤器里，常常会判断一条件是否成立，这时候，就要使用下面两个符号
 
-你会发现，过滤表达式大体可以分成三种过滤条件，“类型”、“方向”和“协议”，这三种条件的搭配组合就构成了我们的过滤表达式。
+    =：判断二者相等
+    ==：判断二者相等
+    !=：判断二者不相等
+    当你使用这两个符号时，tcpdump 还提供了一些关键字的接口来方便我们进行判断，比如
+
+    if：表示网卡接口名、
+    proc：表示进程名
+    pid：表示进程 id
+    svc：表示 service class
+    dir：表示方向，in 和 out
+    eproc：表示 effective process name
+    epid：表示 effective process ID
+    比如我现在要过滤来自进程名为 nc 发出的流经 en0 网卡的数据包，或者不流经 en0 的入方向数据包，可以这样子写
+
+    $ tcpdump "( if=en0 and proc =nc  ) || (if != en0 and dir=in)"
 
 
-tcpdump 'tcp[tcpflags] & tcp-syn != 0 and not dst host qiyi.com'
-tcpdump 'ip[2:2] > 576'
-tcpdump 'ether[0] & 1 = 0 and ip[16] >= 224'
 
-即 proto [expr : size]语法
 
-expr用来指定数据报偏移量，表示从某个协议的数据报的第多少位开始提取内容，默认的起始位置是0；而size表示从偏移量的位置开始提取多少个字节，可以设置为1、2、4。
 
-如果只设置了expr，而没有设置size，则默认提取1个字节。比如ip[2:2]，就表示提取出第3、4个字节；而ip[0]则表示提取ip协议头的第一个字节。
 
-在我们提取了特定内容之后，我们就需要设置我们的过滤条件了，我们可用的“比较操作符”包括：>，<，>=，<=，=，!=，总共有6个。
+    https://baijiahao.baidu.com/s?id=1671144485218215170&wfr=spider&for=pc
 
-ip[0] & 0xf != 5
+    可以通过手册页来详细阅读 #man  pcap-filter
 
-IP协议的第0-4位，表示IP版本号，可以是IPv4（值为0100）或者IPv6（0110）；第5-8位表示首部长度，单位是“4字节”，如果首部长度为默认的20字节的话，此值应为5，即”0101″。
+    你会发现，过滤表达式大体可以分成三种过滤条件，“类型”、“方向”和“协议”，这三种条件的搭配组合就构成了我们的过滤表达式。
 
-ip[0]则是取这两个域的合体。0xf中的0x表示十六进制，f是十六进制数，转换成8位的二进制数是“0000 1111”。而5是一个十进制数，它转换成8位二进制数为”0000 0101″。
+    根据 tcpflags 进行过滤
 
-有了上面这些分析，大家应该可以很清楚的知道，这个语句中!=的左侧部分就是提取IP包首部长度域，如果首部长度不等于5，就满足过滤条件。言下之意也就是说，要求IP包的首部中含有可选字段。
-大家可能已经有所体会，在写过滤表达式时，你需要把协议格式完全背在脑子里，才能把表达式写对。可这对大多数人来说，可能有些困难。为了让tcpdump工具更人性化一些，有一些常用的偏移量，可以通过一些名称来代替，比如icmptype表示ICMP协议的类型域、icmpcode表示ICMP的code域，tcpflags则表示TCP协议的标志字段域。
-更进一步的，对于ICMP的类型域，可以用这些名称具体指代：icmp-echoreply, icmp-unreach, icmp-sourcequench, icmp-redirect, icmp-echo, icmp-routeradvert, icmp-routersolicit, icmp-timxceed, icmp-paramprob, icmp-tstamp, icmp-tstampreply, icmp-ireq, icmp-ireqreply, icmp-maskreq, icmp-maskreply。
-而对于TCP协议的标志字段域，则可以细分为tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg。
-如果一个过滤表达式有多个过滤条件，那么就需要使用逻辑符了，其中，!或not都可以表示“否定”，&&与and都可以表示“与”，而||与or都可以表示“或”。
+    tcpdump 'tcp[tcpflags] & tcp-syn != 0 and not dst host qiyi.com'
+    tcpdump 'ip[2:2] > 576'
+    tcpdump 'ether[0] & 1 = 0 and ip[16] >= 224'
+
+    即 proto [expr : size]语法
+
+    expr用来指定数据报偏移量，表示从某个协议的数据报的第多少位开始提取内容，默认的起始位置是0；而size表示从偏移量的位置开始提取多少个字节，可以设置为1、2、4。
+
+    如果只设置了expr，而没有设置size，则默认提取1个字节。比如ip[2:2]，就表示提取出第3、4个字节；而ip[0]则表示提取ip协议头的第一个字节。
+
+    在我们提取了特定内容之后，我们就需要设置我们的过滤条件了，我们可用的“比较操作符”包括：>，<，>=，<=，=，!=，总共有6个。
+
+    ip[0] & 0xf != 5
+
+    IP协议的第0-4位，表示IP版本号，可以是IPv4（值为0100）或者IPv6（0110）；第5-8位表示首部长度，单位是“4字节”，如果首部长度为默认的20字节的话，此值应为5，即”0101″。
+
+    ip[0]则是取这两个域的合体。0xf中的0x表示十六进制，f是十六进制数，转换成8位的二进制数是“0000 1111”。而5是一个十进制数，它转换成8位二进制数为”0000 0101″。
+
+    有了上面这些分析，大家应该可以很清楚的知道，这个语句中!=的左侧部分就是提取IP包首部长度域，如果首部长度不等于5，就满足过滤条件。言下之意也就是说，要求IP包的首部中含有可选字段。
+    大家可能已经有所体会，在写过滤表达式时，你需要把协议格式完全背在脑子里，才能把表达式写对。可这对大多数人来说，可能有些困难。为了让tcpdump工具更人性化一些，有一些常用的偏移量，可以通过一些名称来代替，比如icmptype表示ICMP协议的类型域、icmpcode表示ICMP的code域，tcpflags则表示TCP协议的标志字段域。
+    更进一步的，对于ICMP的类型域，可以用这些名称具体指代：icmp-echoreply, icmp-unreach, icmp-sourcequench, icmp-redirect, icmp-echo, icmp-routeradvert, icmp-routersolicit, icmp-timxceed, icmp-paramprob, icmp-tstamp, icmp-tstampreply, icmp-ireq, icmp-ireqreply, icmp-maskreq, icmp-maskreply。
+    而对于TCP协议的标志字段域，则可以细分为tcp-fin, tcp-syn, tcp-rst, tcp-push, tcp-ack, tcp-urg。
+    如果一个过滤表达式有多个过滤条件，那么就需要使用逻辑符了，其中，!或not都可以表示“否定”，&&与and都可以表示“与”，而||与or都可以表示“或”。

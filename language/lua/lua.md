@@ -226,8 +226,63 @@ type() 返回字符串
     mysay = say
     mysay(liming)
 
+    ```
+
+    Lua语言函数可以返回多个值，每个值以逗号隔开
+
+    默认为全局函数，local 为局部函数
+
+
+    可变参数
+
+    Lua 函数可以接受可变数目的参数，和 C 语言类似，在函数参数列表中使用三点 ...
+    表示函数有可变的参数。
 
     ```
+    function add(...)  
+    local s = 0  
+      for i, v in ipairs{...} do   --> {...} 表示一个由所有变长参数构成的数组  
+        s = s + v  
+      end  
+      return s  
+    end  
+    print(add(3,4,5,6,7))  --->25
+    ```
+
+    我们也可以通过 select("#",...) 来获取可变参数的数量
+
+    ```
+    function average(...)
+       result = 0
+       local arg={...}
+       for i,v in ipairs(arg) do
+          result = result + v
+       end
+       print("总共传入 " .. select("#",...) .. " 个数")
+       return result/select("#",...)
+    end
+
+    print("平均值为",average(10,5,3,4,5,6))
+    ```
+
+    固定参数必须放在变长参数之前
+
+    通常在遍历变长参数的时候只需要使用 {…}，然而变长参数可能会包含一些 nil，那
+    么就可以用 select 函数来访问变长参数了：select('#', …) 或者 select(n, …)
+
+        select('#', …) 返回可变参数的长度。
+        select(n, …) 用于返回从起点 n 开始到结束位置的所有参数列表。
+
+        ```
+        function f(...)
+            a = select(3,...)  -->从第三个位置开始，变量 a 对应右边变量列表的第一个参数
+            print (a)
+            print (select(3,...)) -->打印所有列表参数
+        end
+
+        f(0,1,2,3,4,5)
+        ```
+
 
 7. thread
 
@@ -270,7 +325,12 @@ type() 返回字符串
         end
 
         print(t1[1])
+        
         ```
+
+    table 不会固定长度大小，有新数据添加时 table 长度会自动增长，没初始的 table
+    都是 nil。
+
 
 ## 特点
 
@@ -309,6 +369,8 @@ type() 返回字符串
 
     tostring(11)
 
+使用未经初始化的全局变量不会导致错误。当使用未经初始化的全局变量时，得到的结果
+为 nil:
 
 ## 迭代器
 
