@@ -49,6 +49,26 @@ shift k : man 手册帮助
 gcc -c a.c -o a.o
 gcc a.o -lm
 
+
+## int
+
+char            1
+    没有规定是有符号还是无符号的
+short           2
+int             4
+long            4
+long long       8
+
+unsigned
+
+
+## 可移植数据类型
+
+float           4Byte
+double          8
+long doulbe     12?
+
+
 ## 常量
 
 整型常量

@@ -184,6 +184,14 @@ printf 变参函数, 取决于格式化个数
     fprintf(stderr,xxx)
 
 2. int fprintf(FILE *stream, const char *format, ...);
+    输出到指定文件
+    FILE *p;
+    f = fopen("a.txt","w");
+    int i = 100;
+    fprintf(f, "%d",i)
+
+
+    fprintf(stdout,"%s",i);
 
 
 3. int sprintf(char *str, const char *format, ...);
@@ -195,6 +203,15 @@ printf 变参函数, 取决于格式化个数
     输出到某块内存
 
     **安全版本**
+
+    char buf[32];
+    char *p = malloc(32);
+
+    snprintf(buf,32,"%d",i);
+    printf("%s\n",buf)
+
+
+
 ```
 
 
@@ -228,11 +245,15 @@ function, which **linearly** reads multiple values by specifying the matching
 values in a char[] array named target.
 
 
+
+
+
+
 ### scanf
 
 1. scanf
 
-2. `int fscanf(FILE *stream, const char *format, ...);
+2. int fscanf(FILE *stream, const char *format, ...);
 
 ```
 #include <stdio.h>
@@ -241,9 +262,8 @@ values in a char[] array named target.
 int main(int argc, char* argv[]){
     FILE *fp;
     fp = fopen("hello.txt","r");
-    char *a;
+    char a[10];                     // 不能是 *a
     fscanf(fp,"%s",a);              // 从 fp 中读取到 a 中
-
     printf("%s\n",a);
 }
 
@@ -254,7 +274,7 @@ fscanf(stdin,"%s",a);
 printf("%s\n",a);
 ```
 
-3. ` int sscanf(const char *str, const char *format, ...);
+3. int sscanf(const char *str, const char *format, ...);
     
     从内存中读
 
@@ -268,7 +288,7 @@ printf("%s\n",a);
         snprintf(a,32,"%d",i);
         
         int b;
-        sscanf(a,"%d",&b);
+        sscanf(a,"%d",&b);          // 不用指定大小?
         printf("%d\n",b);
     }
 
@@ -277,6 +297,8 @@ printf("%s\n",a);
 ## 运算符
 
 单目: 单个目标
+
+%: 两边的操作数必须是 整型
 
 
 ## 
@@ -357,10 +379,11 @@ switch(整型)
 
 apple:
     printf("goto apple");
-    printf("%d\n",__LINE__);
+    printf("%d\n",_____LINE__);
     ```
 
     出错处理
+
     ```
     if(ret == error1){
         goto err1;
@@ -494,6 +517,8 @@ A,B 两方通信，一些信息是固定的，如 ip, 一些是不固定的，�
 
         p->malloc(50+n),   // 50 用来存放固定数据, 后边还有n个字节方说的话
                            // 唯一的可以内存越界的情况, 这部分内存还是结构体的
+
+        msg[0] - msg[n-1]
 
 ```
 #include <stdio.h>
