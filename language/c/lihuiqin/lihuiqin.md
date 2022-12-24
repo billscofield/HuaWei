@@ -467,6 +467,29 @@ b:
 ### 2. 二维数组
 ### 3. 多维数组
 
+### 4. 字符数组和字符串
+
+    ```
+	/*字符数组赋初值*/
+    char cArr[] = {'I','L','O','V','E','C'};            // 没有尾0, 如果用printf(%s), puts 输出，可能会有意外情况
+    /*字符串赋初值*/
+    char sArr[] = "ILOVEC";                             // 有尾0, printf("%s") 和 puts 没有问题
+    /*用sizeof（）求长度*/
+    printf("cArr的长度=%d\n", sizeof(cArr));            // 没有意外情况 6
+    printf("sArr的长度=%d\n", sizeof(sArr));            // 没有意外情况 7
+
+    //*(cArr+6) = '\0';
+    //*(cArr+7) = 'A';
+    //*(cArr+8) = 'A';
+    /*用strlen（）求长度*/
+    printf("cArr的长度=%d\n", strlen(cArr));            // strlen 统计的是到尾0的字符个数，字符数组的话可能有意外情况
+    printf("sArr的长度=%d\n", strlen(sArr));            // strlen 对字符串（有尾0）的没有意外情况
+    /*用printf的%s打印内容*/
+    printf("cArr的内容=%s\n", cArr);
+    printf("sArr的内容=%s\n", sArr);
+
+    ```
+
 
 ## 共用体
 
