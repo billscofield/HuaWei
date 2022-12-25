@@ -12,7 +12,13 @@ Java James Gosling 詹姆斯-高斯林, 1991年 还叫 Oak, 1994年改名为 Jav
 Javascript: Brendan Eich 布兰登-艾奇
 
 Golang: 
-    吉祥物：gopher 
+    Ken Thompson
+    Rob Pike
+        贝尔实验室 Unix 成员, Plan 9 操作系统成员， 与 Ken Tompson 共事多年， 并共创出 UTF-8
+    Robert Griesemer
+        V8 引擎
+
+    吉祥物：gopher 囊地鼠（产自北美的一种地鼠）
     起源于2007年
     2009年发布
     速度和开发效率快
@@ -20,6 +26,12 @@ Golang:
     静态，编译型语言
     语法简洁
     强类型
+
+    既有 C 静态语言程序的运行速度，又能达到 Python 动态语言的快速开发 go = c + python
+
+    引入包的概念, 
+
+
 
     **天生支持并发**
 
@@ -29,11 +41,31 @@ Golang:
         自动回收
 
     编译
-        建立在gcc基础上的Gccgo
+        建立在 gcc 基础上的 Gccgo
 
         针对64位x64 和32位x86 计算机的一套编译器(6g 和 8g)
 
+golang 的学习方向
+
+    简称 go
+
+    区块链(Blockchain Technology) BT
+
+    Go服务器端/游戏软件
+        美团后台支撑
+        仙侠道（游戏）
+
+    Go分布式/云计算
+        K8s
+        盛大云CDN
+        京东云后台所有服务
+
+
+
+
+
 环境安装
+
     去官网选择版本下载  https://golang.org/dl/
 
     解压, 推荐放在 /opt/ 下
@@ -50,7 +82,8 @@ Golang:
     GOPATH
         go install/go get和 go的工具等会用到GOPATH环境变量
 
-        GOPATH是作为编译后二进制的存放目的地和import包时的搜索路径 (其实也是你的工作目录, 你可以在src下创建你自己的go源文件, 然后开始工作)。
+        GOPATH是作为编译后二进制的存放目的地和import包时的搜索路径 (其实也是你
+        的工作目录, 你可以在src下创建你自己的go源文件, 然后开始工作)。
 
         GOPATH之下主要包含三个目录: bin、pkg、src
             bin目录主要存放可执行文件; 
@@ -99,6 +132,16 @@ go run
 go install 
     设置 GOBIN
 
+
+
+内嵌C语言支持
+
+
+不足
+    包管理，大部分包都在 github 上
+    无泛化类型
+    所有 Exception 都用 Error 来处理
+    对 C 的降级处理，并非无缝，没有 C 降级到 asm 那么完美(序列化问题)
 
 
 
@@ -152,6 +195,7 @@ vim-go 是一款go代码高亮和语法检查的插件
 Plugin 'fatih/vim-go'
 let g:go_gopls_enabled = 0
 
+:GoInstallBinaries
 
 
 gocode是一款go的代码提示插件
