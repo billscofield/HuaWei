@@ -12,10 +12,11 @@ Java James Gosling 詹姆斯-高斯林, 1991年 还叫 Oak, 1994年改名为 Jav
 Javascript: Brendan Eich 布兰登-艾奇
 
 Golang: 
+    Google
     Ken Thompson
-    Rob Pike
+    Rob Pike(罗勃 派克)
         贝尔实验室 Unix 成员, Plan 9 操作系统成员， 与 Ken Tompson 共事多年， 并共创出 UTF-8
-    Robert Griesemer
+    Robert Griesemer(罗伯特 格瑞史莫)
         V8 引擎
 
     吉祥物：gopher 囊地鼠（产自北美的一种地鼠）
@@ -46,8 +47,6 @@ Golang:
         针对64位x64 和32位x86 计算机的一套编译器(6g 和 8g)
 
 golang 的学习方向
-
-    简称 go
 
     区块链(Blockchain Technology) BT
 
