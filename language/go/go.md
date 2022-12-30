@@ -28,23 +28,52 @@ Golang:
     语法简洁
     强类型
 
-    既有 C 静态语言程序的运行速度，又能达到 Python 动态语言的快速开发 go = c + python
+ 特点
 
-    引入包的概念, 
+    1. 既有 C 静态语言程序的运行速度，又能达到 Python 动态语言的快速开发 go = c + python
 
+    2. 引入包的概念, 
+        go 语言的每一个文件都要属于一个包
 
+    3. **天生支持大并发**
+        golang的并发执行单元是一种称为 goroutine 的协程
 
-    **天生支持并发**
-
-    golang的并发执行单元是一种称为 goroutine 的协程
-
-    内存回收(GC)
+    4. 内存回收(GC)
         自动回收
+
+    5. 管道通信机制 channel
+
+    6. 函数可以返回多个值
+    ```
+    func getMulti(n1 int, n2 int) (int,int){
+        sum := n1 + n2
+        sub := n1 - n2
+        return sum, sub
+    }
+    ```
+
+    7. 新的创新: 切片，延时执行 defer
 
     编译
         建立在 gcc 基础上的 Gccgo
 
         针对64位x64 和32位x86 计算机的一套编译器(6g 和 8g)
+
+开发工具
+    
+    1. visual studio code(VSCode)
+
+    2. sublime text
+
+    3. vim
+
+    4. Emacs
+
+    5. Eclipse IDE
+
+    6. liteide
+
+    7. JetBrains, 都可以安装 go 插件
 
 golang 的学习方向
 
@@ -233,13 +262,13 @@ YouCompleteMe
 
 ### 打印
 
-fmt.Print(xxx)                  不会换行, 最后会打印一个#
-fmt.Printf("name is %s", name)  格式化
+fmt.Print(xxx)                          不会换行, 最后会打印一个#
+fmt.Printf("name is %s", name)          格式化
     fmtpPrintf("%% value:%v\n",a,b)
     %v 任何
     %T 变量类型
         fmt.Printf("%T", a)
-fmt.Println(xxx)                最后会换行
+fmt.Println(xxx)                        最后会换行line
 
 
 ### 变量
