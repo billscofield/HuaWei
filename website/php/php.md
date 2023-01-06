@@ -1,10 +1,10 @@
 
 ## PHP (Hypertext Preprocessor)
 
-
 apt install php7.3
 
 apt install php7.3-dev
+
     安装了php-devel以后就会有phpize和php-config这两个脚本
 
 

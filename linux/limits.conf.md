@@ -197,6 +197,10 @@ file-max
         of error messages about running out of file handles, you might
         want to increase this limit
 
+    file-max是所有进程最大的文件数
+    nr_open是单个进程可分配的最大文件数, 所以在我们使用ulimit或limits.conf来设置时，如果要超过默认的1048576值时需要先增大nr_open值(sysctl -w fs.nr_open=100000000或者直接写入sysctl.conf文件)。:queues
+    ulimit其实就是对单一程序的限制,进程级别的
+
 
 
 There are many place have the max limits about the open files:

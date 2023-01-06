@@ -1,3 +1,12 @@
+GNU Compile Collection (GCC)
+Microsoft C (MS C)
+Borland Turbo C (Turbo C)
+
+这些C语言版本不仅实现了ANSI C标准，而且在此基础上各自作了一些扩充，使之更加方便、完美。
+
+
+
+
 .i
     C程序预处理输出，可以被编译。可以理解为预处理翻译（interpret）后的文件
 
