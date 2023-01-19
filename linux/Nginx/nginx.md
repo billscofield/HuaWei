@@ -731,4 +731,18 @@ server {
 
 
 
+### 虚拟主机
 
+
+    ```
+    server {
+            listen       80;
+            # 配置了二级域名
+            server_name  onenav.bitbeings.com;
+
+            location / {
+                # 表示代理的端口是本机的8001端口
+                proxy_pass http://127.0.0.1:8001;
+            }
+        }
+    ```

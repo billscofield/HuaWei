@@ -3,7 +3,6 @@
 目录是一类为了浏览和搜索数据而设计的特殊的数据库
 
 
-
 ## 什么是LDAP？
 
 （一）在介绍什么是LDAP之前，我们先来复习一个东西：“什么是目录服务？”
@@ -17,23 +16,32 @@
 
 （二）了解完目录服务后，我们再来看看LDAP的介绍：
 
-LDAP（Lightweight Directory Access Portocol），它是基于X.500标准的轻量级目录访问协议。
+X.500是一套已经被国际标准化组织（ISO）接受的**目录服务系统标准**，它定义了一个机构
+如何在全局范围内共享其名字和与之相关的对象。X.500是层次性的，其中的管理域（机构、
+分支、部门和工作组）可以提供这些域内的用户和资源信息。在PKI体系中，X.500被用来
+唯一标识一个实体，该实体可以是机构、组织、个人或一台服务器。X.500被认为是实现目
+录服务的最佳途径，但X.500的实现投资较大，并且比其他方式速度慢，而其优势具有信息
+模型、多功能和开放性
 
-目录是一个为查询、浏览和搜索而优化的数据库，它成树状结构组织数据，类似文件目录一
-样。
 
-目录数据库和关系数据库不同，它有优异的读性能，但写性能差，并且没有事务处理、回滚
-等复杂功能，不适于存储修改频繁的数据。所以目录天生是用来查询的，就好象它的名字一
-样。
+LDAP（Lightweight Directory Access Portocol），它是基于X.500标准的轻量级目录访
+问协议。
+
+目录是一个为查询、浏览和搜索而优化的数据库，它成树状结构组织数据，类似文件目录
+一样。
+
+目录数据库和关系数据库不同，它有优异的读性能，但写性能差，并且没有事务处理、回
+滚等复杂功能，不适于存储修改频繁的数据。所以目录天生是用来查询的，就好象它的名
+字一样。
 
 LDAP目录服务是由目录数据库和一套访问协议组成的系统。
 
 （三）为什么要使用
 
-LDAP是开放的Internet标准，支持跨平台的Internet协议，在业界中得到广泛认可的，并且
-市场上或者开源社区上的大多产品都加入了对LDAP的支持，因此对于这类系统，不需单独定
-制，只需要通过LDAP做简单的配置就可以与服务器做认证交互。“简单粗暴”，可以大大降低
-重复开发和对接的成本。
+LDAP是开放的Internet标准，支持跨平台的Internet协议，在业界中得到广泛认可的，并
+且市场上或者开源社区上的大多产品都加入了对LDAP的支持，因此对于这类系统，不需单
+独定制，只需要通过LDAP做简单的配置就可以与服务器做认证交互。“简单粗暴”，可以大
+大降低重复开发和对接的成本。
 
 
 可以和微软的AD域打通
@@ -41,7 +49,6 @@ LDAP是开放的Internet标准，支持跨平台的Internet协议，在业界中
 
 OpenLDAP 默认以 Berkeley DB 作为后端数据库，Berkeley DB 数据库主要以散列的数据
 类型进行数据存储，如以键值对的方式进行存储。
-
 
 
 OpenLDAP 通过 ACL 灵活控制用户访问数据的权限
@@ -81,7 +88,7 @@ LDAP的主要产品
     
     X.500 和 LDAP(实际上是X.500的简化版本, 是X.500的子集), 应该是衍生物
 
-    X.500, a directory protocol standard developed by the International
+    X.500, a **directory protocol standard** developed by the International
     Telecommunications Union (ITU).
 
     LDAP, a derivative of the X.500 protocol developed as an open source
@@ -118,8 +125,6 @@ X.500特征
     搜索性能
 
 
-
-
 ## 实际上整个 OpenLDAP 的架构大致包含 3个部分:
 
 1. OpenLDAP
@@ -129,7 +134,7 @@ X.500特征
     反人类的设计真的不是给人用的。
 
 
-1. phpLDAPadmin
+2. phpLDAPadmin
     
     所以，你需要安装一个叫作 phpLDAPadmin的工具，好歹这是一个图形界面，虽然奇丑
     无比，并且配置起来也并不容易。
@@ -138,14 +143,37 @@ X.500特征
     directory management
 
 
-1. PWM
+3. PWM
 
     光装管理工具还不够，你总要给用户提供一个修改密码的地方。
 
-1. 客户端
+4. 客户端
 
-1. 最后，你还需要配置各种工具。
+5. 最后，你还需要配置各种工具。
 
+
+
+## OpenLDAP Software is an open source implementation of the Lightweight Directory Access Protocol.
+
+https://www.openldap.org/
+
+The suite includes:
+
+    1. lloadd - stand-alone LDAP Load Balancer Daemon (server or slapd module)
+
+    2. slapd - stand-alone LDAP daemon (server)
+
+    3. libraries implementing the LDAP protocol, and utilities, tools, and sample clients.
+
+Also available from the OpenLDAP Project:
+
+    1. Fortress - Role-based identity access management Java SDK
+
+    2. JLDAP - LDAP Class Libraries for Java
+
+    3. JDBC-LDAP - Java JDBC - LDAP Bridge Driver
+    
+    4. LMDB - Lightning Memory-Mapped Database
 
 
 ## 名词解释

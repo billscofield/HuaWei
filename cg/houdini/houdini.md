@@ -447,3 +447,7 @@ hserver.opt
     logFile = ""
     debugMode = 1
     logToSystem = 1
+
+
+
+### Which licenses are needed to run which product?

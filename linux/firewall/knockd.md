@@ -28,9 +28,9 @@ apt-get install knockd
         
     [openSSH]                           // 自定义
         sequence    = 7000,8000,9000    // 敲门端口号
-        seq_timeout = 5
+        seq_timeout = 5                 // 需要在多少时间里完成端口的敲击
         command     = /sbin/iptables -A INPUT -s %IP% -p tcp --dport 22 -j ACCEPT
-        tcpflags    = syn
+        tcpflags    = syn               // 来源封包所需带有的封包标志，一般来说， UDP 封包不会有ack
         
     [closeSSH]
         sequence    = 9000,8000,7000
@@ -50,3 +50,7 @@ apt-get install knockd
 关门
 
     knock IP  9000 8000 7000
+
+
+
+

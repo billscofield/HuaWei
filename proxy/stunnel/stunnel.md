@@ -1,6 +1,22 @@
-SSL是Netscape开发的专门用户保护Web通讯的，目前版本为3.0。
 
-最新版本的TLS(Transport Layer Security，传输层安全协议)是IETF(Internet
+SSL/TLS协议最初叫做SSL协议(Secure Socket Layer),它是网景(Netscape)公司在1990年
+推出的私有协议，用于保护WWW的通讯安全。
+
+SSL协议共推出了3个版本:
+
+    SSL1.0
+    SSL2.0
+    SSL3.0
+
+由于SSL1.0和SSL2.0存在严重问题，前两个协议逐渐被重构后的SSL3.0所替代。
+
+到了1999年，SSL协议在互联网中应用特别广泛，已经成为事实上的互联网标准。于是，在
+1999年IETF组织将SSL3.0协议规范进行了标准化，便成了TLS协议(Transport Layer
+Secure)。不过由于SSL3.0和TLS之间存在加密算法上的差异，因此不能互相操作。他们是
+两个不同的协议。
+
+
+最新版本的 TLS(Transport Layer Security，传输层安全协议)是 IETF(Internet
 Engineering Task Force，Internet工程任务组)制定的一种新的协议。最新版本的TLS
 1.0，它建立在SSL 3.0协议规范之上，是SSL 3.0的后续版本。两者差别极小，可以理解为
 SSL 3.1

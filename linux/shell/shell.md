@@ -375,8 +375,9 @@ exit 推出整个程序
 
 ## 生成随机数
 
-openssl rand -base64 数字
-openssl rand -hex 数字
+openssl rand -base64 位数
+
+openssl rand -hex 位数
 
 
 ## 关联数组
