@@ -1,3 +1,4 @@
+# maya
 
 设置英文/中文显示:
     windows:
@@ -9,15 +10,13 @@
         方法二:
             安装文件夹/resources/I10n/zh_CN     //使用的是中文版，就是 zh_CN, 改为 en_US 就是英文
 
+CPU 建议
 
-
-cpu
-
-    Modeling and animation in Maya are primarily **single-threaded**, so you want a CPU
+    Modeling and animation in Maya are primarily single-threaded, so you want a CPU
     with the highest possible clock speed – but core count is not particularly
     important. 
 
-gpu
+GPU 建议
 
     Do I need to use a Quadro card for Maya or is GeForce okay?
 
@@ -27,3 +26,25 @@ gpu
     do also test GeForce cards, so those should work fine for most users and
     may be preferred for those working in game dev, but pro-grade cards are
     optimized by NVIDIA to be more reliable in the long-term.
+
+## Linux
+
+How to install Maya to a custom path on Linux?
+
+[官方说明](https://knowledge.autodesk.com/support/maya/learn-explore/caas/sfdcarticles/sfdcarticles/How-to-install-Maya-to-a-custom-path-on-Linux.html)
+
+Some installation files have embedded multiple configuration paths for Maya to
+run properly. Any service packs or add ins installed would probably not work if
+Maya was installed (or moved) to a custom location. For that reason there is no
+recommended process to install Maya to a different path (location). Anyone
+trying to do so would be discouraged because of the reasons above.
+
+主要安装了哪些文件?
+
+/usr/autodesk/
+    chmod +x /usr/autodesk/bin/maya.bin
+/opt/Autodesk
+/var/flexlm
+/var/opt/Autodesk
+
+直接 mv /usr/autodesk 到 共享盘即可

@@ -4,12 +4,9 @@
 在linux，把字体文件拷贝到字体目录后，执行fc-cache命令，fc-cache扫描字体目录并生
 成字体信息的缓存，然后应用程序就可以立即使用这些新安装的字体。
 
-
 ## some good fonts
 
 DejaVu Sans Mono
-
-
 
 ## TTF or OTF
 
@@ -33,7 +30,6 @@ DejaVu Sans Mono
     sometimes a bit more expensive, because of this reason. Conviction:
     Suitable for designers looking for bigger freedom.
 
-
 ## Bitmap and Vector
 
 Bitmap is a raster-based format
@@ -42,10 +38,7 @@ Those fonts are the first generation of font technologies. They are raster(光�
 )-based which means that each glyph([ɡlɪf]字符) (letter, number or symbol) is a
 set of pixels that form the picture of the glyph.
 
-
-
-
-3. PostScript
+1. PostScript
 
     It’s a programming language, developed by Adobe Systems around 1980, that
     describes digital artwork so that digital printers can reproduce it in the
@@ -63,7 +56,7 @@ set of pixels that form the picture of the glyph.
     subset of the PostScript language and now is one of the most used file
     formats worldwide. 
 
-3. TTF和OTF哪个好？
+2. TTF和OTF哪个好？
 
     OTF是基于TTF制订出的延伸版本，但这不代表TTF 就是不好，或是低质量，完全取决
     于字库定位，如果你想精确控制每个像素点的话，TTF比OTF好。
@@ -75,7 +68,6 @@ set of pixels that form the picture of the glyph.
     .OTF (Open Type Font) is a better choice when you’re designing materials
     for print.
 
-
 ## 查看字体
 
 fontconfig 软件包
@@ -85,7 +77,7 @@ fc-list   #字体列表
 fc-list :lang=zh  #中文字体
 
 fc-match -v "字体名" # 查看字体详情
-
+    fc-match -v "JetBrainsMono Nerd Font"
 
 ## 安装字体1
 
@@ -101,14 +93,14 @@ apt-cache show xfonts-utils
 
 2. 修改字体文件的权限，使root用户以外的用户也可以使用
 
-    ```
+    ```shell
     cd /usr/share/fonts/chinese/TrueType
     chmod 755 *.ttf
     ```
 
 3. 建立字体缓存
 
-    ```
+    ```shell
     mkfontscale  （如果提示  mkfontscale: command not found ，需自行安装  # yum install mkfontscale  ）
     mkfontdir  
     fc-cache -fv  （如果提示  fc-cache: command not found ，则需要安装 # yum install fontconfig  ）
@@ -120,7 +112,6 @@ apt-cache show xfonts-utils
 4. 重启计算机（似乎必须重启才会有效）
 
     reboot
-
 
 ## font Examples
 
@@ -144,17 +135,11 @@ Ubuntu Mono
     Serif:Sans
     Weights:Thin, Regular, Bold
 
-
 Bitstream Vera Sans Mono
-
-
-
-
-
 
 ## 中文字体支持
 
-```
+```shell
 1. apt-get install xfonts-intl-chinese wqy*
 2. apt-get install locales
 3. dpkg-reconfigure locales
@@ -166,12 +151,7 @@ Bitstream Vera Sans Mono
 
 5. 默认编码选用：zh_CN.UTF-8 UTF-8  或者使用 export LC_ALL=C
 
-```
-
-
-
-
-apt-cache search xfonts-intl
+    apt-cache search xfonts-intl
     emacs-intl-fonts - fonts to allow multilingual PostScript printing from Emacs
     xfonts-intl-arabic - international fonts for X - Arabic
     xfonts-intl-asian - international fonts for X - (south-east) Asian
@@ -182,19 +162,17 @@ apt-cache search xfonts-intl
     xfonts-intl-japanese-big - international fonts for X - large Japanese
     xfonts-intl-phonetic - international fonts for X - International Phonetic Alphabet
     langdrill - language drills to test vocabulary
-
+```
 
     xfonts-intl-chinese
+
         这个软件包包括了一些 GB2312、GB8565-88、BIG5 (ETen)、和 SiSheng 中文字体。 
         如果您要用中文浏览、打印或创作文档和使用以上几种编码方式，将需要使用这些字体。
         这些字体用于 X Window 系统。
 
-
-
 ## Linux安装字体
 
 https://www.cnblogs.com/dw3306/p/13722556.html
-
 
 1. 安装字体命令
 
@@ -213,15 +191,15 @@ https://www.cnblogs.com/dw3306/p/13722556.html
 3. 安装中文字体
 
     1. 创建目录
-        
+
         mkdir -p /usr/share/fonts/my_fonts
 
     2. 将要安装的字体上传到该文件夹下
-        
+
         这里我们安装黑体常规，即simhei.ttf。
-        
+
         关于具体字体查找，我以windows为例。
-        
+
         进入  C:\Windows\Fonts，该文件夹下就存放相关字体，将simhei.tty拷贝到
         linux 目录  /usr/share/fonts/my_fonts下即可
 
@@ -229,7 +207,7 @@ https://www.cnblogs.com/dw3306/p/13722556.html
 
        mkfontscale 字体目录 (或者进入到字体所在目录执行 mkfontscale)
 
-   4. 生成字体索引
+    4. 生成字体索引
 
         进入目录 cd  /usr/share/fonts/my_fonts, 执行索引字体生成
 
@@ -259,10 +237,11 @@ https://www.cnblogs.com/dw3306/p/13722556.html
 
     fc-list :lang=zh
 
+    Two different font systems are used by X11: 
 
-Two different font systems are used by X11: 
-    1. the older or core X Logical Font Description, XLFD, 
-    2. and the newer X FreeType, Xft, systems (see An Xft Tutorial for font names format). 
+        1. the older or core X Logical Font Description, XLFD, 
+
+        2. and the newer X FreeType, Xft, systems (see An Xft Tutorial for font names format). 
 
     XLFD was originally designed for bitmap fonts and support for scalable
     fonts (Type1, TrueType and OpenType) was added later. XLFD does not support
@@ -270,11 +249,8 @@ Two different font systems are used by X11:
 
     Xft uses the FreeType and Fontconfig libraries and is more suitable when the smooth appearance of fonts is desired.
 
-
-
-
-
 sudo mkfontscale
+
     创建字体的fonts.scale文件，它用来控制字体旋转缩放
     create an index of scalable([ˈskeɪləbl]) font files for X
 
@@ -290,8 +266,10 @@ sudo mkfontscale
 
 
 sudo mkfontdir
+
     创建字体的fonts.dir文件
-    create an index of X font files in a directory
+
+        create an index of X font files in a directory
 
     mkfontdir [directory]
 
@@ -303,12 +281,9 @@ sudo mkfontdir
         First is the name of the font file, 
         followed by a space and the name of the font.
 
-
 sudo fc-cache -fv
+
     建立字体缓存信息，也就是让系统认识该字体
-
-
-
 
 ## mkfontscale and mkfontdir
 
@@ -319,7 +294,6 @@ These programs were probably installed when you installed Xorg.
 Mkfontdir reads all the bitmap font files in a directory for the font names,
 and creates the fonts.dir file using the font and file names it has found. 
 **It also adds the entries from a file named fonts.scale.**
-
 
 Because **mkfontdir cannot read scalable font files**, the program mkfontscale
 is used to create the names for TrueType, OpenType and Type1 fonts. 
@@ -335,7 +309,7 @@ overwritten. Your edits are easily lost.
 
 Any time mkfontdir is run, the font database should be updated, using the command:
 
-    $ xset fp rehash    (没有好像也可以)
+    xset fp rehash    (没有好像也可以)
 
 Note: Filenames that include spaces cannot be parsed correctly from the
 fonts.dir and fonts.scale files. Quoting or escaping these spaces will not

@@ -154,6 +154,8 @@ KEYBOARD   -->   scancode   -->   keycode   -->   keysymbol
 
     udevadm（更新自定义配置，查看配置内容，集成在systemd中，但是部分不使用systemd的发行版也会有udevadm的包提供，详见各发行版wiki）
 
+        udevadm trigger
+
 任何文本编辑器（编辑你的自定义配置……）
 
 所需权限：

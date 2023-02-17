@@ -1,4 +1,10 @@
-表 和 OOP的类 很相似，所以字段会出现在 Python中,每一列类似属性
+## 软件源
+
+http://repo.mysql.com/{yum|apt}
+
+## 
+
+表 和 OOP 的类 很相似，所以字段会出现在 Python中,每一列类似属性
 
 show tables from 库名;
 select database();
@@ -15,10 +21,91 @@ create table (id int not null auto_increment comment 'key')   comment 不可以�
     表内部不要'=',外部需要'='
     
 
-原来mysql支持的 utf8 编码最大字符长度为 3 字节
-MySQL在5.5.3之后增加了这个 utf8mb4 的编码，mb4 就是 most bytes 4 的意思，专门用来兼容四字节的 unicode,utf8mb4 是 utf8 的超集
+字符编码
 
-CHARSET=utf8mb4
+    原来mysql支持的 utf8 编码最大字符长度为 3 字节MySQL在5.5.3之后增加了这个
+    utf8mb4 的编码，mb4 就是 most bytes 4 的意思，专门用来兼容四字节的 unicode,
+    utf8mb4 是 utf8 的超集
+
+    default CHARSET=utf8mb4
+
+    collation 校对规则，字符串的比较规则，是否区分大小写之类
+        _ci 忽略大小写
+        _cs 大小写敏感
+
+        show collations like 'gb2312%'
+
+    create database db1 default character set gbk
+    create database db1 [default] character set utf8 [default] collate utf8_general_ci;
+
+    查看当前数据库的字符集和校对规则
+        
+        show variables like 'character_set_database'
+        show variables like 'collation_database'
+
+
+
+mysql 字符集和校对规则的设置
+
+    1. 配置文件
+
+        [mysqld]
+            character-set-server=utf8
+
+    2. 启动mysql时
+
+        mysqld --character-set-server=utf8
+
+    3. 编译安装的时候指定
+
+连接字符集
+
+    character_set_client
+        客户端来源数据使用的字符集
+        set character_set_client=utf8;
+
+    character_set_connection
+        连接层字符集
+        set character_set_connection=utf8;
+
+    character_set_results
+        返回结果字符集
+
+
+    客户端
+    +----------------------+        +-------------------------------------------------+
+    | character_set_client |        |                                                 |
+    +----------------------+        | +--------------------------+  +---------------+ |
+                                    | | 连接层                   |  | 内部          | |
+                                    | | character_set_connection |  | 服务器字符集  | |
+                                    | +--------------------------+  | 数据库字符集  | |
+                                    |                               | 表字符集      | |
+                                    |                               | 列字符集      | |
+                                    |                               +---------------+ |
+                                    +-------------------------------------------------+
+
+    show variables like 'character_set_%';
+
+    character_set_client 和 character_set_connection 会根据client 自动设置
+
+
+
+InnoDB
+    支持事务
+    支持外键
+    效率低一些
+    5.7以后的InnoDB支持全文索引
+    5.5版本开始Innodb已经成为Mysql的默认引擎(之前是MyISAM)
+
+MyISAM 
+    不支持事务
+    不支持外键
+    速度快
+    支持全文索引
+    
+
+
+
 
 varchar(N) N是字符,不是字节
 
@@ -26,25 +113,48 @@ truncate table `teacher_info`
 
 desc 表名;
 
-如果是不支持事务的引擎，如myisam，则是否commit都没有效的
-如果是支持事务的引擎，如innodb，则得知道你事物支持是否自动提交事务（即commit）
-看自己的数据库是否是自动commit，可以使用mysql> show variables like '%autocommit%';来进行查看，如果是OFF即不自动commit，需要手动commit操作（命令行可以直接“commit；“命令），否则是自动commit。
+如果是不支持事务的引擎，如 myisam，则是否 commit 都没有效的
+如果是支持事务的引擎，如 innodb，则得知道你事物支持是否自动提交事务（即commit）
+看自己的数据库是否是自动 commit，可以使用
+
+    mysql> show variables like '%autocommit%';来进行查看，如果是OFF即不自动commit，需要手动commit操作（命令行可以直接“commit；“命令），否则是自动commit。
+
 
 sql语句不区分大小写，但是库、表、字段、区分大小写
 
-单行注释 #
-单行注释 -- --
-多行注释 /* */
+
+注释
+
+    单行注释 #
+
+    单行注释 -- --
+
+    多行注释 /* */
 
 
-DDL定义语言define
-DML（data manipulation language）数据操纵语言：
+
+
+DDL(Data Definition Languate)定义语言define
+
+    管理员
+    表结构
+
+DML(data manipulation language)数据操纵语言：
+    
+    表记录的操作, 添加/删除/修改数据
+
 DCL
+    权限管理
+
 DQL查询语言
     select 字段、常量、表达式、函数
         函数: database();
     没有字符 和 字符串的概念，单引号即可
+
 TCL 事务控制语言
+
+
+
 
 
 别名 as (可以省略)
@@ -52,15 +162,21 @@ TCL 事务控制语言
 建议用双引号
 
 去重 select distinct 字段
+
     select distinct a,b from 表名;
 
 + 的作用
+
     1. 字符串可以转换为数字:数学运算
         select '123'+1
-    1. 字符串不可以转换为数字:字符转换为零
+
+    2. 字符串不可以转换为数字:字符转换为零
         select 'name'+1
-    1. 有一个操作数是 Null，则结果为Null
-    1. '123abc'+1 =>12
+
+    3. 有一个操作数是 Null，则结果为Null
+
+    4. '123abc'+1 =>12
+
 
 concat
     select concat(a,b,...);
@@ -70,11 +186,23 @@ concat
 
 
 IFNULL(为Null的字段,你希望显示的默认值)
+
     select concat(a,IFNULL(name,"无名氏")) from 表名;
 
 
 =
 !=
+<>
+
+
+安全等于 <=>
+
+    select null = null;
+
+    可以判断NULL, 返回1
+
+    = 不能判断 NULL, 返回 null
+
 
 and or not 
     主要用来连接条件表达式
@@ -83,17 +211,27 @@ and or not
     and score>90;
 
 >
-**not >**
+not
     select * from schoolinfo 
     where not (id>4);
+
+>=
+<=
+=
+!=
 
 
 like
 not like
+
     %
-    _单个字符
+
+    单个字符
+
     转义\
+
     或者 用ESCAPE指定转义符号
+
         select * from schoolinfo where name like '_$_%' escape '$';
 
     **like '%' 不能匹配NULL**
@@ -124,11 +262,6 @@ is not null
 isnull 函数
     isnull(filed) 是返回1,否返回0
 
-安全等于 <=>
-    可以判断NULL
-    = plus is NULL
-
-
 
 select 数据 from 表明  where 条件;
     对每一条数据进行条件匹配,如果没有条件，则每一条记录都为True，会执行select输出
@@ -147,12 +280,25 @@ select 数据 from 表明  where 条件;
             结果 Angelababy 成为第一个
     order by 别名
 
+    order by id asc, name desc;
+
+
+limit
+
+    start,length;
+
 
 length()
     null 的length 还是null
 
 
+
+
+
+
+
 ## 关于null的总结
+
 NULL值与任何其它值的比较（即使是NULL）永远返回false
 null 的length 还是null
 % 不匹配 null
@@ -161,6 +307,7 @@ null 的length 还是null
 
 
 ## 关于大小写
+
 1. 数据库名和表名是严格区分大小写的
 2. 表的别名严格区分小大写
 3. **列名与列的别名在所有情况下均是忽略小大写的, 字段的值是不区分大小写的**
@@ -215,6 +362,7 @@ show variables like '%profiling%' 资料收集,性能开销的收集
 
 
 ### 单行函数
+
 1. 字符函数
     length
         返回的是字节数    
@@ -296,6 +444,7 @@ show variables like '%profiling%' 资料收集,性能开销的收集
 
 
 ### 数学函数
+
 1. round(1.65)    四舍五入,默认到整数
     round(1.654,2)   2 表示小数保存两位)
 1. truncate(1.29,1)  小数点后截断只剩1位
@@ -305,6 +454,7 @@ show variables like '%profiling%' 资料收集,性能开销的收集
     被除数是整数，结果为整数；被除数是负数，结果为负数
 
 ### 日期函数
+
 1. now()    2019-06-18 16:44:03 
 1. curdate()    
 1. curtime()
@@ -338,7 +488,9 @@ show variables like '%profiling%' 资料收集,性能开销的收集
 
     https://www.cnblogs.com/yangjinwang/p/6253131.html
 
+
 ### 流程控制
+
 1. if(表达式,表达式为真的结果,表达式为假的结果)
     select if(10>2,'Hello','world');
 
@@ -407,6 +559,7 @@ show variables like '%profiling%' 资料收集,性能开销的收集
 
 
 ### 分组函数(统计函数，聚合函数，组函数)
+
 功能:用作统计使用
 
 avg
@@ -446,16 +599,21 @@ count
     having
         分组前筛选 where
         分组后筛选 having
+            select department,sum(salary) from employee group by department having sum(salary) > 10000;
 
 多个字段分组
     SELECT AVG(salary), department_id, job_id
     FROM employees
     GROUP BY department_id, job_id;
 
+with rollup
+    是否对分类聚合的结果再汇总
 
+    select department,sum(salary) from employee group by department with rollup;
 
 
 ## 连接查询(多表查询)
+
 select count(1) from table1,table2; 计算的是笛卡尔乘积
 
 按年代分类
@@ -492,6 +650,7 @@ select count(1) from table1,table2; 计算的是笛卡尔乘积
 
 
 ### 等值连接
+
 where Table1.字段 = Table2.字段
 
 **如果为表起了别名,则查询的字段就不能使用原来的表名去限定,**
@@ -589,6 +748,7 @@ where salary BETWEEN g.lowest_sal AND g.highest_sal;
 
 
 ### 自连接
+
 不是所有的表都可以自连接，
 
 employees表 可以
@@ -601,9 +761,10 @@ where a.manager_id = b.employee_id
 
 
 ## 数据类型
+
 数值型
     整型
-        Tinyint     1Byte
+        tinyint     1Byte
         smallint    2Byte
         mediumint   3Byte
         int         4Byte
@@ -611,63 +772,107 @@ where a.manager_id = b.employee_id
         unsigned(unsigned 要写在int的后面)
         
         int(4) 是显示宽度，加了zerofill后会在左面补零，但是我的没有看到效果
-        添加了 zerofill 就默认无符号了
+        添加了 zerofill 就默认无符号了 unsigned
+
+        auto_increment
+            只能用于整型
+            该列应该是 not null
+            并且是 primaray key 或者 unique
+            一个表中只能有一个 auto_increment
+
     小数
         定点数
             dec/decimal(M,D)    8Byte
             默认(10,0)
+
+            也会四舍五入，99999 问题(整数位位数不够，值太大)
+
         浮点数
             float(M,D)   4Byte
+                精度7位左右
             double(M,D)  8Byte
+                精度15位左右
+
             默认没有，你插入什么就是什么
 
+            M 表示整个的长度，整数位加小数位
             D表示小数点位数，这三个多了四舍五入
-            M-D 表示整数位，不能超过，否则错误，或者插不进去,或者插入临界值(依据不同的DBMS版本)
-    字符型
-        较短的文本
-            char(M)
-                此处M默认为1
-            varchar(M)
-                不可以省略M
-        较长的文本
-            text
-            blob(二进制)
-    日期型
-        必须用单引号
-        date        4Byte   1000-01-01                  9999-12-31
-        datetime    8Byte   1000-01-01 00:00:00         9999-12-31 23:59:59
-            与时区无关
-        timestamp   4Byte   1970                        2038年的某个时刻
-            更改时区会发生变化,会受到实际时区的影响
-            受MySQL版本和SQLMode的影响很大
-            **timestamp类型适合用来记录数据的最后修改时间，因为只要你更改了记录中其他字段的值，timestamp字段的值都会被自动更新。（如果需要可以设置timestamp不自动更新）**
-        time        3Byte   -838:59:59                  838:59:59
-        year        1Byte   1902                        2155
-        
+            M 减 D 表示整数位，不能超过，否则错误，或者插不进去,或者插入临界值(依据不同的DBMS版本)
+字符型
 
-    枚举 enum
-        create table test(name enum('a','b','c'));
-        insert into test values ('a'),('b'),('c');
-        insert into test values ('A');
-        insert into test values ('F');  报错
+    较短的文本
 
-        **字段没有设置binary的话，不区分大小写，**
+        char(M)
 
-    集合 set
-        create table test(name set('a','b','c'));
-        insert into test values ('a');
-        insert into test values ('a,b');
-        insert into test values ('a,c,b'); 
+            不可以省略M
 
-        **字段没有设置binary的话，不区分大小写，**
+            此处M默认为1, 字符个数
+
+            M 最大 255
+
+            char 会去除尾部的空格
+            select concat(field1,'+') from table1
+
+        varchar(M)
+
+            不可以省略M
+
+            最大65532 字节
+
+            M 取决于字符集,
+                create table t1(info varchar(65532)) default charset=utf8;
+                会有一个warning, varchar 变成了 text
 
 
+            5.0 版本后是字符个数
 
+    较长的文本
+
+        text
+
+        blob(二进制)
+
+日期型
+    必须用单引号
+    date        4Byte   1000-01-01                  9999-12-31
+    time        3Byte   -838:59:59                  838:59:59
+    datetime    8Byte   1000-01-01 00:00:00         9999-12-31 23:59:59
+        与时区无关
+        now()
+
+    timestamp   4Byte   1970                        2038年的某个时刻
+        更改时区会发生变化,会受到实际时区的影响
+        受MySQL版本和SQLMode的影响很大
+        **timestamp类型适合用来记录数据的最后修改时间，因为只要你更改了记录中其他字段的值，timestamp字段的值都会被自动更新。（如果需要可以设置timestamp不自动更新）**
+    year        1Byte   1902                        2155
+    
+
+枚举 enum
+    create table test(name enum('a','b','c'));
+    insert into test values ('a'),('b'),('c');
+    insert into test values ('A');
+    insert into test values ('F');  报错
+
+    **字段没有设置binary的话，不区分大小写，**
+
+集合 set
+    create table test(name set('a','b','c'));
+    insert into test values ('a');
+    insert into test values ('a,b');
+    insert into test values ('a,c,b'); 
+
+    **字段没有设置binary的话，不区分大小写，**
+
+    select * from table1 where find_in_set('man',gender);
+
+
+show warnings
 
 
 ## 变量
 
 ### 局部变量
+
 只在当前begin/end代码块中有效
 一般用在sql语句块中，比如存储过程的begin/end。其作用域仅限于该语句块，在该语句块执行完毕后，局部变量就消失了。declare语句专门用于定义局部变量，可以使用default来说明默认值。
 
@@ -917,6 +1122,12 @@ select * from teacher;
 
 
 
+
+## delete
+
+delete from TABLE 
+
+
 ## update
 
 create trigger g_afterUpdate_stu
@@ -929,76 +1140,89 @@ END;
 
 update stu set age=1 where name='zhou'
 
-```
+
+update 两张表
+
+    update t1,t2 set t1.name=xxx, t2.x=xxx where t1.id=1 and t2.id=t1.id;
 
 
 
 
-
-
-
-
+**都可以加上 constraint 关键字，但是 primary 是不显示的**
 
 
 1) 加索引
+
    mysql> alter table 表名 add index 索引名 (字段名1[，字段名2 …]);
 
-例子： mysql> alter table employee add index emp_name (name);
+    例子： mysql> alter table employee add index emp_name (name);
 
 2) 加主关键字的索引
+
     mysql> alter table 表名 add primary key (字段名);
 
-例子： mysql> alter table employee add primary key(id);
+    例子： mysql> alter table employee add primary key(id);
+
+    删除主键
+
+        必须先删除 auto_increment 
+        alter table myself drop primary key; 
+
+    组合逐渐/单一主键
 
 3) 加唯一限制条件的索引
+
    mysql> alter table 表名 add unique 索引名 (字段名);
 
-例子： mysql> alter table employee add unique emp_name2(cardnumber);
+    例子： mysql> alter table employee add unique emp_name2(cardnumber);
 
 4) 删除某个索引
+
    mysql> alter table 表名 drop index 索引名;
 
-例子： mysql>alter table employee drop index emp_name;
+    例子： mysql>alter table employee drop index emp_name;
 
 5) 增加字段
-    mysql> ALTER TABLE table_name ADD field_name field_type;
+
+    mysql> ALTER TABLE table_name ADD [column] field_name field_type [first|after 字段];
 
 6) 修改原字段名称及类型
-    mysql> ALTER TABLE table_name CHANGE old_field_name new_field_name field_type;
+
+    mysql> ALTER TABLE table_name CHANGE [column] old_field_name new_field_name field_type;
 
 7) 删除字段
-    MySQL ALTER TABLE table_name DROP field_name;
 
-全文：http://c.biancheng.net/cpp/html/1456.html
+    MySQL ALTER TABLE table_name DROP [column] field_name;
 
- 
+    全文：http://c.biancheng.net/cpp/html/1456.html
 
 8) 修改字段
 
-如果要修改字段的话就用这个：
+    如果要修改字段的话就用这个：
 
-ALTER TABLE 创建好的表名称 MODIFY COLUMN 创建好的表需要修改的字段 INT AUTO_INCREMENT
+        ALTER TABLE 创建好的表名称 MODIFY COLUMN 创建好的表需要修改的字段 INT AUTO_INCREMENT
 
-全文：https://zhidao.baidu.com/question/359185899.html
-
+    全文：https://zhidao.baidu.com/question/359185899.html
  
 
 9) 修改字段属性
 
-mysql修改已存在的表增加ID属性为auto_increment自动增长
+    mysql修改已存在的表增加ID属性为auto_increment自动增长
 
-今天有需要将已经存在表设置自动增长属性
-具体如下
-alter table customers change id id int not null auto_increment primary key;
+    今天有需要将已经存在表设置自动增长属性,具体如下:
+
+    alter table customers change [column] id id int not null auto_increment primary key;
 
 
 
 
 添加新用户
+
     create user 'editest'@'localhost' identified by 'editest123456';
     create user 'editest'@'%' identified by 'editest123456';
 
     用户创建完成后，刷新授权
+
         flush privileges
 
 
@@ -1011,10 +1235,19 @@ alter table customers change id id int not null auto_increment primary key;
     ```
 
 mysql远程连接命令,更改127.0.0.1到0.0.0.0
+
     修改mysql配置文件：/etc/mysql/mysql.conf.d/mysqld.cnf
+
     将bind_address的值从127.0.0.1修改成0.0.0.0
 
     **service mysql restart**
+
+
+
+
+
+
+
 
 ### 内连接 (交集)
 
@@ -1025,6 +1258,7 @@ on a.key = b.key
 ```
 
 ### 外连接
+
 左右连接
 
 一般用于查询一个表中有，另一个表中没有的记录
@@ -1058,7 +1292,8 @@ where e.employee_id is null
 
 
 全外连接
-MySQL不支持全外连接，所以只能采取关键字UNION来联合左、右连接的方法：
+
+    MySQL不支持全外连接，所以只能采取关键字UNION来联合左、右连接的方法：
 
 ```
 查询语句：SELECT s.*,subject,score FROM student s LEFT JOIN mark m ON s.id=m.id 
@@ -1074,7 +1309,13 @@ on a.boyfriend_id = bo.id
 A U (A ∩ B) U B
 
 
+union 和 union all
+
+    union 会将结果合并并去重，union all 并不会去重
+
+
 ### 交叉连接(笛卡尔乘积) sql99
+
 If WHERE clause is used with CROSS JOIN, it functions like an INNER JOIN.
 
     ```
@@ -1156,7 +1397,19 @@ where 或 having 后面
     多行操作符
         in any some all
 
+
+exists
+    
+    有记录即可，null 也行，然后就返回 true, 否则返回 false
+
+    找出有迟到的人的信息
+
+        select * from employee where exists(select * from employee_late where employee_late.id = employee.id);
+
+
+
 #### 标量子查询
+
 1. 标量子查询
 
 例子1:谁的工资比 Abel 高
@@ -1221,6 +1474,7 @@ where 或 having 后面
 
 
 #### 列子查询(多行子查询)
+
 1. in/not in   :等于列表中(任意一个)
 1. any | some  :和子查询返回的(某一个)值比较,any & some 都代表任意, 
     a > any(10,20,30) 当a = 15 即可, 可用 min 进行替换, 所以中文语境下用得少
@@ -1345,6 +1599,7 @@ create table B as select * from A;
 
 
 ## 事务 transaction
+
 TCL transaction control language
 一个或一组sql语句组成一个执行单元，这个单元要么全部执行，要么全部都不执行
 
@@ -1477,7 +1732,9 @@ serializable:       F           F               F
 
 
 ## 视图
+
 ### 视图的修改
+
 方法一
     create or replace view view_name
     as
@@ -1490,12 +1747,17 @@ serializable:       F           F               F
 
 
 ### 删除视图
-    drop view view_nam1, view_name2, ...
+
+drop view view_nam1, view_name2, ...
 
 
 ### 查看视图
-    desc view_name
-    show create view view_name;
+
+desc view_name
+
+show create view view_name;
+
+show create view view_name\G            // 更加友好的格式
     
 
 
@@ -1510,6 +1772,7 @@ serializable:       F           F               F
 select user,host,authentication_string from `mysql`.`user`;
 
 ### 授权
+
 GRANT {} privileges ON databasename.tablename TO 'username'@'host'
 
 privileges - 用户的操作权限,如SELECT , INSERT , UPDATE 等。如果要授予所的权限则使用 ALL;
@@ -1524,9 +1787,11 @@ databasename - 数据库名,tablename-表名,如果要授予该用户对所有�
 
 
 ### 设置与更改用户密码
+
 SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword')
 
 如果是当前登陆用户
+
     SET PASSWORD = PASSWORD("newpassword");
 
 
@@ -1536,8 +1801,8 @@ SET PASSWORD FOR 'username'@'host' = PASSWORD('newpassword')
 
 
 数据表改名
-alter table <tb_name> rename to|as <new_tbname>
-RENAME TABLE <tb_name> TO <new_tbname>;
+    alter table <tb_name> rename to|as <new_tbname>
+    RENAME TABLE <tb_name> TO <new_tbname>;
 
 
 

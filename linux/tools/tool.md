@@ -547,3 +547,11 @@ openssh-clients
 ## markdown
 
 haroopad
+
+
+
+
+## 终端进行翻译
+
+npm i fanyi -g
+apt-get install festival festvox-kallpc16k

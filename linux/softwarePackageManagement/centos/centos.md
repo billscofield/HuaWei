@@ -293,3 +293,16 @@ rpm --nosignature
 rpm --help | grep '\--force'
 rpm -e ntfs-3g --nodepes
     ntfs-3g-devle 依赖于 ntfs-3g
+
+
+
+在yum makecache时，一直停在Determining fastest mirrors 这个界面，也就是说一直在
+判断最快镜像，由于已经指定了yum源，所以不需要些插件，可以用动禁用。
+
+解决方法：
+
+    修改/etc/yum/pluginconf.d/fastestmirror.conf里面的enabled=0；
+
+    修改/etc/yum.conf里面的plugins=0
+
+

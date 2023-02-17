@@ -92,6 +92,7 @@ balenaEtcher，这个有Win版本也有Mac版本，所以如果在Mac系统下�
 
     ```
     在终端里输入：
+
     sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume /Applications/Install\ macOS\ Mojave.app --nointeraction
 
     其中 MyVolume 为你的 U 盘名字。

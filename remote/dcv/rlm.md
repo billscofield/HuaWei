@@ -1,3 +1,5 @@
+# reprise
+
 reprise / rɪˈpriːz /software
     （尤指乐曲的）重复部分，再现部；重复，重演
     是一家公司
@@ -6,11 +8,7 @@ reprise / rɪˈpriːz /software
     Reprise License Manager(RLM)是美国Reprise公司的一套许可证管理软件。
     RLM: 重复许可证管理器
 
-
-
-
 migenius realityserver
-
 
 https://docs.aws.amazon.com/zh_cn/dcv/latest/adminguide/setting-up-production.html#prep-linux
 
@@ -36,7 +34,6 @@ https://docs.aws.amazon.com/zh_cn/dcv/latest/adminguide/setting-up-production.ht
 
 4. 将 RLM 许可证管理包的内容提取到 /opt/nice/rlm/，并确保文件由 rlm 用户拥有。
 
-
     $ tar xvf x64_l1.admin.tar.gz -C /opt/nice/rlm/ --strip-components 1
 
     $ chown -R rlm:rlm /opt/nice/rlm
@@ -44,7 +41,6 @@ https://docs.aws.amazon.com/zh_cn/dcv/latest/adminguide/setting-up-production.ht
 5. 获取 RLM 服务器的主机 ID
 
     ./rlmutil rlmhostid ether
-
 
 ## license.lic文件
 
@@ -213,14 +209,15 @@ license.lic 文件包含以下信息：
 
 ### 配置 NICE DCV 服务器
 
-将您的 NICE DCV 服务器配置为使用 RLM 服务器。为此，必须在 NICE DCV 服务器上license-file配置配置参数。
+将您的 NICE DCV 服务器配置为使用 RLM 服务器。为此，必须在 NICE DCV 服务器上
+license-file配置配置参数。
 
 配置 Linux 服务器上的 license-file 配置参数
 
     1. 导航到 /etc/dcv/，并使用您常用的文本编辑器打开 dcv.conf。
 
     2. 在 [license] 部分中找到 license-file 参数。然后，将现有路径替换为 RLM 服
-       务器的端口和主机名，5053@RLM_server_hostname格式。
+        务器的端口和主机名，5053@RLM_server_hostname格式。
 
         如果 license-file 部分中没有 [license] 参数，则使用以下格式手动添加此参数：
 
@@ -267,6 +264,3 @@ license.lic 文件包含以下信息：
     打开 authentication 参数。对于数值数据，输入 system 或 none。
 
     选择确定，并关闭 Windows 注册表编辑器。
-
-
-

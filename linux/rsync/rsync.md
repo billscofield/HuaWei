@@ -1,3 +1,5 @@
+# rsync
+
 ## 介绍
 
 sync:同步
@@ -441,6 +443,10 @@ Pull:
 
         客户端可以将密码写在文件中
         rsync rsync://192.168.1.1/rsynctest --password-file=/etc/rsync.pass     // 权限同样 others 0
+
+
+        rsync -vrt --exclude=8.7/AppStream/aarch64 rsync://rsync.mirrors.ustc.edu.cn/rocky ./
+            --exclude 排除某些文件目录
 
 
 

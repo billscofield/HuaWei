@@ -1,5 +1,4 @@
-
-## [vim-plugin](https://github.com/junegunn/vim-plug)
+# [vim-plugin](https://github.com/junegunn/vim-plug)
 
 安装
 
@@ -7,6 +6,11 @@
 
     curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     wget https://github.com/junegunn/vim-plug/blob/master/plug.vim
+
+    vim +PlugInstall +qall --headless
+        +: 执行命令
+        --headless 不打开界面 ???
+
 
     方法二,离线安装:
 

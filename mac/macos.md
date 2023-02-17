@@ -108,17 +108,28 @@ Homebrew 对于使用 Mac 的开发者来说，是再熟悉不过的了，它可
 
 不知道为什么访问不了github, 只能使用国内源了
 
-```
+```zsh
+intel
+
 /bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai/HomebrewCN/raw/master/Homebrew.sh)"
 
+m1
+
+/bin/zsh -c "$(curl -fsSL https://gitee.com/cunkai1024/HomebrewCN/raw/master/Homebrew.sh)"
+
 ```
 
 
-brew 是从下载源码解压然后 ./configure && make install ，同时会包含相关依存库。并自动配置好各种环境变量，而且易于卸载。
-这个对程序员来说简直是福音，简单的指令，就能快速安装和升级本地的各种开发环境。
+brew 是从下载源码解压然后 ./configure && make install ，同时会包含相关依存库。
+并自动配置好各种环境变量，而且易于卸载。这个对程序员来说简直是福音，简单的指令，
+就能快速安装和升级本地的各种开发环境。
 
-而 brew cask 是 已经编译好了的应用包 （.dmg/.pkg），仅仅是下载解压，放在统一的目录中（/opt/homebrew-cask/Caskroom），省掉了自己去下载、解压、拖拽（安装）等蛋疼步骤，同样，卸载相当容易与干净。这个对一般用户来说会比较方便，包含很多在 AppStore 里没有的常用软件。
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+而 brew cask 是 已经编译好了的应用包 （.dmg/.pkg），仅仅是下载解压，放在统一的
+目录中（/opt/homebrew-cask/Caskroom），省掉了自己去下载、解压、拖拽（安装）等蛋
+疼步骤，同样，卸载相当容易与干净。这个对一般用户来说会比较方便，包含很多在
+AppStore 里没有的常用软件。
+
+
 
 
 
@@ -636,3 +647,23 @@ pwpolicy -clearaccountpolicies
 
 
 
+
+
+## ffmpeg
+
+```
+因请看brew -v，不安全的repository。
+
+% brew -v
+Homebrew 3.5.10-129-g79c6ab2
+fatal: unsafe repository ('/opt/homebrew/Library/Taps/homebrew/homebrew-core' is owned by someone else)
+To add an exception for this directory, call:
+
+git config --global --add safe.directory /opt/homebrew/Library/Taps/homebrew/homebrew-core
+Homebrew/homebrew-core (no Git repository)
+fatal: unsafe repository ('/opt/homebrew/Library/Taps/homebrew/homebrew-cask' is owned by someone else)
+To add an exception for this directory, call:
+
+git config --global --add safe.directory /opt/homebrew/Library/Taps/homebrew/homebrew-cask
+Homebrew/homebrew-cask (no Git repository)
+```

@@ -562,20 +562,16 @@ async function foo(){
 
 await 用于等待一个 Promise 对象, 即等待一个异步处理的结果
 
-```
-async function foo(){
-    const p1 = await p;
-    console.log(p1)
-}
-```
-
-
-
+    ```
+    async function foo(){
+        const p1 = await p;
+        console.log(p1)
+    }
+    ```
 
 ## npm
 
 npm -v
-
 
 安装
     1. 项目内安装
@@ -614,12 +610,9 @@ npm -v
             home=https://npm.taobao.org
             registry=https://registry.npm.taobao.org/
 
-
     3. 卸载包
 
         npm uninstall 包
-
-
 
 项目初始化
     npm init
@@ -702,24 +695,14 @@ Express 应用程序生成器
         app.use('/', indexRouter);
         app.use('/users', usersRouter);
 
-
-
-
     更改启动
         app.js
             module.exports = app;               注释掉
             app.listen(3000, ()=>"启动成功")    添加
         node app.js                             启动
 
-
         npm i nodemon -g
             nodemon app.js
-
-
-
-
-
-
 
 ## 事件
 
@@ -731,20 +714,10 @@ myEmitter.on('someEvent',function(message){     //绑定了事件，事件名称
     console.log(message);
 })  
 
-
 myEmitter.emit('someEvent','the event was emitted')
-
-
-
-
-
 
 req.body
 req.query
-
-
-
-
 
 ## post
 

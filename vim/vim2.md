@@ -19,20 +19,99 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 ## coc.nvim
 
+https://github.com/neoclide/coc.nvim/wiki
+
+oc.nvim 是一个基于NodeJS 的适用于Vim8, Neovim 的Vim 智能补全插件。
+拥有完整的LSP 支持。配置、使用方式及插件系统的整体风格类似 VSCode
+
+因为Coc 本身是Vim 的一个插件而已，但它又有自己的插件系统，所以下面我会将Coc 的
+插件叫做子插件以作区分
+
+**Coc 本身并不提供具体语言的补全功能，更多的只是提供了一个补全功能的平台，所以在
+安装完成后，我们需要安装具体的语言服务以支持对应的补全功能。**
+
+    :CocInstall coc-json coc-tsserver
+
+要检索都有哪些子插件
+
+    1. 可以直接在[Npm](https://www.npmjs.com/search?q=keywords%3Acoc.nvim)上查找coc.nvim
+    
+        npm 搜索栏: keywords:coc.nvim
+
+    2. 用coc-marketplace 直接在Vim 里面进行管理
+
+        :CocInstall coc-marketplace
+
+        :CocList marketplace
+
+        // 搜索 python 相关子插件
+        :CocList marketplace python
+
+
+[相对完整的子插件列表](https://github.com/neoclide/coc.nvim/wiki/Using-coc-extensions#implemented-coc-extensions)
+
+### coc.nvim 安装 
+
 1. 安装 nodejs curl -sL install-node.now.sh/lts | bash
 
-1. cd ~/.vim/bundle/coc.nvim ./install.sh
+2. cd ~/.vim/bundle/coc.nvim ./install.sh
 
-1. vi ~/.vimrc Plugin 'neoclide/coc.nvim'
+3. vi ~/.vimrc Plugin 'neoclide/coc.nvim'
 
-1. :PluginInstall
-
+4. :PluginInstall
 
 验证是否安装成功 :CocInfo
 
 配置 :CocConfig      //~/.vim/coc-settings.json
 
 安装 :CocInstall coc-python :CocInstall coc-css :CocInstall coc-bash
+
+
+### coc-phpls
+
+PHP language server extension for coc.nvim. // 这句话的意思是说 coc-phpls 是
+coc.nvim 的扩展，什么玩意儿啊，就是客户端
+
+coc.nvim is LSP-Client.
+
+**PHP language server** extension for coc.nvim.
+
+php
+    :CocInstall coc-phpls
+
+
+coc-phpls, which uses intelephense as a LSP-Server
+
+
+服务端是 intelephense
+    https://intelephense.com/
+    https://github.com/bmewburn/intelephense-docs
+
+    Intelephense is a high performance, cross platform PHP language server
+    adhering to the Language Server Protocol (LSP).
+
+    npm i intelephense -g
+
+
+
+---
+
+    :CocInstall coc-phpls
+    npm i intelephense -g
+
+---
+
+
+### python
+
+#### coc-jedi
+
+:CocInstall coc-jedi
+pip install -U jedi-language-server
+
+
+#### coc-py
+
 
 ## 一行80个字符
 

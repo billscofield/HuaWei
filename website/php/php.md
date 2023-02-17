@@ -1,3 +1,74 @@
+# PHP
+
+最早的服务器，设计之初是为了解析静态资源的，但是后来越来越多的东西被加进来, 状
+态啊等等，服务器不知道如何解析这些资源，把这些请求分发给 java,php,node 等程序
+
+cgi: 规定 web 服务器和相应的解析器进行沟通的协议
+
+    php-cgi: php 的解析器
+
+    每次请求都会创建一个新的进程
+
+fastcgi
+    常驻型(long-live)，节省资源
+
+    php-fpm 是 fastcgi 的实现，进程管理, 可以生成多少进程等
+
+把 能解析php 的程序当作自己的模块, 例如 apache php5_module, shell的cli
+
+web server 一般是 apache, nginx, iis
+web application 一般指 php, java, asp.net 等应用程序
+
+## php-fpm
+
+PHP-FPM, on the other hand, is a process manager for PHP. It is an
+implementation of the FastCGI protocol that is optimized for use with PHP. The
+main goal of PHP-FPM is to improve the performance and reliability of PHP-based
+web applications by providing a fast and efficient way to manage PHP processes.
+
+When a web server receives a request for a PHP-based page, it passes the
+request to PHP-FPM, which starts a PHP process to handle the request. PHP-FPM
+manages the PHP processes, ensuring that there are enough processes available
+to handle incoming requests and that the processes are running efficiently.
+When the PHP process has completed processing the request, it returns the
+result to PHP-FPM, which then passes the result back to the web server to be
+returned to the client.
+
+In this way, PHP-FPM acts as an intermediary between the web server and the PHP
+interpreter, improving the performance and reliability of PHP-based web
+applications. The combination of PHP and PHP-FPM is widely used and is a common
+setup for hosting dynamic web sites and applications.
+
+    `from open-ai
+
+## nginx 和 php-fpm 的两种通信方式
+
+1. tcp socket
+
+    nginx.conf
+        fastcgi_pass 127.0.0.1:9000;
+    php-fpm.conf
+        listen=127.0.0.1:9000;
+
+        ```nginx
+        location ~ \.php$ {
+            root /xxxx;
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param ...
+            include fastcgi_params;
+        }
+        ```
+
+    可以跨服务器, nginx 和 php-fpm 可以在不同的服务器
+
+2. unix domain socket
+
+    nginx.conf
+        fastcgi_pass unix:/tmp/php-fpm.sock;
+    php-fpm.conf
+        listen = /tmp/php-fpm.sock;
+        (php-fpm.sock 是一个文件，由 php-fpm 生成)
 
 ## PHP (Hypertext Preprocessor)
 
@@ -7,12 +78,17 @@ apt install php7.3-dev
 
     安装了php-devel以后就会有phpize和php-config这两个脚本
 
+apt install php8.2
+apt install php8.2-dev
+
+常量
+    define('a',123'[, bool $case_insensitive = false ])
+
+    declaration of case-insensitive constants is no longer supported
 
 ## phpize
 
 apt-get install php7.3-dev
-
-
 
 
 ## xdebug
@@ -48,26 +124,17 @@ make install
     xdebug.remote_port=8000
     xdebug.remote_enable=1
 
-
-
 之前失败的原因是有多个php, 解决方法就是只剩下一个，其他的全部卸载
 
     apt remove --purge php8.0
         发现 php8.0 -v  还是可以用, 
     apt purge php8.0-common
 
-
-php -m | grep 
-
+php -m | grep
 
 ### how to remove php
 
-https://askubuntu.com/questions/768737/how-to-remove-php-5-6
-
-
-
-## 
-
+[链接](https://askubuntu.com/questions/768737/how-to-remove-php-5-6)
 
 ## 
 
@@ -76,16 +143,11 @@ php -v
     Xdebug requires Zend Engine API version 420200930.
     The Zend Engine API version 320180731 which is installed, is outdated.
 
-
 vi /var/www/html/a.php
 
 <?php
     phpinfo();
 ?>
-
-
-
-## 
 
 ### include 和 require 的区别
 
@@ -98,16 +160,12 @@ include 引入的文件有错误时，会继续执行，并返回一个警告。
 include会尝试着去包含，如果包含不到，会提示警告错误，但是不会影响当前自身脚本的执行；
 require一定会去包含文件，而且包含的文件必须不能出错，否则会终止当前自身脚本的执行
 
-
-
 关于包含文件后作用域问题总结如下：
 
     1. 所有在被包含文件中定义的函数和类在被包含后，在包含文件里都具有全局作用域
 
     2. 被包含文件的变量的作用域，随着包含位置的变化而变化。比如如果是在函数中包
        含，被包含文件的变量是局部变量
-
-
 
 ## php中，函数内引用函数外的变量三种方法：
 
@@ -116,8 +174,6 @@ require一定会去包含文件，而且包含的文件必须不能出错，否�
 2.函数内global声明，函数内$GLOBALS数组或者直接引用。
 
 3.在调用函数的时候用一个参数传递。
-
-
 
 ```
 1.在外部用global定义直接输出：
@@ -186,9 +242,6 @@ chao_echo($mytext);
 结果：可以输出。
 ```
 
-
-
-
 ## 文件包含
 
 项目中要注意不要使用相对路径来做脚本的嵌套包含，嵌套包含应该采用绝对路径的形式去包含。
@@ -230,8 +283,42 @@ chao_echo($mytext);
 
     如果没找到，接下来就将b.php的所在路径(./b/b.php)和b.php中require的路径（c/c.php）进行拼接，得到拼接后的相对路径./b/c/c.php。在入口文件a.php所在的目录下搜寻./b/c/c.php，存在就包含成功，否则即出错。
 
-
-
-
-
 https://blog.csdn.net/xiaoxiaodongxie/article/details/51828471
+
+## 
+
+unset()
+
+可变变量
+```
+$a = 'test';
+$$a = 20
+```
+
+引用赋值
+```
+$a = 10;
+$b = &$a;
+```
+
+## JIT 即时编译
+
+Just-In-Time 是 php8.0 中的一个重要功能
+
+仅在启用 opcache 的情况下，JIT 才有效
+
+    php.ini
+    zend_extension=opcache
+
+    opcache.enable=1
+    opcache.enable_cli=0
+    opcache.memory_consumption=128
+    opcache.interned_strings_buffer=8
+    opcache.max_accelerated_files=1000
+
+    添加
+    opcache.jit=tracing
+    opcache.jit_buffer_size=100M
+
+    如果有问题，查看 extension_dir="ext" 是否打开
+

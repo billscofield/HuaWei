@@ -3,7 +3,6 @@
 
 https://www.php.net/manual/zh/function.empty.php
 
-
 ## 
 
 empty — 检查一个变量是否为空
@@ -17,8 +16,6 @@ empty(trim($name))。 作为替代，应该使用trim($name) == false.
 
 没有警告会产生，哪怕变量并不存在。 这意味着 empty() 本质上与 !isset($var) ||
 $var == false 等价。
-
-
 
 当var存在，并且是一个非空非零的值时返回 false 否则返回 true.
 

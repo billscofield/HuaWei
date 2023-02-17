@@ -1,3 +1,5 @@
+# vim
+
 据说Emacs是神的编辑器，而Vim是编辑器之神
 
 ## [History of Emacs and vi Keys](http://xahlee.info/kbd/keyboard_hardware_and_key_choices.html)
@@ -301,6 +303,14 @@ ex 命令下的寄存器
 x、s、d、c、y 都会覆盖寄存器中的内容
 
 复制专用寄存器 "0
+
+:map        查看所有映射
+:messages   查看最近的消息
+
+:set helplang=cn
+
+查看所有支持语法高亮的语言
+    /usr/local/vim9/share/vim/vim90/syntax/
 
 
 ## expandtab
@@ -649,3 +659,4 @@ value1              在单词 value1 上执行 w/W , 都会到 value2 上
 :only 关闭所有其他窗口而仅保留当前窗口.
 
 如果你的光标处是一个 url, 那么 gx 将会在默认浏览器中打开该 url.
+
