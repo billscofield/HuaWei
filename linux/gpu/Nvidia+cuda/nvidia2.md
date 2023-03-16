@@ -5,7 +5,7 @@
 
 方案一
     如果会默认安装cuda10,则卸载cuda
-    
+
     /usr/local/cuda-8.0/bin/uninstall_cuda_8.0.pl
 
     安装cuda-9.0
@@ -43,7 +43,6 @@
 
     cat /usr/local/cuda/include/cudnn.h | grep CUDNN_MAJOR -A 2
     ```
-
 
 直接安装 cuda, 会进行 nvidia 的安装提示
 

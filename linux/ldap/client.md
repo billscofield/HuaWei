@@ -1,6 +1,3 @@
-
-
-
 ## ldapadmin
 
 only for windows

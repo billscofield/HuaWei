@@ -19,6 +19,13 @@ released on August 6, 2012. Yellow Dog Linux lent(借给) its name to the popula
 YUM Linux software updater, derived from **YDL's YUP (Yellowdog UPdater)** and thus
 called **Yellowdog Updater, Modified.**
 
+Yellowdog was a Linux distribution **originally developed for the PowerPC
+architecture**, and the YUM package manager was initially created to manage
+software updates for that distribution. Later, it was modified and adapted for
+use with other Linux distributions, including CentOS. YUM provides a simple and
+easy way to manage software packages and updates in CentOS and other Linux
+distributions that use the RPM package format.
+
 ---
 
 [link](https://en.wikipedia.org/wiki/Yum_(software))

@@ -1,11 +1,9 @@
-
 https://www.digitalocean.com/community/tutorials/how-to-configure-openldap-and-perform-administrative-ldap-tasks
 
 LDAP systems organize the data they store into hierarchical structures called
 Directory Information Trees or DITs for short. Starting with version 2.3, the
 actual configuration for OpenLDAP servers is managed within a special DIT,
 typically rooted at an entry called cn=config.
-
 
 This configuration system is known as OpenLDAP online configuration, or OLC.
 
@@ -15,8 +13,6 @@ What Does DSE Stand For?
 DSE stands for “DSA specific entry”, which is a management or control entry in
 an LDAP server. DSA stands for “directory system agent”, which basically means
 a directory server that implements the LDAP protocol.
-
-
 
 ## Accessing the Root DSE
 
@@ -63,9 +59,7 @@ supportedFeatures: 1.3.6.1.4.1.4203.1.5.5
 supportedLDAPVersion: 3
 entryDN:
 subschemaSubentry: cn=Subschema
-
 ```
-
 
 ## Find the DITs this Server Manages
 
@@ -84,13 +78,11 @@ The base entry of each DIT on the server is available through the
 namingContexts attribute. This is an operational attribute that would normally
 be hidden, but calling it out explicitly allows it to be returned.
 
-
 ## Find the Configuration DIT
 
 The DIT that can be used to configure the OpenLDAP server is not returned by a
 search for namingContexts. The root entry of the config DIT is instead stored
 in a dedicated attribute called configContext.
-
 
 ```
 
@@ -111,10 +103,8 @@ ldapsearch -H ldapi:// -Y EXTERNAL -b "cn=config" -LLL -Q
 
     We then use the cn=config entry as the basis of our search.
 
-
 To get a better idea of the hierarchy in which the information is organized and
 stored, let’s just print out the various entry DNs instead:
-
 
     ```
 
@@ -144,9 +134,7 @@ stored in this entry by typing:
 
     ldapsearch -H ldapi:// -Y EXTERNAL -b "cn=config" -LLL -Q -s base
 
-
 ## Find Admin Entry
-
 
 To find the rootDN for each of your DITs, type:
 
@@ -163,7 +151,6 @@ olcRootDN: cn=Manager,dc=my-domain,dc=com
 ## Viewing Schema Information
 
 LDAP schemas define the objectClasses and attributes available to the system
-
 
 View the Built-In Schema
 
@@ -193,5 +180,3 @@ View Additional Schema
 
 
 If you want to print all of the additional schema, instead type:
-
-    

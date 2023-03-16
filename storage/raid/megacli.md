@@ -8,11 +8,9 @@ MegaCli 是由 LSI 原厂提供的 LSI MegaRaid 阵列卡管理工具。
 LSI Corporation was acquired by Avago Technologies (now known as Broadcom Inc.)
 on May 6, 2014
 
-
 wegt https://docs.broadcom.com/docs-and-downloads/raid-controllers/raid-controllers-common-files/8-07-10_MegaCLI_Linux.zip 
 unzip 8-07-10_MegaCLI_Linux.zip 
 yum localinstall 8.07.10_MegaCLI_Linux/Linux\ MegaCLI\ 8.07.10/MegaCli-8.07.10-1.noarch.rpm
-
 
 ### 1. Megacli概念
 
@@ -22,16 +20,12 @@ yum localinstall 8.07.10_MegaCLI_Linux/Linux\ MegaCLI\ 8.07.10/MegaCli-8.07.10-1
 
     1. 适配器(Adapter) - 我们要使用的物理控制器，由id（通常为0）表示。
         The physical controller which we are going to use, represented by id (usually 0).
-
     2. 机柜(Enclosure 围场) - 物理机箱所附的物理驱动器，以id为代表，例如254,252等。
         The physical chassis the physical drives attached to, represented by id, such as 254,252 etc.
-
     3. 物理驱动器 - **附加到控制器的物理硬盘**，由id，0,1,2,3等代表
         Physical Drives - Physical Hard Disks attached to controller, represented by id, 0,1,2,3 etc.
-
     4. 虚拟驱动器 - 这些驱动器包含物理驱动器，并等同于由id，0,1,2,3等代表的RAID设备。
         Physical Hard Disks attached to controller, represented by id, 0,1,2,3 etc.
-
 
 ### 2. Common Parameters
 
@@ -54,9 +48,6 @@ Many of the commands of MegaCli make use of the following parameters:
     Specifies a **virtual drive** (aka RAID array) (where x is a number starting
     with zero or the string all).
 
-
-
-
 ## 2. StorCli
 
 StorCLI 是 MegaCLI 的继承者，允许命令行工具管理和控制 LSI MegaRAID 控制器。
@@ -73,17 +64,13 @@ storcli 支持 json 格式输出，信息解析更加方便
 
 安装完后，默认位置在 /opt/Mega/storcli下面
 
-
 ### 1. Raid卡信息查询
 
 通过以下命令可以大致确定使用的的Raid的厂商和型号
 
 1. dmesg |grep raid 
-
 2. cat /proc/scsi/scsi 
-
 3. lspci |grep -i raid
-
 
 ### 2. 常用命令
 
@@ -135,7 +122,6 @@ storcli 支持 json 格式输出，信息解析更加方便
         个参数，是创建不成功的。这个参数的含义是：Specifies the number of physical
         drives per array. The default value is automatically chosen。）
 
-
     storcli64 /c0 add vd type=raid10 size=100GB,200GB names=tmp1,tmp2 drives=32:0-3 pdperarray=2        由前四块物理磁盘构建raid10，分别分配多个逻辑磁盘。
 
     storcli64 /c0 add vd type=raid10 size=all names=tmp3 drives=32:0-3 pdperarray=2                     剩下的所有空间分配给逻辑磁盘tmp3。
@@ -176,17 +162,9 @@ storcli 支持 json 格式输出，信息解析更加方便
 
     storcli64 /c0 show events file=/home/eventreports               将日志存储为文件
 
-
-
-
-
-
-
-
 ### 下载安装
 
 从 https://www.broadcom.com 官网下载对应工具即可,也可以上服务器品牌官网支持页下
-
 载该工具, 比如联想官网
 
 https: //download.lenovo.com/pccbbs/thinkservers/ul_avago_storcli_1.18.11_anyos.zip

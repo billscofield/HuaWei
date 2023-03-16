@@ -14,18 +14,13 @@ $PS2
 $MAIL
     如 /var/mail/root
 
-
-
 echo $MAIL
 echo ${MAIL}
-
-
 
 man bash
 
 查询是否为 bash 的内置命令(外部命令: 其他非 bash 所提供的命令)
     type 命令
-
 
 ## 自定义变量
 
@@ -90,12 +85,7 @@ $? 0True 1False 2错误
 
 ??? 貌似 && || 用在命令行中,而 -a -o ! 用在 shell script 中
 
-
 ## expr
-
-
-
-
 
 ## 变量内容的删除、取代和替换
 
@@ -241,9 +231,6 @@ SECONDS
 
 $0 当前程序的名称
 
-
-
-
 ```
 if expr 1 \& 0 ;then
     echo "True";
@@ -264,8 +251,6 @@ fi
 break 只是退出当前循环还会继续执行函数后面的命令
 return 退出当前函数还会继续执行主脚本
 exit 彻底退出脚本
-
-
 
 ```
 #!/bin/bash

@@ -3,9 +3,6 @@ DAS
 NAS
 SAN
 
-
-
-
 被动模式端口号：
     e x 256 + f
 
@@ -19,7 +16,6 @@ SAN
     227 Entering Passive Mode (10,0,5,18,135,137).
     150 Here comes the directory listing.
     ```
-
 
 ## ftp passive mode port number:
 

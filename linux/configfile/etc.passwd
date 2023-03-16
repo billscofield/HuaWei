@@ -1,0 +1,51 @@
+# password
+
+The salt is used as a random string of characters that is added to the
+plaintext password before hashing. This helps to increase the security of
+password storage, as the same password will have a different hash when a
+different salt is used.
+
+The encryption used for password storage in Linux systems is typically a
+one-way hash function, such as MD5, SHA-1, SHA-256, or SHA-512. These functions
+take the password and salt as inputs and produce a fixed-length hash value as
+output. The resulting hash is stored in the `/etc/shadow` file, which is only
+readable by the root user.
+
+The encryption used for password storage can be recognized by the prefix in the
+password field of the `/etc/shadow` file. For example, a password hash starting
+with $1$ indicates that MD5 was used, while a hash starting with $6$ indicates
+that SHA-512 was used. The prefix is followed by the salt and the hashed
+password, separated by the $ character.
+
+It is important to note that the use of MD5 for password storage is no longer
+considered secure, as it is vulnerable to various attacks. It is recommended to
+use SHA-256 or SHA-512 instead.
+
+---
+
+please give an example how the passwd in `/etc/passwd` is encrypted Sure! In
+Linux, the password in the `/etc/passwd` file is actually stored as a hashed
+value, which is created by applying a one-way cryptographic function (such as
+MD5 or SHA-256) to the user's password and a random salt value. Here is an
+example of how this works:
+
+Let's say that the user's password is "password123" and the system generates a
+random salt value of "abc123". The system then concatenates the salt value with
+the password to get "abc123password123".
+
+Next, the system applies a one-way cryptographic function (such as SHA-256) to
+this concatenated value to create a hashed value, which is stored in the
+`/etc/passwd` file. The resulting hashed value might look something like this:
+
+`$5$abc123$9LtnYJ4lq3y3cxz6LkkljKgDIJ8OvZ1QzOx9ZZPYe2B`
+
+Here, the hashed value starts with $5$ to indicate that SHA-256 was used. The
+next field "abc123" is the salt value that was used. The rest of the hashed
+value represents the result of applying the SHA-256 function to the
+concatenated salt and password.
+
+When the user enters their password to log in, the system retrieves the hashed
+value from the `/etc/passwd` file, extracts the salt value and applies the same
+cryptographic function to the entered password and the extracted salt. If the
+resulting hashed value matches the one stored in `/etc/passwd`, then the user is
+authenticated and allowed to log in.

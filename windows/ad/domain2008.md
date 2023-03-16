@@ -10,8 +10,6 @@ IP：192.168.10.30
 辅域控制服务器计算机名称：bdc1
 IP：192.168.10.31
 
-
-
 辅域控制器注意事项
 
 1. 安装前，辅域控制器的DNS指向主域控制器，设置如下：
@@ -28,7 +26,6 @@ IP：192.168.10.31
 
 5. 如果确定域环境不使用IPv6地址，主域控和辅域控安装前可以先把IPv6的地址关掉，域控的DNS服务器会优先获取IPv6的DNS
 
-
 ## 域控
 
 手动设置固定IP，DNS服务器指向自己
@@ -42,7 +39,6 @@ IP：192.168.10.31
 2. 安装主域控制器
 
     dcpromo(domain controller promote, 域控制器提升)
-
 
     dcpromo命令是一个“开关”命令。如果Windows 2000 Server计算机是成员服务器，则
     运行dcpromo命令会安装活动目录，将其升级为域控制器；如果Windows 2000 Server
@@ -65,7 +61,7 @@ IP：192.168.10.31
     同样不需要配置,此时也可以不安装, 待步骤二时安装
 
 2. 安装域控
-    
+
     dcpromo
 
     向现有域添加域控制器
@@ -78,7 +74,6 @@ IP：192.168.10.31
 
 最后需要把辅域控制器的DNS指向本机IP地址
 
-
 ### 全局编录解析：
 
 这里对全局编录做个解释。全局编录（global Catalog，GC)全局编录包含了各个活动目录
@@ -89,7 +84,6 @@ IP：192.168.10.31
 个域内的对象，微软设计了全局编录（global Catalog，GC)。全局编录包含了各个活动目
 录中每一个对象的最重要的属性（即部分属性），这样，即使用户或应用程序不知道对象
 位于哪个域，也可以迅速找到被访问的对象。
-
 
 ## unix
 
@@ -105,21 +99,13 @@ Windows Services for UNIX 3.5一起提供的Interix 子系统演变而来的，�
 制和编译工具，并支持使用300余个UNIX命令、实用程序和Shell脚本。因为SUA设计用来在
 Windows内核基础上运行，所以能提供真正的基于UNIX的功能而不用任何仿真。
 
-
 搜索 Utilities and SDK for Subsystem for UNIX-based Applications in Windows 2008
 
 已经非常不容易找到了
 
 wget https://softpedia-secure-download.com/dl/fd85a72ebe900cbf1096f7e46fca2f8a/6222b267/100154308/software/programming/Utilities%20and%20SDK%20for%20Subsystem%20for%20UNIX-based%20Applications_AMD64.exe
 
-
-
 [link](https://wiki.samba.org/index.php/Installing_RSAT#Installation)
-
-
-
-
-
 
 ## 加域时遇到的问题
 

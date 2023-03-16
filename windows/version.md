@@ -1,5 +1,3 @@
-
-
 文件名有VL就是VL版，没有就是零售。
 
 例如“Windows8ProVL”，“Pro”即“professional”，中文即“专业版”，“VL”即“
@@ -18,7 +16,6 @@ volumelicensingfororganizations”的简称，中文即“团体批量许可证�
     VOL可以安装多台机器，不像零售版只能安装一台。
 
     而且不用激活——和普通的零售版在使用上基本没有区别。
-
 
 ## Win10最后一个LTSC版本-Win10最新企业版 LTSC 2021
 

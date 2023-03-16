@@ -1,4 +1,3 @@
-
 # realm
 
 realm join google.com -U administrator

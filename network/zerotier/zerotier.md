@@ -1,5 +1,3 @@
-
-
 由于zerotier官方服务器主要是在国外，在国内高峰时期经常会出现连接不上官方服务器的情况
 
 PLANET 行星服务器，Zerotier 各地的根服务器，有日本、新加坡等地
@@ -9,7 +7,6 @@ LEAF 相当于各个枝叶，就是每台连接到该网络的机器节点。
 
 zerotier-cli listpeers
     能看到上边那几个名词
-
 
 
 curl -s https://install.zerotier.com | sudo bash
@@ -101,10 +98,6 @@ ztncui 是 zerotier one众多开源第三方控制器中的一个，之所以选
 
 
 一个具有固定公网ip的云服务器，最好同时具备固定ipv6。
-
-
-
-
 
 
 ## ztncui&Zerotier安装与设置

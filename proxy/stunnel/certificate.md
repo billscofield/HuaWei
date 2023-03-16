@@ -1,14 +1,10 @@
-
-
 X.509 是定义公钥证书格式的标准。
-
 
 X.509 is a standard format for **public key certificates**, **digital
 documents** that securely associate cryptographic key pairs with identities
 such as websites, individuals, or organizations.
 
 公钥证书是将加密密钥对与网站、个人或组织等身份安全地关联起来的数字文档。
-
 
 In cryptography, X.509 is an International Telecommunication Union (ITU)
 standard defining the format of public key certificates.
@@ -18,17 +14,12 @@ signature. A certificate contains an identity (a hostname, or an organization,
 or an individual) and a public key (RSA, DSA, ECDSA, ed25519, etc.), and is
 either signed by a certificate authority or is self-signed.
 
-
-
 When a certificate is signed by a trusted certificate authority, or validated
 by other means, someone holding that certificate can use the public key it
 contains to establish secure communications with another party, or validate
 documents digitally signed by the corresponding private key.
 
-
-1. ITU
-
-    International Telecommunication Union
+1. ITU(International Telecommunication Union)
 
     ITU's work is organized into three Sectors:(https://www.itu.int/en/mediacentre/backgrounders/Pages/itu-study-groups.aspx)
         1. ITU-R (Radiocommunication).
@@ -39,10 +30,8 @@ documents digitally signed by the corresponding private key.
 
     ITU Telecommunication Standardization Sector (ITU-T)
 
-
     The main products of ITU-T are normative Recommendations.
     ITU-T的主要产品为规范性建议书。
-
 
     Recommendations are standards that define how telecommunication networks
     operate and interwork. ITU-T Recommendations are non-binding, however they
@@ -53,7 +42,6 @@ documents digitally signed by the corresponding private key.
     建议书是确定电信工作运行和互通方法的标准，虽不具有约束力，但由于其质量高且
     能够保证网络互连并实现电信服务的全球提供，而普遍得到遵守。
 
-
     The vast majority of all Recommendations are available in electronic (PDF)
     form, free of charge to all, once the final, edited version is published.
     Texts that are not free of charge include common ITU-T | ISO / IEC texts
@@ -62,9 +50,7 @@ documents digitally signed by the corresponding private key.
     ITU-T的绝大多数建议书一经完成最后编辑工作，即以PDF格式免费向普通公众提供。
     非免费文件包括适用特殊安排的 ITU-T | ISO / IEC 通用文件
 
-
 [ITU-T Recommendation series structure ITU-T建议书的结构](https://www.itu.int/en/ITU-T/publications/Pages/structure.aspx)
-
 
     1. ITU-T A-Series Recommendations:
 
@@ -239,13 +225,9 @@ documents digitally signed by the corresponding private key.
 
     解密算法
 
-
-
 ### 密钥交换
 
 因为对称密钥分发比较困难，使用非对称密钥对对称密钥进行分发
-
-
 
 ### Hash 算法(单向散列函数)
 
@@ -263,7 +245,6 @@ documents digitally signed by the corresponding private key.
         SHA-1：生成 164 位固定长度的 hash 值，已经被破解
         SHA-2：生成 224、256、384、512 位的 hash 值
         SHA-3：全新的算法和标准
-
 
 MD4/MD5
     散列值是 16Byte
@@ -284,7 +265,6 @@ SHA-3
         sha3-512
 
 哈希不是加密，因为不能解密
-
 
 ### 消息认证码 HMAC
 
@@ -307,8 +287,6 @@ SHA-3
 不能鉴别消息的所有者
 
 所以不如使用签名
-
-
 
 ### 数字签名
 
@@ -343,10 +321,12 @@ SHA-3
 服务器把证书发给客户端。
 客户端拿着证书跟第三方机构验证身份，验证通过则建立通信。
 
+## 证书的几个重点内容
 
-
-
-    
+证书办法机构(CA机构)
+证书拥有者的名称
+有效期
+公钥
 
 ## openssl
 
@@ -712,7 +692,23 @@ https厂商生成https证书的简易过程，https证书厂商一般都会有�
 是用户角色，我们直接用自签名证书当做服务器证书就可以了，简单快捷，不过这里只适
 用于测试。
 
+## is public key based on private key? if it is, can i generate a new public key from private key ? and how
 
+Yes, a public key is generated from the corresponding private key in public key
+cryptography.
 
+In most public key cryptography systems, such as RSA and ECC, the public key is
+generated from the private key using a mathematical formula. However, in some
+systems, such as EdDSA, the public key is generated directly from a secret
+scalar value derived from the private key.
 
+To generate a new public key from a private key, you can use the same algorithm
+or library that was used to generate the original public key. For example, in
+OpenSSL you can use the following command to generate a new public key from an
+existing private key:
 
+    openssl ec -in privatekey.pem -pubout -out publickey.pem
+
+This will output the public key in PEM format to the file publickey.pem. Note
+that the specific command and options may vary depending on the algorithm and
+library used.

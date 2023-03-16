@@ -29,7 +29,6 @@ man bash
 -P     The maximum number of pseudoterminals
 -T     The maximum number of threads
 
-
 查看当前系统打开的文件数量: lsof | wc -l
 
 查看当前进程的打开文件数量：lsof -p pid | wc -l      （lsof -p 1234 | wc -l  ）
@@ -39,7 +38,6 @@ man bash
 查看系统总限制打开文件的最大数量：cat /proc/sys/fs/file-max
 
 lsof只能以root权限执行。
-
 
 
 文件标识符概念:
@@ -54,8 +52,6 @@ Linux系统中， 每当进程打开一个文件时，系统就为其分配一�
     /etc/security/limits.d/目录,默认存在一个*-nproc.conf文件,用于限制用户的线程限制,(centos7 有，debian10 没有)
 
     /etc/security/limits.d/里面的配置会覆盖/etc/security/limits.conf的配置,如在/etc/security/limits.conf上有针对某一个用户的配置时,/etc/security/limits.d目录下的配置文件也有该用户的配置,最终会取决于/etc/security/limits.d目录下的配置文件
-
-
 
 ## /etc/security/ulimit.conf
 
@@ -138,11 +134,3 @@ POSIX message queues     (bytes, -q) 819200
 scheduling priority             (-e) 0
 real-time priority              (-r) 0
 pipe size            (512 bytes, -p) 8
-
-
-
-
-
-
-
-

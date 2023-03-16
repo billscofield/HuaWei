@@ -1,15 +1,8 @@
-
-
-
-
-
 主控        linux               windows
 
 方式    openldap/samba
 
-
 client  linux/windows/mac    linux/windows/mac
-
 
 ## 1. windows AD
 
@@ -21,14 +14,9 @@ client  linux/windows/mac    linux/windows/mac
 
     https://blog.csdn.net/algebra007/article/details/127923530
 
-
 ## 2. Linux openldap
 
-
-
-
 ## 理解
-
 
 nslcd
 sssd
@@ -50,19 +38,14 @@ sssd
 nscd
     nscd目前只支持缓存四种名称服务: passwd, group, hosts, services
 
-
 nss(name service switch)
     The  **getent** command displays entries from databases supported by the Name
     Service Switch libraries, which are configured in /etc/nsswitch.conf.
-
 
 在RedHat系统中可以使用authconfig命令查看当前的认证模式配置，例如：
     authconfig --test | egrep -i 'ldap|sss'
     authconfig --test | egrep -i 'ldap|sss|pam|nss'
 
 在Debian/Ubuntu系统中则可使用auth-client-config工具查看当前的NSS和PAM配置
-
-
-
 
 https://www.cnblogs.com/somata/p/LinuxLDAPUserAuthentication.html

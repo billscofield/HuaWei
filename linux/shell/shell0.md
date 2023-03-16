@@ -1,5 +1,3 @@
-
-
 # shell
 
 ```
@@ -23,7 +21,6 @@
 \b([0-9]{1,3}\.){3}[0-9]{1,3}\b
 
 \b 应该是和vim关于单词的定义是一样的，
-
 
 ## zsh
 
@@ -71,10 +68,6 @@ oh-my-zsh集成了大量的主题, 位于oh-my-zsh/theme
 
     uninstall_oh_my_zsh zsh
 
-
-
-
-
 ## .sh文件自动添加注释，文件头
 
 ```
@@ -106,13 +99,13 @@ endfunc
 
     1. 语法错误    bash -n a.sh
         1. **-n，不会运行命令,仅检查语法错误**
-        
+
         1. bash -v file //打印输出这个脚本的内容, 然后输出结果
-        
+
         1. **bash -x file** 
-            
-             **runs the script <file> with tracing of each command executed**
-                
+
+             **runs the script `<file>` with tracing of each command executed**
+
             脚本的执行过程，每一步都会输出（有输出的情况下），
                 1. bash -x a.sh
                 1. + 一个加号代表外层输出
@@ -125,7 +118,10 @@ endfunc
 1. -r  restricted shell
 
 1. --  
-     -- **signals the end of options and disables further option processing.** Any arguments after the -- are treated as filenames and arguments. An argument of - is equivalent to --
+
+    **signals the end of options and disables further option processing.**
+    Any arguments after the -- are treated as filenames and arguments. An
+    argument of - is equivalent to --
 
     ```
     $ echo "date" | sh -
@@ -149,19 +145,19 @@ endfunc
     sh: 0: Can't open -x
     ```
 
-    That means that the date string is being read as a command from the standard input and that the dash (-) signals the end of options and start the arguments (the same as -- would do).
+    That means that the date string is being read as a command from the
+    standard input and that the dash (-) signals the end of options and start
+    the arguments (the same as -- would do).
 
     https://unix.stackexchange.com/questions/423501/what-does-sh-mean
 
-
-## 变量    
+## 变量
 
 = 左右不能有空格
 
 name="BILL"
 
 带有特殊符号的时候，要叫上双引号， **变量赋值最好都加上双引号**
-
 
 ### 双引号保留格式
 
@@ -208,23 +204,23 @@ i=100 被当成了字符串
 
     1. 全局变量定义
         export name="Xian"
-        
+
         或者
-        
+
         name="xian"
         export name
-        
+
         如果之前定义了局部变量a,export a 可以将其升级为全局变量
-        
+
     1. 可以向下传递
         1. 子进程可以改，但是不能向上传递
-        
+
     1. declare -x 也可以声明全局变量
-        
+
     **加不加双引号的原则：这个命令能否识别它**
-        
+
     set 可以显示所有变量，和一些函数
-    
+
 1. 查所有环境变量
 
     1. env
@@ -243,10 +239,8 @@ i=100 被当成了字符串
 
 1. 自定义变量
 
-
 ${name}
 $name
-
 
 lscpu
 /proc/meminfo
@@ -275,7 +269,6 @@ SHLVL   当前shell 深度，第一个为1
 $_  前一个命令的最后一个参数
 
     echo $_
-
 
 只读变量（常量）
 readonly name="bcd"
@@ -312,8 +305,6 @@ x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$
     共同点
         1. 不会向上传递
 
-
-
 ### 大括号
 
 {;}         //最后一个命令是有分号的
@@ -321,7 +312,6 @@ x=1;echo "pid=$$";(echo "subpid=$$";echo "subx=$x";x=2;echo "subx2=$x");echo x=$
 {name="aaa";echo $name;}
 
 就是在本shell中执行，类似于数学运算中的优先级吧
-
 
 ### 位置变量
 
@@ -342,7 +332,6 @@ $3 就是c
 1. $@   所有参数,**每个参数为独立字符串**
 
 1. $* 传递给脚本的所有参数，**全部参数合为一个字符串**
-
 
 
 ```
@@ -392,7 +381,6 @@ a.sh one two three four
     ```
 
 **set-- 清空所有位置变量**
-
 
 ```
 a.sh
@@ -451,50 +439,39 @@ done
 
     **和是否有语法错误决定的**
 
-
 **退出状态码**
     exit    
     exit 10
 
-
-
-
-
 ## hash
 
 1. 简介
-    1. linux系统下会有一个hash表，当你刚开机时这个hash表为空，每当你执行过一条命令时，hash表会记录下这条命令的路径，就相当于缓存一样。
-
-    1. 第一次执行命令shell解释器默认会从PATH路径下寻找该命令的路径，当你第二次使用该命令时，shell解释器首先会查看hash表，没有该命令才会去PATH路径下寻找。
-    1. hash表的作用：
+    1. linux系统下会有一个hash表，当你刚开机时这个hash表为空，每当你执行过一条
+       命令时，hash表会记录下这条命令的路径，就相当于缓存一样。
+    2. 第一次执行命令shell解释器默认会从PATH路径下寻找该命令的路径，当你第二次
+       使用该命令时，shell解释器首先会查看hash表，没有该命令才会去PATH路径下寻
+       找。
+    3. hash表的作用：
         1. 大大提高命令的调用速率。
 
 1. 命令
     1. help hash
-    1.  hash -l             //--long
+    2. hash -l             //--long
         1. 查看hash表中的内容
-        
-    1. hash -p /bin/ls bb
+    3. hash -p /bin/ls bb
         1. 把ls命令重新写了一遍，改名为bb
-        
-    1. hash -t ls　　//-t参数可以查看hash表中命令的路径
+    4. hash -t ls　　//-t参数可以查看hash表中命令的路径
         1. hash表中没有记录这个命令的话，就是not found
-        
-    1. hash -r
+    5. hash -r
         1. 清空hash表
-        
-    1. hash -d bb
+    6. hash -d bb
         1. 清除某一条
 
-    -d	forget the remembered location of each NAME
-    -l	display in a format that may be reused as input
-    -p pathname	use PATHNAME as the full pathname of NAME
-    -r	forget all remembered locations
-    -t	print the remembered location of each NAME, preceding each location with the corresponding NAME if multiple NAMEs are given
-
-
-
-
+    -d  forget the remembered location of each NAME
+    -l  display in a format that may be reused as input
+    -p  pathname    use PATHNAME as the full pathname of NAME
+    -r  forget all remembered locations
+    -t  print the remembered location of each NAME, preceding each location with the corresponding NAME if multiple NAMEs are given
 
 ## 算数运算
 
@@ -502,7 +479,6 @@ x=10
 y=20
 
 $x+$y 输出10+20
-
 
 let $x+$y
     help let
@@ -520,8 +496,7 @@ var=expr 1 \* 2
 
 var=$(expr 1 \* 2)
 
-
-##  短路
+## 短路
 
 false && cmd2;cmd3
 true || cmd2;cmd3
@@ -537,25 +512,18 @@ true || cmd2;cmd3
 
 declare -i x=10 //声明为数字
 
-    -a	to make NAMEs indexed arrays (if supported)
-    -A	to make NAMEs associative arrays (if supported)
-    -i	to make NAMEs have the `integer' attribute
-    -l	to convert the value of each NAME to lower case on assignment
-    -n	make NAME a reference to the variable named by its value
-    -r	to make NAMEs readonly
-    -t	to make NAMEs have the `trace' attribute
-    -u	to convert the value of each NAME to upper case on assignment
-    -x	to make NAMEs export
-
-
-
-
+    -a  to make NAMEs indexed arrays (if supported)
+    -A  to make NAMEs associative arrays (if supported)
+    -i  to make NAMEs have the `integer' attribute
+    -l  to convert the value of each NAME to lower case on assignment
+    -n  make NAME a reference to the variable named by its value
+    -r  to make NAMEs readonly
+    -t  to make NAMEs have the `trace' attribute
+    -u  to convert the value of each NAME to upper case on assignment
+    -x  to make NAMEs export
 
 
 COLOR=$[RANDOM%7+31]
-
-
-
 
 ## to review
 
@@ -563,13 +531,9 @@ COLOR=$[RANDOM%7+31]
 
     https://blog.csdn.net/sinolover/article/details/78673625
 
-
-
 unzip 用法
 
     https://blog.csdn.net/qq_35399846/article/details/70168002
-
-
 
 # 吴光科
 
@@ -606,7 +570,6 @@ fi
 
 
 
-
 if 
 then
 
@@ -619,7 +582,7 @@ fi
 ```
 
 -f  判断文件是否存在    if [ -f FILENAME ]
-    
+
     ```
     FILE=/data/a.txt
     if [ ! -f $FILE ];then
@@ -630,7 +593,7 @@ fi
     ```
 
 -d  判断目录是否存在    if [ -d DIR ]
-    
+
     ```
     if [ ! -d /data/newyear ];then
         mkdir -p /data/newyear
@@ -640,7 +603,7 @@ fi
     ```
 
 -eq 等于，用于：整型比较
-    
+
     ```
     score=$1
 
@@ -690,8 +653,6 @@ fi
     echo Linux `echo Shell $(echo today is $(date "+%Y-%m-%d"))`
         这种嵌套的情况下，单单使用反引号会出现问题, 多个$()同时使用也不会有问题
 
-
-
 1. 一般情况下，$var与${var}是没有区别的，但是用${ }会比较精确的界定变量名称的范围
 
     ```
@@ -699,7 +660,6 @@ fi
     echo ${A}B  //输出LinuxB
     echo $AB    //表示变量AB
     ```
-
 
 ### MySQL 备份
 
@@ -736,9 +696,8 @@ else
 fi
 ```
 
-
-
 ## for
+
 ```
 for 变量 in 字符串
     do
@@ -759,8 +718,6 @@ for ((i=1;i<=100;i++))
     done
 
 
-
-
 打包数个文件
 for i in `find ./ -name "*.log"`
     do
@@ -770,7 +727,6 @@ for i in `find ./ -name "*.log"`
 
 批量传输文件scp
 
-
     ```
     FIELS=$*
     for i in 
@@ -779,16 +735,15 @@ for i in `find ./ -name "*.log"`
     done
     ```
 
-
 ## 各种shell
+
 1. AIX 下的Korn Shell, 即ksh
-1. Solaris 下的 Bourne Shell, 即bsh
-1. FreeBSD 下的C Shell, 即csh
-1. HP-UX 下的POSIX Shell
-1. Linux 下的Bourne Again Shell, 即bash
+2. Solaris 下的 Bourne Shell, 即bsh
+3. FreeBSD 下的C Shell, 即csh
+4. HP-UX 下的POSIX Shell
+5. Linux 下的Bourne Again Shell, 即bash
 
 cat /etc/shells
-
 
     ```
     find ./ -name a[b.]*
@@ -800,7 +755,8 @@ cat /etc/shells
 
 
     当前目录下 有 a.sh ab.sh
-    ----
+
+---
 
     a.txt ab.txt c.txt b.txt
     find ./ -name "[!a]*"
@@ -810,15 +766,12 @@ cat /etc/shells
 
         这三条命令为什么不一样呢?
 
-
-    
     ```
-
 
     标准输出+错误输出 合并到一个文件
 
 | tee 文件      T型管道
-    
+
 ## 文件通配符
 *
 ?
@@ -838,41 +791,41 @@ cat /etc/shells
     1. 将前一个命令的**标准输出**存入一个文件中，并传递给下一个命令作为标准输入
         用法:   命令 | tee 文件 | 命令
 
-
-
 ## 命令执行控制符
+
 1. ;    顺序执行
-1. &&   逻辑与
-1. ||   逻辑或
-1. &    后台执行
+2. &&   逻辑与
+3. ||   逻辑或
+4. &    后台执行
 
 ## 命令替换符号
+
 1. ""   
-1. ''   阻止shell解析变量
-1. ``   把执行命令的结果存放在变量中
+2. ''   阻止shell解析变量
+3. ``   把执行命令的结果存放在变量中
 
 ## 元字符
+
 1. #        注释符号
-1. $        变量的引用符号
-1. 空格     分隔符，用来分隔 命令名、参数、选项
+2. $        变量的引用符号
+3. 空格     分隔符，用来分隔 命令名、参数、选项
 
 ## 转义符
+
 1. \
-
-
 
 --- 
 
 ## 环境变量
+
 每个用户登陆系统后，都有自己专属的运行环境（也称为Shell环境），称为环境变量
 BASH
 SHELL
 
 BASH_VERSINFO   
 
-
-
 ## 环境配置文件
+
 全局环境变量配置文件：/etc/profile , /etc/bashrc
 用户环境变量配置文件：~/.bash_profile , ~/.bashrc
 读取顺序：
@@ -882,51 +835,41 @@ BASH_VERSINFO
     1. ~/.bashrc            //当用户登陆时，每次打开新shell时，该文件被读取
     1. /etc/bashrc          //每个用户，当bash被打开时，该文件被读取
 
-
 ## 测试命令 test
 
 指定条件值:使用命令和字符串
 
 1. 数值比较
     1. -eq
-    1. -ne
-
-    1. -ge
-    1. -gt
-
-    1. -le
-    1. -lt
-
-1. 字符串比较
+    2. -ne
+    3. -ge
+    4. -gt
+    5. -le
+    6. -lt
+2. 字符串比较
     1. =
-    1. !=
-    1. -z
-    1. -n
-    1. **注意操作符和操作数之间必须有空格**
-
-1. 文件操作
+    2. !=
+    3. -z
+    4. -n
+    5. **注意操作符和操作数之间必须有空格**
+3. 文件操作
     1. -b  文件存在，且为块文件
-    1. -c  文件存在，且为字符文件
-
-    1. -d  文件存在，且为目录
-    1. -f  文件存在，且为普通文件
-
-    1. -e  文件存在
-    1. **-s  文件存在，且至少有一个字符**
-
-    1. -r  文件存在，且readonly
-    1. -w  文件存在，且writeable
-    1. -x  文件存在，且executable
-
-    1. 通常会和 ! 连用
+    2. -c  文件存在，且为字符文件
+    3. -d  文件存在，且为目录
+    4. -f  文件存在，且为普通文件
+    5. -e  文件存在
+    6. **-s  文件存在，且至少有一个字符**
+    7. -r  文件存在，且readonly
+    8. -w  文件存在，且writeable
+    9. -x  文件存在，且executable
+    10. 通常会和 ! 连用
         ! -e    注意有空格
-
-1. 逻辑操作
+4. 逻辑操作
     1. &&   短路与
     1. ||   短路或
 
-
 ## 算术运算符
+
 $[] //有无空格均可
 
 ```
@@ -935,38 +878,34 @@ NUM2=2
 
 NUM3=$[NUM1+NUM2*2]
 
-
 expr NUM1 + NUM2 \* 2
 expr 的话 ，* / () 都要做转义处理
 ```
 
-
 ## 内部命令
+
 1. echo 
     1. 双引号完全可以省略
     
     ```
     echo it is a good idea
-
     echo "\"It is a test\""
-
     ```
 
-    1. -e 开启转义
+    2. -e 开启转义
     
     ```
     echo -e "hello\n"
     ```
     
-    1. 单引号 不进行任何转义，原样输出
+    3. 单引号 不进行任何转义，原样输出
 
-    1. 总结
+    4. 总结
            | 能否引用变量 |  能否引用转移符  |  能否引用文本格式符(如：换行符、制表符)
 
     单引号 |      否      |       否         |                否
     双引号 |      能      |       能         |                能
     无引号 |      能      |       能         |                否  
-
 
 1. printf
     http://www.runoob.com/linux/linux-shell-printf.html
@@ -977,7 +916,6 @@ expr 的话 ，* / () 都要做转义处理
 
     printf "hello\n"
     为什么没有\n时都看不到输出呢?
-
 
     printf "%-10s %-8s %-4s\n" 姓名 性别 体重kg
     printf "%-10s %-8s %-4.2f\n" 郭靖 男 66.1234
@@ -990,7 +928,6 @@ expr 的话 ，* / () 都要做转义处理
         printf %10s\n a b c     意想不到的结果
         printf "%10s\n" a b c   正确的结果
         ```
-        
 
     格式只指定了一个参数，但多出的参数仍然会按照该格式输出，**format-string 被重用**
     printf %10s\n a b c
@@ -1019,9 +956,6 @@ expr 的话 ，* / () 都要做转义处理
     read -p "请输入一段文字:" -n 6 -t 5 -s password
     echo -e "\npassword is $password"
 
-
-
-
     a.sh
     NAME=''
     read -p "Please input ur name: " NAME
@@ -1035,18 +969,21 @@ expr 的话 ，* / () 都要做转义处理
 ## source 或 "."(dot)
 
 "."表示当前目录
-一个脚本others没有x权限，通过source 或 "." 或 /bin/bash 就可以执行了，这有什么安全的?
+
+一个脚本others没有x权限，通过source 或 "." 或 /bin/bash 就可以执行了，这有什么
+安全的?
 
 ### source filename 与 sh filename 及./filename执行脚本的区别
 
-1. 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。./filename是因为当前目录没有在PATH中，所有"."是用来表示当前目录的。
+1. 当shell脚本具有可执行权限时，用sh filename与./filename执行脚本是没有区别得。
+   ./filename是因为当前目录没有在PATH中，所有"."是用来表示当前目录的。
 
-1. sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用export。
+2. sh filename 重新建立一个子shell，在子shell中执行脚本里面的语句，该子shell继
+   承父shell的环境变量，但子shell新建的、改变的变量不会被带回父shell，除非使用
+   export。
 
-1. source filename：这个命令其实只是简单地读取脚本里面的语句依次**在当前shell里面执行，没有建立新的子shell。**那么脚本里面所有新建、改变变量的语句都会保存在当前shell里面。
+3. source filename：这个命令其实只是简单地读取脚本里面的语句依次**在当前shell里
+   面执行，没有建立新的子shell。**那么脚本里面所有新建、改变变量的语句都会保存
+   在当前shell里面。
 
-
-
-
-扩展阅读
-    https://www.cnblogs.com/liang-io/p/9825363.html
+扩展阅读https://www.cnblogs.com/liang-io/p/9825363.html

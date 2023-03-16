@@ -1,8 +1,6 @@
-
 ## CF
 
 Compact Flash
-
 
 ## TF
 
@@ -11,7 +9,6 @@ TF卡又称microSD
 ## SD
 
 ## Micro SDXC卡（即俗称的TF卡、小卡）
-
 
 1. SD卡
     Secure Digital
@@ -37,8 +34,6 @@ TF卡又称microSD
 6. SDXC(超大容量SD卡)
     SD eXtended Capacity
     32x24x2.1mm
-
-
 
 ## UHS
 

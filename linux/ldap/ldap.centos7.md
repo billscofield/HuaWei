@@ -1,4 +1,3 @@
-
 ## 实验环境
 
 名称            IP              用途
@@ -6,8 +5,6 @@ ldap master01    10.0.11.
 ldap master02    10.0.11.        
 ldap client01    10.0.11.        
 ldap client02    10.0.11.        
-
-
 
 ## 0. 配置yum源
 
@@ -21,7 +18,6 @@ yum clean all && yum makecache
 ```
 * */1 * * * ntpdate time.windows.com &>/dev/null
 ```
-
 
 ## 2. 关闭selinux和防火墙firewalld
 
@@ -59,12 +55,11 @@ yum install -y migrationtools
     The openldap-clients package contains the client programs needed for
     accessing and modifying OpenLDAP directories.
 
-
 4. compat-openldap
     The compat-openldap package includes older versions of the OpenLDAP shared
     libraries which may be required by some applications.
 
-5.  openldap-servers-sql
+5. openldap-servers-sql
     This package contains a loadable module which the slapd server can use to
     read data from an RDBMS.
 
@@ -77,14 +72,7 @@ yum install -y migrationtools
     aliases, hosts, netgroups, networks, protocols, RPCs, and services from
     existing nameservices (flat files, NIS, and NetInfo) to LDAP.
 
-
-
-
-
-
 ## 4. 配置OpenLDAP
-
-
 
 [root@master1 openldap]# pwd
 /etc/openldap
@@ -141,12 +129,6 @@ openldap-servers-2.4.44-24.el7_9.x86_64
 openldap-clients-2.4.44-24.el7_9.x86_64
 openldap-2.4.44-24.el7_9.x86_64
 
-
-
-
-
-
-
 NOTE:
 
     从openldap2.4.23版本开始，所有配置都保存在 **/etc/openldap/slapd.d** 目录下的
@@ -164,7 +146,6 @@ schema(架构) and DIT.
 There are specific objectClasses used to carry global configuration options,
 schema definitions, backend and database definitions, and assorted(各种各样的，
 混杂的) other items.
-
 
 | Sample configuration tree:
 |   
@@ -193,7 +174,6 @@ schema definitions, backend and database definitions, and assorted(各种各样�
 
 Other objects may be part of the configuration but were omitted from the illustration for clarity.
 (其他对象可能是配置的一部分，但为了清晰起见，在插图中省略了。)
-
 
 The slapd-config configuration tree has a very specific structure. 
 The root of the tree is named **cn=config** and contains global configuration settings.
@@ -224,7 +204,6 @@ database, so that all ordering dependencies are preserved.
 In most cases the index does not have to be provided; it will be automatically
 generated based on the order in which entries are created.
 
-
 Configuration directives are specified as values of individual attributes. 
 
 Most of the attributes and objectClasses used in the slapd configuration have a
@@ -234,21 +213,16 @@ Generally there is a one-to-one correspondence between the attributes and the
 old-style slapd.conf configuration keywords, using the keyword as the attribute
 name, with the "olc" prefix attached.
 
-
 A configuration directive may take arguments. If so, the arguments are
 separated by whitespace. If an argument contains whitespace, the argument
 should be enclosed in double quotes "like this". In the descriptions that
 follow, arguments that should be replaced by actual text are shown in brackets
 <>.
 
-
 The distribution contains an example configuration file that will be installed
 in the /usr/local/etc/openldap directory. A number of files containing schema
 definitions (attribute types and object classes) are also provided in the
 /usr/local/etc/openldap/schema directory.
-
-
-
 
 ### 配置示例
 
@@ -260,7 +234,6 @@ definitions (attribute types and object classes) are also provided in the
     ldapdelete
 顾名思义就是添加，修改和删除。而需要修改或增加配置时，则需要先写一个ldif后缀的
 配置文件，然后通过命令将写的配置更新到slapd.d目录下的配置文件中去，
-
 
 1. 生成管理员密码
 
@@ -360,14 +333,14 @@ definitions (attribute types and object classes) are also provided in the
 3. 设置 OpenLDAP 数据库
 
     1. 将示例数据库配置文件复制到/var/lib/ldap并更新文件权限。
-        
+
         ```
         cp /usr/share/openldap-servers/DB_CONFIG.example /var/lib/ldap/DB_CONFIG
         chown ldap:ldap /var/lib/ldap/ -R
         ```
 
     2. 添加cosine和nis LDAP模式。
-        
+
         ```
         ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/cosine.ldif
         ldapadd -Y EXTERNAL -H ldapi:/// -f /etc/openldap/schema/nis.ldif 
@@ -375,7 +348,7 @@ definitions (attribute types and object classes) are also provided in the
         ```
 
     3. 创建 base.ldif 为您的域生成文件。使用以下信息。您可以根据自己的要求进行修改。
-        
+
         ```
         dn: dc=qiansw,dc=com
         dc: qiansw
@@ -395,7 +368,7 @@ definitions (attribute types and object classes) are also provided in the
         objectClass: organizationalUnit
         ou: Group
         ```
-        
+
         构建目录结构：ldapadd -x -W -D "cn=root,dc=qiansw,dc=com" -f base.ldif
         此次需要输入上面步骤设置的 root 密码。
 
@@ -485,7 +458,6 @@ definitions (attribute types and object classes) are also provided in the
         ldapdelete -W -D "cn=root,dc=qiansw,dc=com" "uid=raj,ou=People,dc=qiansw,dc=com"
 
     还可以使用 Apache Directory Studio 图形化 LDAP 管理工具 来管理 ldap。
-
 
 5. 防火墙-Firewall
 

@@ -1,4 +1,3 @@
-
 ## test
 
 https://www.shellscript.sh/test.html
@@ -14,7 +13,6 @@ It is also normally a shell builtin (which means that the shell itself will
 interpret [ as meaning test, even if your Unix environment is set up
 differently):
 
-
 ```
 $ type [
 [ is a shell builtin
@@ -26,7 +24,8 @@ $ ls -l /usr/bin/test
 -rwxr-xr-x 1 root root 35368 Mar 27  2000 /usr/bin/test
 ```
 
-This means that '[' is actually a program, just like ls and other programs, so it must be surrounded by spaces:
+This means that '[' is actually a program, just like ls and other programs, so
+it must be surrounded by spaces:
 
     > if [$foo = "bar" ]
 
@@ -39,7 +38,6 @@ space; if there isn't a space there, it won't work:
 
 Note: Some shells also accept "==" for string comparison; this is not portable,
 a single "=" should be used for strings, or "-eq" for integers.
-
 
 ## read
 
@@ -131,16 +129,11 @@ echo ${url-www.baidu.com}       // 会输出 www.baidu.com
 
 echo ${url:-www.baidu.com}       // 会输出 www.baidu.com
 
-
-
-
 ## seq tr
 
 for i in {1..${num}};do     $num 不管用
 
 done
-
-
 
 ## 多线程
 
@@ -155,6 +148,3 @@ done
 wait
 echo "over"
 ```
-
-
-

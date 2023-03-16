@@ -8,7 +8,7 @@ links:
 
     https://www.kernel.org/doc/Documentation/iostats.txt
 
-一. 基本概念
+## 一. 基本概念
 
 1. 读/写IO
 
@@ -63,7 +63,7 @@ IO SIZE乘V/（V乘寻道时间＋IO SIZE）。我们可以看出影响每秒IO�
 是IO SIZE和寻道时间，IO SIZE越大，寻道时间越小，吞吐量越高。相比能显著影响IOPS
 的因素，只有一个，就是寻道时间。
 
-二. 监控磁盘IO的基本原理:通过分析/proc/diskstats文件，来对IO的性能进行监控。
+## 二. 监控磁盘IO的基本原理:通过分析/proc/diskstats文件，来对IO的性能进行监控。
 
 1. 第一至第三个域
 
@@ -86,12 +86,12 @@ is the total number of reads completed successfully.）
 读扇区的次数，成功读过的扇区总次数。（number of sectors read. This is the total
 number of sectors read successfully.）
 
-5. 第7个域```读花费的毫秒数，这是所有读操作所花费的毫秒数（用__make_request()到
-   end_that_request_last()测量）。（number of milliseconds spent reading. This
-   is the total number of milliseconds spent by all reads (as measured from
-   __make_request() to end_that_request_last()).）
+5. 第7个域
 
-```
+    读花费的毫秒数，这是所有读操作所花费的毫秒数（用__make_request()到
+    end_that_request_last()测量）。（number of milliseconds spent reading. This
+    is the total number of milliseconds spent by all reads (as measured from
+    __make_request() to end_that_request_last()).）
 
 6. 第8个域
 
@@ -113,40 +113,34 @@ is the total number of sectors written successfully.）
 
 9. 第11个域
 
-```写操作花费的毫秒数 — 写花费的毫秒数，这是所有写操作所花费的毫秒数（用
-__make_request()到end_that_request_last()测量）。（number of milliseconds spent
-writing This is the total number of milliseconds spent by all writes (as
-measured from __make_request() to end_that_request_last()).）
-
-```
+    写操作花费的毫秒数 — 写花费的毫秒数，这是所有写操作所花费的毫秒数（用
+    __make_request()到end_that_request_last()测量）。（number of milliseconds
+    spent writing This is the total number of milliseconds spent by all writes
+    (as measured from __make_request() to end_that_request_last()).）
 
 10. 第12个域
 
-正在处理的输入/输出请求数 — -I/O的当前进度，只有这个域应该是0。当请求被交给适当
-的request_queue_t时增加和请求完成时减小。（number of I/Os currently in
-progress. The only field that should go to zero. Incremented as requests are
-given to appropriate request_queue_t and decremented as they finish.）
+    正在处理的输入/输出请求数 — -I/O的当前进度，只有这个域应该是0。当请求被交给
+    适当的request_queue_t时增加和请求完成时减小。（number of I/Os currently in
+    progress. The only field that should go to zero. Incremented as requests
+    are given to appropriate request_queue_t and decremented as they finish.）
 
 11. 第13个域
 
-输入/输出操作花费的毫秒数 —-花在I/O操作上的毫秒数，这个域会增长只要field 9不为0
-。（number of milliseconds spent doing I/Os. This field is increased so long as
-field 9 is nonzero.）
+    输入/输出操作花费的毫秒数 —-花在I/O操作上的毫秒数，这个域会增长只要field 9
+    不为0。（number of milliseconds spent doing I/Os. This field is increased
+    so long as field 9 is nonzero.）
 
 12. 第14个域
 
-输入/输出操作花费的加权毫秒数 —– 加权， 花在I/O操作上的毫秒数，在每次I/O开始，
-I/O结束，I/O合并时这个域都会增加。这可以给I/O完成时间和存储那些可以累积的提供一
-个便利的测量标准。（number of milliseconds spent doing I/Os. This field is
-incremented at each I/O start, I/O completion, I/O merge, or read of these
-stats by the number of I/Os in progress (field 9) times the number of
-milliseconds spent doing I/O since the last update of this field. This can
-provide an easy measure of both I/O completion time and the backlog that may be
-accumulating.）
-
-
-
-
+    输入/输出操作花费的加权毫秒数 —– 加权， 花在I/O操作上的毫秒数，在每次I/O开
+    始，I/O结束，I/O合并时这个域都会增加。这可以给I/O完成时间和存储那些可以累积
+    的提供一个便利的测量标准。（number of milliseconds spent doing I/Os. This
+    field is incremented at each I/O start, I/O completion, I/O merge, or read
+    of these stats by the number of I/Os in progress (field 9) times the number
+    of milliseconds spent doing I/O since the last update of this field. This
+    can provide an easy measure of both I/O completion time and the backlog
+    that may be accumulating.）
 
 ---
 

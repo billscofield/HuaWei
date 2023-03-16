@@ -5,10 +5,12 @@
 the apt.conf has been replaced by apt.conf.d
 
 ISC tools
+
     Internet Systems Consortium(/ kənˈsɔːtiəm /联合)
 
     ISC develops and distributes three open source Internet networking software
     packages:
+
         BIND 9,
         ISC DHCP,
         Kea DHCP,
@@ -17,7 +19,8 @@ ISC tools
 
     Lines starting with // are treated as comments (ignored). 
 
-When an APT tool starts up it will read the configuration files in the following order:
+When an APT tool starts up it will read the configuration files in the
+following order:
 
     1. the file specified by the APT_CONFIG environment variable (if any)
 

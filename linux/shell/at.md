@@ -1,6 +1,8 @@
 
 # at
 
+apt install -y at
+
 at and batch read commands from standard input or a specified file which are to
 be executed at a later time, using /bin/sh.
 
@@ -15,10 +17,6 @@ atrm    deletes jobs, identified by their job number.
 batch   executes commands when system load levels permit; in other words, when
 the load average drops below 1.5, or the value specified in the invocation of
 atd.
-
-
-
-
 
 -m      Send mail to the user when the job has completed even if there was no
 output.
@@ -41,7 +39,19 @@ output.
 
         Times displayed will be in the format "Thu Feb 20 14:50:00 1997".
 
--c     cats the jobs listed on the command line to standard output.
+-c     **cats the jobs listed on the command line to standard output.**
+
+systemctl status atd
+
+---
+
+The result of the command specified by the at command will be printed to
+standard output (stdout) and standard error (stderr) streams, which by default
+are redirected to the user's email account. If the user does not have an email
+account set up, the output will be discarded.
+
+To redirect the output of the command to a file or another destination, you can
+use standard shell redirection operators such as >, >>, or 2>&1.
 
 
 
@@ -66,8 +76,6 @@ output.
 9）一般情况下这两个文件存在一个即可。如果只有少数几个用户需要使用计划任务，
     那么就保留at.allow文件，如果大部分用户都要使用计划任务，那么保留at.deny即可。
 
-
-
 ## 关于时间
 
 [[CC]YY]MMDDhhmm[.ss]
@@ -88,13 +96,8 @@ CCYY-MM-DD ： CC为century世纪，YY 两位的年份，MM 和 DD 表示月和�
 
 注：这里一位的C具体哪个数字代表哪个世纪需看系统的定义，无固定的说法
 
-
-
-
 The definition of the time specification can be found in
 /usr/share/doc/at/timespec.
-
-
 
 ### 使用案例
 
@@ -120,7 +123,6 @@ The definition of the time specification can be found in
     job 4 at Tue Jun 11 15:47:00 2019
     [root@vms002 /]# atq                                #查看计划任务是否设置成功
 
-
 batch
     uptime
     12:57:06 up  5:41,  3 users,  load average: 0.00, 0.01, 0.05  #好吧，现在几乎没有负载
@@ -131,9 +133,6 @@ batch
     job 12 at Mon Sep  4 12:51:00 2017
 
     同样batch同样也可以使用atq和atrm来管理。
-
-
-
 
 ## atd
 

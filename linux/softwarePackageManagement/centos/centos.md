@@ -1,8 +1,13 @@
+# centos 软件管理
 
+套件名称: 包名称-(主版本.次版本 修订号) 操作系统(Release)   cpu平台
+                                        .el7                .noarch
+autoconf-2.69-11.el7.noarch.rpm  
 
-## 
+x86_64  64位¬
+noarch  32/64通用
 
-软件名称 版本号 发布版本 系统平台
+rpmfind.net
 
 Base/Extras/Updates
 
@@ -11,12 +16,23 @@ yum repolist
     extras
     updates
 
+In CentOS 7, the '!' symbol in front of a repository id in the output of the
+"yum repolist" command indicates that the repository is disabled. This means
+that the repository is not currently being used to install or update packages
+on the system.
+
+To enable a disabled repository, you can use the following command:
+
+    yum-config-manager --enable <repo-id>
+
+Replace <repo-id> with the actual repository id that you want to enable. You
+can also use the yum-config-manager command to disable a repository by using
+the --disable option instead of --enable.
+
+---
+
 epel fedora 的一个项目
-
-
-
-
-
+EPEL stands for Extra Packages for Enterprise Linux.
 
 yum list 包名               // apt-cache search 
 yum list | grep 
@@ -26,23 +42,10 @@ yum list
 
 yum list installed          // 从本地数据库中查询
 
-
-
-
-
-
-
 yum info httpd
-
-
-
 
 yum install  --nogpgcheck
 yum install  xxx  --downloadonly
-
-
-
-
 
 yum group list
 yum groupinfo "MATE Desktop"
@@ -50,6 +53,16 @@ yum groupinstall    mariadb
 yum groupremove     mariadb
 yum groupupdate     xxx
 
+**$releasever** and **$asearch** are variables that will be replaced with specific
+values during the repository configuration process.
+
+**$releasever** stands for the current version of CentOS being used, which can be
+found in the file /etc/centos-release. This variable ensures that the correct
+version of the packages are installed.
+
+**$basearch** is the base architecture of the system, such as x86_64, i386, or
+aarch64. This variable is determined automatically based on the system's
+architecture.
 
 ## yum groups
 
@@ -65,6 +78,24 @@ Maybe run: yum groups mark install (see man yum)
 No packages in any requested group available to install or update
 ```
 
+### yum groups mark install
+
+The "yum groups mark install" command is used **to mark a package group for
+installation**. In Yum, a package group is a collection of related packages that
+can be installed together as a single unit. The "yum groups" command is used to
+manage package groups in Yum.
+
+The "mark" sub-command is used to mark a package group for installation. This
+means that Yum will include the package group in the list of packages to be
+installed or updated during the next Yum transaction.
+
+For example, the command "yum groups mark install 'Development Tools'" would
+mark the "Development Tools" package group for installation. This package group
+includes a collection of development tools that are commonly used for software
+development on Linux.
+
+---
+
 Resolution
 
     The yum has changed in Red Hat Enterprise Linux 7. The package group
@@ -79,7 +110,6 @@ Resolution
     ```
 
 ---
-
 
 https://fedoraproject.org/wiki/Features/YumGroupsAsObjects
 
@@ -99,48 +129,30 @@ https://fedoraproject.org/wiki/Features/YumGroupsAsObjects
 
 2. Benefit to Fedora
 
-
-
 ## 
 
-
-
 yum search                      // 关注软件包的名称和内容描述
-
-
-
 
 yum reinstall xxx
 yum update                  // 系统更新，更新yum源中所有的软件
 yum update xxx
     yum update kernel
 
-
-
 yum history 
     yum history info 9
     yum history undo 9      // 撤销第九步
     yum history undo 12     // 撤销刚才的撤销
-
-
 
 yum provides vim            // 查文件，查命令
 yum whatprovides vim
     yum provides /etc/vsftpd/vsftpd.conf
     yum provides */vsftpd.conf
 
-
-
-
-
-
-
 []
 name
 baseurl
 gpgcheck
 enabled
-
 
 ## yum 服务器
 
@@ -179,7 +191,6 @@ systemctl enable vsftpd
     enabled = 1
     ```
 
-
 CD:
 
 ```
@@ -196,7 +207,6 @@ gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
 
 yum --disablerepo=\* --enablerepo=c7-media [command]
 
-
 ## 签名检查机制
 
 两种方法:
@@ -208,8 +218,6 @@ yum --disablerepo=\* --enablerepo=c7-media [command]
 2. 指定位置
 
     gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7
-
-
 
 ## /etc/yum.conf
 
@@ -230,7 +238,6 @@ distroverpkg=centos-release
 ```
 
 The [main] section must exist for yum to do anything. It consists of the following options:
-
 
     1. cachedir
         Directory where yum should store its cache and db files. The default is `/var/cache/yum'.
@@ -275,11 +282,6 @@ The [main] section must exist for yum to do anything. It consists of the followi
         'system-release(releasever)' red‐hat-release" and you can see what
         $releasever is most easily by using: "yum version".  `'`
 
-
-
-
-
-
 ## rpm
 
 rpmfind.net
@@ -289,12 +291,9 @@ rpm --nosignature
     --force             // yum reinstall
     --nodeps
 
-
 rpm --help | grep '\--force'
 rpm -e ntfs-3g --nodepes
     ntfs-3g-devle 依赖于 ntfs-3g
-
-
 
 在yum makecache时，一直停在Determining fastest mirrors 这个界面，也就是说一直在
 判断最快镜像，由于已经指定了yum源，所以不需要些插件，可以用动禁用。
@@ -304,5 +303,3 @@ rpm -e ntfs-3g --nodepes
     修改/etc/yum/pluginconf.d/fastestmirror.conf里面的enabled=0；
 
     修改/etc/yum.conf里面的plugins=0
-
-

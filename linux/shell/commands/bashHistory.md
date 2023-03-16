@@ -1,3 +1,21 @@
+# history
+
+## what if you open many terminals , will every command in every terminals be saved to .bash_history ? what sequence will be used?
+
+Yes, every command entered in every terminal session will be saved to the
+.bash_history file, as long as the commands are executed in the Bash shell. The
+history entries will be stored in chronological order, with the most recent
+command being added to the end of the file.
+
+**Each terminal session has its own history buffer**, which is stored in
+memory.  When a session is closed, its history buffer is written to the
+.bash_history file, and when a new session is opened, it reads the entire
+contents of the file into memory.
+
+It's worth noting that if multiple terminal sessions are open at the same time,
+and a command is executed in one session before the other session has had a
+chance to save its history to the file, then **the order of the commands in the
+history file may not reflect the actual order in which they were executed.**
 
 ## HISTFILESIZE 与 HISTSIZE 的区别
 
@@ -12,8 +30,6 @@ HISTFILESIZE 定义了在 .bash_history 中保存命令的记录总数，可以�
 
 HISTSIZE 定义了 history 命令输出的记录数，即输出.bash_history文件中的最后
 HISTSIZE 行
-
-
 
 set | grep HIST (我用的是 zsh)
 
@@ -37,14 +53,6 @@ HISTCONTROL有以下的选项：
     如果同时设定多个选项，中间使用冒号,如：
         HISTCONTROL=ignorespace:erasedups
 
-
-
-
-
-
-
-
-
 ## 显示操作时间
 
 bash
@@ -55,16 +63,12 @@ bash
 zsh
     history -i
 
-
-
 ## zsh 的 history
 
 ➜  Linux git:(master) ✗ which history
 history: aliased to omz_history
 
-
 zsh 改写了 bash 的 history 
-
 
 ```  /root/.oh-my-zsh/lib/history.zsh
 
@@ -84,8 +88,8 @@ omz_history () {
                 fi
 }
 
+## Timestamp format
 
-# Timestamp format
 case ${HIST_STAMPS-} in
   "mm/dd/yyyy") alias history='omz_history -f' ;;
   "dd.mm.yyyy") alias history='omz_history -E' ;;
@@ -93,13 +97,7 @@ case ${HIST_STAMPS-} in
   "") alias history='omz_history' ;;
   *) alias history="omz_history -t '$HIST_STAMPS'" ;;
 esac
-
-
 ```
-
-
-
-
 
 ## [bash-history-facilities](https://www.gnu.org/software/bash/manual/html_node/Bash-History-Facilities.html)
 
@@ -128,10 +126,5 @@ $HISTFILESIZE lines. If HISTFILESIZE is
     a numeric value less than zero,
 the history file is not truncated.
 
-
 history
     -c     Clears the directory stack by deleting all of the entries.
-
-
-
-

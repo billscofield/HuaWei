@@ -1,4 +1,3 @@
-
 Create a file and wirte binding information to it
 
     echo ‘192.168.1.1 00:02:B3:38:08:62 ‘ > /etc/ip-mac-binding
@@ -6,9 +5,6 @@ Create a file and wirte binding information to it
 Set automatic binding at startup
 
     cho ‘arp -f /etc/ip-mac-binding ‘ >> /etc/rc.d/rc.local
-
-
-
 
 1）查看arp缓存
 
@@ -46,4 +42,5 @@ Set automatic binding at startup
     arp -i eth0 -Ds 10.0.0.2 eth1 pub
     提示：当eth0收到IP地址为10.0.0.2的请求时，用eth1的MAC地址应答
 
-
+net-tools
+    arping

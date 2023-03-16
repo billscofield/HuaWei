@@ -1,8 +1,17 @@
-Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记本，支持运行 40 多种编程语言。
-Jupyter Notebook 的本质是一个 Web 应用程序，便于创建和共享文学化程序文档，支持实时代码，数学方程，可视化和 markdown。 用途包括：数据清理和转换，数值模拟，统计建模，机器学习等等
+# jupyter
 
-用户可以通过电子邮件，Dropbox，GitHub 和 Jupyter Notebook Viewer，将 Jupyter Notebook 分享给其他人。
-在Jupyter Notebook 中，代码可以实时的生成图像，视频，LaTeX和JavaScript。
+julia python R
+
+Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记本，支持运行 40
+多种编程语言。
+
+Jupyter Notebook 的本质是一个 Web 应用程序，便于创建和共享文学化程序文档，支持
+实时代码，数学方程，可视化和 markdown。 用途包括：数据清理和转换，数值模拟，统
+计建模，机器学习等等
+
+用户可以通过电子邮件，Dropbox，GitHub 和 Jupyter Notebook Viewer，将 Jupyter
+Notebook 分享给其他人。在Jupyter Notebook 中，代码可以实时的生成图像，视频，
+LaTeX和JavaScript。
 
 数据挖掘领域中最热门的比赛 Kaggle 里的资料都是Jupyter 格式
 
@@ -16,14 +25,20 @@ B：在下方插入新单元
 X：剪切选中的单元
 Shift +V：在上方粘贴单元
 
-
 ## 安装
+
 pip install jupyter
 
 ## 根据提示输入密码
+
 jupyter notebook password
 
+[NotebookPasswordApp] Wrote hashed password to /root/.jupyter/jupyter_notebook_config.json
+
 ## 启动jupyter,默认端口是8888
+
+$ jupyter notebook --no-browser --ip=0.0.0.0 --allow-root
+
 nohup jupyter notebook --no-browser --ip=0.0.0.0  --port=10000 &> jupyter.log &
 
 nohup 命令
@@ -32,7 +47,13 @@ nohup 命令
     Output that would normally go to the terminal goes to a file called nohup.out if it has not already been redirected.
 
 jupyter notebook
-同时，会在你开启 notebook 的文件夹中启动 Jupyter 主界面
+    同时，会在你开启 notebook 的文件夹中启动 Jupyter 主界面
 
 https://www.cnblogs.com/nxld/p/6566380.html
 
+
+.ipynb
+
+一个输入和一个相应的输出叫做一个 cell
+
+ctrl enter 执行

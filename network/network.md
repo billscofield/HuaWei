@@ -10,7 +10,6 @@
 BASE是英文baseband的缩写，指的就是基带。表示没有使用频分复用或者其它频率转换技
 术，每一个信号在一个单一频率上完全控制线缆。
 
-
 1. 100BASE-T has three major standard versions in copper and fiber mediums:
 
     1. 100BASE-TX: Used for full-duplex point-to-point communication with two
@@ -30,8 +29,7 @@ BASE是英文baseband的缩写，指的就是基带。表示没有使用频分�
        distance of up to six miles between two stations. A repeater is required
        every 165 yards over long haul distances.
 
-
-1. CAT3,4,5,6
+2. CAT3,4,5,6
 
     没有电磁干扰的情况下，能够承载的最大数据传输速率
 
@@ -40,7 +38,6 @@ cat 6       1Gbps       10Gbps(cable length under 100 meters)
 cat 6a      10Gbps      Augmented
 cat 7       10Gbps      Added shielding to the wires(Cat6 的屏蔽版本)
 cat 8       40Gbps      (distance up to 30 meters,屏蔽)
-
 
 /etc/network/interface
 auto eth0
@@ -55,13 +52,13 @@ name eth0
 
 uses TCP/IP protocol and can be configured by dhcp .
 
-here is another 
+here is another
 
     1. https://unix.stackexchange.com/questions/128439/good-detailed-explanation-of-etc-network-interfaces-syntax
 
 互联网络分组交换(internet packet exchange, IPX)
 
-OSI reference model 
+OSI reference model
     互操作性，简单，模块化设计和培训目的
 
 应用层提供了人与应用程序交互的界面
@@ -85,9 +82,6 @@ OSI reference model
         multiple analog or digital signals are combined into one signal over a
         shared medium.  5个主要功能：连接管理，可靠和不可靠的数据传输，流控制，
         多路复用和分段。
-
-
-
 
 ## 硬件链路
 
@@ -136,11 +130,3 @@ ADSL是指从运营商机房的设备（DSLAM）一直到用户家中（猫）�
     运营商就想到一个办法，根据家庭宽带消费等级，分配不同数量的允许客户端。现在
     运营商默许了路由器的存在，一般新的套餐都不能多拨了，部分老套餐依然可以。所
     以当时每一个客户设备享用一个拨号通道？
-
-
-
-
-
-
-
-

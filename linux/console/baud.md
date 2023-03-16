@@ -1,5 +1,4 @@
-
-## 串口通信为什么要设置波特率
+# 串口通信为什么要设置波特率
 
 http://www.elecfans.com/dianzichangshi/20170823540954.html
 

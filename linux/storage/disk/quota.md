@@ -1,20 +1,15 @@
-
-
 ## Quota
 
 磁盘配额应用在组上没啥用，这个组最大多少，不限制成员
 
-
 容量限制
 文件个数限制
-
 
 软限制
 硬限制
 
     软设置10，硬设置13   (soft,hard]
     第10个可以，第11个可以(会报警) , 第12个、13个可以，14不可以, 第15个才不可以 
-
 
 宽限时间
 
@@ -42,13 +37,12 @@
 
 ### 步骤
 
-
 #### 1. 分区开启 quota
 
 ext4
 
 临时开启Quota
-    
+
     mount -o remount,usrquota,grpquota /disk
 
 永久开启Quota
@@ -65,7 +59,7 @@ ext4
 xfs
 
 临时开启Quota
-    
+
     umount /disk
     mount /dev/xxx /disk -o uquota,gquota
 
@@ -78,11 +72,9 @@ xfs
     mount -o remount,uquota,gquota /disk
     mount
 
-
 #### 2. 建立磁盘配额的配置文件
 
 **xfs 分区可以省略这一步骤**
-
 
 quotacheck - scan a filesystem for disk usage, create, check and repair quota files
 
@@ -98,10 +90,11 @@ Options
     -m: 强制以读写的方式扫描文件系统，和 -M 类似，一般扫描根分区时使用
     -f: 强制扫描文件系统，并写入新的配置文件，一般扫描新添加的硬盘分区时使用
 
-
     -M, --try-remount
 
-        This flag forces checking of filesystem in read-write mode if a remount fails. Do this only when you are sure no process will write to a filesystem while scanning.
+        This flag forces checking of filesystem in read-write mode if a remount
+        fails. Do this only when you are sure no process will write to a
+        filesystem while scanning.
 
     -m, --no-remount
 
@@ -113,7 +106,6 @@ Options
     如果需要给根分区开启配额功能,添加 m: quotacheck -augvm
 
     会在磁盘分区下生成两个二进制文件: aquota.user 和 aquota.group
-
 
 #### 3. 设置用户的配额配置文件
 
@@ -141,7 +133,6 @@ Filesystem  blocks  soft    hard    inodes  soft    hard
 
 ```
 
-
 xfs 还支持一种命令
 
     xfs_quota - manage use of quota on XFS filesystems
@@ -158,8 +149,6 @@ xfs 还支持一种命令
         xfs_quota -x -c 'limit bsoft=30m bhard=40m isoft=3 ihard=5 user1' /disk
         xfs_quota -x -c report /home
 
-    
-
 #### 启动和关闭配额
 
 quotaon, quotaoff - turn filesystem quotas on and off
@@ -171,7 +160,6 @@ quotaon, quotaoff - turn filesystem quotas on and off
 
     quotaon -augv
     quotaoff -a
-
 
 #### 磁盘配额查询
 
@@ -191,7 +179,6 @@ repquota - summarize quotas for a filesystem
 #### 测试
 
 dd if=/dev/zero of=/disk/testfile bs=1M count=60
-
 
 #### 删除磁盘配额
 
@@ -222,6 +209,4 @@ dd if=/dev/zero of=/disk/testfile bs=1M count=60
     sudo mount -a
     -a：将 /etc/fstab 中定义的所有档案系统挂上
 
-
 lrwxrwxrwx 1 root root 19 Mar  9 11:21 /etc/mtab -> ../proc/self/mounts
-

@@ -1,22 +1,12 @@
-
 1. 系统初始化
-
 2. 自动化安装程序
-
 3. 自动化调整配置文件
-
 4. 自动化部署业务
-
 5. 定期备份恢复程序
-
 6. 自动化信息采集(zabbix + shell)
-
 7. 自动化日志收集(ELK)
-    
     1. 收集 -> 存储 -> 展示
-
 8. 自动化扩容/缩荣(zabbix + shell)
-
 
 ## SHELL
 
@@ -173,12 +163,7 @@ echo $TTY
 pstree   
 ```
 
-
-
-
-
 #### 系统环境变量
-
 
 #### 预先定义变量
 
@@ -262,7 +247,6 @@ echo ${url-www.baidu.com}
 如果没有设置url, 则输出 www.baidu.com
 ```
 
-
 a=
 echo ${a-z.cn} 输出空
 
@@ -282,9 +266,6 @@ echo ${a:-z.cn} 输出z.cn
     a=
     ${a-z.cn}  输出空
     ${a:-z.cn} 输出z.cn
-
-
-
 
 ## 数学运算
 
@@ -335,8 +316,6 @@ echo 'scale=2;3/2' | bc
 
 echo "scale=2;3/2" | bc
 
-
-
 ## 文件测试
 
 test
@@ -345,21 +324,32 @@ test
 test -d /backup || mdkir -p /backup
 ```
 
-
-
 ## Unix BSD Linux
+
 ### unix操作系统 
 
-UNIX操作系统，是一个强大的多用户、多任务操作系统，支持多种处理器架构，按照操作系统的分类，属于分时操作系统，最早由KenThompson、Dennis Ritchie和Douglas McIlroy于1969年在AT&T的贝尔实验室开发。目前它的商标权由国际开放标准组织所拥有，只有符合单一UNIX规范的UNIX系统才能使用UNIX这个名称，否则只能称为类UNIX(UNIX-like)。
+UNIX操作系统，是一个强大的多用户、多任务操作系统，支持多种处理器架构，按照操作
+系统的分类，属于分时操作系统，最早由KenThompson、Dennis Ritchie和Douglas
+McIlroy于1969年在AT&T的贝尔实验室开发。目前它的商标权由国际开放标准组织所拥有，
+只有符合单一UNIX规范的UNIX系统才能使用UNIX这个名称，否则只能称为类
+UNIX(UNIX-like)。
 
 ### BSD 
 
-BSD (Berkeley Software Distribution，伯克利软件套件)是Unix的衍生系统，在1977至1995年间由加州大学伯克利分校开发和发布的。历史上， BSD曾经被认为是UNIX的一支--"BSD UNIX", 因为它和AT&T UNIX操作系统共享基础代码和设计。在20世纪80年代，衍生出了许多变形的UNIX授权软件。比较著名的如DEC的Ultrix及Sun公司的SunOS。1990年代，BSD很大程度上被System V4.x版以及OSF/1系统所取代，晚期BSD版本为几个开源软件开发提供了平台并且一直沿用至今。今天，"BSD"并不特指任何一个BSD衍生版本，而是类UNIX操作系统中的一个分支的总称。
+BSD (Berkeley Software Distribution，伯克利软件套件)是Unix的衍生系统，在1977至
+1995年间由加州大学伯克利分校开发和发布的。历史上， BSD曾经被认为是UNIX的一支
+--"BSD UNIX", 因为它和AT&T UNIX操作系统共享基础代码和设计。在20世纪80年代，衍生
+出了许多变形的UNIX授权软件。比较著名的如DEC的Ultrix及Sun公司的SunOS。1990年代，
+BSD很大程度上被System V4.x版以及OSF/1系统所取代，晚期BSD版本为几个开源软件开发
+提供了平台并且一直沿用至今。今天，"BSD"并不特指任何一个BSD衍生版本，而是类UNIX
+操作系统中的一个分支的总称。
 
 ### linux系统 
 
-Linux操作系统是基于UNIX操作系统发展而来的一种克隆系统，它诞生于1991 年的 [Linux桌面] 10 月5 日（这是第一次正式向外公布的时间）。以后借助于Internet网络，并通过全世界各地计算机爱好者的共同努力，已成为今天世界上使用最多的一种UNIX 类操作系统，并且使用人数还在迅猛增长。
-
+Linux操作系统是基于UNIX操作系统发展而来的一种克隆系统，它诞生于1991 年的 [Linux
+桌面] 10 月5 日（这是第一次正式向外公布的时间）。以后借助于Internet网络，并通过
+全世界各地计算机爱好者的共同努力，已成为今天世界上使用最多的一种UNIX 类操作系统，
+并且使用人数还在迅猛增长。
 
 ## 脚本的执行
 
@@ -367,18 +357,15 @@ Linux操作系统是基于UNIX操作系统发展而来的一种克隆系统，�
 
 2. ./ 脚本
 
-3. chmod +x 
-
+3. chmod +x
 
 exit 推出整个程序
-
 
 ## 生成随机数
 
 openssl rand -base64 位数
 
 openssl rand -hex 位数
-
 
 ## 关联数组
 
@@ -398,7 +385,6 @@ echo ${info[*]}
 所有的索引
 echo ${!info[*]}
 ```
-
 
 ## 函数
 
@@ -424,8 +410,6 @@ done
 
 和通配符是不一样的，有本质区别的
 
-
-
 ## 运行多条 SHELL 命令
 
 ```
@@ -443,7 +427,6 @@ EOF
 1. 变量赋值：
     
     result = $(ssh root@ip 'ip a')
-
 
 2. 直接追加到文件：
 

@@ -1,6 +1,3 @@
-
-
-
 ## 方式
 
 sssd
@@ -9,29 +6,24 @@ winbind
 
 nslcd
 
-
-
-
 /etc/krb5.conf
-    
+
     这个配置文件有域的信息
 
     https://www.jb51.net/article/44306.htm
 
 ## 公司的
 
-yum install -y 
-    pam_krb5 
+yum install -y
+    pam_krb5
     pam_krb5.x86_64
-    authconfig-gtk 
+    authconfig-gtk
     nss-pam-ldapd
     openldap openldap-clients
 
 yum -y remove sssd sssd-common
 
 rsync -av krb5.conf nslcd.conf nsswitch.conf /etc/skel/
-
-
 
     nslcd(local LDAP name service daemon)
         Naming services LDAP client daemon
@@ -40,7 +32,6 @@ rsync -av krb5.conf nslcd.conf nsswitch.conf /etc/skel/
         provides a daemon for retrieving user accounts and similar system
         information from LDAP. It is used by the libnss-ldapd and libpam-ldapd
         packages but is not very useful by itself.
-
 
     nsswitch
 
@@ -54,7 +45,6 @@ rsync -av krb5.conf nslcd.conf nsswitch.conf /etc/skel/
                     : service information (users, groups, etc.) on behalf of a lightweight
                     : nsswitch module.
 
-
 ## 我的实验
 
 yum install -y
@@ -67,7 +57,6 @@ yum install -y
     sssd samba-common
 
 centos 只要安装上述包，然后 realm join xx.com -U administrator 就可以加入 windows 域了, 但是和公司的不一样
-
 
 ## 安装包 
 
@@ -90,7 +79,6 @@ centos 只要安装上述包，然后 realm join xx.com -U administrator 就可�
     Gamin has been designed as a drop-in replacement for FAM with security
     and maintainability in mind and can use Linux's advanced inotify
     service when available.
-
 
 2. 软件包2
 

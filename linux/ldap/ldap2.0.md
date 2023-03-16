@@ -15,11 +15,9 @@ If ldapsearch finds one or more entries, the attributes specified by attrs are r
     If + is listed, all operational attributes are returned.  
     If no attrs are listed, all user attributes are  returned.
 
-
 -b searchbase
 
     Use searchbase as the starting point for the search instead of the default.
-
 
 -s {base|one|sub|children}
 
@@ -29,7 +27,6 @@ If ldapsearch finds one or more entries, the attributes specified by attrs are r
     extension.
 
     The base search scope means that only the entry given will be returned.
-
 
 -H ldapuri
 
@@ -45,9 +42,7 @@ If ldapsearch finds one or more entries, the attributes specified by attrs are r
 
     -H ldapi:// to make the request over a Unix socket.
 
-
 -x     Use simple authentication instead of SASL.
-
 
  -L     
 
@@ -61,13 +56,11 @@ If ldapsearch finds one or more entries, the attributes specified by attrs are r
 
     The default is to use an extended version of LDIF.
 
-
 -Y mech
 
     Specify the SASL mechanism to be used for authentication. If it's not
     specified, the program will choose the best mechanism the server knows.
 
     -Y EXTERNAL to indicate that we want to use a SASL authentication method.
-
 
 -Q     Enable SASL Quiet mode.  Never prompt.

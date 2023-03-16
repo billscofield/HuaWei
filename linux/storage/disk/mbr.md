@@ -1,3 +1,5 @@
+# MBR
+
 备份MBR：
 
     dd if=/dev/sda1 of=/root/mbr bs=512 count=1
@@ -14,13 +16,9 @@
 
 bs=512 skip=446 count=66 用来确定分区表在备份文件中的位置
 
-
 55AA
 
-
-
 分区的时候 0,2048, 不能选，是因为这个是系统的 loader 所在
-
 
 grub1版本
 
@@ -40,10 +38,7 @@ grub1版本
 
             initrd /initramfs-2.6.32-642.el6.x86_64.img         存在内存中的系统 init ramfs
 
-
     /lib/modules/内核版本名/       内核模块
-
-
 
     /sbin/init
 
@@ -62,10 +57,6 @@ grub1版本
 
         可以写我们要启动的脚本
 
-
     /sbin/mingetty 启动终端
-
-
-
 
 https://space.bilibili.com/480933314/video

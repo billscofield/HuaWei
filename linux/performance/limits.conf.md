@@ -1,14 +1,10 @@
 ## 
 
-
 /etc/security/limits.d/目录下，里面配置会覆盖/etc/security/limits.conf的配置
-
 
 ## 语法
 
 <domain>　　 <type>　　 <item> 　　 <value>
-
-
 
 ## type
 
@@ -17,8 +13,6 @@ soft 指的是当前系统生效的设置值（警告）
 hard 表明系统中所能设定的最大值（错误）
 
 soft 的限制不能比har 限制高，- 表明同时设置了 soft 和 hard 的值
-
-
 
 ## item
 
@@ -57,12 +51,6 @@ nice - 最大不错优先允许提高到值：[-20，19]
 
 rtprio - 最大实时优先
 
-
-
-
-
-
-
 ulimit 命令是用来设置shell启动进程所占用的资源限制的，而nofile是一个有限的值，
 并不是 unlimited 的。设置该值的时候不能超出nr_open定义的范围（在2.6.25内核之前
 nr_open定义为1024x1024）。 
@@ -73,10 +61,6 @@ cat /proc/sys/fs/nr_open查看。
 如果我们想要增大nofile的值，比如300万，则首先需要修改nr_open的值，通过直接
 sysctl -w fs.nr_open=或者直接写入sysctl.conf文件来修改nr_open的值，之后在增大
 nofile的值。
-
-
-
-
 
 ## ulimit命令
 
@@ -99,16 +83,14 @@ ulimit -a
     virtual memory          (kbytes, -v) unlimited
     file locks                      (-x) unlimited
 
-
-
-
-
 ## 系统级别设置
 
 查看系统最大文件描述符
+
     cat /proc/sys/fs/file-max
 
 临时性设置系统最大文件描述符
+
     echo 1000000 > /proc/sys/fs/file-max
 
 永久性设置
@@ -116,8 +98,6 @@ ulimit -a
     在/etc/sysctl.conf中设置，应该设什么值是最佳实践？比如8G的内存，设为8192/2 * 256 = 524288
 
     fs.file-max = 1000000
-
-
 
 ## 用户级别设置
 
@@ -131,7 +111,7 @@ ulimit -a
         ulimit -Hn
          170000
 
- 2. 设置
+2. 设置
 
     临时性：
 
@@ -142,12 +122,12 @@ ulimit -a
     通过 ulimit -Hn设置最Hard limit
 
         ulimit -Hn 160000
-   
+
 
    同时设置soft limit和hard limit。对于非root用户只能设置比原来小的hard limit。
 
         ulimit -n 180000
-    
+
     永久性：
 
     root权限下，在/etc/security/limits.conf中添加如下两行，星表示所有用户，重启生效
@@ -158,7 +138,36 @@ ulimit -a
 
     还有一点要注意的就是 hard limit不能大于/proc/sys/fs/nr_open，假如hard limit大于nr_open，注销后将无法正常登录
 
+## file-max > nr_open
 
+`/proc/sys/fs/nr_open` and `/proc/sys/fs/file-max` are both kernel parameters
+related to file handling in Linux.
+
+`/proc/sys/fs/nr_open` specifies the maximum number of file handles (i.e., open
+files) that can be held by the kernel at one time. This limit applies to all
+processes on the system. By default, this value is set to 1048576.
+
+`/proc/sys/fs/file-max` specifies the system-wide maximum number of open file
+handles. This includes all files opened by all processes, as well as files that
+the kernel may open for its own purposes. By default, this value is set to an
+arbitrarily high value, which is determined by the system's memory capacity.
+
+In summary, `/proc/sys/fs/nr_open` sets the per-process limit for file handles,
+while `/proc/sys/fs/file-max` sets the system-wide limit.
+
+### what is `nr_open` short for
+
+`nr_open` is short for **"number of open files"**. It is a system-wide limit on
+the maximum number of file handles that can be opened at the same time by all
+processes on the system. The limit is enforced by the kernel to prevent
+processes from opening too many files and exhausting system resources such as
+memory and CPU time. The default value of `nr_open` can vary between different
+operating systems and distributions, but it is typically in the range of tens
+of thousands to millions of files.
+
+From openai
+
+---
 
 nr_open
 file-max
@@ -189,7 +198,9 @@ file-max
         resource limit.
 
         The default value fs.nr_open is 1024*1024 = 1048576 defined in kernel code.
-        The maximum value of fs.nr_open is limited to sysctl_nr_open_max in kernel, which is 2147483584 on x86_64.
+
+        The maximum value of fs.nr_open is limited to sysctl_nr_open_max in
+        kernel, which is 2147483584 on x86_64.
 
     file-max
         The value in file-max denotes the maximum number of file-
@@ -197,9 +208,11 @@ file-max
         of error messages about running out of file handles, you might
         want to increase this limit
 
-    file-max是所有进程最大的文件数
-    nr_open是单个进程可分配的最大文件数, 所以在我们使用ulimit或limits.conf来设置时，如果要超过默认的1048576值时需要先增大nr_open值(sysctl -w fs.nr_open=100000000或者直接写入sysctl.conf文件)。:queues
-    ulimit其实就是对单一程序的限制,进程级别的
+**file-max是所有进程最大的文件数**
+
+**nr_open是单个进程可分配的最大文件数**, 所以在我们使用ulimit或limits.conf来设置时，
+如果要超过默认的1048576值时需要先增大nr_open值(sysctl -w fs.nr_open=100000000或
+者直接写入sysctl.conf文件)。:queues ulimit其实就是对单一程序的限制,进程级别的
 
 
 
@@ -207,12 +220,12 @@ There are many place have the max limits about the open files:
 
     /proc/sys/fs/file-max
     /proc/sys/fs/nr_open
+
     /etc/security/limits.conf
     /etc/systemd/system.conf
+
     ulimit -n
     /proc/pid/limits
-
-
 
 更改方法
     cat /proc/sys/fs/nr_open

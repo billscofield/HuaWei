@@ -11,9 +11,6 @@ ldap-utils
     Access Protocol) package. These utilities can access a local or remote LDAP
     server and contain all the client programs required to access LDAP servers.
 
-
-
-
 apt install -y slapd
 
 apt install ldap-utils

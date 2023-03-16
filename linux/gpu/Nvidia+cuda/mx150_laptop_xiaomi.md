@@ -1,7 +1,3 @@
-## Author: bill_scofield
-## github: billscofield.github.com
-
-
 ## 什么是 CUDA
 
 CUDA(Compute Unified Device Architecture)，是显卡厂商NVIDIA推出的运算平台。
@@ -25,7 +21,6 @@ Linux 64-bit
 
 run文件权限更改, 添加可执行权限
 
-
 ## 安装 nvidia 驱动
 
 如何查看显卡型号
@@ -33,7 +28,6 @@ run文件权限更改, 添加可执行权限
     lspci -Ei '(vga|display|nvidia)'
 
 Kernel mode setting(KMS)
-
 
 ### 禁用nouveau
 
@@ -53,7 +47,6 @@ blacklist rivatv
     fuser -v /dev/nvidia*
     ```
 查看 nvidia-smi
-
 
 ``` 这个不一定需要
 "sudo update-initramfs -u"

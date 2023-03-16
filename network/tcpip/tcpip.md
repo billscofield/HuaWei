@@ -1,9 +1,8 @@
-## 
+# TCP/IP
 
 B/S架构, 实际是C/S架构的泛化、特例, 将客户端泛化，中心还是 Server
 
 应用程序通常是进程，下三层是在内核实现
-
 
 UDP:
     TFTP
@@ -12,36 +11,42 @@ UDP:
 TCP:
     FTP
 
-
 ## 层次划分
 
 ### OSI/RM
 
-7. Application
+1. Application
 
-6. Presentation
+2. Presentation
 
-5. Session
+3. Session
 
 4. Transport
 
-3. Network
+5. Network
 
-2. Data Link
+6. Data Link
+    The term "frame" in the context of networking and data communication has
+    been used for many decades, and it's not clear who first coined the term.
+    However, it's likely that the term comes from the idea of a picture frame
+    or a window frame, which provides a border or a boundary around a
+    particular piece of content. Similarly, a data link layer frame provides a
+    boundary around the data being transmitted, including a header and a
+    trailer that contain information about the data and the communication
+    itself. The frame allows the data link layer to identify and differentiate
+    different packets of data on the same network.
 
-1. Physical
-
+7. Physical
 
 ### TCP/IP
 
-4. Application
+1. Application
 
-3. Transport
+2. Transport
 
-2. Internet
+3. Internet
 
-1. Network Access
-
+4. Network Access
 
 对等层 Peer Layer
 
@@ -63,13 +68,11 @@ TCP:
 
 协议是控制两个对等实体进行通信的规则的集合
 
-
 ### 会话层
 
 拿QQ来举例，QQ软件有一个端口号，但是不同人之间的会话是隔离的
 
 一个端口有很多会话; 一个大对数有很多芯
-
 
 ### IP 是不可靠的
 
@@ -78,13 +81,11 @@ TCP:
 tcp 相当于卖家，ip 相当于物流，顾客收到货物后才会付款，但是 IP(物流) 不一定能送
 到
 
-
 ### "连接"和"可靠没有必然的关系"
 
 如果没有提供差错控制、流量控制等可靠性机制，即使连接的通信也是不可靠的
 
 只是面向连接的可靠性更容易实现
-
 
 ## ping -s 最大值
 
@@ -99,7 +100,6 @@ icmp header 是 8Bytes
 1500 - 20 - 8 = 1472 Bytes
 
 所以 ping -s 最大值是 1472 
-
 
 ### classD
 
@@ -117,10 +117,6 @@ hosts within a group share the group’s IP address for receiver purposes.
 
 While this class is reserved, its usage was never defined. As a result, most network implementations discard these addresses 
 as illegal or undefined. The exception is 255.255.255.255, which is used as a broadcast address.
-
-
-
-
 
 最基本的协议号、端口号
 
@@ -158,33 +154,30 @@ as illegal or undefined. The exception is 255.255.255.255, which is used as a br
 
     well-known ports: from 0 through 1023
 
-
-
-                    +---+    +---+
-                    |TCP|    |UDP|
-                    +---+    +---+
-    +----+  +----+    |        |
-    |ICMP|  |IGMP|    |        |
-    +----+  +----+    |        |
-     |        |       |        |
-      \       |       |       /
-       \      |       |      /
-        \     |       |     /
-         \    |       |    /
-          \   |       |   /
-           \  |       |  /
-         +----------------+   +---+   +----+
-         |      IP        |   |ARP|   |RARP|
-         +----------------+   +---+   +----+
-                        |       |       / 
-                         \      |      /
-                          \     |     /
-                           \    |    /
-                            \   |   /
-                           +---------+ 
-                           | 以太网  |
-                           +---------+ 
-
+    |                   +---+    +---+
+    |                   |TCP|    |UDP|
+    |                   +---+    +---+
+    |   +----+  +----+    |        |
+    |   |ICMP|  |IGMP|    |        |
+    |   +----+  +----+    |        |
+    |    |        |       |        |
+    |     \       |       |       /
+    |      \      |       |      /
+    |       \     |       |     /
+    |        \    |       |    /
+    |         \   |       |   /
+    |          \  |       |  /
+    |        +----------------+   +---+   +----+
+    |        |      IP        |   |ARP|   |RARP|
+    |        +----------------+   +---+   +----+
+    |                       |       |       / 
+    |                        \      |      /
+    |                         \     |     /
+    |                          \    |    /
+    |                           \   |   /
+    |                          +---------+ 
+    |                          | 以太网  |
+    |                          +---------+ 
 
 ### 路由跟踪 
 
@@ -195,15 +188,12 @@ Cisco 路由器
     ping 
     根据提示进行设置
 
-
-
 ## telnet route-server.ip.att.net
 
 用户名: rviews
 密  码: rviews
 
 查看全球 IP 路由信息
-
 
 ## RFC 需求等级
 
@@ -214,12 +204,6 @@ RFC 2119
 1. 选用的
 1. 限制使用的
 1. 不推荐的
-
-
-
-
-
-
 
 ## 虚电路交换
 
@@ -232,9 +216,6 @@ RFC 2119
 1. 连接建立位预留资源提供了支持
 
 VC标识: Virtual Circuit
-
-
-
 
 ### 虚电路的实现
 
@@ -1275,8 +1256,6 @@ PUSH
     因此传送通道容量为:
         
         capacity(bit) = bandwidth(b/s) x roud-trip time(s)
-
-
 ### 超时重传
 
 1. 重传定时器
@@ -1302,9 +1281,8 @@ RTT时间测量
         Err: 刚刚得到的测量结果与当前的RTT估计器之差
         RTO=A+4D
 
-
 拥塞避免算法
-    
+
     超时和收到重复的ACK
 
     https://www.bilibili.com/video/BV1Mx411v7rJ?p=13&spm_id_from=pageDriver
