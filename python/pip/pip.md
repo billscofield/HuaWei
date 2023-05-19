@@ -1,6 +1,7 @@
-
+# pip
 
 ## install
+
 pip install SomePackage              # 最新版本
 pip install SomePackage==1.0.4       # 指定版本
 pip install 'SomePackage>=1.0.4'     # 最小版本
@@ -20,6 +21,7 @@ pip install 'SomePackage>=1.0.4'     # 最小版本
 安装一个不存在的ipython版本5.xx,然后就会出现所有可以安装ipython版本
 
 ## 升级
+
 pip install -U SomePackage
 pip install --upgrade SomePackage
 
@@ -78,3 +80,21 @@ sudo pip3 install packagename
 pip3 install --user packagename
 
 代表仅该用户的安装，安装后仅该用户可用。处于安全考虑，尽量使用该命令进行安装。
+
+
+## timeout
+
+在安装python库，在网络不好的情况会遇到
+
+```
+raise ReadTimeoutError(self._pool, None, 'Read timed out.')
+ReadTimeoutError: HTTPSConnectionPool(host='files.pythonhosted.org', port=443): Read timed out.
+```
+
+解决办法1：延长timeout时间
+
+    pip --default-timeout=100 install Package
+
+解决办法2：换源，将pip源更换到国内镜像
+
+    国内源也会存在 timeout 的情况

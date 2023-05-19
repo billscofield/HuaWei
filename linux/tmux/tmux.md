@@ -19,7 +19,6 @@ space between them: C-b c means first the prefix key C-b is pressed, then it is
 released and then the c key is pressed. Care must be taken to release the Ctrl
 key after pressing C-b if necessary - C-b c is different from C-b C-c.
 
-
 ## Help keys
 
 Every default tmux key binding has a short description to help remember what
@@ -41,7 +40,6 @@ C-b ? enters **view mode** to show text.
 
     $ tmux lsk |more    // github上是 tmux lsk -N | more, 但是 -N 有问题
 
-
 -d By default, attaching to a session does not detach any other clients
 attached to the same session. The -d flag does this: tmux attach -dtmysession这
 个最开始说的好像不是很好理解，但是 man 手册里边解释的很清楚了多读几遍就明白了，
@@ -51,8 +49,6 @@ the session are detached.
 -r signifies the client is read-only (only keys bound to the detach-client or
 switch-client commands have any effect)
 
-
-
 ## quick source
 
 > bind r source-file ~/.tmux.conf \; display "Reloaded!"
@@ -60,9 +56,6 @@ switch-client commands have any effect)
 注意有一个\
 
 ---
-
-
-
 
 mkdir ~/.tmux/
 git clone https://github.com/tmux-plugins/tpm       ~/.tmux/plugins/tpm
@@ -77,3 +70,12 @@ git clone https://gitee.com/billscofield/tmux-continuum.git
 将下边的语句添加到 .tmux.conf 中
 run-shell ~/.tmux/tmux-resurrect/resurrect.tmux
 run-shell ~/.tmux/tmux-continuum/continuum.tmux
+
+## dracula 主题
+
+部分开源
+
+/root/.tmux/plugins/tmux/scripts/dracula.sh
+
+    tmux set-option -g pane-active-border-style "fg=${light_purple}"    #默认是紫色
+

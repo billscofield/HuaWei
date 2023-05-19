@@ -249,3 +249,32 @@ There are many place have the max limits about the open files:
     2. NR_FILE is the limit on total number of files in the system at any given point in time
 
         NR_FILE 是系统在某一给定时刻，限制的文件总数
+
+## nproc
+
+nproc是操作系统级别对每个用户创建的进程数的限制,在Linux下运行多线程时,每个线程
+的实现其实是一个轻量级的进程,对应的术语是:light weight process(LWP)。怎么知道一
+个用户创建了多少个进程呢，默认的ps是不显示全部进程的，需要‘-L' 才能看到所有的进
+程。
+
+查看所有用户创建的进程数,使用命令：
+
+
+    ps h -Led -o user | sort | uniq -c | sort -n
+      1 chrony
+      1 dbus
+      1 libstoragemgmt
+      1 nobody
+      2 avahi
+      5 nginx
+      6 polkitd
+     10 memcached
+     27 mysql
+   1071 root
+
+
+查看root用户创建的进程数，使用命令:
+
+ps -o nlwp,pid,lwp,args -u root | sort -n
+NLWP   PID   LWP COMMAND
+1    27    27 [migration/3]

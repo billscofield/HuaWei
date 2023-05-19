@@ -6,6 +6,9 @@
 # 客户端
 ./houdini.install --no-install-avahi --no-install-license --auto-install --accept-EULA 2021-10-13
 
+# 这个是 houdini.install 里边的默认路径
+# HFS_LOCATION="/opt/hfs${VER_MMB}"
+
 
 # license
 ##./houdini.install --no-install-avahi --install-license --no-install-houdini --auto-install --accept-EULA 2021-10-13

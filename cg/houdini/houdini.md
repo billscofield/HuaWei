@@ -73,8 +73,8 @@
 ## 关于 active
 
 /root/.sesi_licenses.pref 已经修改, 但还是隔一段时间就会掉 license
-    
-    ` netstat -tnpu | grep 1715
+
+    `netstat -tnpu | grep 1715`
 
     查看又是监听到了本地的 1715
 
@@ -297,19 +297,11 @@ houdinicore source houdinicore-bin
 hselect     source houdinicore
 hselect-bin source houdinicore-bin
 
-
-
-
 会创建一个 polkitd 的用户
-
-
-
 
 ## 计划
 
 搭建 nginx 负载均衡服务器, 后面堆 license servers
-
-
 
 
 ## license server
@@ -372,11 +364,6 @@ hserver -l
     4. Using a DNS service record.
         _sesi-lm._tcp   IN      SRV     0 0 1715 your-license-server-name.yourdomain.com.
         应该得安装 avahi-daemon
-
-
-
-
-
 
 License Server Log
     /var/log/sesinetd.log

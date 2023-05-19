@@ -1,4 +1,4 @@
-# basic of ai
+# BASIC of AI
 
 mse
     mean 平均
@@ -32,10 +32,6 @@ Linear Regression
     聚类
 半监督学习
 强化学习
-
-
-
-
 
 ## 请以一元一次方程为例解释，在 Rosenblatt 的感知器算法中，为什么误差 要乘以 输入x
 
@@ -118,3 +114,18 @@ Linear Regression
 误差有更大贡献的输入。
 
 
+
+## 百度
+
+ernie
+
+## GPT
+
+### 模型
+
+In ChatGLM-6B model, the "**6B**" represents the number of parameters in the
+model, which is around 6.2 billion. Essentially, a larger number of parameters
+in a language model allows it to better understand and generate more complex
+and nuanced language. The ChatGLM-6B model is an open source English-Chinese
+language model that has been trained on a large amount of data, which allows it
+to generate high quality responses to a wide variety of inquiries.

@@ -1,5 +1,11 @@
 # arnold
 
+Solid Angle is a computer graphics software company that specializes in
+creating rendering software for the film, television and animation industries.
+Their main product is Arnold
+
+Solid Angle was acquired by Autodesk in 2016
+
 ## Network License Manager (NLM)
 
 https://knowledge.autodesk.com/search-result/caas/sfdcarticles/sfdcarticles/Autodesk-Arnold-2018-Arnold-SDK-5-0-1-0-network-licensing.html

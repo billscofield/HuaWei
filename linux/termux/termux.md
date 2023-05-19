@@ -1,14 +1,14 @@
 
-## termux
+# termux
 
-### 常用变量
+## 常用变量
 
 $HOME=/data/data/com.termux/files/home
 
 $PREFIX=/data/data/com.termux/files/usr
 
 
-### 更改键盘上的常用字符
+## 更改键盘上的常用字符
 
 mkdir /data/data/com.termux/files/home/.termux
 cd /data/data/com.termux/files/home/.termux
@@ -19,23 +19,23 @@ extra-keys = [['ESC','/','-','HOME','UP','END','PGUP','<','>'],['TAB','CTRL','AL
 
 ```
 
-### 修改源
+## 1. 修改源
 
-apt edit-sources
+方法一:
+    apt edit-sources
 
-或者 
+方法二:
+    vi $PREFIX/etc/apt/sources.list
 
-vi $PREFIX/etc/apt/sources.list
-
-将原来的https://termux.net官方源替换为http://mirrors.tuna.tsinghua.edu.cn/termux
-
-
-(详情见)[https://mirrors.tuna.tsinghua.edu.cn/help/termux/]
-
-较新的版本推荐使用 termux-change-repo 直接换源
+    将原来的https://termux.net官方源替换为http://mirrors.tuna.tsinghua.edu.cn/termux
 
 
-### 安装 ssh 
+    (详情见)[https://mirrors.tuna.tsinghua.edu.cn/help/termux/]
+
+方法三:
+    较新的版本推荐使用 termux-change-repo 直接换源
+
+### 2. 安装 ssh 
 
 sshd是包含在openssh包中的
 
@@ -45,10 +45,8 @@ sshd                //启动sshd 服务
 
 端口号是8023
 
-
 讲电脑的public key 添加到手机
 ssh-copy-id root@192.168.1.1 -p 8022
-
 
 
 之前的版本不能执行ssh-copy-id命令,需要这么做

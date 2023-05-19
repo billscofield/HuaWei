@@ -87,9 +87,11 @@ apt-cache show xfonts-utils
 
 安装方法：
 
-1. 先从你本机 C:\Windows\Fonts 拷贝或者网络上下载你想要安装的字体文件（.ttf文件）（把.ttc重命名为.ttf）
+1. 先从你本机 C:\Windows\Fonts 拷贝或者网络上下载你想要安装的字体文件（.ttf文件）
+   （把.ttc重命名为.ttf）
 
-    到/usr/share/fonts/chinese/TrueType 目录下（如果系统中没有此目录，则自行mkdir创建，亦可重命名为自己喜欢的文件夹名）
+    到/usr/share/fonts/chinese/TrueType 目录下（如果系统中没有此目录，则自行
+    mkdir创建，亦可重命名为自己喜欢的文件夹名）
 
 2. 修改字体文件的权限，使root用户以外的用户也可以使用
 
@@ -102,12 +104,14 @@ apt-cache show xfonts-utils
 
     ```shell
     mkfontscale  （如果提示  mkfontscale: command not found ，需自行安装  # yum install mkfontscale  ）
-    mkfontdir  
+    mkfontdir
     fc-cache -fv  （如果提示  fc-cache: command not found ，则需要安装 # yum install fontconfig  ）
     ```
 
     mkfontscale - create an index of scalable font files for X
     mkfontdir   - create an index of X font files in a directory
+
+    fc-cache刷新一下字体缓存，就不用reboot重启了。
 
 4. 重启计算机（似乎必须重启才会有效）
 

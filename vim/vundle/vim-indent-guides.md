@@ -66,4 +66,5 @@ Alternatively you can manually setup the highlight colors yourself, see :help
 indent_guides_auto_colors for an example.
 
 ## Help
+
     :help indent-guides

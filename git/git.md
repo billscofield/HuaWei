@@ -24,7 +24,6 @@ https://learngitbranching.js.org/
 
     git --version
 
-
-
+## git server 是非常规端口, 比如922 980
 
 

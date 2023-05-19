@@ -56,6 +56,26 @@ Usage
 
 ## 3. ALE
 
+ALE (short for Asynchronous Lint Engine) is a plugin for Vim that provides
+real-time linting and code analysis for various programming languages. It
+allows Vim to asynchronously run linters and other code analysis tools in the
+background while you are editing your code, and provides feedback and
+suggestions in realtime.
+
+ALE can be configured to use a variety of linters and code analysis tools for
+different programming languages, including Python, JavaScript, Ruby, and more.
+It supports many popular linters and code analysis tools, such as Pylint,
+Flake8, ESLint, and RuboCop, among others.
+
+With ALE installed and configured, Vim will highlight any errors or warnings
+detected by the linters in your code, and provide suggestions and possible
+fixes in real-time. This can help you catch and fix errors as you are writing
+code, rather than having to wait until you run your code to discover issues.
+
+Overall, ALE is a powerful and flexible tool for improving your coding
+productivity and catching errors in realtime.
+
+
 https://gitee.com/billscofield/ale/blob/master/doc/ale.txt
 
 ALE's **primary focus** is on checking for problems with your code with various
@@ -142,9 +162,6 @@ Completion
 
     Refer links:
         https://vim.fandom.com/wiki/Omni_completion
-
-
-
 
 ## NERDTree
 
@@ -240,7 +257,6 @@ m 显示文件系统菜单（添加、删除、移动操作）
 
 :tabp      前一个
 :tabn      后一个
-
 
 ## 分屏
 

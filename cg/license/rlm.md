@@ -1,11 +1,19 @@
-# rlm
+# RLM License Server
+
+It can support a wide range of licensing models, including node-locked,
+floating, subscription-based, and software-as-a-service (SaaS) licensing.
+
+Additionally, RLM License Server supports integrations with popular license
+management tools, such as FlexNet and Sentinel RMS.
 
 1. solidangel
+
     license ISV Server Name: arnold
     网页端口默认 5054
     arnold
 
 2. katana
+
     license ISV Server Name: foundry
     网页端口默认 4102
 
@@ -14,6 +22,8 @@
 4. peregrinel
 
 5. [boris fx](https://borisfx.com/support/documentation/rlm-license-server/#linux)
+
+6. 
 
 ## other License Management Software
 
@@ -25,17 +35,30 @@
 
 AMPED 是个组织？个人？
 
-AMPED in "AMPED rlm license server" stands for "**Advanced Multi-Platform Engine
-for Distributed license serving**". The AMPED license server is used to manage
+(bard)AMPED acquired Reprise Software in 2019.
+
+AMPED in "AMPED rlm license server" stands for 
+    (chatgpt)"**Advanced Multi-Platform Engine for Distributed license serving**".
+    (bard)"**Advanced Management Platform for Effective Distribution**"
+
+The AMPED license server is used to manage
 the distribution and activation of software licenses for a variety of products,
 including computer software and hardware. It provides a centralized platform
 for managing licenses and ensures that the number of concurrent users does not
 exceed the number of available licenses.
 
 The "rlm" in "AMPED rlm license server" refers to Reprise License Manager,
-which is the technology used to implement the license server.
+which is the technology used to implement the license server.  (From chatGPT)
 
-    From chatGPT
+(chatgpt)The name "AMPED" is a term that is often used to refer to a group of
+individuals or a community that is involved in cracking and distributing
+software without authorization. This group is often associated with the illegal
+distribution of pirated software, including cracking software license
+protections.  It is unclear where the name "AMPED" specifically came from, but
+it is likely used as a sort of code name or handle by the group as a way to
+remain anonymous and avoid being traced or prosecuted for their activities. The
+use of this name, as well as other aliases and handles, is common among
+individuals and groups operating in the dark web or illegal markets.
 
 ## RLM License Administration
 

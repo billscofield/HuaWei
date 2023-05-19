@@ -1,3 +1,12 @@
+## 编译安装
+
+绿色
+解压
+创建ln
+
+
+## 使用
+
 Hyper fast Audio and Video encoder
 usage: ffmpeg [options] [[infile options] -i infile]... {[outfile options] outfile}...
 
@@ -103,13 +112,13 @@ flac 开源的无损音频格式
             0...18...23...28...51
             0 是无损
             一般在18,28间选择
-        
+
         -r              视频帧率
-        
+
         -qp(Constant Quantizer) 恒定量化器模式
             0..20...40..51
             0 无损
-        
+
         -b(bitrate) 固定目标码率模式
 
 

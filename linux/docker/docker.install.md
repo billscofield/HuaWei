@@ -43,13 +43,6 @@ systemctl start docker
 
 service docker start
 
-
-
-
-
-
-
-
 ## 推荐的安装方式
 
 利用国内源进行docker的安装
@@ -60,7 +53,7 @@ service docker start
 
 添加源
 
-    deb [arch=amd64] http://mirrors.ustc.edu.cn/docker-ce/linux/debian buster stable　　
+    deb [arch=amd64] http://mirrors.ustc.edu.cn/docker-ce/linux/debian buster stable
 
 使用以下 curl 命令导入存储库的 GPG 密钥：
 
@@ -81,7 +74,7 @@ service docker start
 
     阿里云镜像加速配置, 登录阿里云，控制台,搜索"镜像" , "镜像加速器"
     阿里云上会显示如何配置阿里云的源(根据发行版)
-    
+
     ```
     touch /etc/docker/daemon.json
     {
@@ -89,12 +82,11 @@ service docker start
     }
     systemctl daemon-reload
     systemctl restart docker
-    
-    
+
+
     实际发现不太好用，网易的比较好用
     {
       "registry-mirrors": ["http://hub-mirror.c.163.com"]
-      
     }
     ```
 

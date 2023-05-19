@@ -24,8 +24,6 @@
 网络监控
     端口，web(URL), DB, ping, IDC贷款网络流量，网络流入流出速率, SMTP, POP3
 
-
-
 ## 监控工具
 
 1. Cacti
@@ -171,7 +169,7 @@
 硬件 系统 程序
 
 
-
+```
 |                       zabbix-web
 |                           /|\
 |                            |
@@ -199,8 +197,9 @@
 |                        |
 |                        |
 |                        |
-|                      图形   
-|   
+|                      图形
+|
+```
 
 
 主机组(host group)
@@ -369,100 +368,90 @@ zabbix-apache-conf
 zcat /usr/share/zabbix-server-mysql/{schema,images,data}.sql.gz | mysql -uzabbix -pSECRETPASSWORD zabbix
     find . -iname "*create*"
     官网上的那个不对，下载安装后的 README
- 
-
 
 接下来，通过编辑文件/etc/zabbix/zabbix_server.conf ，将Zabbix服务器守护程序配置为使用您为其创建的数据库。
 
-    vim /etc/zabbix/zabbix_server.conf
+vim /etc/zabbix/zabbix_server.conf
 
-    ```
-        ### Option: DBHost
-        DBHost=localhost
-        DBPassword=
-        DBUser=zabbix
-        DBPassword=
-        DBPort=3306
-        
-        ---
-        
-        ListenPort=10051
-        SourceIP=           // 发采样数据请求IP (应该是老师的角色, 老师向学渣要作业的, 那应该是被动模式了)
-        
-        ---
-       
-        ### Option: PidFile
-        PidFile=/var/run/zabbix/zabbix_server.pid
-        
-        ---
-        
-        ### Option: Timeout
-        Timeout=4
-        
-        ---
-        
-        ### Option: AlertScriptsPath
-        AlertScriptsPath=/usr/lib/zabbix/alertscripts
-        
-        ---
-        ExternalScripts=/usr/lib/zabbix/externalscripts
-        
-        ---
-         LogSlowQueries=3000
-        StatsAllowedIP=127.0.0.1    // comma separated, Stats request will be accepted only from the addresses listed here.
-        ---
-        
-        SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
-        LogFile=/var/log/zabbix/zabbix_server.log
-        LogFileSize=0       // 日志的滚动，默认值为1,表示滚动。设为零表示不滚动，当数据很多的时候，我们也可以设置为1， 
-                            // 0 - disable automatic log rotation
-                            // 然后在 Maximum size of log file in MB 设置数据文件最大到多少时会自动滚动
-        
-        ### Option: DebugLevel 日志级别 
-            [0,5] 5是最详细的, 默认为3(warnings)  
+```
+### Option: DBHost
+DBHost=localhost
+DBPassword=
+DBUser=zabbix
+DBPassword=
+DBPort=3306
 
-    ```
+---
 
+ListenPort=10051
+SourceIP=           // 发采样数据请求IP (应该是老师的角色, 老师向学渣要作业的, 那应该是被动模式了)
 
+---
 
+### Option: PidFile
+PidFile=/var/run/zabbix/zabbix_server.pid
+
+---
+
+### Option: Timeout
+Timeout=4
+
+---
+
+### Option: AlertScriptsPath
+AlertScriptsPath=/usr/lib/zabbix/alertscripts
+
+---
+ExternalScripts=/usr/lib/zabbix/externalscripts
+
+---
+ LogSlowQueries=3000
+StatsAllowedIP=127.0.0.1    // comma separated, Stats request will be accepted only from the addresses listed here.
+---
+
+SNMPTrapperFile=/var/log/snmptrap/snmptrap.log
+LogFile=/var/log/zabbix/zabbix_server.log
+LogFileSize=0       // 日志的滚动，默认值为1,表示滚动。设为零表示不滚动，当数据很多的时候，我们也可以设置为1， 
+                    // 0 - disable automatic log rotation
+                    // 然后在 Maximum size of log file in MB 设置数据文件最大到多少时会自动滚动
+
+### Option: DebugLevel 日志级别 
+    [0,5] 5是最详细的, 默认为3(warnings)
+
+```
 
 您还应该通过在/etc/zabbix/apache.conf文件中定义时区来设置PHP以便与Zabbix前端一起正常工作。
 
-    ```
-    vim /etc/zabbix/apache.conf
+```
+vim /etc/zabbix/apache.conf
 
-    php_value date.timezone Africa/Kampala
+php_value date.timezone Africa/Kampala
 
-    (/etc/php/7.3/apache2/php.ini) https://blog.csdn.net/jing875480512/article/details/79002404
-
-    ```
+(/etc/php/7.3/apache2/php.ini) https://blog.csdn.net/jing875480512/article/details/79002404
+```
 
 通过所有完美的环境设置，您现在可以启动Zabbix服务器和代理程序进程，使它们能够在系统引导时自动启动
 
-    ```
-    systemctl start zabbix-server zabbix-agent
-    systemctl enable zabbix-server zabbix-agent
-    systemctl restart apache2
-    重启 php?
-    ```
+```
+systemctl start zabbix-server zabbix-agent
+systemctl enable zabbix-server zabbix-agent
+systemctl restart apache2
+重启 php?
+```
 
 
 如果是安装官方的写法 utf8 collate utf8_ci
 1118 (42000) at line 1278: Row size too large (> 8126). Changing some columns to TEXT or BLOB or using ROW_FORMAT=DYNAMIC or ROW_FORMAT=COMPRnt row format, BLOB prefix of 768 bytes is stored inline.
 
-
-
-
-
 ---
 
 PHP bcmath extension missing (PHP configuration parameter --enable-bcmath
 
-	apt install php-bcmath
+    apt install php-bcmath
 
 PHP mbstring extension missing (PHP configuration parameter --enable-mbstring).
 
-	apt install php-mbstring
+    apt install php-mbstring
 
 
 
@@ -538,14 +527,12 @@ dpkg-reconfigure locales把zh_CN.utf8这一行选中保存，然后使用locale 
     /usr/share/zabbix/include
 
     /usr/share/zabbix/fonts??? 不是复制到这里???
-        
+
         cp /usr/share/fonts/wqy-microhei.ttc /usr/share/zabbix/
-        
+
         ➜  share find . -iname DejaVuSans.ttf
         ./matplotlib/mpl-data/fonts/ttf/DejaVuSans.ttf
         ./fonts/truetype/dejavu/DejaVuSans.ttf                  覆盖这个
-
-
 
 ### zabbix agent 安装
 
@@ -587,11 +574,11 @@ windows 添加 agent 方法
     1. 下载agent
 
     1. 修改配置文件
-        
+
         注意配置文件位置默认在c盘根目录
-        
+
         注意添加防火墙端口
-        
+
     1. powershell
 
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --install
@@ -602,10 +589,6 @@ windows 添加 agent 方法
 
         zabbix_agentd.exe --config c:\zabbix\conf\zabbix_agentd.conf --stop
 
-
-
-
-
 问题:
 1. systemctl status zabbix-agent.service
     Can't open PID file /run/zabbix/zabbix_agentd.pid (yet?) after start: No such file or directory
@@ -615,8 +598,6 @@ windows 添加 agent 方法
 
     报错原因：**zabbix server监听全网地址，agent监听内网地址**
     解决办法：把zabbix_agentd.conf中 的server把zabbix_server的公网和内网地址都加行。然后agent就可以正常获取到值了
-
-
 
 
 debian 10 系统需要安装nmap???
@@ -633,12 +614,10 @@ debian 10 需要安装snmp
     apt install sudo 
 
     为 zabbix 用户授权???
-        
+
         vi /etc/sudoers
-        
+
         zabbix ALL=(ALL) NOPASSWD:ALL
-
-
 
 #### agent2
 
@@ -655,14 +634,14 @@ Passive checks work similarly to Zabbix agent. Active checks support scheduled/f
 
 Zabbix agent 2 is available in pre-compiled Zabbix packages. To compile Zabbix agent 2 from sources you have to specify the --enable-agent2 configure option.
 
-
-
-
 对于centos, 请先关闭防火墙和selinux
+
     systemctl disable firewalld
     systemctl stop firewalld
     setenforce 0
+
 否则报错
+
     zabbix_get [19475]: Get value error: cannot connect to [[192.168.61.101]:10050]: [113] No route to host
 
 
@@ -676,25 +655,19 @@ Zabbix agent 2 is available in pre-compiled Zabbix packages. To compile Zabbix a
 
 systemctl enable --now zabbix_agent2
 
-
-
 cat /lib/systemd/system/zabbix-agent2.service
-
 
 ### 在服务器上测试数据接收
 
 apt install zabbix-get
 
-zabbix-get -s 10.0.0.1 -p 10050 -k 'system.hostname'
-
+zabbix_get -s 10.0.0.1 -p 10050 -k 'system.hostname'
 
 ## snmp 监控 RouterOS
 
 https://techexpert.tips/zabbix/monitor-mikrotik-zabbix/
 
 模板: Template Net Mikrotik SNMPv2
-
-
 
 ## 术语
 
@@ -703,7 +676,7 @@ Hosts           主机组
 Applications    应用
 Events          事件
 Media           发送通知的通道
-Remote Command  
+Remote Command
 Item            一个指标的监控
 Trigger         触发器
 Action          动作
@@ -718,13 +691,10 @@ zabbix get
 zabbix sender
 zabbix java gateway
 
-
-
-
-
 ## 监控系统
 
 1. 单一监控程序
+
     linux中的top, vmstat, iostat 等
 
 1. 分布式监控程序
@@ -744,7 +714,7 @@ zabbix java gateway
         图标及监控大屏
         网络拓扑图
     1. 告警策略
-        
+
     1. 告警发送
         发送告警信息
         自动修复故障
@@ -928,11 +898,11 @@ action                              操作, 根据事件以及条件定义的一
                 发送消息
                 远程命令
                     sudo /usr/bin/systemctl restart redis.service
-                    
+
                     vi /etc/sudoers
-                    
+
                     zabbix  ALL=(ALL)   NOPASSWD: /usr/bin/systemctl
-                    
+
                 agent.conf 中允许接收远程命令
                     EnableRemoteCommands=1  // 允许接收远程命令
                     LogRemoteCommands=1     // 把接受的远程命令记入日志
@@ -971,7 +941,7 @@ User Type                           用户类型, 三种: 普通用户，管理�
     但是port端口不要设置 每秒更改, 否则 0 1
 
     删除的步骤
-        
+
         1. 清除历史和趋势
         1. 删除
 
@@ -992,14 +962,14 @@ Trigger
     触发器表达式
 
         {<server>:<key>.<function>(<parameter>)}<operator><constant>
-        
+
         函数有: avg count change date dayofweek delta diff iregexp last max min nodata now sum 
 
         参数: 大多数数值函数可以接受秒数为其参数，而如果在数值参数之前使用 '#' 作为前缀，则表示为最近几次的取值, 如 sum(300)
               表示300秒内所有取值纸盒，而 sum(#300) 则表示最近 300 次取值之和
-                
+
               avg coun last min max 还支持第二个参数，用于完成时间限定，如 max(1h,7d) 将返回一周之内的最大值???
-            
+
         运算符:
             '/'
             '*'

@@ -11,3 +11,8 @@ LSP 插件。因此 coc.vim 其实是一个能加载其他插件的 Vim 插件�
 
 
 https://gitee.com/billscofield/coc.nvim
+
+npm config get registry
+
+
+:CocList extensions

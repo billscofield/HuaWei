@@ -331,7 +331,8 @@ ren 旧 新
 
 ## 目录复制
 
-copy
+copy con a.bat
+    con 代表标准输入
 
 ## 目录文件剪切
 

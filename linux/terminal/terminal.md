@@ -1,5 +1,4 @@
 
-
 /usr/share/terminfo
 
 linux的终端信息放在 /usr/share/terminfo下，在这个目录的子目录v下就有许多的如vt100,vt102,vt200

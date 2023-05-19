@@ -5,7 +5,6 @@ Allan Larsson和Michael“Monty”Widenius在瑞典创办的。
 
 Mysql -> SUN -> Oracle
 
-
 C/S
 
 
@@ -680,26 +679,26 @@ LIMIT
             DEC(M,D)            M+2字节, M:整数位+小数位的位数  D:小数点后的位数
             DECIMAL(M,D)        超过范围，就插入临界值 decimal(4.2), 插入11111.11 值就是999., 也可能不会插入, 要看配置
             DECIMAL(10,0)
-            
-        浮点数
+
+    浮点数
             float       4字节
             double      8字节
             默认精度根据输入来的
-        
+
     字符型
         较短的：char, varchar
             char(M)         //多少个字符, 而不是字节;M:[0,255], 默认为1
             varchar(M)      //[0,65535]
         较长的: text, blob
-        
+
     ENUM枚举
-        ENUM('a','b','c')    //不区分大小写
-        
+    ENUM('a','b','c')    //不区分大小写
+
     SET
         SET('a','b','c')
         insert into 表明 values('a');
         insert into 表明 values('a,b');    //不区分大小写
-        
+
     日期时间型
         date
         time
@@ -707,9 +706,9 @@ LIMIT
         datetime            8字节
         timestamp           4字节, 和实际市区有关，和MySQL版本有关
             东八区插入的时间，如果此时更改为0时区，时间会自动减8
-        
+
         除了 timestamp 类型支持系统默认值设置，其他类型都不支持, NOW() 或 DEFAULT CURRENT_TIMESTAMP() 
-        
+
         set time_zone='+8:00'
         show variables like '%time_zone%'
 
@@ -895,6 +894,10 @@ show variables like '%auto_increment'
 
 ## DCL
 
+
+更改密码:
+
+    set password for 'zabbix'@'localhost' = password('password');
 
 ## 视图
 

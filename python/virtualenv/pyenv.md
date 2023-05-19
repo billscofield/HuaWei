@@ -29,6 +29,24 @@ curl -L https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer 
 
 系统是会告诉你怎么做的（即将最后的三行追加到~/.bash_profile,做环境变量）
 
+```
+# Load pyenv automatically by appending
+# the following to
+~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
+and ~/.bashrc (for interactive shells) :
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+
+# Restart your shell for the changes to take effect.
+
+# Load pyenv-virtualenv automatically by adding
+# the following to ~/.bashrc:
+
+eval "$(pyenv virtualenv-init -)"
+```
+
 ### 方法2
 
 git clone https://github.com/yyuu/pyenv.git ~/.pyenv 
@@ -50,6 +68,12 @@ source ~/.bashrc
 
     exec "$SHELL"
 
+## pyenv-udpate
+
+pyenv-update is a pyenv plugin that provides a pyenv update command to update pyenv and its plugins.
+
+`git clone https://github.com/pyenv/pyenv-update.git $(pyenv root)/plugins/pyenv-update`
+
 
 ## 安装python的不同版本
 
@@ -65,9 +89,11 @@ source ~/.bashrc
 
 另一个给出的
 
-    apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev
-    libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils
-    tk-dev libxml2-dev libxmlsec1-dev libffi-dev
+```
+apt-get install -y make build-essential libssl-dev zlib1g-dev libbz2-dev
+libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev xz-utils
+tk-dev libxml2-dev libxmlsec1-dev libffi-dev
+```
 
 
 pyenv install --list    查看可以安装的python版本
@@ -78,7 +104,7 @@ pyenv uninstall 3.6.7   卸载python
 
 
 华为Python源
-    https://mirrors.huaweicloud.com/python
+    https://mirrors.huaweicloud.com/python/
 
 
 注意
@@ -182,6 +208,9 @@ Some useful pyenv commands are:
 
     这是创建了一个名为env2713的python虚拟环境，这个环境的目录位于：~/.pyenv/versions/
 
+3. 删除虚拟环境
+    pyenv virtualenv-delete env2713
+
 
 创建一个3.6.2的虚拟环境
     $ pyenv virtualenv 3.6.2 env362
@@ -235,7 +264,7 @@ to simulate the behavior.
 执行完上面那条语句后就没有虚拟环境的prompt提示了...
 ```
 
-3. 查看python版本
+4. 查看python版本
 
     pyenv versions
     * system (set by /root/.pyenv/version)

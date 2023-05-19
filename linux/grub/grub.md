@@ -2,9 +2,6 @@
 
 CMOS 芯片读取 BIOS 程序, 连接内存, 自检(power-on self-test (POST)), 设置系统的启动项(Boot Sequence)
 
-
-
-
 ## POST
 
 Since a self-test might detect that the system's usual human-readable display
@@ -15,8 +12,6 @@ codes as a sequence of flashes or beeps
 In the case of a computer, the POST routines are part of a device's **pre-boot
 sequence**; if they complete successfully, the bootstrap loader code is invoked
 to load an operating system.
-
-
 
 ## 
 
@@ -29,8 +24,6 @@ initramfs(initrd)
     initramfs 模拟文件系统, 性能好一些
 
 vmlinuz
-
-
 
 ## init
 
@@ -339,18 +332,10 @@ Booting CentOS 6 (2.6.32-696.el6.x86_64) in 5 seconds...
 
 ```
 
-
-
-
 mingetty命令是精简版的getty。 mingetty适用于本机上的登入程序。
 
 
 getty(get teletypewriter [ˌteliˈtaɪpraɪtə(r)]电传打字机)
-
-
-
-
-
 
 ### grub2 
 
@@ -383,6 +368,5 @@ initrd ($root)/initramfs-4.18.0-240.e18.x86_64.img $tuned_initrd
     initrd: init run disk, 一个临时文件系统， 
 
 
-
-
 内核模块: /lib/modules/内核版本号
+

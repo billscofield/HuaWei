@@ -278,7 +278,6 @@ apt install -y gobjc++
   --enable-gui=gtk2 \
   --enable-cscope \
   --enable-luainterp \
-  --enable-perlinterp \
   --enable-multibyte \
   --prefix=/usr/local/vimPython3
 

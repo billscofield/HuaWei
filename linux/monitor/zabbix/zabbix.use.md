@@ -107,7 +107,7 @@ User settings -> message(正在发送消息) -> frontend messaging -> 勾选
             名称
             类型：email
             SMTP服务器:
-            SMTP HELO:    126.com/ qq.com
+            SMTP HELO:    126.com/ qq.com, 一般是域名
             SMTP电邮: 发件箱地址
 
     User Setting

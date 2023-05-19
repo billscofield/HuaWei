@@ -16,8 +16,6 @@ links:
 yum install -y epel-release
 yum -y install cobbler dhcp tftp-server pykickstart httpd cobbler-web xinetd
 
-
-
 /etc/cobbler/settings
     next_server: 192.168.197.175    //cobbler dhcp以及pxe server ip
     server: 192.168.197.175         //cobbler server
@@ -154,51 +152,51 @@ cobbler删除distro
 
 ## cobbler主要命令
 
-cobbler check #检查cobbler配置 主要用于检查cobbler配置是否有错
-cobbler sync #同步配置到dhcp pxe和数据目录 更改某些配置后记得执行一下，同步一下配置。
-cobbler list #列出所有的cobbler元素
-cobbler import #导入安装的系统光盘镜像
-cobbler report #列出各元素的详细信息
-cobbler distro #查看导入的发行版系统信息 不但可以查看导入的发行版系统信息还可以增加与修改等
-cobbler profile #查看配置信息 不但可以查看Kickstart文件而且还可以编辑与删除此文件
-cobbler system #查看添加的系统信息
-cobbler reposync #同步yum仓库到本地 同步远程的yum源到本地
+cobbler check               检查cobbler配置 主要用于检查cobbler配置是否有错
+cobbler sync                同步配置到dhcp pxe和数据目录 更改某些配置后记得执行一下，同步一下配置。
+cobbler list                列出所有的cobbler元素
+cobbler import              导入安装的系统光盘镜像
+cobbler report              列出各元素的详细信息
+cobbler distro              查看导入的发行版系统信息 不但可以查看导入的发行版系统信息还可以增加与修改等
+cobbler profile             查看配置信息 不但可以查看Kickstart文件而且还可以编辑与删除此文件
+cobbler system              查看添加的系统信息
+cobbler reposync            同步yum仓库到本地 同步远程的yum源到本地
 cobbler signature update
-cobbler --help #获得cobbler的帮助
+cobbler --help              获得cobbler的帮助
 cobbler distro --help #获得cobbler子命令的帮助
 
 ## Cobbler配置文件目录：/etc/cobbler
 
 1. /etc/cobbler/settings #cobbler主配置文件
 
-/etc/cobbler/dhcp.template #DHCP服务的配置模板
-/etc/cobbler/tftpd.template #tftp服务的配置模板
-/etc/cobbler/rsync.template #rsync服务的配置模板
-/etc/cobbler/iso #iso模板配置文件
-/etc/cobbler/pxe #pxe模板文件
-/etc/cobbler/power #电源的配置文件
-/etc/cobbler/users.conf #Web服务授权配置文件
-/etc/cobbler/users.digest #用于web访问的用户名密码配置文件
-/etc/cobbler/dnsmasq.template #DNS服务的配置模板
-/etc/cobbler/modules.conf #Cobbler模块配置文件
+    /etc/cobbler/dhcp.template #DHCP服务的配置模板
+    /etc/cobbler/tftpd.template #tftp服务的配置模板
+    /etc/cobbler/rsync.template #rsync服务的配置模板
+    /etc/cobbler/iso #iso模板配置文件
+    /etc/cobbler/pxe #pxe模板文件
+    /etc/cobbler/power #电源的配置文件
+    /etc/cobbler/users.conf #Web服务授权配置文件
+    /etc/cobbler/users.digest #用于web访问的用户名密码配置文件
+    /etc/cobbler/dnsmasq.template #DNS服务的配置模板
+    /etc/cobbler/modules.conf #Cobbler模块配置文件
 
 2. Cobbler数据目录：/var/lib/cobbler
 
-/var/lib/cobbler/config #配置文件
-/var/lib/cobbler/triggers #Cobbler命令
-/var/lib/cobbler/kickstarts #默认存放kickstart文件
-/var/lib/cobbler/loaders #存放的各种引导程序
+    /var/lib/cobbler/config #配置文件
+    /var/lib/cobbler/triggers #Cobbler命令
+    /var/lib/cobbler/kickstarts #默认存放kickstart文件
+    /var/lib/cobbler/loaders #存放的各种引导程序
 
 3. 系统安装镜像目录：/var/www/cobbler
 
-/var/www/cobbler/ks_mirror #导入的系统镜像列表
-/var/www/cobbler/images #导入的系统镜像启动文件
-/var/www/cobbler/repo_mirror #yum源存储目录
+    /var/www/cobbler/ks_mirror #导入的系统镜像列表
+    /var/www/cobbler/images #导入的系统镜像启动文件
+    /var/www/cobbler/repo_mirror #yum源存储目录
 
 4. 日志目录：/var/log/cobbler
 
-/var/log/cobbler/install.log #客户端系统安装日志
-/var/log/cobbler/cobbler.log #cobbler日志
+    /var/log/cobbler/install.log #客户端系统安装日志
+    /var/log/cobbler/cobbler.log #cobbler日志
 
 
 
@@ -223,10 +221,8 @@ cobbler distro --help #获得cobbler子命令的帮助
 4. 指定重装系统的名字
 
     koan --replace-self --server=192.168.1.172 --profile=centos-7-x86_64
+        CentOS76-x86_64
 
 5. 重启自动安装
 
     reboot
-
-
-
