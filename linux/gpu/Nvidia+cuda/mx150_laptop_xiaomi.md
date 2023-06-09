@@ -3,6 +3,8 @@
 CUDA(Compute Unified Device Architecture)，是显卡厂商NVIDIA推出的运算平台。
 CUDA™是一种由NVIDIA推出的通用并行计算架构，该架构使GPU能够解决复杂的计算问题。
 
+cuda 会自带显卡驱动
+
 ## 什么是CUDNN?
 
 NVIDIA cuDNN是用于深度神经网络的GPU加速库。它强调性能、易用性和低内存开销。
@@ -62,6 +64,9 @@ sh NV....run
 sudo apt-get --purge remove nvidia-*
 sudo apt-get --purge remove xserver-xorg-video-nouveau
 ```
+
+centos7 是 yum autoremove nvidia*
+
 
 重启电脑，按Ctrl + Alt +F1到第一控制台（+F7是回到桌面），首先登录账号，然后结束图形化界面
 
@@ -153,7 +158,9 @@ Please make sure that
 
 ### 验证 cuda 安装成功否
 
-切换到 cuda 的 bin 目录，nvcc -V
+切换到 cuda 的 bin 目录，
+
+    nvcc -V
 
 或
 
@@ -176,9 +183,21 @@ sudo make
 ## cuDNN
 
 1. 下载cuDNN，并解压缩
+
     tar xzvf cudnn-10.1-linux-x64-v7.6.0.64.tgz
 
-1. 验证 cuDNN 安装成功
+2. 移动文件
+
+    cp include/cudnn* /usr/local/cuda-11.1/include
+    cp lib64/libcudnn* /usr/local/cuda-11.1/lib64
+
+3. 验证 cuDNN 安装成功
+
+cudnn samples 现在放置在 github 上，需要单独下载
+
+git clone https://github.com/NVIDIA/cuda-samples.git
+
+对 gcc 版本有要求, 不能太高
 
 ```
 cp -r /usr/src/cudnn_samples_v7/ $HOME
@@ -187,6 +206,6 @@ make clean && make
 ./mnistCUDNN
 ```
 
-
 ## tensorlfow
+
 pip install tensorflow-gpu

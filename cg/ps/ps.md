@@ -145,8 +145,54 @@ PSD
 
 选择菜单
 
-试图菜单
+视图菜单
 
+
+## Neural Filters
+
+Neural Filters 是 Photoshop 中的一个新工作区，其中包含一个过滤器库，可使用由
+Adobe Sensei 提供支持的机器学习将困难的工作流程显着减少到只需单击几下。神经过滤
+器是一种工具，可让您在几秒钟内尝试非破坏性、生成过滤器并探索创意。
+
+神经滤镜早在ps2021版本官方就已经上线这个功能
+
+1. 拷贝PHSP文件夹，粘贴到：C:\User\用户名\AppData\Roaming\Adobe\UXP\PluginsStorage\，替换即可
+
+2. 打开PS 2023，顶部菜单栏点击帮助-登录
+
+3. 有账号就登录，没有就不登录，无视7天试用，直接退出ps。
+
+4. 再次重启PS就可以直接打开滤镜-Neural Filters
+
+
+大多数过滤器都在本地工作，因此您需要先下载它们才能使用它们。
+
+一些滤镜，例如智能人像 （Beta）和深度模糊 （Beta），在云端处理一些操作。需要互
+联网连接才能充分受益于过滤器。
+
+它们的范围从小于 1 MB（皮肤平滑）到超过 650 MB（样式转移）。一些过滤器基于较小
+的机器学习模型，而另一些则基于较大的机器学习模型。但是，我们一直在努力优化每个
+模型的尺寸。
+
+过滤器使用 GPU 还是 CPU？
+
+每个过滤器都会首先尝试使用您本地计算机的 GPU。如果您的计算机没有高性能 GPU，则
+过滤器将默认使用 CPU。不需要高性能 GPU。
+
+
+我可以从本地计算机中删除过滤器吗？
+
+是的。您可以在以下位置访问过滤器。每个子文件夹包含一个模型。
+
+    macOS：~/Library/Application Support/Adobe/UXP/PluginsStorage/PHSP/23/Internal/com.adobe.nfp.gallery/PluginData
+
+    Windows： %appdata% \Roaming\Adobe\UXP\PluginsStorage\PHSP\23\Internal\com.adobe.nfp.gallery\PluginData
+
+
+## Generative Fill
+
+Firefly 于今年 3 月作为网页版测试版发布，Generative Fill 目前也处于测试阶段，但
+Adobe 表示，该功能将在2023年下半年正式添加到 Photoshop 中
 
 
 ## problems
@@ -162,5 +208,6 @@ PSD
     Creative Cloud同时检测软件的正版授权问题！简单处理方法：
 
         1. 采用【Process 程序进程管理大师】把其拉入黑名单，彻底禁止运行！
-        
+
         2. 进入AdobePhotoshop CC 2019的安装文件夹，找到CRWindowsClientService.exe文件，右键【压缩并删除它】！
+

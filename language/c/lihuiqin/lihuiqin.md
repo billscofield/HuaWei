@@ -583,20 +583,19 @@ b:
     数组名：表示地址的常量, 数组的起始位置
     不检查越界
 
-
-
-
-
 ### 2. 二维数组
+
+
+
 ### 3. 多维数组
 
 ### 4. 字符数组和字符串
 
     ```
-	/*字符数组赋初值*/
+    /*字符数组赋初值*/
     char cArr[] = {'I','L','O','V','E','C'};            // 没有尾0, 如果用printf(%s), puts 输出，可能会有意外情况
     /*字符串赋初值*/
-    char sArr[] = "ILOVEC";                             // 有尾0, printf("%s") 和 puts 没有问题
+    char sArr[] = "ILOVEC";                             // 有尾0, printf("%s") 和 puts 没有问题, **字符串是有尾0的,字符数组没有**
     /*用sizeof（）求长度*/
     printf("cArr的长度=%d\n", sizeof(cArr));            // 没有意外情况 6
     printf("sArr的长度=%d\n", sizeof(sArr));            // 没有意外情况 7
@@ -612,6 +611,51 @@ b:
     printf("sArr的内容=%s\n", sArr);
 
     ```
+
+    串常量
+
+string.h
+
+    strlen: 不包含尾0
+
+    strcpy
+
+        char *strcpy(char *dest, const char *src);
+
+        直接覆盖，不是 append
+
+    strncpy
+
+        char *strncpy(char *dest, const char *src, size_t n);
+
+        从左边开始计算 n 个字符
+
+    strcat
+
+        char *strcat(char *dest, const char *src);
+        连接 join, append
+        覆盖前一个 str 的尾0, 最后添加一个尾0
+
+        ```
+        char a[100] = "hello"
+        strcat(a, " ");
+        strcat(a,"world")
+        ```
+
+    strncat
+
+        char *strncat(char *dest, const char *src, size_t n);
+        连接 join, append
+
+    strcmp
+        int strcmp(const char *s1, const char *s2);
+        比较 ASCII
+        前 - 后 的差值(第一个,如果第一个相同，则比较第二个，直到有不同为止)
+
+    strncmp
+
+        int strncmp(const char *s1, const char *s2, size_t n);
+        只比较前 n 个
 
 
 ## 共用体
@@ -670,9 +714,11 @@ x86 大部分是小端
 
     因为大小端的问题, 移植性不强
 
+    ```
     +---+---+---+---+---+---+---+---+
     | 7 | 6 | 5 | 4 | 3 | 2 | 1 | 0 |
     +---+---+---+---+---+---+---+---+
+    ```
 
     w.y = 1;
     printf("%d\n",w.x.a)
@@ -748,11 +794,11 @@ free
 
 
 1. malloc
-    
+
     ```
     void *malloc(size_t size);
     ```
-    
+
     ```
     #include <stdio.h>
     #include <stdlib.h>
@@ -765,7 +811,7 @@ free
             printf("error");
             exit(1);
         }
-            
+
         *p = 10;
         free(p);
     }
@@ -784,16 +830,111 @@ free
     void *realloc(void *ptr, size_t size);
     ```
 
-    
 
 ## 指针
 
-指针有两个运算, 取地址和取值
+用来保存变量的地址
+
+### 1. 变量与地址
+
+**变量是对某个空间的抽象命名**
+
+指针就是地址
+
+TYPE NAME VALUE
+
+    TYPE:   int *
+    NAME:   i
+    VALUE:  &a
+
+### 2. 指针和指针变量
+
+    int a = 3;
+
+
+    int b;
+    int *p = &b;
+    *p = 3;
+
+### 3. 直接访问和间接访问
+
+### 4. 空指针和野指针
+
+NULL 是一个宏
+
+### 5. 空类型
+
+    void *p
+
+    void *memcpy(void *dest, const void *src, size_t n);
+
+### 6. 定义与初始化的书写规则
+
+
+### 7. 指针运算
+
+取地址和取值
 
 还可以作 ++ -- 比较
 
-指针的大小在某一个平台下是一定的, 一般是 8
+### 8.指针与数组
 
+数组指针
+
+    指向数组
+
+        数据类型 （*指针名） 下标 = 值
+        int (*p) [3];    // 指向 int[3], +1 跳3
+
+        ```
+        int a[][3] = {1,2,3,4,5,6};
+        int (*p)[3] = a;
+        ```
+
+### 9 字符数组和指针
+
+    // 字符数组
+    char a[] = "hello";
+    strcpy(a,"world");
+
+    // 字符指针
+    char *p = "hello";
+    p = "world";
+    puts(p);
+    // 这是错误的，因为 p 指向的是串常量，是不能改变的, 但**是是可以的!!!**
+    strcpy(p,"world");
+
+### 10. const 与指针
+
+// 常变量
+
+    const int pi = 3.14
+
+// 可以，但是会报警告
+
+    int *p = &pi;
+    *p = 3.1415926;
+
+    const int *p = &pi
+
+
+// 常量指针
+
+    const int *p 
+    int const *p    // p 指向的是只读的，**不能通过该指针修改原来的值，原来的值也不一定是不能变化的**
+
+    1. int 指针，float指针，，，指向常量的指针
+    2. 指针的指向可以变化
+
+// 指针常量
+
+    int *const p
+
+    1. int 常量，float 常量，，，该指针不能变
+    2. 指针指向的变量可以变化
+
+
+指针的大小在某一个平台下是一定的, 一般是 8
 
 ```
 *q -> *(&p) -> p
@@ -802,8 +943,21 @@ p 即 &a
 **q -> **(&p) -> *p -> *(&a) -> a
 ```
 
-空指针
-    NULL 是一个宏
+
+### 11. 指针数组 数组指针
+
+// 数组指针
+
+    int (*p)[3];
+
+// 指针数组
+
+    int * arr[3]
+
+    int main(int argc, char **argv){
+         char * p[3] = {"hello","world","hhh"};
+    }
+
 
 
 void 指针类型
@@ -834,11 +988,11 @@ void 指针类型
 
         int a[3];
         int *p = a;
-        
+
         for(int i=0; i<3; i++){
             scanf("%d",p++);
         }
-        
+
         for(int i=0; i<3; i++){
             printf("%d\n",a[i]);
         }
@@ -857,7 +1011,7 @@ void 指针类型
     int main(void){
 
         int *p = (int [3]){1,2,4};          // **无名数组**
-        
+
         for(int i=0; i<3; i++)
             printf("%d\n",p[i]);
         exit(0);
@@ -883,23 +1037,40 @@ void 指针类型
     int main(void){
 
         int a[2][3] = {1,2,3,4,5,6};
-        
+
         for(int i=0; i<2; i++){
             for(int j=0; j<3; j++){
                 printf("%p -> %d\n",&a[i][j],a[i][j]);
                 printf("%p -> %d\n",*(a+i)+j,*(*(a+i)+j));          //!!!
             }
             printf("\n");
-        
+
         }
-        
+
         printf("%p ->\n",a);
         printf("%p ->\n",a+1);
-        
-        exit(0);
 
+        exit(0);
     }
     ```
+
+### 11. 多级指针
+
+
+
+
+
+The statement `int *p = {1, 2, 3}` is not correct because it is attempting to
+initialize a pointer variable with an array of integers using brace
+initialization syntax.
+
+While brace initialization can be used to initialize arrays, it cannot be used
+to initialize pointer variables in this way.
+
+
+
+In C++, arrays are not assignable, which means that you cannot change the
+entire contents of an array using the assignment operator.
 
 
 
