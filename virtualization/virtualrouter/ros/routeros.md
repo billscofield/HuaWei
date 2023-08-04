@@ -1,4 +1,5 @@
 ## MikroTik
+
 基于 Debian 开发，引导方式为 LILO(LInux Loader)
 ros 2.x 3.x 4.x 5.x 6.x
 
@@ -487,3 +488,12 @@ Action中 masquerade 与 (srcnat src address wan口)
     Action
         action:masquerade
 
+
+## DDNS
+
+从RouterOS v6.14开始，MikroTik为RouterBOARD设备提供动态DNS名称服务。这意味着您
+的设备可以自动获得一个有效的域名, 是这样的:
+
+    529c0491d41c.sn.mynetname.net
+
+DDNS 开启后就会有，但是这个地址可能会被墙

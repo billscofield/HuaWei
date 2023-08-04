@@ -1,0 +1,40 @@
+https://youdao.com/result?word=%E9%80%9A%E7%94%A8%E7%94%B5%E6%B0%94&lang=en | 通用电气
+https://youdao.com/result?word=Alameda&lang=en | Alameda
+https://www.google.com/search?q=Walnut+Creek&ei=O1iNZI_4PJ-j5NoPtdeFsAI&ved=0ahUKEwjPgeb828n_AhWfEVkFHbVrASYQ4dUDCA8&uact=5&oq=Walnut+Creek&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzILCC4QgwEQsQMQgAQyCwgAEIAEELEDEIMBMgsIABCABBCxAxCDATILCAAQgAQQsQMQgwEyCwgAEIAEELEDEIMBMhEILhCABBCxAxCDARDHARCvATIRCC4QgAQQsQMQgwEQxwEQrwEyCwgAEIAEELEDEIMBMhEILhCABBCxAxCDARDHARCvATIRCC4QgAQQsQMQgwEQxwEQrwEyGQguEIMBELEDEIAEEJcFENwEEN4EEOAEGAE6CAgAEIoFEJECOg0IABCKBRCxAxCDARBDOgsILhCABBCxAxCDAToRCC4QgAQQsQMQgwEQxwEQ0QM6CwgAEIoFELEDEIMBOg0ILhCKBRDHARCvARBDOhMILhCKBRCxAxCDARDHARDRAxBDOgcIABCKBRBDOhsILhCKBRDHARCvARBDEJcFENwEEN4EEOAEGAE6EwguEIAEELEDEIMBEMcBENEDEAo6BQguEIAEOhAIABCABBCxAxCDARCxAxAKOgUIABCABDoLCC4QgAQQxwEQ0QM6CggAEIoFELEDEEM6CwguEIoFELEDEIMBOggILhCABBCxAzoOCC4QgAQQsQMQxwEQ0QM6EQguEIMBEK8BEMcBELEDEIAESgQIQRgAUABYwyJg-yhoAHABeACAAa4KiAG3PJIBCTQtNC42LjEuMZgBAKABAcABAdoBBggBEAEYFA&sclient=gws-wiz-serp | Walnut Creek - Google Search
+https://archive.org/details/bsdos-4.3 | BSD/OS 4.3 : Berkeley Software Design Incorporated : Free Download, Borrow, and Streaming : Internet Archive
+http://blog.chinaunix.net/uid-20438355-id-60613.html | BSD系统全家福-atyu30-ChinaUnix博客
+https://www.baidu.com/s?ie=utf-8&f=8&rsv_bp=1&rsv_idx=1&tn=baidu&wd=PON%20STICK&fenlei=256&oq=%25E5%2585%2589%25E7%258C%25AB%25E6%25A3%2592%2520%25E8%258B%25B1%25E6%2596%2587%25E5%2590%258D&rsv_pq=932ef0250002dd9a&rsv_t=d35eUqI2gmDSvTdIAIZZwxtWG7o0oGmE1%2FatZT3fBtIayKotzHDBWfMX5lo&rqlang=cn&rsv_dl=tb&rsv_btype=t&rsv_enter=0&rsv_sug3=29&rsv_sug1=16&rsv_sug7=100 | PON STICK_百度搜索
+https://zhuanlan.zhihu.com/p/409204068 | 冷冷的网络手记·家庭网络改造实战之 RouteOS + PON STICK - 知乎
+https://www.baidu.com/s?wd=RB760iGS%20hEX%20S%20%E7%9A%84license&pn=10&oq=RB760iGS%20hEX%20S%20%E7%9A%84license&ie=utf-8&fenlei=256&rsv_idx=1&rsv_pq=e91e3053000057b1&rsv_t=d5ccNqJs1JiPm8%2FCq5xUkFAG%2Fc%2Bg2XesMbuDBFBGRndZrnmq69xznwJPyYY&rsv_page=1 | RB760iGS hEX S 的license_百度搜索
+https://baijiahao.baidu.com/s?id=1692538095593613398&wfr=spider&for=pc | Mikrotik RouterOS(ROS)软路由配置奶妈入门教程-PPPOE拨号上网
+https://www.vos.cn/other/516.html | RB760iGS+PON STICK折腾过程|vOS
+https://blog.csdn.net/zhidc/article/details/105330254 | ubnt ER-4添加PON stick模块替换光猫实战_方圆百里找对手的博客-CSDN博客
+https://www.jianshu.com/p/943cb42ee5b9 | 使用猫棒代替光猫跑满千兆宽带 - 简书
+https://www.luyouwang.net/9290.html | 扔掉光猫：猫棒代替光猫 跑满千兆甚至万兆 - 路由网
+https://www.leixue.com/ask/what-is-pon-stick | PON STICK是什么 - 泪雪网
+https://zhuanlan.zhihu.com/p/581093806?utm_id=0 | 低成本升级2.5G光猫方案——猫棒+光纤收发器！ - 知乎
+https://baijiahao.baidu.com/s?id=1736766967398397692&wfr=spider&for=pc | 对于光猫棒，其实也就那么回事，基本家用并不推荐
+https://www.leixue.com/ask/what-is-the-difference-between-an-optical-cat-stick-and-a-optical-module | 光猫棒和光模块有什么区别 - 泪雪网
+https://www.leixue.com/tag/%E7%8C%AB%E6%A3%92 | 猫棒，什么是猫棒，猫棒是什么意思 - 泪雪网
+https://www.leixue.com/ask/what-is-the-difference-between-an-optical-cat-stick-and-a-optical-module | 光猫棒和光模块有什么区别 - 泪雪网
+https://www.leixue.com/ask/when-do-i-need-to-use-a-light-cat-stick | 什么情况下需要使用光猫棒 - 泪雪网
+https://www.bilibili.com/ | 哔哩哔哩 (゜-゜)つロ 干杯~-bilibili
+https://search.bilibili.com/all?keyword=%E4%B8%87%E5%85%86%E5%85%89%E7%BA%BF++%E5%B8%83%E7%BA%BF&from_source=webtop_search&spm_id_from=333.1007&search_source=5 | 万兆光线 布线-哔哩哔哩_Bilibili
+https://search.bilibili.com/all?keyword=RB760iGS&from_source=webtop_search&spm_id_from=333.1007&search_source=5 | RB760iGS-哔哩哔哩_Bilibili
+https://www.bilibili.com/video/BV1Mr4y1y7Qa/?spm_id_from=333.337.search-card.all.click | Mikrotik RB4011iGS+5HacQ2HnD-IN 简单开箱以及配置_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1PK411z7yb/?spm_id_from=333.788.recommend_more_video.4&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | MikroTik 的廉价低功耗 25GbE 和 100GbE 交换机 CRS518_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1q5411b7YE/?spm_id_from=333.788.recommend_more_video.-1&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 家庭万兆网络初体验 - 10G_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1MP4y1A7xh/?spm_id_from=333.788.recommend_more_video.13&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 实战！PCC 三宽带叠加教程 RouterOS v7_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV11m4y1X7pV/?spm_id_from=333.788.recommend_more_video.0&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | RouterOS单线多拨，多线接入叠加宽带_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1GT41177Ax/?spm_id_from=333.788.recommend_more_video.-1&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 真香家用全万兆、你要不要入坑_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV14J411u7qZ/?spm_id_from=333.788.recommend_more_video.8&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 万兆网络用电口还是光口？——ASK_司波图_02_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1fK4y1N7U9/?spm_id_from=333.788.recommend_more_video.1&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 【万兆网络坑多多二】家用万兆模块怎么选：多模单模哪个好？_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1Ch41187i7/?spm_id_from=333.788&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 秒掉5G？光纤布网战未来！Fiber Optical Yes！_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1ie4y1K7bi/?spm_id_from=333.788.recommend_more_video.10&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 装修还只留网线？过时了！必须要预留光纤！_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1mV4y1A7PP/?spm_id_from=333.788&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 科技还是魔法？！2分钟重建我的家！_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1Do4y1G7X3/?spm_id_from=333.788.recommend_more_video.-1&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | FTTR装机自由，不绑套餐，设备属于自己 光纤组网~快到飞起！！！自己装机不花钱，一步到位不过时#路由器 #家用好物_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1YK4y1Y7vA/?spm_id_from=333.788.recommend_more_video.2&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 全屋万兆光纤预埋线管怎么选？弱电线管尺寸选购攻略_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1h44y1T7bG/?spm_id_from=333.788.recommend_more_video.-1&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 家庭万兆光纤网络布网实践，附带光纤冷接教程，让光纤铺满你家，提前感受FTTR！_哔哩哔哩_bilibili
+https://www.bilibili.com/video/BV1wR4y1Y7oN/?spm_id_from=333.788&vd_source=f1507fc10dd8d384b7dba30d9bd02202 | 没有人能逃得过BadApple！ Stream Deck多功能直播控制台使用报告_哔哩哔哩_bilibili
+chrome://extensions/ | 扩展程序
+

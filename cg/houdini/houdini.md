@@ -90,7 +90,7 @@
     /etc/init.d/houdini                             // 应该就是它了
         #! /bin/bash
         #chkconfig: 2345 23 65
-        
+
         pkill hserver
         /usr/lib/sesi/sesinetd.startup restart
         /opt/hfs17.5/bin/hserver                    // 改成正确的应该比较好一些

@@ -68,7 +68,7 @@ pacman -S archlinuxcn-keyring
     setfont /usr/share/kbd/consolefonts/一个字体文件
 
 更改键盘布局
-    
+
     loadkeys colemak    //colemak 键盘布局
 
 更改键盘按键
@@ -191,6 +191,10 @@ vi /etc/sudoers
 su - david
 
 sudo pacman -Syyu
+
+
+telnet
+    pacman -S inetutils
 
 
 ## 图形界面

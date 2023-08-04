@@ -1,6 +1,8 @@
 ## nmtui
-    
-    tui 方式
+
+nmtui 是一个基于文本用户界面的，用于控制网络的管理器
+
+nmtui 还可以用来设置系统的主机名
 
 ## nmcli
 
@@ -45,9 +47,44 @@ OBJECT
 
 
 
+## 配置静态 IP
+
+命令列出当前活动的以太网卡，
+
+    nmcli connection
+
+为了简化语句，在 nmcli 命令中，我们通常用 con 关键字替换 connection，并用 mod 关键字替换 modify
+nmcli connection modify <interface_name> ipv4.address  <ip/prefix>
+
+    nmcli con mod enp0s3 ipv4.addresses 192.168.1.4/24
+
+设置网关
+
+    nmcli con mod enp0s3 ipv4.gateway 192.168.1.1
+
+设置手动配置（从 dhcp 到 static）
+
+    nmcli con mod enp0s3 ipv4.method manual
+
+dns
+
+    nmcli con mod enp0s3 ipv4.dns "8.8.8.8"
+
+保存上述更改并重新加载
+
+    nmcli con up enp0s3
+
+以上命令显示网卡 enp0s3 已成功配置。我们使用 nmcli 命令做的那些更改都将永久保存在文件
+
+cat /etc/sysconfig/network-scripts/ifcfg-enp0s3
+
+ip addr show enp0s3
+
+
+
 ### 设置ipv4
 
-1. 
+1.
     nmcli connection add con-name static ifname ens33 type ethernet ip4.address 192.168.1.1/24 ipv4.gateway 192.168.1.254  ipv4.method manual  ipv4.dns 8.8.8.8    //手动, 静态
     nmcli connection add con-name static ifname ens33 type ethernet ipv4.method auto autoconnect yes                      //自动获取
 
@@ -55,10 +92,10 @@ OBJECT
     nmcli connection modify static connection.autoconnect yes
 
 
-2. 
+2.
     nmcli connection up static
 
-3. 
+3.
     nmcli connection show
     nmcli connection show static
 

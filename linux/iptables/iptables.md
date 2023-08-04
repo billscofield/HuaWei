@@ -1,3 +1,5 @@
+# iptables
+
 工作于主机或网络的边界,对于进出主机或网络的的报文根据实现制定的规则进行检查匹配，对匹配到的报文进行相应处理的软件或硬件组件
 
     主机防火墙
@@ -50,7 +52,7 @@ netfilter/iptables
     mangle
     NAT(常用)
     filter(default)(常用)
-        
+
 
 1. iptables的表又是链的容器
     链(chains)
@@ -284,3 +286,79 @@ ICMP类型: --icmp_type echo_request
 -m state --state NEW,ESTABLISHED,RELATED
     NEW
     ESTABLISHED
+
+
+
+## Examples
+
+许本地计算机上的流量。这意味着接受服务器生成并发送给自己的流量。这允许服务相互交谈而不会被阻止:
+
+    sudo iptables -A INPUT -i lo -j ACCEPT
+
+允许所有已建立的连接和与已建立的连接相关的流量
+
+    iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+ iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+ iptables -A INPUT -j DROP
+
+ 键入以下内容查看您的规则:
+
+ sudo iptables -S
+
+    -P INPUT ACCEPT
+    -P FORWARD ACCEPT
+    -P OUTPUT ACCEPT
+    -A INPUT -s 10.0.45.4/32 -j ACCEPT
+    -A INPUT -s 10.0.0.233/32 -j ACCEPT
+    -A INPUT -m state --state RELATED,ESTABLISHED -j ACCEPT
+    -A INPUT -p tcp -m tcp --dport 22 -j REJECT --reject-with icmp-port-unreachable
+    -A INPUT -p icmp -j ACCEPT
+    -A INPUT -i lo -j ACCEPT
+    -A INPUT -j REJECT --reject-with icmp-host-prohibited
+    -A FORWARD -j REJECT --reject-with icmp-host-prohibited
+
+
+--list-rules -S [chain [rulenum]]
+    Print the rules in a chain or all chains
+
+--flush   -F [chain]          Delete all rules in  chain or all chains
+
+
+--list-rules -S [chain [rulenum]]
+    Print the rules in a chain or all chains
+
+--flush   -F [chain]          Delete all rules in  chain or all chains
+
+
+
+
+## 路由器
+
+masquerade 伪装
+
+    iptables -t nat -A POSTROUTING -o <external_interface> -j MASQUERADE
+
+    iptables -t nat -A POSTROUTING -s '192.168.3.0/24' -o ppp0 -j MASQUERADE
+
+- -t nat: Specifies the NAT table, where the MASQUERADE target is located.
+
+- -A POSTROUTING: Appends the rule to the end of the POSTROUTING chain, which is executed after routing the packet.
+
+- -s using the MASQUERADE target in the NAT table to perform Network Address
+  Translation (NAT) for outgoing packets **from a specific source IP range**
+  (192.168.1.0/24) destined for the internet via the specified external
+  interface.
+
+- -o <external_interface>: Specifies the outgoing network interface that connects to the internet.
+
+- -j MASQUERADE: Specifies the target action, which is MASQUERADE in this case.
+
+This rule tells iptables to perform IP masquerading on packets going out
+through the specified <external_interface>, which is usually the interface
+connected to the internet. By using MASQUERADE, all the outgoing packets from
+devices on the local network will appear to come from the public IP address of
+the external interface, allowing them to communicate with internet services and
+receive responses back from the internet.
+
+iptables -t nat -nL

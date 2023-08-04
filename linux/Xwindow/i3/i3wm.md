@@ -140,7 +140,7 @@ Compton 是 xcompmgr-dana 的分支，而后者又是 xcompmgr 的分支。
 类似的还有: conky
 
 dpkg --listfiles compton
-    
+
     /usr/share/doc/compton/examples/compton.sample.conf
 
 
@@ -177,10 +177,10 @@ compton 如何重载配置文件???
 
 ### 快捷键
 
-垂直方向上创建窗口      mod + v         
+垂直方向上创建窗口      mod + v
 水平方向上创建窗口      mod + h
 
-激活窗口                mod + 方向键    
+激活窗口                mod + 方向键
 
 创建工作区workspace     mod + 数字键
 

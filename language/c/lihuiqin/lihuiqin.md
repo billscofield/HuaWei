@@ -81,6 +81,10 @@ gcc a.o -lm
 
 
 
+WORD(双字节)    2字节
+DWORD           4字节
+
+
 ## int
 
 char            1
@@ -90,6 +94,7 @@ int             4
 long            4
 long long       8
 
+
 unsigned
 
 0
@@ -97,10 +102,11 @@ unsigned
 "0"
 '\0'
 
+
 ## 可移植数据类型
 
-float           4Byte
-double          8
+float           4Byte, 默认6位小数, 准确能保证的是6位
+double          8, 默认6位小数
 long doulbe     12?
 
 
@@ -125,6 +131,10 @@ long doulbe     12?
 个补码，可以算出它的原码是0x80000020，转换为10进制，它的值是 -32,所以会输出 -32。
 ```
 
+%hd     有符号short
+%hu     无符号short
+%ld     有符号long
+
 ## 带参数的宏
 
 ```
@@ -137,7 +147,7 @@ MAX(i++,j++)
 
 ---
 
-#define MAX(a,b)    ((a) > (b) ? (a) : (b)          // this is right
+#define MAX(a,b)    ((a) > (b) ? (a) : (b))          // this is right
 
     比较 i++, 和 j++, 
 
@@ -151,13 +161,102 @@ max = ((a++) > (b++) ? (a++) : (b++));
         a++      b++           返回 b, 然后b++
 
 #define MAX(a,b) ({int x = a; int y = b; ( (x) > (y) ? (x) : (y) );})
-                           分号       分号                       分号, 必须有小括号
+                           分号       分号(定义域)                  分号, 必须有小括号, 封闭整个宏定义，任何跟随宏扩展的分号都将被视为表达式的一部分而不是单独的语句
 
 ```
 
+The code block is enclosed in parentheses and braces, which ensures that the
+entire block of code is evaluated as a single expression. 
+
+The braces also provide a scoping mechanism for the local variables A and B,
+ensuring that they are only visible within the code block and do not interfere
+with any other variables named A or B that may be defined elsewhere in the
+program.
 
 
-##
+    #define MAX(a,b) {int A=a, B=b; ((A) > (B) ? (A):(B));}
+
+The round brackets enclosing the entire expression are necessary because they
+group the entire macro definition into a single expression, allowing the
+expression to be evaluated correctly in all contexts.
+
+
+---
+
+Here's an example of what can happen if the entire macro definition is not enclosed in round brackets:
+
+```
+#include <stdio.h>
+
+#define MAX(a,b) int A=a, B=b; ((A) > (B) ? (A):(B))
+
+int main() {
+    int a = 10;
+    int b = 20;
+    int c = 0;
+
+    c = MAX(a, b);
+    printf("The maximum value is %d\n", c);
+    return 0;
+}
+```
+
+In this example, the macro definition for `MAX` does not have the entire
+expression enclosed in round brackets. As a result, the line `c = MAX(a, b);`
+expands to:
+
+    c = int A=a, B=b; ((A) > (B) ? (A):(B));;
+
+This is because the semicolon after `((A) > (B) ? (A):(B))` is treated as a
+separate statement, rather than as part of the expression. As a result, the
+code will fail to compile with the following error:
+
+    error: lvalue required as left operand of assignment
+
+This is because the line `c = int A=a, B=b; ((A) > (B) ? (A):(B));;` is not a
+valid expression, and the compiler is unable to determine the correct behavior.
+
+In summary, failing to enclose the entire macro definition in round brackets
+can lead to errors in the expanded code, and can cause the code to fail to
+compile or to behave unexpectedly.
+
+
+Here's an example of how the corrected macro definition for MAX would behave:
+
+```
+#include <stdio.h>
+
+#define MAX(a,b) ({int A=a, B=b; ((A) > (B) ? (A):(B));})
+
+int main() {
+    int a = 10;
+    int b = 20;
+    int c = 0;
+
+    c = MAX(a, b);
+    printf("The maximum value is %d\n", c);
+    return 0;
+}
+```
+
+In this example, the macro definition for `MAX` has been corrected by enclosing
+the entire expression in round brackets. The line `c = MAX(a, b);` correctly
+expands to:
+
+    c = ({int A=a, B=b; ((A) > (B) ? (A):(B));});
+
+When this code is compiled and run, it correctly calculates the maximum value
+of `a` and `b` and assigns it to `c`. The output of this program is:
+
+    The maximum value is 20
+
+In summary, enclosing the entire macro definition in round brackets produces
+the correct expansion of the macro and allows the code to be compiled and
+executed without errors.
+
+---
+
+## 变量
 
 [存储类型] 数据类型 标识符 = value
 
@@ -189,6 +288,7 @@ max = ((a++) > (b++) ? (a++) : (b++));
 
     4. extern(说明型)
         说明型, 也不能改变被说明的变量的值或类型
+        不开辟空间
 
     5. inline
         建议型关键字, 从 C++ 引入
@@ -258,8 +358,10 @@ man 3 fopen  中最早的 errno(error number) 就是全局变量, 现在不是�
 
 
 一般会在全局变量前加上 static 关键字
+
 ```
 -main.c
+//主调用
 #include <stdio.h>
 #include <stdlib.h>
 #include "proj.h"
@@ -271,7 +373,9 @@ int main(void){
     exit(0);
 }
 
+
 -proj.c
+// 功能实现
 #include <stdio.h>
 #include <stdlib.h>
 
@@ -282,7 +386,9 @@ void func(void){
     exit(0);
 }
 
+
 -proj.h
+// 头文件
 #ifndef PROJ_H
 #define PROJ_H
 
@@ -290,6 +396,11 @@ void func(void);
 
 #endif
 ```
+
+the code appears to be functioning as intended to protect against multiple
+inclusions of the proj.h header file.
+
+
 多个文件中有同名的全局变量，编译时导致冲突，解决方法就是加 static
 
 ## 表达式和语句
@@ -323,6 +434,11 @@ void func(void);
     或1
     与0
 
+    man 2 stat
+        st_mode
+        16bit
+        rwxrwxrw
+
 4. 分量运算符(.  ->)
 
 5. 下标运算
@@ -355,7 +471,37 @@ man 2 stat
 
 ## 输入、输出专题
 
-标准IO, 文件IO
+### 句柄:既然内存是分页的，那么页里边的东西大概可以是“句”吧
+https://www.zhihu.com/question/22950899
+
+缓冲区
+    程序结束
+    缓冲区满
+    强制刷新缓冲区
+
+
+### Why scanf must use & and printf doesn't
+
+The & character before the variable name in the scanf() function is used **to
+obtain the memory address of the variable**, which is then used to store the
+input value entered by the user.
+
+When the variable is passed as an argument to the printf() function, its value
+is copied and passed to the function, rather than its memory address. The
+printf() function then works with that value directly to display it according
+to the specified format string.
+
+
+the compiler helps bring the variable's value from address to printf, right?
+
+Yes, that is correct. The compiler copies the value of the variable to a
+register or stack before passing it to printf(). The printf() function then
+works with that value directly to display it according to the specified format
+string.
+
+
+
+### 标准IO, 文件IO
 
 1. 格式化输入输出函数  printf()    scanf()
 
@@ -415,6 +561,52 @@ man 2 stat
     }
     ```
 
+    详解:
+
+    the scanf function will fail to read it and leave the input buffer in an
+    invalid state. This can cause the program to enter an infinite loop where
+    it continuously attempts to read the invalid input without giving you a
+    chance to input a valid number.
+
+    To handle this situation and prevent the program from getting stuck, you
+    can modify the code to clear the invalid input from the buffer before the
+    next iteration of the loop. One way to do this is by using a do-while loop
+    to discard the invalid input, like this:
+
+    ```
+    int i = 0;
+    while (1) {
+        if (scanf("%d", &i) == 1) {
+            printf("%d\n", i);
+        } else {
+            printf("Invalid input\n");
+            // Clear the input buffer
+            int c;
+            do {
+                c = getchar();
+            } while (c != '\n' && c != EOF);
+            continue;
+        }
+    }
+    ```
+
+    With this modification, if scanf fails to read an integer input, it will
+    print "Invalid input" and then clear the input buffer using getchar() until
+    a newline character or the end of the file is encountered. This ensures
+    that any remaining invalid input is discarded before the next iteration of
+    the loop.
+
+    In Linux and Unix systems, the typical key or combination of keys that
+    represent EOF for getchar() is Control + D
+
+    In Windows systems, the typical key or combination of keys that represent
+    EOF for getchar() is Control + Z.
+
+
+    **The fflush function is used for flushing the output buffer, not the input
+    buffer.**
+
+
     scanf 返回不包括 \0
         如果不加，可以是空格回车等
         scanf("%d%f",&a,&b); // 输入完第一个，输入回车，换行等再输入第二个
@@ -428,6 +620,49 @@ man 2 stat
         printf("%s\n",a);
         printf("%d\n",b);
         ```
+
+    buffer 和 cache
+
+    buffer：
+
+        A buffer is something that has yet to be “written” to disk.翻译过来就是：
+        buffer就是写入到磁盘。buffer是为了提高内存和硬盘（或其他I/O设备）之间的
+        数据交换的速度而设计的。buffer将数据缓冲下来，解决速度慢和快的交接问题；
+        速度快的需要通过缓冲区将数据一点一点传给速度慢的区域。例如：从内存中将
+        数据往硬盘中写入，并不是直接写入，而是缓冲到一定大小之后刷入硬盘中。
+
+    cache
+
+        A cache is something that has been “read” from the disk and stored for
+        later use.翻译过来就是：cache就是从磁盘读取数据然后存起来方便以后使用。
+        cache实现数据的重复使用，速度慢的设备需要通过缓存将经常要用到的数据缓存
+        起来，缓存下来的数据可以提供高速的传输速度给速度快的设备。例如：将硬盘
+        中的数据读取出来放在内存的缓存区中，这样以后再次访问同一个资源，速度会
+        快很多。
+
+
+    buffer和cache的特点
+
+    共性：
+
+        都属于内存，数据都是临时的，一旦关机数据都会丢失。
+
+    差异：(先理解前两点，后两点有兴趣可以了解)
+
+        - buffer是要写入数据；cache是已读取数据。
+
+        - buffer数据丢失会影响数据完整性，源数据不受影响；cache数据丢失不会影响
+          数据完整性，但会影响性能。
+
+        - 一般来说cache越大，性能越好，超过一定程度，导致命中率太低之后才会越大
+          性能越低。buffer来说，空间越大性能影响不大，够用就行。cache过小，或者
+          没有cache，不影响程序逻辑（高并发cache过小或者丢失导致系统忙死除外）。
+          buffer过小有时候会影响程序逻辑，如导致网络丢包。
+
+        - cache可以做到应用透明，编写应用的可以不用管是否有cache，可以在应用做
+          好之后再上cache。当然开发者显式使用cache也行。buffer需要编写应用的人
+          设计，是程序的一部分。
+
 
 2. 字符输入输出函数    getchar()   putchar()
 
@@ -574,28 +809,92 @@ b:
 
 ## 数组
 
+In C language, the array name is not a constant. However, the array name can be
+implicitly converted into a pointer to the first element of the array,  and
+this pointer is a constant pointer, which means that it cannot be modified to
+point to a different memory location.
+
+This means that you can use the array name to initialize a pointer variable,
+and this pointer variable will also be a constant pointer. For example:
+
+```
+int arr[10];
+int *ptr = arr; // valid: arr is implicitly converted to a constant pointer to the first element of the array
+```
+
+In this example , arr is implicitly converted to a **constant pointer** to the
+first element of the array , and this pointer is used to initialize the pointer
+variable ptr. Since ptr is also a pointer to the first element of the array ,
+you can use ptr to access the array elements just like you would with arr.
+
+---
+
+    `int arr[10]; sizeof(arr)`
+
+in this example ,arr is not converted to a pointer pointing the first member?
+
+In the example `int arr[10]; sizeof(arr);`, the array arr is not converted to a
+pointer pointing to the first member.
+
+**The sizeof operator is evaluated at compile time**, and it determines the
+size of an object in bytes. In this case, sizeof(arr) returns the size of **the
+entire array arr in bytes**, which is 10 * sizeof(int) because arr has 10
+elements of type int.
+
+**Note that in many contexts, an array name is automatically converted into a
+pointer pointing to the first element of the array**. However, sizeof is not one
+of those contexts. So, in the example you provided, arr is treated as an array
+of integers with 10 elements, and not as a pointer to an integer.
+
+---
+
+In the code `int arr[] = {1,2,3,4,5}; *(arr+1) = 99;`, the * operator is indeed
+used to get the value stored at a particular memory location, but it can also
+be used to set the value at that memory location.
+
+In this case,`*(arr+1)` is equivalent to arr[1], which accesses the second
+element of the array arr. So, the expression ` *(arr+1)` gets the value stored
+in the second element of the array, which is 2.
+
+By assigning a new value of 99 to `*(arr+1)` or arr[1], you are updating the
+value stored in the second element of the array to 99. This is a common way of
+updating or modifying array elements in C.
+
+**Therefore, the * operator is used both to get and set the value stored in a
+particular memory location, depending on the context and usage.**
+
 ### 1. 一维数组
 
-    [存储类型] 数据类型 key[]
+[存储类型] 数据类型 key[]
 
-    变长数据要看编译器支持否
+变长数据要看编译器支持否
 
-    数组名：表示地址的常量, 数组的起始位置
-    不检查越界
+数组名：表示地址的常量, 数组的起始位置
+不检查越界
+
+In this example , arr is implicitly converted to a **constant pointer** to the
+first element of the array.
+
 
 ### 2. 二维数组
 
 
-
 ### 3. 多维数组
 
-### 4. 字符数组和字符串
+
+### 4. 字符数组 和 字符串
 
     ```
     /*字符数组赋初值*/
     char cArr[] = {'I','L','O','V','E','C'};            // 没有尾0, 如果用printf(%s), puts 输出，可能会有意外情况
+
     /*字符串赋初值*/
     char sArr[] = "ILOVEC";                             // 有尾0, printf("%s") 和 puts 没有问题, **字符串是有尾0的,字符数组没有**
+
+    /* 格式化输入方式 */
+    scanf("%s",str)                                     // 不能有空格等
+
+
     /*用sizeof（）求长度*/
     printf("cArr的长度=%d\n", sizeof(cArr));            // 没有意外情况 6
     printf("sArr的长度=%d\n", sizeof(sArr));            // 没有意外情况 7
@@ -616,7 +915,9 @@ b:
 
 string.h
 
-    strlen: 不包含尾0
+    strlen: 不包含尾0, 遇到第一个 \0 就返回
+    sizeof() 包含尾零
+
 
     strcpy
 
@@ -624,11 +925,25 @@ string.h
 
         直接覆盖，不是 append
 
+        ```
+        #include <string.h>
+        char str[] = "hello world";
+        strcpy(str,"meet you");
+        printf("%s\n",str);
+        ```
+
     strncpy
 
         char *strncpy(char *dest, const char *src, size_t n);
 
         从左边开始计算 n 个字符
+
+        ```
+        #include <string.h>
+        char str[] = "hello world";
+        strcpy(str,"meet you",2);      // 覆盖两个字符, -> mello world
+        printf("%s\n",str);
+        ```
 
     strcat
 
@@ -656,6 +971,7 @@ string.h
 
         int strncmp(const char *s1, const char *s2, size_t n);
         只比较前 n 个
+
 
 
 ## 共用体
@@ -839,6 +1155,14 @@ free
 
 **变量是对某个空间的抽象命名**
 
+There is a mapping between the variable and its value's memory address. If you
+have a pointer to the variable, you can use that to access the memory location
+where its value is stored directly.
+
+However, if you try to access the variable directly (without a pointer), **the
+compiler takes care of the memory address mapping for you, allowing you to use
+the variable name to read or modify its value.**
+
 指针就是地址
 
 TYPE NAME VALUE
@@ -847,14 +1171,73 @@ TYPE NAME VALUE
     NAME:   i
     VALUE:  &a
 
-### 2. 指针和指针变量
+    ```
+    int a = 1;¬
+    int *p = &a;¬
+    *p = 110;¬
+    printf(format: "%d\n",a);
+    ```
 
+### 2. 指针 和 指针变量
+
+    ```
     int a = 3;
-
 
     int b;
     int *p = &b;
     *p = 3;
+    ```
+
+Here are some snippets of search results related to the differences between `int
+a[]={1,2,3};` and `int *p = {1,2,3}` in C:
+
+    - `int a[]={1,2,3};` initializes an array of integers with the values `{1,
+      2, 3}`. The array a stores the values directly in memory as three
+      contiguous blocks of 4 bytes each (assuming an int is represented with 4
+      bytes on the machine).
+
+    - `int *p = {1,2,3}` initializes a pointer p to point to a block of memory
+      containing the values `{1, 2, 3}`. The memory is not guaranteed to be
+      contiguous in this case - the compiler may decide to store the values at
+      arbitrary locations in memory.
+
+    - sizeof(a) returns the size of the array a in bytes, which in this case
+      would be 3 * sizeof(int) = 12 bytes.
+
+    - sizeof(p) returns the size of the pointer p in bytes, which is usually 4
+      or 8 bytes on a 32- or 64-bit machine, respectively. It does not return
+      the size of the memory block p is pointing to, which is unknown in this
+      case.
+
+    - The main difference between arrays and pointers is that arrays are not
+      modifiable l-values, while pointers are. This means that you can't assign
+      to an array, but you can assign to a pointer.
+
+      here's an example illustrating that arrays are non-modifiable lvalues:
+
+      ```
+      #include <stdio.h>
+
+      int main() {
+          int arr[] = {1, 2, 3};
+          arr[0] = 4; // This is allowed
+          int *p = arr; 
+          p[0] = 5; // This is also allowed
+          // arr = p; // This is not allowed
+
+          return 0;
+      }
+      ```
+
+      **arrays are non-modifiable lvalues** - we can't assign values to them
+      after they have been declared, although we can modify the individual
+      elements of the array using the bracket operator.
+
+    - Another difference between arrays and pointers is that the name of an
+      array can be used as a pointer to its first element. In other words, if a
+      is an array of integers, then a can be used as a pointer to the first
+      element of the array, i.e. a and &a[0] are equivalent.
+
 
 ### 3. 直接访问和间接访问
 
@@ -877,9 +1260,9 @@ NULL 是一个宏
 
 还可以作 ++ -- 比较
 
-### 8.指针与数组
+### 8. 指针与数组
 
-数组指针
+二维数组指针
 
     指向数组
 
@@ -891,7 +1274,42 @@ NULL 是一个宏
         int (*p)[3] = a;
         ```
 
-### 9 字符数组和指针
+        int a[4][5];
+        int (*p)[5]=a;
+
+        这里a是个二维数组的数组名
+        p是一个指针变量，它指向包含5个int元素的一维数组，此时p的增量以它所指向的一维数组长度为单位
+
+        p+i是一维数组a[i]的地址，即p+i==&a[i]；对该式两边作取内容运算（*）得*(p+i)==a[i]，由于二维数组中a[i]==&a[i][0]，则*(p+i)表示a[i][0]的地址，即*(p+i)==&a[i][0]；
+
+        *(p+2)+3表示a[2][3]地址（第一行为0行，第一列为0列），*（*(p+2)+3）表示a[2][3]的值。
+
+---
+
+        数组指针（也称行指针）
+
+        定义 int (*p)[n];
+
+        ()优先级高，首先说明 p 是一个指针，指向一个整型的一维数组，这个一维数组的长度是 n，也可以说是 p 的步长。
+
+        也就是说执行 p+1 时，p 要跨过 n 个整型数据的长度。
+
+        如要将二维数组赋给一指针，应这样赋值：
+
+        int a[3][4];
+
+        int (*p)[4]; //该语句是定义一个数组指针，指向含 4 个元素的一维数组。
+
+        p=a; //将该二维数组的首地址赋给 p，也就是 a[0]或&a[0][0]
+
+        p++; //该语句执行过后，也就是 p=p+1;p 跨过行 a[0][]指向了行 a[1][]
+
+        所以数组指针也称指向一维数组的指针，亦称行指针。
+
+
+
+
+### 9. 字符数组和指针
 
     // 字符数组
     char a[] = "hello";
@@ -1057,9 +1475,6 @@ void 指针类型
 ### 11. 多级指针
 
 
-
-
-
 The statement `int *p = {1, 2, 3}` is not correct because it is attempting to
 initialize a pointer variable with an array of integers using brace
 initialization syntax.
@@ -1108,8 +1523,10 @@ entire contents of an array using the assignment operator.
 
 ### 5. 函数与指针
 
+指针作为参数
+
 1. 指针函数
-    
+
     返回值是指针
 
     > 返回值 * 函数名(形参)
@@ -1123,8 +1540,13 @@ entire contents of an array using the assignment operator.
 
     > 如 int (*p)(int)
 
-3. 函数指针数组
+    ```
     
+
+    ```
+
+3. 函数指针数组
+
     > 类型 (*数组名[下标])(形参)
 
     int (*funcp[2])(int,int)
@@ -1140,6 +1562,7 @@ entire contents of an array using the assignment operator.
 
 ### 7. 函数与二维数组
 
+    print_arr(int p[][N])
 
 ## 构造类型
 
@@ -1222,7 +1645,7 @@ struct student_st{
         ```
         #include <stdio.h>
         #include <stdlib.h>
-    
+
         struct simp_st{
             int a;
             int b;
@@ -1237,17 +1660,17 @@ struct student_st{
         ```
 
     **可以只初始化部分元素**
-    
+
     ```
     struct student_st liu = {.math=99};     // "." 引用当前结构体中的某个成员
     ```
 
     2. **还可以用指针, 使用箭头**
-        
+
         指针->成员名
-        
+
         (*指针).成员名                      // 就不是第一个成员了
-    
+
     ```
     struct student_st liu = {.name="liu"}
     struct student_st *pliu = &liu;
@@ -1255,7 +1678,7 @@ struct student_st{
     ```
 
     数组
-        
+
         ```
         struct student_st liu[2] = {{.name="liu"},{.name="wang"}};
         p = &liu[0];            //
@@ -1290,7 +1713,7 @@ struct student_st{
 6. 传参
 
     1. 值
-    
+
     2. 指针方式
        truct simp_st a;
        truct simp_st *p = &a;
@@ -1562,10 +1985,12 @@ man string.h            // POSIX Programmer's Manual
         1. cp libxx.so ~/lib
         2. export LD_LIBRARY_PATH=~/lib
 
-    
+
     貌似只有标准库才不用写 -lxxx
 
 
 
 ## 未看
 p32
+
+

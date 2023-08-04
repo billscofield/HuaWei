@@ -24,7 +24,6 @@ ALTAIR 8800为例
 
     前边是一个 Operating Panel, 一排一排的LED灯(作为输出设备), 一排排的开关(作为输入设备)
 
-
 Interface(接口，界面)
 
     硬件-硬件
@@ -39,7 +38,7 @@ Interface(接口，界面)
 
         和硬件相关, 编译后
 
-    
+
     跨平台:
 
         编译前 + 编译后 都要可以跨平台
@@ -49,8 +48,8 @@ Interface(接口，界面)
 
 Virtual Machine
 
-    操作系统向用户提供一个容易理解的计算机(虚拟的计算机), 用户对这个虚拟计算机的操作都会被
-    操作系统转成对计算机硬件的操作。
+    操作系统向用户提供一个容易理解的计算机(虚拟的计算机), 用户对这个虚拟计算机
+    的操作都会被操作系统转成对计算机硬件的操作。
 
 |    Application
 |                            Virtual Machine Interface
@@ -60,7 +59,6 @@ Virtual Machine
 
 
 操作系统能做什么?
-    
     从用户的角度:
         提供良好的用户界面
         标准的函数库
@@ -70,14 +68,14 @@ Virtual Machine
             硬件，软件
             申请资源时的冲突
 
-
 So, what is computer?
+
     1. OS acts an intermediary between 'user of a computer' and the computer hardware
 
-    1. the purpose of an operating system is to provide an environment in which a user
+    2. the purpose of an operating system is to provide an environment in which a user
        can execute programs in a convient and efficient manner.
 
-    1. an OS is software that manages the computer hardware. 
+    3. an OS is software that manages the computer hardware. 
 
 ### 计算机系统组成(Computer System Organization)
 
@@ -101,20 +99,21 @@ So, what is computer?
 
     Bootstrap(本意是靴子上的鞋带)
         谚语：Pull oneself up by one's bootstraps., 引意为不可能的任务
-        
+
         bootloader 载入内存
 
     中断
         当有随机事件(Event)发生时，CPU收到一个中断(Interrupt)信号, 可以是硬中断或软件中断
             事件一般都是随机的
-        
+
         CPU会停下正在做的事，转而执行中断处理程序，执行完毕后会回到之前被中断的地方继续执行
-        
+
         **OS is an INTERRUPT driven system**
 
 
         exception:异常,也是中断
 
+    ```
     |   +-------+                   |                                 +-----------+
     |   |process|   exception       |interrupt                        | Process   |
     |   |execu  |------------+      |                        +---->---| executing |
@@ -128,6 +127,7 @@ So, what is computer?
     |                       +-----------------------------------+
     |                       |   Exception/Interrupt handler     |
     |                       +-----------------------------------+
+    ```
 
 
 
@@ -135,18 +135,18 @@ So, what is computer?
 
     存储系统
         CPU负责将指令(Instruction)从内存(Memory)读入，所以程序必须在内存中才能运行
-        
+
         内存以字节为存储单位，每个字节都有一个地址与之对应。通过 load/store 指令即可访问指定地址的内存数据
-            
-            load: 将内存数据装入寄存器(Register)
-            store: 将寄存器数据写入内存
+
+            load: 将内存指定位置指定地址上的数据装入寄存器(Register)
+            store: 将寄存器数据写入指定位置内存
 
     存储层次图
-        Register            // 寄存器
+        Register            // 寄存器   Volatile Memory 易失性存储
         Cache               // 缓存
         Main memory         // 内存
         ---
-        solid-state disk    // 固态硬盘
+        solid-state disk    // 固态硬盘    Nonvolatile Memory 非易失性存储
         magnetic disk       // 磁盘
         optical disk        // 光盘
         magnetic tapes      // 磁带
@@ -154,124 +154,174 @@ So, what is computer?
         由上到下速度越来越慢，但是容量越来越大
         上三层是易失性存储(Volatile Memory)
 
+
     I/O结构
+
         IO设备是计算机体系结构中种类最丰富的设备类型，而且他有着很强的扩展性
+
         管理IO设备是操作系统非常重要的组成部分，操作系统中有一个专门的IO子系统负责完成这项工作
 
-
-
-|
-|                                           +------------+
-|                                           |            |
-|                                           |            |
-|   +--------+      +------------+      +--------+       |      +-----+
-|   |   IO   |      | Controller |      | Device | OS    |<---> | CPU |
-|   | Device | <--->| Adapter    | <--->| Driver |       |      |     |
-|   +--------+      +------------+      +--------+       |      +-----+
-|                                           |            |
-|                                           |            |
-|                                           +------------+
-|
+    ```
+                                            +------------+
+                                            |            |
+                                            |            |
+    +--------+      +------------+      +--------+       |      +-----+
+    |   IO   |      | Controller |      | Device | OS    |<---> | CPU |
+    | Device | <--->| Adapter    | <--->| Driver |       |      |     |
+    +--------+      +------------+      +--------+       |      +-----+
+                                            |            |
+                                            |            |
+                                            +------------+
+    ```
 
     操作系统需要知道这个 Adapter/controller 是如何使用的，需要一个该 Adapter 的驱动程序
 
 
 ### 计算机体系结构
 
-Single-processor System
+1. Single-processor System
 
     只有一颗 CPU, 执行通用指令集
 
     带有其他专用处理器，为特定设备服务，如：磁盘、键盘、图形控制器等, 如南桥
 
         他们能够执行的指令有限，不处理用户进程
-        
+
         操作系统会向他们发出任务，并监控他们的状态
 
-Multiprocessor/Multicore System
+2. Multiprocessor/Multicore System
 
+    一个计算机
     有两个或多个紧密通信的CPU, 它们共享计算机总线、时钟、内存和外设等
-    
+
         非对称处理 (Asymmetric multiprocessing)
             有一个主CPU，其他是从CPU
-            
+
         对称处理(Symmetric MultiProcessing,SMP)
             每个CPU 都是独立的，同等地位的
+            每个处理器有自己的寄存器和缓存
 
-集群系统 Clustered System
+3. 集群系统 Clustered System
 
-    该系统由若干节点(node)通过网络连接在一起，每个节点可为单处理器系统或多处理器系统，节点之间是
-    松耦合(loosely coupled) 关系
-        
+    计算机集群
+
+    该系统由若干节点(node)通过网络连接在一起，每个节点可为单处理器系统或多处理
+    器系统，节点之间是松耦合(loosely coupled) 关系
+
         高可用性(high availability)
-        
+
         高性能计算(high-performance computing)
 
     就是现在的 Cloud Computing
 
-
-
 ### 操作系统结构
 
-单用户单道模式
+1. 单用户单道模式
     单道程序不能让CPU和IO设备始终忙碌
+    一次只能处理一个任务
 
-多道程序设计
-    前提条件：硬件支持
-    
+    输入字符，cpu处理，结果存到磁带上
 
-分时系统(time sharing), 也称多任务系统(multi tasking), 是多道程序设计的延伸
+2. 多道程序设计
+    前提条件：硬件支持, CPU 和 IO设备具有并行能力
+
+    单道程序不能让 CPU 和 IO 设备始终忙碌
+
+    多道程序设计通过安排任务使得CPU总是有一个执行任务，从而提高CPU利用率
+
+
+3. 分时系统(time sharing), 也称多任务系统(multi tasking), 是多道程序设计的延伸
     允许多个用户共享一台计算机
     用户只有输入和输出设备
     为每个用户轮流分配等量的CPU时间
-    用户从发出指令到得到结果的时间称为响应时间, 响应时间和用户数量成正比
+    用户从发出指令到得到结果的时间称为**响应时间**, 响应时间和用户数量成正比
 
-    地一个分时系统CTSS由MIT于1962年开发出来
+    第一个分时系统CTSS由MIT于1962年开发出来
 
 引发的其他模式
+
     处理器调度(CPU Scheduling)
+        任务优先级
+
     交换(Swapping)
         多道程序
+        多个程序在内存中，将其中不用的交换到 swap 上
+
     虚拟内存(Virtual Memory)
+        就是 swap
+
     磁盘管理(Disk Management)
+
     同步(Synchronization)
         商量好的，就像接力，一定是前边那个人把接力棒交给我，我才能跑
+
     异步时间(随机)
         自己想什么时候跑什么时候跑, 容易产生死锁
+
     死锁(Deadlock)
 
 ---
 
-操作系统的服务
-    
-    为用户
-        User Interface
-            GUI
-            batch 批处理
-            Command line
-    为程序员
-        System Call
+### 操作系统的服务
+
+1. 为用户
+    User Interface
+        GUI
+        batch 批处理
+        Command line
+2. 为程序员
+    System Call
 
 
-    +---------+ +------------+ +---------+ +---------------+ +------------+ +------------+
-    |program  | | IO         | | File    | | communication | | Resource   | | accounting |
-    |execution| | Operations | | Systems | |               | | allocation | |            |
-    +---------+ +------------+ +---------+ +---------------+ +------------+ +------------+
-    +---------+ +----------------+ 
-    |error    | | protection and |
-    |detection| | security       |
-    +---------+ +----------------+ 
+    ```
+                            user and other system programs
 
+                            +-----+-------+--------------+
+                            | GUI | batch | command line |
+                            +-----+-------+--------------+
+                            |     user interface         | ------------------------------------ 面向用户的接口
+                            +----------------------------+
+
+                            +----------------------------+
+                            |       system calls         | ------------------------------------ 面向程序的接口
+                            +----------------------------+
+    +-----------------------------------------------------------------------------------------------+
+    |   +---------+ +------------+ +---------+ +---------------+ +------------+ +------------+      |
+    |   |program  | | IO         | | File    | | communication | | Resource   | | accounting |      |
+    |   |execution| | Operations | | Systems | |  进程         | | allocation | |  记账      |      |
+    |   |         | |            | |         | |               | | 资源分配   | |  记账      |      |
+    |   +---------+ +------------+ +---------+ +---------------+ +------------+ +------------+      |
+    |           +---------+                             +----------------+                          |
+    |           |error    |                             | protection and |                          |
+    |           |detection|                             | security       |                          |
+    |           +---------+                             +----------------+                          |
+    |                                                                                               |
+    |                                   service                                                     |
+    +-----------------------------------------------------------------------------------------------+
+
+                            +----------------------------+
+                            |      operating system      |
+                            +----------------------------+
+
+                            +----------------------------+
+                            |           hardware         |
+                            +----------------------------+
+
+
+
+
+    batch : 批处理
+    ```
 
     almost all operating system have a user interface(UI). It offers a way for users to interface with OS.
 
     CLI(Command line interface) 
         command interpreter(命令解释器) shell
     GUI(Graphic User interface)
-    Batch 
+    Batch
         It is a file which contains commands and directives
 
-    
+
     系统调用(system calls)
         系统调用的实现代码是操作系统级别的
         程序员也不是直接使用系统调用，而是使用系统调用的接口API间接访问系统调用
@@ -281,56 +331,96 @@ Multiprocessor/Multicore System
         printf 是 standard C library 提供的API
         printf 函数(API)的调用引发了对应的系统调用 write 的执行
         write执行结束时的返回值传递回用户程序
+
+
+
+        user mode
+                +--------------------+
+        --------+ standard c library |----------- 
+                +--------------------+
+        kernel mode
         ```
 
 
     双重模式(Dual mode)
+
         现代计算机系统有一个特殊的硬件，用于划分系统的运行状态，至少需要两种单独运行模式:
+
             用户模式(user mode): 执行用户代码
+
             内核模式(kernel mode): 执行操作系统代码
+
         实现方式
+
             用一个**硬件模式位**表示当前模式：0表示内核模式，1表示用户模式
 
     运行模式的切换
+
         系统调用发生在内核模式, 当调用printf时，要使用系统调用write, 会进入内核模式，然后返回用户模式
 
 
 
     Trap Mechanism (陷阱机制)
 
-|   user process
-|
-|   (user process executing)   (calls system call)
-|        -->-------------------+                   +------>---
-|                               \                 /                                     user mode(mode bit=1)
-| ------------------------------------------------------------------------------
-|                          (trap) \             /(return)                               kernel mode(mode bit=0)
-|                                  \           /
-|                                   +------>--+
-|   模式切换                   |----|         |----|
-|                               开销           开销
+    ```
+    user process
+
+    (user process executing)   (calls system call)
+         -->-------------------+                   +------>---
+                                \                 /                                     user mode(mode bit=1)
+  ------------------------------------------------------------------------------
+                           (trap) \             /(return)                               kernel mode(mode bit=0)
+                                   \           /
+                                    +------>--+
+    模式切换                   |----|         |----|
+                                开销           开销
+                              模式切换       模式切换
+    ```
 
 系统调用的实现机制
-    
+
     每一个系统调用都有一个唯一的数字编号(而不是说直接调用比如write)，被称为系统调用号
 
-    用户代码调用API时，API中会向[系统调用接口]指明所要用的系统调用号，操作系统内核中维护了一张索引表，依据这个调用号
-    可以检索到系统调用代码在内核中的位置
+    用户代码调用API时，API中会向**系统调用接口**指明所要用的**系统调用号**，操作系统
+    内核中维护了一张索引表，依据这个调用号可以检索到系统调用代码在内核中的位置
 
+    ```
+            +-------------------------------+
+            | user application              |
+            +-------------------------------+
+                 \|/                   /|\
+                open()                  |
+                  |                     |
+    user mode    \|/                    |
+            +-------------------------------+
+    --------+ system call interface         |----------- 
+            +-------------------------------+
+    kernel mode                        /|\
+                                        |
+                                        |
+          系统调用编号                  |
+            +----+                      |
+            |    |------------> open()  |
+            |    |                      |
+            |    |                +-----+
+            |    |
+            |    |
+            +----+
+    系统调用号：类似指针
+    ```
 
+### 操作系统的构建方式
 
+Multics (multiplexed information and computer system) 多路信息计算系统 (多道程序设计)
 
-操作系统的构建方式
+设计目标
+    用户目标(user goal)
+    系统目标(system goal)
 
-    Multics (multiplexed information and computer system) 多路信息计算系统 (多道)
-
-    设计目标
-
-    机制与策略的分离
-        机制(mechanism):如何做,    CPU调度
-        策略(policy): 做什么
-        微内核操作系统 Mach、Darwin -> macos
-
+机制与策略的分离
+    机制(mechanism):如何做,    CPU调度
+    策略(policy): 做什么
+    微内核操作系统 Mach(早期 macos)、Darwin -> macos
 
 
 GNU/Linux
@@ -341,93 +431,193 @@ GNU/Linux
     source code VS binary code
     源代码          二进制
 
-    
+    Linux Mint
+
     Debian
-        for those seeking a truly free Linux distribution with no proprietary drivers, firmware of software, 
-        then Debian is for you. The grandfather of Linux.
+
+        for those seeking a truly free Linux distribution with no proprietary
+        drivers, firmware of software, then Debian is for you. The grandfather
+        of Linux.
+
     Arch
-        A rolling release distribution meaning that you don't have to install new versions of the operating system
-        at any point because it updates itself.
 
+        A rolling release distribution meaning that you don't have to install
+        new versions of the operating system at any point because it updates
+        itself.
 
+    Fedora
+
+        the most up to date linux distribution with all new concepts
+        incorporated at the earliest possible opportunity
 
 ## 进程概念
 
-进程的定义
+1. 进程的定义
 
-    A program is a passive(被动的) entity, such as a file containing a list of instructions stored 
-    on disk(often called an executable file)
+    A program is a **passive(被动的) entity**, such as a file containing a list of
+    instructions stored on disk(often called an **executable file**)
+
         被动的，不会自己运行起来
 
-    A program becomes a process when an executable file is loaded into memory
+    A program becomes a **process** when an executable file is loaded into memory
 
-    A process is an active entity, with a program counter(程序计数器) specifing the next instruction
-    to execute a set of associated resources
+    A **process** is an **active entity**, with a **program counter(程序计数器)**
+    specifing the next instruction to execute a set of associated resources
 
         程序计数器(PC)是一个CPU中的寄存器,里面存放下一跳要执行指令的内存地址，
 
-    
+    程序计数器(PC) 是一个CPU中的寄存器，里面存放下一条要执行指令的内存地址，在
+    Intel x86 和 Itanium 微处理器中，它叫**指令指针(Instruction Pointer,IP)**,
+    有时又称为**指令地址寄存器(instruction address register,IAR)、指令计数器
+
+    通常，CPU在取完一条指令之后会将PC寄存器的值加"1"(一个指针大小), 以计算下一
+    条要执行的指令的地址
+
+Process in memory
+
     +-----------+
-    |   stack   |       栈内存: 用于存放局部变量，函数返回地址
+    |   stack   |       栈内存: 用于存放局部变量，**函数返回地址**
     +-----------+
     | \|/       |
     |           |
+    |  ......   |
+    |           |
     |     /|\   |
     +-----------+
-    |   heap    |       堆内存: 用于程序**运行时(runtime)**的动态内存分配, 用malloc函数申请内存
+    |   heap    |       堆内存: 用于程序**运行时(runtime)**的动态内存分配, **用malloc函数申请内存,必须手动回收**
     +-----------+
-    |   data    |       全局和静态变量数据
+    |   data    |       全局和**静态**变量数据
     +-----------+
-    |   text    |       代码
+    |   text    |       代码(read only)
     +-----------+
 
     栈内存和堆内存其实占用的是一块内存空间，只是stack是从上往下增长，而heap是从下往上增长
 
-
     并发的进程
-        Concurrency: the fact of two or more events or circumstances(环境、状态) happening or existing at the same time.
+
+        Concurrency: the fact of two or more events or circumstances(环境、状态)
+        happening or existing at the same time.
+
             同一个时间存在 exist
-            
-        与“并行”的区别
-            同时在运行, running
-            
+
+        与“并行(parallel)”的区别
+            并行：同时在运行, running
+            并发: 同时存在，在内存中，并没有同时运行，是时间片，一个运行，一个暂停; 并发进程无法一次性执行完毕,是走走停停的
+
+            如果有多个cpu, 则可以是并行
+
         进程并发的动机: 多道程序设计
+
 
     并发进程共享CPU
         并发进程可能无法一次性执行完毕，会走走停停
         一个进程在执行过程中可能会被另一个进程替换占有CPU,这个过程叫做"进程切换"
-        
+
         process 1       -------      ---   ---- -----
         process 2              --       -                   进程切换switch
         process 3                --      --    -  
 
     进程是资源分配、保护和调度的基本单位
 
+    进程的定义
 
-进程的状态(Process state)
+        **进程**是一个程序的一次执行过程更，能完成具体的功能，是在某个数据集合
+        上(stack,heap,data)完成的，执行过程是可并发的
+
+2. 进程的状态(Process state)
+
     进程在执行期间自身的状态
+
     有三种基本状态
-        运行态(running)    
-        就绪态(ready)   : 等待分配CPU
-        等待态(waiting) : 进程在等待某些时间的发生(比如IO操作结束或是一个信号)
-        
+        - 就绪态(ready)   : 等待分配CPU
+        - 运行态(running) : 此时进程的代码在 CPU 上运行
+        - 等待态(waiting, also known as blocked or sleeping) : 进程在等待某些时间的发生(比如IO操作结束或是一个信号), 此时cpu会去执行其他的 process
+
+            When a process is in its waiting state (also known as blocked or
+            sleeping state), the CPU can switch to run other processes that are
+            in their ready state and waiting to be executed. This is because a
+            process in the waiting state is not actively using the CPU and is
+            waiting for some event (such as I/O completion or an external
+            signal) to occur before it can continue to run. During this time,
+            the CPU can be used by other processes that are in their ready
+            state and waiting to be executed by the scheduler. 
+
+            !!!
+
+            rsync and cp need to use the CPU to perform the copying or syncing
+            of files. While they may not be actively utilizing the CPU every
+            moment of the process, they still require CPU resources to read
+            data from the source and write it to the destination. If rsync or
+            cp were not able to use the CPU during this process, then the
+            transfer would not occur at all. So, these processes cannot work
+            without the CPU during file copying or syncing.
+
         ```
         a = 1
         printf('hello')         // 在向屏幕输出，进行IO操作，假如很漫长，会进入等待状态，让出CPU
         b = 1
-        
         ```
-            
+
         new
         finish
-        
+
         这是5种状态的,还有7种状态的
 
+    linux 中进程的几种状态
+
+        Running or Runnable State (R)
+
+        Sleeping State: Interruptible (S) and Uninterruptible (D)
+
+        Stopped State (T)
+
+            When a process is stopped, it is removed from the **run queue** and cannot use CPU resources.
+
+        Zombie State (Z)
+
+        - TASK_RUNNING : is the process state indicating that the process is currently executing on the CPU
+
+        - TASK_UNINTERRUPTIBLE and TASK_INTERRUPTIBLE are both waiting states
+
+            !!!
+
+            TASK_UNINTERRUPTIBLE is a process state similar to
+            TASK_INTERRUPTIBLE, but in this case, delivering a signal **will
+            not wake the process up.**
+
+            This is often associated with waiting for some resource, such as
+            disk I/O or network I/O, and the process will not consume CPU time
+            during this state
+
+
+            !!!
+
+            TASK_INTERRUPTIBLE is a process state where the process is waiting
+            for some event to occur and can be interrupted by a signal, such as
+            a timer or a user interrupt.
+
+            When a process is in the TASK_INTERRUPTIBLE state, it is not using
+            the CPU. Instead, it is waiting for some event to occur, which
+            could be the completion of a disk or network I/O operation. This
+            state is similar to the TASK_UNINTERRUPTIBLE state, but the
+            difference is that the process can be interrupted by a signal.
+
+            So, in general, a process that is in TASK_INTERRUPTIBLE state is
+            not executing on the CPU and is not using CPU resources until it is
+            woken up by an event or signal. Once the event occurs or the signal
+            is delivered, the process will be moved to the "runnable" state
+            (TASK_RUNNING) and added to the run queue, at which point it can
+            start using the CPU again.
+
 进程何时离开CPU
+
     内部事件
+
         进程主动放弃(yield)CPU， 进入等待/终止状态(所有的IO操作都是这样设定的，进行IO操作就会主动放弃CPU)
         E.g 使用I/O设备，(非)正常结束
+
     外部事件
+
         进程被剥夺CPU使用权，进入就绪状态，这个动作叫[抢占(preempt)]
         E.g 时间片到达，高优先权进程到达
 
@@ -438,35 +628,50 @@ GNU/Linux
 
 进程切换时，CPU做了什么?
 
-中断源
+### 中断
+
+1. 中断技术
+
+    中断是指程序执行过程中
+        当发生某个事件时，中止CPU上现行程序的运行
+        引出该事件的处理程序执行
+        执行完毕返回元程序中断点继续执行
+
+        系统调用就是中断的一个例子
+
+2. 中断源
+
     外中断: 来自CPU之外的硬件中断信号(一般直接称之为中断)
+        interrupt
         如时钟中断，键盘中断，外围设备中断
         外部中断均是异步中断(随机的)
-    
-    内中断(异常Exception): 来自CPU内部，指令执行过程中发生的终端，属于同步中断
+
+    内中断(异常Exception): 来自CPU内部，指令执行过程中发生的终端，**属于同步中断**
+        exception
         硬件异常：掉电，奇偶校验错误
         程序异常：非法操作，地址越界，断点，除数为灵
         系统调用
 
+    ```
+     mode switch
 
-    | mode switch
-    |
-    |   +-------+                   |                                 +-----------+
-    |   |process|   exception       |interrupt                        | Process   |
-    |   |execu  |------------+      |                        +---->---| executing |
-    |   +-------+            |      |                        |        +-----------+
-    |                       \|/    \|/                       |                                  user mod
-    |                   +-------------------+        +------------------------------------------------+                    
-    |  -----------------| saving the context|--------| 1. select a process to restarot and resume     |------------------
-    |          Trap     | of the executing  |        | 2. restore the context of the selected process |
-    |                   |                   |        | 3. resume excution of the selected process     |
-    |                   +-------------------+        +------------------------------------------------+
-    |                           |                           /|\ LPSW (内核模式回到用户模式指令)        kernel mod
-    |                          \|/                           |
-    |                       +------------------------------------------------------+
-    |                       | 1. Determing the cause of the exception or interrupt |
-    |                       | 2. handle the exception/interrupt                    |
-    |                       +------------------------------------------------------+
+       +-------+                   |                                 +-----------+
+       |process|   exception       |interrupt                        | Process   |
+       |execu  |------------+      |                        +---->---| executing |
+       +-------+            |      |                        |        +-----------+
+                           \|/    \|/                       |                                  user mod
+                       +-------------------+        +------------------------------------------------+
+      -----------------| saving the context|--------| 1. select a process to restarot and resume     |------------------
+              Trap     | of the executing  |        | 2. restore the context of the selected process |
+                       |                   |        | 3. resume excution of the selected process     |
+                       +-------------------+        +------------------------------------------------+
+                               |                           /|\ LPSW (内核模式回到用户模式指令)        kernel mod
+                              \|/                           |
+                           +------------------------------------------------------+
+                           | 1. Determing the cause of the exception or interrupt |
+                           | 2. handle the exception/interrupt                    |
+                           +------------------------------------------------------+
+    ```
 
 
     特权指令和非特权指令
@@ -480,10 +685,10 @@ GNU/Linux
             The Instructions that can run only in User Mode are called Non-Privileged Instructions
 
         中断是用户态向核心态转换的唯一途径。系统调用实质上也是有一种中断
-        
+
         OS 提供 Load PSW 指令装载用户进程返回用户状态
 
-    
+
     切换过程
         保存被终端进程的上下文信息(context)
         修改被中断进程的控制信息(如状态等)
@@ -492,8 +697,12 @@ GNU/Linux
 
     进程控制块
         每一个进程都有一块区域存放该进程的控制信息,这个区域叫做 [进程控制块]
-        A process Control Block(PCB) contains many pieces of information associated with a specifit process.
-        
+
+        A process Control Block(PCB) contains many pieces of information
+        associated with a specifit process.
+
+        仅包含管理信息
+
         +--------------------+
         | process state      |      就绪，执行，等待
         +--------------------+
@@ -501,29 +710,36 @@ GNU/Linux
         +--------------------+
         | program counter    |      下一跳要执行的指令
         +--------------------+
+        |                    |
         | registers          |      寄存器的值
+        |                    |
         +--------------------+
-        | memory limits      |      
+        | memory limits      |      内存相关
         +--------------------+
-        | list of open files |
+        | list of open files |      打开的文件
         +--------------------+
         | ...                |
         +--------------------+
 
-    一个完整的进程, 进程上下文
-        +---------------
-        | PCB
-        +---------------
-        | Stack
-        +---------------
-        | heap
-        +---------------
-        | data
-        +---------------
-        | text
-        +---------------
+
+    一个完整的进程, 叫做"进程上下文"
+
+        +---------------+
+        | PCB           |
+        +---------------+
+        | Stack         |
+        +---------------+
+        | heap          |
+        +---------------+
+        | data          |
+        +---------------+
+        | text          |
+        +---------------+
+
+    进程在物理内存中的存放
 
         进程队列，是交叉离散存放的
+
         +---------------
         | PCB 1
         +---------------
@@ -540,62 +756,106 @@ GNU/Linux
         | ...
         +---------------
 
+        避免连续存放带来的问题
+
 
     进程队列(Process queues)
 
         就绪队列
-            只是连接了PCB
-        
+            只是连接了PCB, 因为要频繁的插入移除
+
         等待队列
 
+        单CPU没有运行队列
 
-    |   ```
-    |   #include <stdio.h>
-    |   #include <sys/types.h>          // /usr/include/x86_64-linux-gnu/sys/types.h
-    |   #include <unistd.h>             // 是C和C++程序设计语言中提供对  POSIX 操作系统API的访问功能的头文件的名称。
-    |                                   // 对于类 Unix 系统，unistd.h 中所定义的接口通常都是大量针对系统调用的封装（英语：wrapper functions），如 fork、pipe 以及各种 I/O 原语（read、write、close 等等）。
-    |                                   // 此处是调用 fork 函数
-    |
-    |   int main(int argc, char const *argv[]){
-    |       pid_t pid;                  // pid_t定义的类型都是进程号类型
-    |       pid_t cid;
-    |       
-    |       printf("Before fork Process id: %d\n", getpid());
-    |
-    |       fork();                     // fork: 分叉, fork 下边的代码会执行两边，父进程和子进程都会执行，并发地执行
-    |
-    |       printf("After fork Process id: %d\n", getpid());
-    |
-    |       pause();
-    |
-    |       return 0;
-    |   }
-    |
-    |   ```
+
+    ```
+    #include <stdio.h>
+    #include <sys/types.h>          // /usr/include/x86_64-linux-gnu/sys/types.h
+    #include <unistd.h>             // 是C和C++程序设计语言中提供对  POSIX 操作系统API的访问功能的头文件的名称。
+                                    // 对于类 Unix 系统，unistd.h 中所定义的接口通常都是大量针对系统调用的封装（英语：wrapper functions），如 fork、pipe 以及各种 I/O 原语（read、write、close 等等）。
+                                    // 此处是调用 fork 函数
+
+    int main(int argc, char const *argv[]){
+        pid_t pid;                  // pid_t定义的类型都是进程号类型
+        pid_t cid;
+
+        printf("Before fork Process id: %d\n", getpid());
+
+        fork();                     // fork: 分叉, fork 下边的代码会执行两边，父进程和子进程都会执行，并发地执行
+
+        printf("After fork Process id: %d\n", getpid());
+
+        pause();
+
+        return 0;
+    }
+
+    ```
 
     进程调度
 
-    ready queue ------------->------------------CPU----->--     
-    |                                              ----->-+
+    |
+   \|/
+    +
+    ready queue ------------->------------------CPU----->---------terminated     
+    +                                            +
+   /|\                                           |
+    |                                            +------>-+
     |                                                     |
-    IO ---- < IO queue       <      IO request  --------<-+
+    IO ---- < IO queue       <      IO request  --------<-+ 主动离开
     |                                                     |
     |                                                     |
-   /|\ ----------------------<     time slice expired --<-+
+   /|\ ----------------------<     time slice expired --<-+ 被动离开
     |                                                     |
-    |                                                     |
+    |     子进程执行完成主动进入队列                      |
     |  <   child executes    <     fork a child  -------<-+
     |                                                     |
     |                                                     |
     +  <   interrupt occurs  <     wait for an interrupt<-+
 
 
+进程切换
+
+    时机
+        主动: 
+            启动IO设备
+
+        被动
+            高优先级进程
+
+    其实都是中断
+        专门处理进程切换的代码
+
+    ```
+                                1
+         -->-------------------+                   +------>---
+                                \                 /                                     user mode(mode bit=1)
+         -----------------------------------------------------------------------
+                           (trap) \             /(return)                               kernel mode(mode bit=0)
+                                   \           /
+                                    +------>--+ 2
+    ```
+    1: save p1's task and data
+    2: load p2's task and data
+
+进程队列
+    调度策略
+
+    磁盘队列
 
 
+### Thread 线程
 
-### Trhead 线程
+子进程
+    优点
+        得到了一个新的并发的执行流
+        代码是一样的，但是执行的代码是不一样的
 
+    缺点
+        资源浪费, 所以有了线程的概念
 
+       father                sub
     +-----------+       +-----------+
     |   stack   |       |   stack   |
     +-----------+       +-----------+
@@ -612,37 +872,38 @@ GNU/Linux
 
     所以引入线程的概念
 
-    
-    +-----------+
-    |   stack   |
-    +-----------+
-    |   heap    |
-    +-----------+
-    |   data    |
-    +-----------+
-    |执行流1 & 2|   在同一个进程中实现两个并发的执行流, 叫做线程
-    +-----------+
+    进程p
+    +-----------------+
+    |   stack         |
+    +-----------------+
+    |   heap          |
+    +-----------------+
+    |   data          |
+    +-----------------+
+    |执行流1 & 执行流2|   在同一个进程中实现两个**并发**的执行流, 叫做线程, **共享数据**
+    | 线程            |   并发线程：进程中的执行流
+    +-----------------+
 
     线程: 进程当中的执行流
 
 
-
     拷贝数据的例子
 
+    ```
+    +--------+-----------+  用户发出取消拷贝指令，线程2进入就绪队列等待执行，以便取消线程1
+    |        |           |  4               3
+    | 线程1  | 线程2     |------>  CPU   cpu 去执行其他任务
+    | copy   | waitAbort |         /|\                              等待 abort 信号
+    +--------+-----------+          |
+        |                     1     |
+        +---------------------------+ 
+        | 2, 然后线程1 进入 wait 状态
+       \|/
+     Disk Copy
+    ```
 
-|   +--------+-----------+  用户发出取消拷贝指令，线程2进入就绪队列等待执行，以便取消线程1
-|   |        |           |  4               3
-|   | 线程1  | 线程2     |------>  CPU   cpu 去执行其他任务
-|   | copy   | waitAbort |         /|\
-|   +--------+-----------+          |
-|       |                     1     |
-|       +---------------------------+ 
-|       | 2, 然后线程1 进入 wait 状态
-|      \|/
-|    Disk Copy
 
-
-    也可一开一个子进程，但是
+    也可以开一个子进程，但是
         线程更加省资源
         线程间通信也更省资源
 
@@ -651,11 +912,11 @@ GNU/Linux
 
         一个应用通常需要同时处理很多工作，比如web浏览器,可能需要同时处理文字、图片、视频,
         这些同时执行的任务可称为“执行流”， 我们不希望他们是顺序执行的
-        
+
         早期，每个执行流都要创建一个进程来实现，的那是进程的创建需要消耗大量的时间和资源
-        
+
         还需要硬件的支持，如多个CPU，或者1个CPU多个核心
-        
+
         现在, 和一个应用相关的所有执行任务都装在一个进程里，这些进程内部的执行任务就是
         "线程"(Thread)
 
@@ -665,7 +926,7 @@ GNU/Linux
     |  code |   data | files |  
     +------------------------+
     |register|stach|heap |...|
-    +------------------------+          单线程
+    +------------------------+          单线程(single-threaded process)
     |                        |
     |       thread   \|/     |
     |                        |
@@ -675,24 +936,27 @@ GNU/Linux
 
     +------------------------+
     |  code |   data | files |  共享的 data:全局变量,静态变量; code:代码; files: 打开的文件 
+    |       |        |       |
     +------------------------+
-    | stack    |  stack      |  非共享的, 局部变量，函数返回值
-    +----------+-------------+          
+    | register1| register2   |
+    +------------------------+
+    | stack1   |  stack2     |  非共享的, 局部变量，函数返回值
+    +----------+-------------+
     |          |             |
-    | thread1  | thread2 |...|  多线程
+    | thread1  | thread2 |...|  多线程(multithreaded process)
     |          |             |
     +------------------------+
 
-    
+
     多线程的优点:
         响应性: 响应速度快, 不需要重新开辟内存，复制
         资源共享
         经济: 避免浪费资源，进程切换
         可伸缩性: 多核, 可以实现并行
 
-    A thread is a basic unit of CUP utilization(利用); 
+    A thread is a basic unit(单元) of CPU utilization(利用); 
     it comprises a thread id, a program counter, a register set, and a stack
-    
+
     It shares with other threads belonging to the same process its 
     code section,  data section, and other operating-system resources,such as open files and signals
 
@@ -702,32 +966,28 @@ GNU/Linux
         lightweight 轻量级
 
 
-
-
-
-
 多线程模型
     links:
         http://c.biancheng.net/view/1220.html
-    
+
     多核编程
         在多处理器系统中，多核心编程机制让应用程序可以更有效地将自身的多个执行任务(并发的线程)
         分散到不同的处理器上运行，以实现并行计算
-        
-        
+
+
         single core:        T1  T2  T3  T4  T1  T2  T3  T4  T1  T2  ...
-        
-        --------->-------Time------------->-------
-        
+
+        --------->-------Time 时间轴------------->-------
+
         core 1              T1  T3  T1  T3  ...
-        
+
         core 2              T2  T4  T2  T4  ...
-        
-        
-        用户线程ULT(User Level Thread)
-        内核线程KLT(Kernel Level Thread)
 
 
+多线程模型
+        用户线程 ULT(User Level Thread)
+
+        内核线程 KLT(Kernel Level Thread)
 
 
     Many:1 模型
@@ -741,7 +1001,13 @@ GNU/Linux
 
     1:1 模型
         每一个用户线程和一个核心线程一一对应
-        
+
+        userThread1 userThread2 userThread3 ...             线程1、2、3 可能是多个进程的线程
+                |       |       |
+                |       |       |
+                |       |       |
+             cpu1     cpu2     cpu3  ...
+
         好处：带来真正的并行运算
         缺点：内核开销(时间和空间上)
             建一个用户线程就要创建一个相应的内核线程。由于创建内核线程的开销会影响应用程序的性能，
@@ -749,31 +1015,34 @@ GNU/Linux
 
     M:M 模型
 
-        KLT 的数量肯定是小于 CPU 的数量, KLT 去争夺CPU的时间，KLT 相当于用户线程的代理人
-        
-        
+        KLT 的数量肯定是大于 CPU 的数量, KLT 去争夺CPU的时间，KLT 相当于用户线程的代理人
+
+
         多路复用多个用户级线程到同样数量或更少数量的内核线程。内核线程的数量可能与特定应用程序
         或特定机器有关（应用程序在多处理器上比在单处理器上可能分配到更多数量的线程）。
-        
+
         现在我们考虑一下这些设计对并发性的影响。虽然多对一模型允许开发人员创建任意多的用户线程，
         但是由于内核只能一次调度一个线程，所以并未增加并发性。虽然一对一模型提供了更大的并发性，
         但是开发人员应小心，不要在应用程序内创建太多线程（有时系统可能会限制创建线程的数量）。
-     
+ 
         多对多模型没有这两个缺点：开发人员可以创建任意多的用户线程，并且相应内核线程能在多处理
         器系统上并发执行。而且，当一个线程执行阻塞系统调用时，内核可以调度另一个线程来执行。
-     
+ 
         多对多模型的一种变种仍然多路复用多个用户级线程到同样数量或更少数量的内核线程，但也允许
         绑定某个用户线程到一个内核线程。这个变种，有时称为双层模型
 
-    |
-    |   ULT1 ULT2 ULT3      ULT4            用户线程
-    |    \    |    /         |
-    |     \   |   /          |
-    |      \  |  /           |
-    |       \ | /            |
-    |         +              |              多了一层管理层，实现起来较为复杂
-    |        / \             |
-    |    KLT1   KLT2       KLT3             内核线程
+        ```
+        ULT1 ULT2 ULT3      ULT4            用户线程
+         \    |    /         |
+          \   |   /          |
+           \  |  /           |
+            \ | /            |
+              +              |              多了一层管理层，实现起来较为复杂
+             / \             |
+         KLT1   KLT2       KLT3             内核线程
+
+             cpu1   cpu2
+        ```
 
         M:M 模型历史上叫做  NGPT(Netxt Generation POSIX Threads)
         1:1 模型历史上叫做  NPTL(Native POSIX Thread Library) 原生
@@ -782,21 +1051,25 @@ GNU/Linux
                 所以现在是1：1模型
 
 
-线程库    
-    
+线程库
+
     Thread Library 为程序员提供创建和管理线程的API
-        POSIX Pthreads: POSIX用户线程库和内核线程库(POSIX threads)
-        Windows Threads: windows 内核线程库
-        Java Threads: 依据所依赖的操作系统而定
+
+        - POSIX Pthreads: POSIX用户线程库和内核线程库(POSIX threads)
+        - Windows Threads: windows 内核线程库
+        - Java Threads: 依据所依赖的操作系统而定
 
     Pthreads 是 POSIX 标准定义的线程创建与同步API。不同的操作系统对该标准的实现不禁相同
-    
+
 
 实验1
-    使用Pthreads库创建多个线程，并观察线程的并发执行现象以及数据共享关系
+
+    使用 Pthreads 库创建多个线程，并观察线程的并发执行现象以及数据共享关系
+
 
 实验2
-    Monte Carlo 技术计算Pi值(多线程)
+
+    Monte Carlo 技术计算Pi值(多线程) 用统计的方法计算Pi值
         Pi = 4 x 圆内点数/总的点数
 
     主线程结束，会回收所有的资源，所以如果没有 pthread_join(等待子线程执行完毕), 子线程的输出就没有去执行了
@@ -853,7 +1126,7 @@ GNU/Linux
     CPU-bound program: 
     I/O-bound program: 
 
-    
+
 
 
 
@@ -873,7 +1146,7 @@ CPU 调度程序
 
 
 CPU调度准则
-    
+
     一个调度程序
 
 
@@ -898,7 +1171,7 @@ CPU调度准则
     作业(job) == 进程(process)
     假设作业i提交给系统的时刻是Ts, 完成的时刻是Tf, 所需运行时间是Tk, 那么:
         周转时间 Ti = Tf - Ts 
-       
+
         平均作业周转时间T(假设并发了n个job)
         T = 并发的作业的平均值 
 
@@ -906,50 +1179,50 @@ CPU调度准则
 ### 调度算法
 
 FCFS(First-Come, First-Served) 先来先服务, 先进先出
-    
+
     早期系统里，FCFS意味着一个程序会一直运行到结束(即使出现等待IO的情况,也会一直占用CPU)
     如今，当一个程序阻塞时，会让出CPU，进入等待/阻塞队列
 
     是**非抢占式**调度算法
 
     例题:
-    
+
     3个Job所需CPU时间
     Process     Time
     P1          28
     P2          9
     P3          3
-    
+
     如果三个进程的到达顺序是: P1, P2, P3
-    
+
     +-------------+---------+-----+
     | P1          | P2      | P3  |
     +-------------+---------+-----+
     0            28        37    40
-    
-    
+
+
     等待时间分别是: P1=0; P2=28; P3=37
-   
+
     平均等待时间是: (0+28+37)/3 = 22
     平均作业周转时间: (28+37+40)/3 = 35
 
 
     如果三个进程的到达顺序是: P1, P2, P3
-    
+
     +-----+--------+-------------+
     | P3  |   P2   |         P3  |
     +-----+--------+-------------+
     0     3        12            40
-    
-    
+
+
     等待时间分别是: P3=0; P2=3; P1=12
-   
+
     平均等待时间是: (0+3+12)/3 = 5
     平均作业周转时间: (3+12+40)/3 = 18
 
 
     显然第二种排列方式比第一种好，平均作业周转时间缩短为18
-    
+
     FCFS的优缺点:
         系统默认的调度算法
         简单易行
@@ -968,24 +1241,24 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
     是抢占式调度算法
 
         假设就绪队列中有n个进程，时间片为q
-        
+
         每个进程获得 1/n 的CPU时间，大约是q个时间单位
-        
+
         没有进程等待时间会超过(n-1)q
 
     例题(时间片=20)
-        
+
         Process         CPU Time
         P1              68
         P2              53
         P3              24
         P4              8
-        
+
         +---------------------------------------------------+
         | P1 | P2 | P3 | P4| P1 | P2 | P3 | P1 |   P2|  P1  |
         +---------------------------------------------------+
         0   20   40   60   68  88   108  112  132   145     153
-        
+
         等待时间：
             P1=(68-20)+(112-88)+(145-132)=85
             P2=20 + (88-40) + (132-108) = 92
@@ -1011,7 +1284,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
         10 个进程，每个花费100个CPU时间
             假设RR时间片为1
             所有进程同时在就绪队列中
-            
+
         结束时间
             +--------+--------+-----+
             | 进程号 |  FCFS  | RR  |
@@ -1026,7 +1299,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
             +--------+--------+-----+
             | 100    |  1000  | 1000|
             +--------+--------+-----+
-            
+
             RR 的周转时间更加糟糕
 
 
@@ -1043,7 +1316,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
     P2     1                4
     P3     2                9
     P4     3                5
-        
+
         +----------------------------------+
         | P1    | p2 |  P4    |     P3     |
         +----------------------------------+
@@ -1054,19 +1327,19 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
 
     SJF/SRTF 算法分析
         该算法总是将短进程移到长进程之前执行，因此平均的等待时间最小
-        
+
         饥饿现象: 长进程可能长时间无法获得CU
-        
+
         预测技术
             该算法需要事先知道进程所需的CPU时间
             预测一个进程的CPU时间并非易事
-            
+
         优点:
             优化了响应时间
         缺点:
             难以预测作业CPU时间(很难实现)
             不公平算法
-    
+
 
 
 优先级调度(Priority)
@@ -1078,7 +1351,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
 
     调度策略
         下一次调度总是选择优先级最高的进程
-        
+
         SJF 是优先级调度的一个特例，CPU时间越短越优先
 
     优先级调度可以是抢占式，也可以是非抢占式
@@ -1087,7 +1360,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
     优先级的定义
         静态优先级
             优先级保持不变，但会出现不公平(饥饿)现象
-            
+
         动态优先级(退化Aging)
             根据进程占用CPU时间：当进程占有CPU时间愈长，则慢慢降低它的优先级
             根据进程占用CPU时间：当进程在就绪队列中等待时间愈长，则慢慢提升它的优先级
@@ -1102,7 +1375,7 @@ FCFS(First-Come, First-Served) 先来先服务, 先进先出
 
 CPU调度(短程调度)
     将内存上的程序和CPU之间互相调度
-    
+
 中程调度
     和swap有关
 

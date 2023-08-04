@@ -14,7 +14,7 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
 贝尔(1847-1922) 于1876年申请了电话的专利
 
-爱迪生(1847-1931) 
+爱迪生(1847-1931)
 
 特斯拉(1856-1943)
 
@@ -27,9 +27,20 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
     形象思维
 
     抽象思维
-        
+
+        又称词的思维或者逻辑思维，是指用词进行判断、推理并得出结论的过程
+
         抽象思维总是要从已知的事实出发，计算出一个结果得到一个新的结论, 这叫[推理]。
         或用一组被公认为真实的材料，证明某种观点或说法，这叫[论证]。
+
+        抽象思维凭借**科学的抽象概念**对**事物的本质和客观世界发展的深远过程**进行反映，
+        使人们通过认识活动获得**远远超出靠感觉器官直接感知**的知识。
+
+        科学的抽象是在概念中反映自然界或社会物质过程的内在本质的思想，它是在对
+        事物的本质属性进行分析、综合、比较的基础上，抽取出事物的本质属性，撇开
+        其非本质属性，使认识从感性的具体进入抽象的规定，形成概念。空洞的、臆造
+        的、不可捉摸的抽象是不科学的抽象。科学的、合乎逻辑的抽象思维是在社会实
+        践的基础上形成的。
 
     [概念]是人们头脑中的思想，既看不见也听不到。
 
@@ -42,18 +53,18 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
     形象思维不存在正确与否的问题，因为形象思维是发散的、自由的、无拘无束的，没
     有定势，不需要规则只要有足够的想象力，想到什么都可以.
 
-    抽象思维通常被认为是在追求真理。由于形象思维包括概念、命题和推理，所以，如
+    抽象思维通常被认为是在追求真理。由于抽象思维包括概念、命题和推理，所以，如
     果这三个中的任何一个出现问题，就会出现问题。
 
 亚里士多德(前384-前322) 柏拉图的学生, 著有《工具论》
 
     三段论:
-        
+
         人都是要死的
         苏格拉底是人
         所以苏格拉底是要死的
 
-    逻辑学最早是哲学的一个分支逻辑学的产生和发展说明了一个基本事实，那就是人在
+    逻辑学最早是哲学的一个分支,逻辑学的产生和发展说明了一个基本事实，那就是人在
     抽象思维方面不是完美的，是有缺陷的。
 
 对数学本身来说，简捷的，能够恰当的描述各种事务内在本质的符号至关重要
@@ -74,27 +85,39 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
     《IBM与纳粹》
 
-
-
-
-
-
-1. 1941 Dennis Ritchie(D.M.R)
+1. (1941/9/9 - 2011/10/12) Dennis Ritchie(D.M.R)
 
     Dennis MacAlistair Ritchie
 
+    Alasdair常见英文名音译是阿拉斯代尔。Alasdair代表是人类的保护者，男士用的最
+    多，历史来源于苏格兰盖尔语、希腊语，Alasdair是个好听的英文名字，这个英文名
+    字表示美丽。
+
+    McAllister is a surname from Ireland and Scotland that originates from the
+    Gaelic(/ ˈɡælɪk; ˈɡeɪlɪk / 盖尔语,人的) name **Mac Alasdair**, meaning son of
+    Alasdair. Alasdair is the Gaelic form of the first name Alexander
+
+    爰尔兰的母语盖尔语(Gaelic)是世界上最古老的语言之一。经过英国近800年的统治与
+    同化英语已成为爱尔兰社会绝对的主流语言。
+
 1. 1942 Ken Tompson
+
+    gcc / glibc / bash shell / emacs
+
+    hurd 内核
 
 1. 1946 ENIAC
 
     Electronic Numerical([njuː'merɪk(ə)l])  Integrator(积分器；整合) And
     Computer
 
-1. 1953 
+1. 1953
 
     Richard Mathew Stallman 出生
 
 1. 1957.10 Soviet launched Sputnik
+
+    Sputnik 1 was the first artificial Earth satellite, launched into orbit by the Soviet Union on October 4, 1957
 
 1. 1958 ARPA
 
@@ -104,9 +127,16 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
 1. 60年代初, MIT 兼容分时操作系统
 
+    Massachusetts Institute of Technology
+    (/ ˌmæsəˈtʃuːsɪts /) 马萨诸塞州（美国）
+
 1. 1962年，第一个分时系统CTSS, 由MIT开发出来
 
 1. 1963.1.1 IEEE(Institute of Electrical and Electronics Engineers)
+
+    electronics, n 电子学；电子设备，电子器件
+
+    electrical electronics engineers, 电气电子工程师
 
     IEEE的两个前身AIEE（美国电气工程师协会）成立于1884年，IRE（无线电工程师协会）
     成立于1912年
@@ -116,9 +146,27 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
 1. 1964 MULTICS(Multiplexed['mʌltɪpleks] Information and Computing Service)
 
+    多路存取计算机系统
+
+    Multics ("Multiplexed Information and Computing Service") was an
+    influential(有影响力的) early time-sharing operating system. The project
+    was started in 1964 in Cambridge(/ ˈkeɪmbrɪdʒ /剑桥), Massachusetts.
+
+    multiplex:多样的，多元的；[通信] 多路传输的
+
+    剑桥学院（cambridge college/ ˈkɑːlɪdʒ /）是一所综合性的高等学府，其主校区位
+    于马萨诸塞州的剑桥地区，是全球推崇的创新型大学和美国在职教育的先驱。
+
+    University of Cambridge 剑桥大学
+
+    The last known running Multics installation was shut down on October 30,
+    2000, at the Canadian Department of National Defence in Halifax, Nova
+    Scotia, Canada.
+
+
     1. MultICS
 
-    1. Bell Lab, GE, 麻省理工学院
+    1. Bell Lab, GE(General Electric), 麻省理工学院
 
     1. 控制数据公司(Control Data Corporation)研制除了CDC 6600计算机，世界上首台
        超级计算机
@@ -129,7 +177,7 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
 1. 1967 Dennis Ritchie 加入贝尔实验室
 
-    1. 1941 生
+    1941 生
 
 1. 1969 贝尔实验室退出 MutICS 项目
 
@@ -162,6 +210,8 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
     1. 1993 BSD4.3    4.4
 
+        https://archive.org/details/bsdos-4.3
+
         NetBSD,FreeBSD,OpenBSD 均基于 BSD4.3
 
         2001 Mac OS X 基于 FreeBSD
@@ -172,6 +222,36 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
     AT&T发布最后一个正式版本 System V Release 4(SVR4)时，System V Unix 已经吸收
     了 BSD 的大多数重要的优点
 
+    ``` bsd4.3 下载
+    https://archive.org/details/bsdos-4.3
+
+    BSD/OS 4.3: by Berkeley Software Design Incorporated
+
+    The last version of BSD/OS published by the BSDi business unit of **Walnut
+    Creek** before it divested it's BSDi assets to Wind River Systems.
+
+    Wind River公司生产嵌入式Linux系统，是智能手机软件设计工具的先驱。
+
+    在1993年10月发布了第一个版本。 在互联网还没有普及的当时，为了拓展 FreeBSD的
+    发行渠道，大家抱着试试看的心态， 联系了一家叫做 Walnut Creek CDROM的光盘商，
+    以便那些上网不方便的用户得到 FreeBSD（后世的Canonical为了推广Ubuntu也采用了
+    类似的方法）。
+
+    4 ISO9660 CD-ROM images, install is bootable from CD.  The system uses
+    old-style UFS so it won't cleanly work with drive sizes over 4GB or so.
+
+    (when the installer asks for a serial, enter K8ix @Vix @Dnw for unlimited users)
+
+    ---
+
+    Wind River Systems, also known as Wind River (trademarked商标 as Wndrvr), is an
+    Alameda阿拉梅达, California–based company, subsidiary of Aptiv PLC. The company
+    develops embedded system and cloud software consisting of real-time
+    operating systems software, industry-specific software, simulation
+    technology, development tools and middleware
+
+    ```
+
     1984年开始，AT&T 逐渐可以将 Unix 商业化, 而伯克利 Unix 的开发工作在 1993 年
     BSD4.4 版本完成以后就逐渐收缩以致终止了
 
@@ -179,6 +259,10 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
     美国国防部项目 ARPANET 就是以 BSD Unix 作为研究系统的，ARPANET发展为了今天
     的Internet
+
+    According to the search results, the first released networking version of
+    Unix that was extensively used on the ARPANET was 4.3 BSD . However, there
+    is no direct mention of ARPANET being based on a specific version of BSD.
 
     AT&T 开发的 SystemIII 以及后面开发的 SystemV 等系列的 Unix 也是非常优秀的，
     但是由于其商业化，因此它的影响力远远没有 BSD 那么大。
@@ -217,7 +301,7 @@ portability / ˌpɔːrtəˈbɪləti / [计] 可移植性；轻便；可携带性
 
 1. Andrew Tanenbaum 《操作系统：设计与实施》
 
-1. 1990年地一个GNU核心 Hurd 完成开发
+1. 1990年底一个GNU核心 Hurd 完成开发
 
 1. 1991.10 Linus Torvalds 发布Linux 内核
 

@@ -211,3 +211,19 @@ Adobe 表示，该功能将在2023年下半年正式添加到 Photoshop 中
 
         2. 进入AdobePhotoshop CC 2019的安装文件夹，找到CRWindowsClientService.exe文件，右键【压缩并删除它】！
 
+
+## Firefly
+
+Adobe Firefly 的 Generative Fill 主要包括三大功能：
+    - 为图像添加新内容
+    - 删除/替换图像的部分内容
+    - 以及向外扩展绘制现有图像。
+
+其中前两个功能在 Adobe Firefly 中都可以使用，最后的图像拓展只能在 Photoshop Beta 测试版中使用。
+
+
+## Photoshop 2023 Beta 24.7（爱国版）安装教程，内置AI绘画功能
+
+[link1](http://www.sucaijishi.com/tutorial-52-494-1.html)
+
+直接安装

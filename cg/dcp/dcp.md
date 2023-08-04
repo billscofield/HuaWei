@@ -84,4 +84,31 @@ Pirates_Of_The_Caribbean_At_World`s_End_从以上名字的信息，无法得知�
 
 
 
-## DCP 
+## DCP 包制作
+
+dcp-o-matic
+
+    - There are .rpm packages for Fedora, Centos and Mageia on https://dcpomatic.com/
+
+    - Packages for Arch Linux are available from https://aur.archlinux.org/packages/dcpomatic/, thanks to Stefan Karner.
+
+    - Since DCP-o-matic is open-source you can also build it yourself, though this can be quite a difficult process (especially on Windows and macOS). There are instructions for how to do it on https://dcpomatic.com/building
+
+    ```
+     the low-resolution trailer  低分辨率预告片
+    ```
+
+
+卷
+    签名卷：不对视频进行分割
+    根据内容进行分割：每个原视频一个卷
+    分卷|自定义：当视频特别大时
+
+标准
+    SMPTE: 新的标准，用这个即可
+    Interop: 老的标准，兼容性差
+
+封装格式
+    DCP Flat(遮幅/1.77/1.78/1.85) 1998x1080
+    DCI Scope(宽银幕/2.35/2.39) 2048x858
+    Full(全幅/1.90)

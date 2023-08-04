@@ -1,10 +1,10 @@
+# inotify + rsync
 
 ## inotify + rsync
 
 inotify: 内核的功能，监控磁盘文件的所有属性变化
 
 2.6.13 以上内核才支持
-
 
 pull 
 
@@ -13,20 +13,12 @@ pull
     备份服务器去拉
 
 push
-    
+
     配合 inotify, push
 
     数据服务器 push
 
-
-
-
-
-
-
-
 ### rsync 服务器搭建
-
 
 基准服务器  备份服务器
 
@@ -38,25 +30,34 @@ rsync
     -z, --compress              compress file data during the transfer
         --compress-level=NUM    explicitly set compression level
 
-
-
-
 #### 创建主配置文件 /etc/rsyncd.conf
 
 创建主配置文件
 
     ```
-    address = 192.168.1.1                   //rsync 服务绑定IP
-    port 873                                //默认服务端口 873
-    log file = /var/log/rsyncd.log          //
-    pid file = /var/run/rsyncd.pid          //进程号文件位置
-    [web]                                   //共享名，用来连接，是写在url上的
-        comment =                           //描述
-        path = /data                        //实际共享目录
-        read only = no                      
-        dont compress = *.gz *.bz2          //哪些文件不用压缩
-        auth user = user1                   //登录用户名
-        secrets file = /etc/rsyncd_user.db  //密码文件
+    motd file = /etc/rsyncd.motd                        // 设置服务器信息提示文件，在该文件中编写提示信息
+    address = 192.168.1.1                               // rsync 服务绑定IP
+    port 873                                            // 默认服务端口 873
+    log file = /var/log/rsyncd.log                      // 设置日志文件名，可通过log format参数设置日志格式
+    pid file = /var/run/rsyncd.pid                      // 进程号文件位置
+    uid = nobody                                        // 设置进行数据传输时所使用的帐户名或ID号，默认使用nobody
+    gid = nobody                                        // 设置进行数据传输时所使用的组名或GID号，默认使用nobody
+    read only = yes                                     // 是否允许客户端上传数据，yes表示不允许
+    max connections =10                                 // 设置并发连接数，0表示无限制
+    [common]                                            // 自定义模块名，rsync通过模块定义同步的目录，可定义多个
+        exclude = test/                                 // exclude指定common目录下某个目录可以不同步数据
+        auth users = tom, jerry                         // 设置允许连接服务器的账户，此账户可以是系统中不存在的用户
+        secrets file = /etc/rysncd.secrets              // 密码验证文件名，该文件权限要求为只读，建议为600，仅在设置auth users后有效
+        hosts allow = 192.168.0.0/255.255.255.0         // 设置哪些主机可以同步数据，多ip和网段之间使用空格分隔
+        hosts deny=*                                    // 除了hosts allow定义的主机外，拒绝其他所有
+        list = false                                    // 客户端请求显示模块列表时，本模块名称是否显示，默认为true
+    [web]                                               // 共享名，用来连接，是写在url上的
+        comment =                                       // 描述
+        path = /data                                    // 实际共享目录
+        read only = no                                  
+        dont compress = *.gz *.bz2                      // 哪些文件不用压缩
+        auth user = user1                               // 登录用户名
+        secrets file = /etc/rsyncd_user.db              // 密码文件
     ```
 
 
@@ -72,6 +73,7 @@ rsync
 启动服务
 
     rsync --daemon
+    
 
 设置映射用户对共享目录有权限(r)
 

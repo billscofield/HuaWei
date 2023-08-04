@@ -73,7 +73,7 @@ ssh-keygen
 
         Removes all keys belonging to the specified hostname (with optional
         port number) from a known_hosts file.
-        
+
         This option is useful to delete hashed hosts (see the -H option above).
 
 

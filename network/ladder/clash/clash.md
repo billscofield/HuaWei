@@ -1,5 +1,35 @@
 # clash
 
+[github](https://github.com/Fndroid/clash_for_windows_pkg/releases)
+
+支持Shadowsocks(SS)、Socks、Snell、V2Ray、Trojan等代理协议。
+自 v0.11.2 开始，开始支持ShadowsocksR(SSR)
+
+## 界面简介
+
+- General（常规）：
+    - Port、Socks Port；分别为 HTTP、SOCKS 代理端口，点击终端图案可以打开一个配置了代理的命令行窗口，点击端口数字可以复制该命令；
+    - Allow LAN：启用局域网共享代理功能；
+    - Log Level：日志等级；
+    - Home Directory：点击下方路径直达 C:\Users\用户名\.config\clash 文件夹；
+    - GeoIP Database：点击下方日期可更新 GeoIP 数据库；
+    - UWP Loopback ：可以用来使 UWP 应用解除回环代理限制；
+    - Tap Device ：安装 cfw-tap 网卡，可用于处理不遵循系统代理的软件（实际启动 tap 模式需要更改配置文件）；
+    - General YML：编辑 config.yml 文件，可用于配置部分 General 页面内容；
+    - Dark Theme：控制暗色模式；
+    - System Proxy：启用系统代理；
+    - Start with Windows：设置开机自启；
+- Proxies（代理）：选择代理方式（Global – 全局、Rule – 规则、Direct – 直连）及策略组节点选择；
+- Profiles（配置管理）：
+    - 用来下载远端配置文件和创建本地副本，且可在多个配置文件间切换；
+    - 对配置进行节点、策略组和规则的管理（添加节点、策略组和规则在各自编辑界面选择 Add, 调整策略组顺序、节点顺序及策略组节点使用拖拽的方式）；
+- Logs（日志）：显示当前请求命中规则类型和策略；
+- Connections (连接): 显示当前的 TCP 连接，可对某个具体连接执行关闭操作；
+- Settings（设置）：软件详细设置；
+- Feedback（反馈）：显示软件、作者相关信息
+
+
+
 apt install socat
 vaxilu/x-ui
 

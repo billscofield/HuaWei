@@ -21,21 +21,26 @@
 ## [自动挂载 nfs](https://zhuanlan.zhihu.com/p/288594630)
 
 1. /etc/auto_master
-    
+
     /Users/jamesding/nfs    auto_nfs
     挂载到哪个目录          具体要挂在的资源
 
+    编辑 /etc/auto_master 时报错:
+        "/private/etc/auto_master"
+        "/private/etc/auto_master" E212: Can't open file for writing
+        Press ENTER or type command to continue
+
 2. 创建资源映射文件
-    
+
     /etc/auto_nfs
         dell_server_harddisk_data -rw,bg,soft,rsize=32768,wsize=32768 172.16.47.96:/data
 
 3. 使配置生效
-    
+
     > $ sudo  automount -vc
 
 4. 其他可选的配置
-    
+
     可以在/etc/autofs.conf配置文件中更改其他选项。比较常用的选项是挂载超时
     时间。如果该文件系统一段时间内没有任何访问，系统就会将它卸载。在MacOS附
     带的/etc/autofs.conf中默认设置为1小时（3600秒）

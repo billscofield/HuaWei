@@ -1,3 +1,5 @@
+https://zhuanlan.zhihu.com/p/138951848
+
 
 lsblk
 
@@ -68,6 +70,8 @@ cfdisk /dev/sda
     // 安装引导系统
 
         pacman -S grub efibootmgr
+
+        /etc/pacman.conf SigLevel to SigLevel = Never
 
         vim /etc/default/grub
         取消最后一行 `GRUB_DISABLE_OS_PROBER=false`的注释
@@ -225,3 +229,144 @@ MATE 团队一直在继续开发，它是一个基于 GNOME 2 的流行桌面之
     pacman -Sy go
     yay -S google-chrome
     ```
+
+i3wm: window manager
+
+[Core utilities and Alternatives](https://wiki.archlinux.org/title/Core_utilities)
+
+
+screenkey
+
+1. 输入法
+
+2. 文件管理器
+
+    dolphin(kde,支持 webdav)
+        webdav(阿里云，坚果云)
+
+    ranger
+
+3. 浏览器
+
+    vim
+    nord
+    greasymonkey
+
+4. qq wechat 腾讯会议 音乐 stream office
+
+    archlinux.cn AUR
+
+    YesPlayMusic(网易云音乐的第三方实现)
+    listen1
+
+    protondb.com
+
+    wps
+    libreoffice
+
+## 编程环境
+
+vscode
+vim
+neovim
+    [NvChad](https://nvchad.com/)
+    neovim轻量级IDE效果
+
+## 阅读和写作
+
+markdown
+    grammarly 插件, 语法检查
+
+## 中文字体和中文输入法
+
+### 1. 安装中文Locale
+
+首先设置中文locale，推荐参考官方Wiki:[Arch Linux Localization](https://wiki.archlinux.org/title/Localization)
+
+修改/etc/locale.gen文件，取消对应项之前的注释符#即可。我个人的locale文件设置为
+
+    en_US.UTF-8 UTF-8
+    zh_CN.UTF-8 UTF-8
+    zh_CN.GB2312
+    zh_CN.GBK GBK
+    zh_TW BIG-5 
+    zh_TW.UTF-8 UTF-8
+
+修改完成之后，执行命令
+
+    locale-gen
+
+### 2.启用中文locale
+
+打开文件/etc/locale.conf，设置全局有效的locale为
+
+    LANG=en_US.UTF-8
+
+**官方wiki不推荐在此设置中文的locale，怕tty会出现乱码。**
+
+因为我的图形界面是i3-wm，为了能在图形界面单独启用中文locale，需要在~/.xinitrc中
+设置中文locale。在exec之前加上三行代码
+
+    export LANG=zh_CN.UTF-8
+    export LANGUAGE=zh_CN:en_US
+    export LC_CTYPE=en_US.UTF-8
+
+这个时候，执行startx，在终端里随便输错一个命令，看看是不是提示中文了呢。
+
+**我个人并没有启用中文locale，因为终端的英文提示比起中文提示来，查找问题更方便。**
+这个取决于个人喜好了。其实就算不启用中文locale，一样能在终端里看中文字体，影响
+不大，只不过提示不是中文而已。
+
+### 3. 安装中文字体
+
+除了设置好中文locale之外，还需要安装中文字体。比如使用chromium浏览器时，如果没
+有安装中文字体的话，中文就显示成方格了。我个人安装了**wqy-zenhei**字体，我个人在使
+用过程中只有这一个wqy-开头的字体在chromium里起作用。执行命令
+
+    pacman -S wqy-zenhei
+
+
+### 4. 安装中文输入法
+
+[详见wiki](https://wiki.archlinux.org/title/Localization/Chinese)
+
+中文字体也支持了，现在就缺一个中文输入法了。arch可以安装的中文输入法平台有IBus、
+fcitx和scim。我个人选择fcitx
+
+    pacman -Sy fcitx
+
+其次，安装输入法模块。我并不知道哪些输入法模块支持fcitx，fcitx-im包含了全部模块，
+索性全部安装，执行命令
+
+    pacman -S fcitx-im
+
+因为我的图形界面是i3，属于非桌面环境，打开~/.xinitrc文件，在exec之前加上三行代
+码,用以注册输入法模块
+
+    export GTK_IM_MODULE=fcitx
+    export QT_IM_MODULE=fcitx
+    export XMODIFIERS=@im=fcitx
+
+安装fcitx图形界面配置程序
+
+    pacman -S fcitx-configtool
+
+安装完成之后，打开i3的配置文件~/.config/i3/config，在里面加上一行代码
+
+    exec --no-startup-id fcitx-autostart
+
+fcitx-autostart是自动启动fcitx输入法的命令，让它随开机自启动。接下来需要重新登
+录让环境变量生效。
+
+重启后，进入图形界面，执行命令fcitx-configtool来打开输入法配置工具。
+
+**注意**，一定要执行了fcitx-autostart命令后，才会在fcitx-configtool的Input
+Method里看见语言选项。由于我已经设置成了开机自启动，所以不需要执行
+fcitx-autostart命令了。
+
+最后，如果还是有问题的话，记得执行一下命令fcitx-diagnose来进行诊断。
+
+
+## 字体
+
+要知道archlinux的TTY是不支持中文字体的，除非对linux内核打补丁

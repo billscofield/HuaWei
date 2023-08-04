@@ -596,6 +596,8 @@ server. Here is a high-level overview of the steps you need to take:
 
 3. Configure the LDAP client to use the AD server
 
+### ldap client 
+
 ---
 
 ### what is Kerberos
@@ -637,6 +639,17 @@ In addition to authentication, SSSD provides other security-related services,
 such as SELinux user mapping, local credential caching, and integration with
 smart cards. It is commonly used in enterprise environments to enable
 centralized identity management and authentication across a range of systems.
+
+
+https://cloud.tencent.com/developer/article/2213642?areaSource=105001.4&traceId=xWPaX6R51XbxXdHZSInA5
+
+SSSD（System Security Services Dameon，官网地址：https://sssd.io），它是一个工
+作在Linux系统上与LDAP/AD对接进行身份认证和账号缓存的服务，与直接同LDAP对接相比，
+SSSD有如下一些优点：
+
+支持离线认证：当本地主机与LDAP服务器断网的情况下，用户依然可以登录
+减轻LDAP服务器的负载：通过SSSD，一台Linux主机仅与LDAP服务器建立一个连接
+支持多个LDAP/AD：通过SSSD，可以同时配置多个LDAP/AD作为认证源
 
 ### what is realm?
 

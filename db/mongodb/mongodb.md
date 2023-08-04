@@ -15,13 +15,13 @@
 ` wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 
 3. Now add the MongoDB repository to your system by running
-    
+
     Enable the MongoDB repository by creating a file
     /etc/apt/sources.list.d/mongodb-org-5.0.list and as the “bullseye” version
     of MongoDB is still not released so we use the “buster” version of MongoDB.
 
 
-` echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
+    echo "deb http://repo.mongodb.org/apt/debian buster/mongodb-org/5.0 main" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
 
     deb https://mirrors.tuna.tsinghua.edu.cn/mongodb/apt/debian bullseye/mongodb-org/5.0 main
 
@@ -45,8 +45,6 @@ mongodb-database-tools-rhel70-x86_64-100.5.0.rpm
 
 顺序安装
 
-
-
 ## 
 
 访问数据库（默认无密码）
@@ -57,7 +55,13 @@ mongodb-database-tools-rhel70-x86_64-100.5.0.rpm
 
 ```
 use admin       // admin 是数据库
-db.createUser({user:"Admin", pwd:"Db0AdMiN1!", roles:[{role:"dbAdminAnyDatabase", db:"admin"}]})
+db.createUser({user:"admin", pwd:"Db0AdMiN1!", roles:[{role:"dbAdminAnyDatabase", db:"admin"}]})
+db.createUser({user:"root",pwd:"123456",roles:[{role:"userAdminAnyDatabase",db:"admin"},"readWriteAnyDatabase"]})
+
+db.createUser({user:"admin", pwd:"Db0AdMiN1!", roles:[{role:"root", db:"admin"}]})
+    在admin添加管理员（role:root表示最高权限）：
+
+db.auth("admin", "Db0AdMiN1!")
 ```
 
 /etc/mongod.conf
@@ -67,9 +71,11 @@ db.createUser({user:"Admin", pwd:"Db0AdMiN1!", roles:[{role:"dbAdminAnyDatabase"
 systemctl restart mongod
 
 
-mongo -u madmin -p
+mongo -u admin -p
 
 
+db.auth("用户名", "密码") 方法更具用户名和密码登录到mongodb，然后访问数据库数据。
+show collections    // 显示 xxx 数据库中所有当集合列表。
 
 ## MongoDB启动失败
 
@@ -93,8 +99,6 @@ navicat
     lsof | grep navicat | grep \\.config  #用于列出当前系统打开navicat的工具
 
 再次重新启动navicat即可。
-
-
 
 ## (mongosh](https://www.mongodb.com/try/download/shell)
 
@@ -253,4 +257,47 @@ MVC 架构
         usersModel.js
     usersDao.js
         暴露给
+
+
+
+
+## 使用
+
+查询所有数据库
+
+    show dbs;
+
+切换/创建数据库
+
+    use raykaeso;
+
+显示当前db状态
+
+    db.stats();
+
+查看表（显示当前库中的表）
+
+    show tables;
+
+查询集合所有数据
+    db.表(集合).find()
+
+查询集合的第一个
+    db.collection.findOne()
+
+删除当前使用数据库
+
+    db.dropDatabase();
+
+从指定主机上克隆数据库
+
+    db.cloneDatabase(“127.0.0.1”); 将指定机器上的数据库的数据克隆到当前数据库
+
+从指定的机器上复制指定数据库数据到某个数据库
+
+    db.copyDatabase(“mydb”, “temp”, “127.0.0.1”);将本机的mydb的数据复制到temp数据库中
+
+修复当前数据库
+
+    db.repairDatabase();
 

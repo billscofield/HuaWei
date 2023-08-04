@@ -16,40 +16,24 @@ soft 的限制不能比har 限制高，- 表明同时设置了 soft 和 hard 的
 
 ## item
 
-nofile - 打开的文件描述符的最大数目**（经常设置）**
-noproc - 进程程最大数量
-
-core - 限制内核文件的大小（KB）
-
-date - 最大数据大小（KB）
-
-fsize - 最大文件大小（KB）
-
-memlock - 最大锁定内存地址空间（KB）
-
-rss - 最大持久设置大小（KB）
-
-stack - 最大堆栈大小（KB）
-
-cpu - 最大CPU时间（min）
-
-as - 地址空间限制（KB）
-
-maxlogins - 此用户的最大登录数量
-
-maxsyslogins - 在系统上登录的最大数目
-
-priority - 优先级运行用户进程
-
-locks -  文件的最大数量锁定用户可容纳
-
-sigpending - 最大挂起信号的数量
-
-msgqueue - 通过POSIX消息队列使用的最大内存（字节）
-
-nice - 最大不错优先允许提高到值：[-20，19]
-
-rtprio - 最大实时优先
+- nofile - 打开的文件描述符的最大数目**（经常设置）**
+- noproc - 进程程最大数量
+- core - 限制内核文件的大小（KB）
+- date - 最大数据大小（KB）
+- fsize - 最大文件大小（KB）
+- memlock - 最大锁定内存地址空间（KB）
+- rss - 最大持久设置大小（KB）
+- stack - 最大堆栈大小（KB）
+- cpu - 最大CPU时间（min）
+- as - 地址空间限制（KB）
+- maxlogins - 此用户的最大登录数量
+- maxsyslogins - 在系统上登录的最大数目
+- priority - 优先级运行用户进程
+- locks -  文件的最大数量锁定用户可容纳
+- sigpending - 最大挂起信号的数量
+- msgqueue - 通过POSIX消息队列使用的最大内存（字节）
+- nice - 最大不错优先允许提高到值：[-20，19]
+- rtprio - 最大实时优先
 
 ulimit 命令是用来设置shell启动进程所占用的资源限制的，而nofile是一个有限的值，
 并不是 unlimited 的。设置该值的时候不能超出nr_open定义的范围（在2.6.25内核之前
@@ -58,9 +42,19 @@ nr_open定义为1024x1024）。
 nr_open是一个进程最多同时打开的文件句柄数量,默认nr_open的值为1048576，可以通过
 cat /proc/sys/fs/nr_open查看。
 
+
 如果我们想要增大nofile的值，比如300万，则首先需要修改nr_open的值，通过直接
 sysctl -w fs.nr_open=或者直接写入sysctl.conf文件来修改nr_open的值，之后在增大
 nofile的值。
+
+    vim /etc/sysctl.conf
+    fs.nr_open = 1000000
+
+    或者
+
+    sysctl -w fs.nr_open=1000000
+
+    sudo sysctl -p
 
 ## ulimit命令
 

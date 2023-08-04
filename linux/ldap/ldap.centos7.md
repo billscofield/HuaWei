@@ -224,6 +224,43 @@ in the /usr/local/etc/openldap directory. A number of files containing schema
 definitions (attribute types and object classes) are also provided in the
 /usr/local/etc/openldap/schema directory.
 
+### 实验1
+
+sssd
+nslcd
+
+
+```
+realm join -v -U Administrator bill.com
+
+kinit Administrator@BILL.COM
+# lowwer case will have this error
+kinit: KDC reply did not match expectations while getting initial credentials
+
+klist
+
+    Ticket cache: FILE:/tmp/krb5cc_0
+    Default principal: administrator@BILL.COM
+
+    Valid starting       Expires              Service principal
+    06/19/2023 20:49:55  06/20/2023 06:49:55  krbtgt/BILL.COM@BILL.COM
+            renew until 06/20/2023 20:49:53
+
+id stb01@BILL.COM
+
+    uid=1637201112(stb01@bill.com) gid=1637200513(domain users@bill.com) groups=1637200513(domain users@bill.com)
+
+realm discover -v 
+
+    编辑 /etc/sssd/sssd.conf
+    在对应位置添加如下配置：
+        use_fully_qualified_names = False
+        fallback_homedir = /home/%u@%d
+    systemctl restart sssd
+
+```
+
+
 ### 配置示例
 
 [link](https://www.qiansw.com/how-to-install-openldap-in-centos7-system.html)
@@ -280,12 +317,12 @@ definitions (attribute types and object classes) are also provided in the
         changetype: modify
         replace: olcSuffix
         olcSuffix: dc=qiansw,dc=com
-        
+
         dn: olcDatabase={2}hdb,cn=config
         changetype: modify
         replace: olcRootDN
         olcRootDN: cn=root,dc=qiansw,dc=com
-        
+
         dn: olcDatabase={2}hdb,cn=config
         changetype: modify
         replace: olcRootPW
@@ -295,22 +332,22 @@ definitions (attribute types and object classes) are also provided in the
     2. 将配置发送到LDAP服务器：
 
         执行 ldapmodify -Y EXTERNAL -H ldapi:/// -f db.ldif，输出：
-        
+
         ```
         SASL/EXTERNAL authentication started
         SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
         SASL SSF: 0
         modifying entry "olcDatabase={2}hdb,cn=config"
-        
+
         modifying entry "olcDatabase={2}hdb,cn=config"
-        
+
         modifying entry "olcDatabase={2}hdb,cn=config"
         ```
-    
+
     3. 对/etc/openldap/slapd.d/cn=config/olcDatabase={1 }monitor.ldif （不要手
        动编辑）文件进行更改，以仅将监视器访问限制为ldap root（root）用户而不是
        其他用户。
-        
+
        创建 monitor.ldif，输入使用以下信息：
         
        ```
