@@ -1,8 +1,6 @@
-
 # 在Debian/Ubuntu上使用rclone挂载Google Drive网盘
 
 ## 1.安装
-
 
 安装rclone依赖fuse
 
@@ -24,10 +22,9 @@ For beta installation, run:
 Note that this script checks the version of rclone installed first and won't
 re-download if not needed.
 
-
 ## 2. 设置rclone配置文件
 
-./rclone config
+rclone config
 
 ```
 Google Application Client Id
@@ -61,10 +58,7 @@ Edit advanced config? (y/n)
 
 Configure this as a team drive?
     n
-
-
 ```
-
 
 ## 3. 挂载指令
 
@@ -98,8 +92,6 @@ Configure this as a team drive?
 
 
 rclone mount gdrive: /LCA/gdrive --copy-links --no-gzip-encoding --no-check-certificate --allow-other --allow-non-empty --umask 000
-
-
 
 ## 4. 设置开机自动挂载
 

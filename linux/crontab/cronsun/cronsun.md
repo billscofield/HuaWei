@@ -66,7 +66,9 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
 
         进入安装目录： ./mongod
 
-    3. 启动cronsun节点：
+    3. 启动cronsun节点(slave servers)：
+
+        cronsun server 不需要运行这个
 
         在启动之前，需要修改conf下的db.conf
 
@@ -75,7 +77,7 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
         ```
         {
             "Hosts": [
-                "127.0.0.1:27017"
+                "<cronsun server ip>:27017"
             ],
         }
         ```
@@ -87,7 +89,7 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
         ```
         {
             "Endpoints":[
-                "http://127.0.0.1:2379"
+                "http://<cronsun server ip>:2379"
             ],
         }
         ```
@@ -102,28 +104,29 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
 
         默认登录账号密码： admin@admin.com /  admin
 
-    6. 客户端
-        复制 cronsun-v0.3.4
-
-        修改 base.json
-        ```
-        "Hosts": [
-            "serverip:27017"
-        ],
-        ```
-
-        修改 etcd.json
-        ```
-        "Endpoints":[
-            "http://serverip:2379"
-        ],
-        ```
-
-        ./cronnode -conf ./conf/base.json
-
-    7. 浏览器打开 serverip:7079
+    6. 浏览器打开 serverip:7079
 
         此时可以看到 Total nodes 已经有了
+
+## 备份与恢复cronsun的任务数据
+
+cronsun提供的csctl工具可以备份和恢复cronsun的任务数据。
+
+1. 备份数据
+
+    请将 --conf 修改为你自己保存的 base.json 文件的路径
+    --file 为备份文件路径，会自动加上 .zip 后缀，这里不需要写后缀
+
+    csctl backup --conf={/path/to/base.json} --dir=./ --file=cronsun_data
+
+2. 恢复数据
+
+    请将 --conf 修改为你自己保存的 base.json 文件的路径
+    --file 为备份文件路径
+
+    csctl restore --conf={/path/to/base.json} --file=./cronsun_data.zip
+
+
 
 ## etcd 数据库问题
 

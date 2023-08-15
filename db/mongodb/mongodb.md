@@ -8,11 +8,11 @@
 1. Before adding the MongoDB repository to the system, it is necessary to
    install a package called gnupg2.
 
-` sudo apt install gnupg2
+    sudo apt install gnupg2
 
 2. After that, add the GPG key of the repository as follows
 
-` wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+    wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
 
 3. Now add the MongoDB repository to your system by running
 
@@ -162,11 +162,11 @@ cannot be opened because the developer cannot be verified的解决办法
 
 4. 集合/数据表
     查看当前库中有哪些集合
-    
+
     show collections
 
 5. 数据
-    
+
     1. 添加数据, 如果该集合不存在则自动创建
 
     ```
@@ -185,6 +185,12 @@ cannot be opened because the developer cannot be verified的解决办法
 
         db.集合.find()
         db.集合.find().pretty()
+
+    3. 删除集合中的数据
+
+        1. remove
+
+
 
 ### 图形化
 
@@ -257,7 +263,6 @@ MVC 架构
         usersModel.js
     usersDao.js
         暴露给
-
 
 
 

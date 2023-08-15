@@ -350,5 +350,58 @@ etcdctl put a lease=694d85bd1f1b6729        // 过期后 a 被删除
 
 
 heartbeat timeout
-    
+
     follower 收到数据同步报，重置两个超时
+
+
+
+
+## etcd DB SIZE
+
+[参考](https://www.cnblogs.com/yuhaohao/p/13292085.html)
+
+etcd的数据库空间配额大小默认限制为2G，当数据达到2G的时候就不允许写入。这里如果
+想继续写入，必须对历史数据进行压缩，或者调整etcd数据库的空间配额大小限制。
+
+当空间配额满载时，会提示mvcc: database space exceeded
+
+1. 查看etcd的配额使用量
+
+    export ETCDCTL_API=3
+    etcdctl endpoint status --write-out table
+
+    +----------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+    |    ENDPOINT    |        ID        | VERSION | DB SIZE | IS LEADER | IS LEARNER | RAFT TERM | RAFT INDEX | RAFT APPLIED INDEX | ERRORS |
+    +----------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+    | 127.0.0.1:2379 | 8e9e05c52164694d |   3.5.9 |   25 kB |      true |      false |         3 |         33 |                 33 |        |
+    +----------------+------------------+---------+---------+-----------+------------+-----------+------------+--------------------+--------+
+
+2. 开启磁盘碎片整理
+
+    1. 获取历史版本号
+
+        export ETCDCTL_API=3
+        etcdctl endpoint status --write-out="json" | egrep -o '"revision":[0-9]*' | egrep -o '[0-9].*'
+
+        8991138
+
+    2. 压缩旧版本
+
+        etcdctl compact 8991138
+
+    3. etcd进行碎片整理
+
+        etcdctl defrag
+
+    4. 查看etcd数据库大小
+
+        etcdctl endpoint status --write-out table
+
+3. 修改etcd空间配额大小
+
+    cat /etc/systemd/system/etcd.service
+
+    --quota-backend-bytes=10240000000    // 这里单位是字节
+
+    systemctl daemon-reload
+    systemctl restart etcd
