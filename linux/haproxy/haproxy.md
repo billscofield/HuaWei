@@ -3,7 +3,6 @@ lvs
 apache
 haproxy
 
-
 ## haproxy
 
 tcp/http
@@ -22,11 +21,7 @@ yum install haproxy
     vim-haproxy - syntax highlighting for HAProxy configuration files
     haproxy - fast and reliable load balancing reverse proxy
 
-
-
-
-
-
+    ```
                 +-----
                 |
                 | 前端          后端
@@ -35,16 +30,7 @@ yum install haproxy
                 |
                 |
                 +-----
-
-
-
-
-
-
-
-
-
-
+    ```
 
 vim /etc/haproxy/haproxy.cfg
 
@@ -55,53 +41,105 @@ backend
 listen
 
 ```
-global          // 全局配置段
+1. global          // 全局配置段
     log 127.0.0.1 local3 info           // 日志, local3:日志对象，需要在 syslog 中配置
-    maxconn     4000                    // 最大连接数
+    maxconn     4000                    // 用户最大连接数
     user        haproxy
     group       haproxy
+    uid
+    gid
     nbproc      1                       // number proc 进程个数
-    daemon
+    daemon                              // 守护进程方式运行
+    pidfile     /var/run/haproxy.pid
 
+    ```
+    $ModLoad imudp                  // 取消注释
+    $UDPServerRun 514               // 取消注释
+    $ModLoad imtcp                  // 取消注释
+    $InputTCPServerRun 514          // 取消注释
+    ```
 
-
-defaults        // 针对listen 和 backend 块如果没有配置，则使用本章节的默认配置
-    log         global          // 使用全局日志
-    mode        http            // 模式
+2. defaults        // 针对listen 和 backend 块如果没有配置，则使用本章节的默认配置
+    log         global          // 使用全局日志,即 global 的部分
+    mode        http            // 模式,7层还是4层 tcp
     maxconn     3000            // 高于 global 优先级
+
     retries     3               // 健康检查，3次连接失败就认为服务不可用
-    option      redispatch      // 服务不可用后的操作，重定向到其他健康的服务器
-    stats       uri /haproxy    // 开启 haproxy 的web界面模块      浏览器 IP/haproxy
+    option      redispatch      // 服务不可用后的操作，重定向到其他健康的服务器(redispatch:再发送)
+
+    stats       uri /haproxy    // 开启 haproxy 的web界面模块      浏览器 IP/haproxy(stats 同 sttaus 状态)
+    stats       uri /admin?stats    // 开启 haproxy 的web界面模块      浏览器 IP/haproxy(stats 同 sttaus 状态)
+    stats       realm Private lands //
     stats       auth  admin:a   // 认证
+    stats       hide-version    // 隐藏统计页面上的 haproxy 版本信息
 
-    contimeout  5000            // haproxy 将客户端请求转发至后端服务器的超时时间, timeout connect
-    clitimeout  5000            // **haproxy 作为客户**，和后端服务器之间空闲连接的超时时间 timeout client
-    srvtimeout  5000            // **haproxy 作为服务器**，和用户之间空闲连接的超时时间 timeout server
+    contimeout  5000            // timeout connect; haproxy 将客户端请求转发至后端服务器的超时时间, timeout connect
+    clitimeout  5000            // timeout client; **haproxy 作为客户**，和后端服务器之间空闲连接的超时时间 timeout client
+    srvtimeout  5000            // timeout server; **haproxy 作为服务器**，和用户之间空闲连接的超时时间 timeout server
 
+    option      abortonclose    // 关闭连接的选项
 
-
-frontend http-in                // 前端配置段, 针对用户侧的配置, http-in 是一个名字
+3. frontend http-in             // 前端配置段, 针对用户侧的配置, http-in 是一个名字
     bind 0.0.0.0:80             // 绑定监听的IP和端口
     mode http                   // 7层负载
     log  global                 // 使用全局日志
     option httplog              // 丰富日志内容
     option httpclose            // 每次请求完毕后，关闭http通道
-    acl html url_reg -i \.html$ // acl 名称为 html, 以 html 结尾的url时
+
+    acl html url_reg -i \.html$ // acl 名称为 html, 以 html 结尾的url时, -i:忽略大小写
     use_backend html-server if html     // 如果满足上面的条件，则推送给后端服务器 html-server
+
     default_backend html-server         // 默认的后端服务器
 
-
-backend html-server             // 后端配置段, 针对后端服务器的配置
+4. backend html-server             // 后端配置段, 针对后端服务器的配置
     mode http
     balance roundrobin                          // 负载算法，此处是轮询
+
     option httpchk GET /index.html              // 使用get进行健康检查
+
     cookie SERVERID insert indirect nocache     // 负载的同时，根据插入的 cookie SERVERID 值进行会话保持，将相同的请求转发给相同的服务器
-    server html-A 10.0.0.1:80 weight 1 cookie 3 check inter 20000 rise 2 fall 5
+
+    server html-A 10.0.0.1:80 weight 1 cookie 3 check inter 20000 rise 2 fall 5     // 一定要写上端口号
     server html-A 10.0.0.2:80 weight 1 cookie 4 check inter 20000 rise 2 fall 5     // 针对 cookie 为 4 的 健康检查间隔为 2s, 连续2成功则OK， 5次失败则标记为有问题
+        check inter 2000 每隔2秒检测依次健康
 
-
-listen          // 前后端不分离，直接使用
+    cookie SERVERID insert nocache
+    #为每个服务器定义一个cookie名称标识
+    server web01 172.16.1.7:8888 check port 8888 inter 3s rise 2 fall 3 maxconn 2000 maxqueue 1000 weight 1 cookie web1
+    server web02 172.16.1.8:8888 check port 8888 inter 3s rise 2 fall 3 maxconn 2000 maxqueue 1000 weight 1 cookie web2
 ```
+
+动静分离的一个例子
+
+```
+frontend http-in
+    bind 0.0.0.0:80
+    mode http
+    log global
+    option httplog
+    option httpclose
+
+    acl php url_reg -i \.php$
+    acl html url_reg -i \.html$
+    use_backend php-server if php
+    use_backend html-server if html
+    default_backend html-server
+
+backend php-server
+    balance roundrobin
+    cookie SERVERID insert nocache
+    server php-A 10.0.0.1:80 weight 1 cookie php-A check inter 2000 rise 2 fall 5
+    server php-B 10.0.0.2:80 weight 1 cookie php-B check inter 2000 rise 2 fall 5
+
+backend html-server
+    balance roundrobin
+    cookie SERVERID insert nocache
+    server html-A 10.0.0.10:80 weight 1 cookie html-A check inter 2000 rise 2 fall 5
+    server html-B 10.0.0.11:80 weight 1 cookie html-B check inter 2000 rise 2 fall 5
+
+```
+
+
 
 vim /etc/rsyslog.conf
 ```添加

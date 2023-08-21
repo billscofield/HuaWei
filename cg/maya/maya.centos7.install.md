@@ -76,7 +76,7 @@
 
 
     /usr/autodesk/pymel2023/pymel/pymel.txt
-    
+
     /usr/autodesk/maya2023/bin/mayapy
 
 

@@ -38,6 +38,11 @@
 
 安装文件列表
 
+https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el7/RPMS/mongodb-org-server-5.0.3-1.el7.x86_64.rpm
+https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el7/RPMS/mongodb-org-mongos-5.0.3-1.el7.x86_64.rpm
+https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el7/RPMS/mongodb-org-shell-5.0.3-1.el7.x86_64.rpm
+https://mirrors.tuna.tsinghua.edu.cn/mongodb/yum/el7/RPMS/mongodb-database-tools-100.5.0.x86_64.rpm
+
 mongodb-org-server-5.0.3-1.el7.x86_64.rpm
 mongodb-org-mongos-5.0.3-1.el7.x86_64.rpm
 mongodb-org-shell-5.0.3-1.el7.x86_64.rpm

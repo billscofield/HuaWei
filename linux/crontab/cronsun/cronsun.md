@@ -52,6 +52,7 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
 
 3. 安装mongodb
 
+
 4. 启动服务
 
     1. etcd
@@ -60,7 +61,7 @@ cronsun 是为了解决多台 linix 机器上crontab 任务管理不方便的问
 
         默认侦听的客户端地址为： http://localhost:2379，  这个可以修改配置文件
 
-        ./etcd --listen-client-urls 'http://0.0.0.0:2379' --advertise-client-urls http://0.0.0.0:2379
+        ./etcd --quota-backend-bytes=10240000000 --listen-client-urls 'http://0.0.0.0:2379' --advertise-client-urls http://0.0.0.0:2379
 
     2. 动mongodb：
 
