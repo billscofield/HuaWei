@@ -1,0 +1,144 @@
+{
+   "Bundle": {
+      "Identity": {
+         "Publisher": "Autodesk, Inc.",
+         "DisplayName": "Autodesk Maya 2023",
+         "PLC": "MAYA",
+         "Release": "2023",
+         "BuildNumber": {
+            "_envvar": "BUILDNUMBER",
+            "__text": "2023.3.0.2072"
+         },
+         "UPI2": "{EC4CAAD2-186E-37F3-911B-DDEBDF7486CF}",
+         "UpgradeCode": "{79EBAAA4-B8E5-34F5-980B-CCFC63264184}",
+         "ConstantId": "{FF19DC41-C154-4717-8B91-B8C6DB70C453}",
+         "Signature": "EEaUk44o3HQuXUmdyanw3Xa4dKuNrlQxLavxpzsyWb0=",
+         "Type": "PRD"
+      },
+      "Resources": {
+         "LocalizedResources": "SetupRes/locale/%setuplang%/setup.xml",
+         "Images": {
+            "Image": [
+               {
+                  "_id": "ProductIconImage",
+                  "__text": "SetupRes/icons/Maya.svg"
+               },
+               {
+                  "_id": "ProductBrandImage",
+                  "__text": "SetupRes/branding/Maya.png"
+               },
+               {
+                  "_id": "ProductLogoImage",
+                  "__text": "SetupRes/icons/MayaLogo.png"
+               }
+            ]
+         },
+         "UIStyle": {
+            "_style": "Rosetta.Dark"
+         },
+         "ThemeColor": "#00aaaa"
+      },
+      "Configuration": {
+         "Attributes": {
+            "_launchAfterCore": "false",
+            "_majorUpgrade": "true"
+         },
+         "AdditionalBundleInfo": "",
+         "Platforms": {
+            "Platform": {
+               "_name": "Linux",
+               "_architecture": "x64",
+               "_minVersion": "1"
+            }
+         },
+         "Languages": {
+            "Language": [
+               {
+                  "_langId": "en-US"
+               },
+               {
+                  "_langId": "ja-JP"
+               },
+               {
+                  "_langId": "zh-CN"
+               }
+            ]
+         },
+         "Media": {
+            "Disk": {
+               "_diskLabel": "Maya2023",
+               "_diskPromptId": "DiskPrompt",
+               "_defaultDisk": "true"
+            }
+         }
+      },
+      "Applications": {
+         "Application": [
+            {
+               "_sequence": "1",
+               "_launchApp": "true",
+               "_installAs": "core",
+               "_name": "Maya",
+               "_external": "false",
+               "_path": "manifest/app.maya.xml",
+               "_upi2": "{8C5762EE-4C49-3A95-82D5-86F149F44015}",
+               "_upgradeCode": "{F7D6858E-D68D-3BAE-BADD-B81524C666D7}"
+            },
+            {
+               "_sequence": "2",
+               "_installAs": "optional",
+               "_preSelected": "true",
+               "_name": "MtoA",
+               "_external": "true",
+               "_path": "manifest/app.mtoa.xml",
+               "_upi2": "{A5155F71-212D-327E-AB7A-49C5353AF2F7}",
+               "_upgradeCode": "{EE9A41E3-97FB-3A3A-801A-02315FC11D2C}"
+            },
+            {
+               "_sequence": "3",
+               "_installAs": "optional",
+               "_preSelected": "true",
+               "_name": "Bifrost",
+               "_external": "true",
+               "_path": "manifest/app.bifrost.xml",
+               "_upi2": "{E82E3C42-B181-3BE3-8D95-40E74B6CE03C}",
+               "_upgradeCode": "{9534E533-6BB7-3C33-BFF7-63699A2CFCC7}"
+            },
+            {
+               "_sequence": "3",
+               "_installAs": "optional",
+               "_preSelected": "true",
+               "_name": "MayaUSD",
+               "_external": "true",
+               "_path": "manifest/app.mayausd.xml",
+               "_upi2": "{BCE243AB-51BB-3723-A65D-5D7F50A732A6}",
+               "_upgradeCode": "{88095112-295B-3318-902E-3AED438965DB}"
+            },
+            {
+               "_sequence": "4",
+               "_installAs": "optional",
+               "_preSelected": "true",
+               "_name": "Substance",
+               "_external": "true",
+               "_path": "manifest/app.substance.xml",
+               "_upi2": "{317539C0-9DFB-3940-AE23-6E0B47CD5C5A}",
+               "_upgradeCode": "{7F9A614A-A809-373F-BBA0-90C653612065}"
+            },
+            {
+               "_sequence": "6",
+               "_installAs": "optional",
+               "_preSelected": "false",
+               "_name": "Pymel",
+               "_external": "true",
+               "_path": "manifest/app.pymel.xml",
+               "_upi2": "{57B89D31-03B5-3EC0-9089-28615D9F097F}",
+               "_upgradeCode": "{D33E81EF-0828-35A5-B5A2-EFFE1F133333}"
+            }
+         ]
+      },
+      "_xmlns": "https://emsfs.autodesk.com/schema/manifest/1/0",
+      "_xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance",
+      "_version": "1.0",
+      "_xsi:schemaLocation": ""
+   }
+}

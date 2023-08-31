@@ -21,7 +21,7 @@ TrueNAS Minimum Requirements
     Free To Download & Use
     Community-Supported
 
-    Free BSD
+    基于 Free BSD
 
 2. TrueNAS enterprise
 
@@ -70,19 +70,23 @@ TrueNAS Minimum Requirements
 网页登录
     网关要在网页上修改
 
+Storate / Disks
+    Manual Test
+
+
 存储
     Create Pool
         存储池的名字是不能修改的
 
         阵列
             stripe   raid0
-            
+
             mirror  每个硬盘都写一样的
-            
+
             raid-z  raid-5
-            
+
             raid-z2 raid-6(损失2个)
-    
+
         pool 实际上是被挂载到 /mnt/下 poolname
 
         dateset 数据集(文件夹, 有一些设置可用)
@@ -95,7 +99,7 @@ resilvering / diˈsɪlvər / 重新挂银
 
 storage / 右边的 Pool Operations / status 
     将掉的磁盘(removed)拔掉，插上新的，右键 replace 即可
-    
+
 邮件报警
     设置 root 帐号的邮箱(发送到的邮箱)
     smtp

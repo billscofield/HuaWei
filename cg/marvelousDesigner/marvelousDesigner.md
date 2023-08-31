@@ -1,0 +1,7 @@
+三维服装设计软件个人版 Marvelous Designer
+
+安装MarvelousDesigner11_Personal_6_1_723_Installer_x64.exe
+不要运行
+拷贝MarvelousDesigner11_Personal_x64.exe到安装目录下替换，默认位置是C:\Program Files\Marvelous Designer 11 Personal
+输入任意ID和序列号即可，Auto Deactivation不用勾选，记住ID和密码可以勾选
+然后会有一个弹窗，让你选择单位、语言、视窗控制等，语言可以选择简体中文

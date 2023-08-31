@@ -44,6 +44,33 @@ gstreamer-plugins-base-devel.i686 gettext-devel.i686 libmpg123-devel.i686 lcms2-
 hal-devel.i686
 ```
 
+[编译安装所需依赖](https://wiki.winehq.org/Building_Wine#head-6d87f1d37a9c2a482007eb047a9281be699dd3f0)
+
+rocky8 32bit
+    1. ../../configure --prefix=/opt/wine --with-wine64=../wine64 时候:
+        Cannot build a 32-bit program, you need to install 32-bit development libraries.
+
+        yum install -y glibc-devel.i686
+        yum install -y libstdc++-devel.i686
+
+    2. configure: error: X 32-bit development files not found. Wine will be
+       built without X support, which probably isn't what you want. You will
+       need to install 32-bit development packages of Xlib at the very least.
+       Use the --without-x option if you really want this.
+
+        [link](https://www.systutorials.com/install-32-bit-wine-1-8-centos-7/)
+        yum install -y libX11-devel.i686
+
+    3. configure: error: FreeType 32-bit development files not found. Fonts
+       will not be built.  Use the --without-freetype option if you really want
+       this.
+
+       yum install glibc-devel.{i686,x86_64} libgcc.{i686,x86_64} libX11-devel.{i686,x86_64} freetype-devel.{i686,x86_64} gnutls-devel.{i686,x86_64} libxml2-devel.{i686,x86_64} libjpeg-turbo-devel.{i686,x86_64} libpng-devel.{i686,x86_64} libXrender-devel.{i686,x86_64} alsa-lib-devel.{i686,x86_64} -y 
+
+       yum install -y fontconfig-devel.i686
+
+       添加 --without-freetype
+
 编译安装
 ```
 mkdir build
@@ -56,8 +83,11 @@ cd ..
 mkdir wine32
 cd wine32
 ../../configure --prefix=/opt/wine --with-wine64=../wine64
+../../configure --prefix=/opt/wine --with-wine64=../wine64 --without-freetype
 make -j12
+
 make install
+
 cd ../wine64
 make install
 ```

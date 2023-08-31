@@ -1,0 +1,53 @@
+SINGLE MACHINE
+1.Install Your Foundry Product
+2.Install FLT7 (follow the docs for any custom installation)    (If you already have our rlm server working and running , jump to step 8) 
+  for 64bit-linux : tar xvzf FLT7.1v1-linux-x86-release-64.tgz 
+                    cd FLT_7.1v1_linux-x86-release-64RH
+                    ./install.sh
+3.Stop Foundry License Server (one way is /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s stop -t RLM)
+4.Copy the cracked rlm.foundry over the original one (/usr/local/foundry/LicensingTools7.1/bin/RLM/rlm.foundry" 
+  (keep permissions or just do a chmod 755 on cracked rlm.foundry if you didnt overwrite)
+5.Edit xf_foundry.lic replacing HOST_NAME MAC_ADDRESS PORT . You can get those informations using rlmutil (./rlmutil rlmhostid host and ./rlmutil rlmhostid)
+  PORT is by default 4102 if you dont put any (dont forget to delete the word PORT then if you dont want to specify one) . If you need more infos read RLM manual.
+
+6.Copy the xf_foundry.lic to /usr/local/foundry/RLM 
+7.Restart RLM Server you can do that from inetd/services or just with Foundry License Utility (the best way to check logs and infos)
+  /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s stop -t RLM
+  /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s start -t RLM
+  or to get a status /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s status -t RLM
+
+8.Start Your Foundry Product and Enjoy ut !!
+
+XFORCE SMOKED it again !
+
+
+MULTIPLE MACHINES
+Machine A acting as rlm license server
+1.Install FLT7
+2.Stop Foundry License Server
+3.Copy the cracked rlm.foundry over the original one (/usr/local/foundry/LicensingTools7.1/bin/RLM/rlm.foundry"
+4.Edit xf_foundry.lic replacing HOST_NAME MAC_ADDRESS PORT . You can get those informations using rlmutil (./rlmutil rlmhostid host and ./rlmutil rlmhostid)
+  PORT is by default 5053 if you dont put any (dont forget to delete the word PORT then if you dont want to specify one) . If you need more infos read RLM manual.
+5.Copy the xf_foundry.lic to /usr/local/foundry/RLM
+6.Restart RLM Server you can do that from inetd/services or just with Foundry License Utility (the best way to check logs and infos)
+  /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s stop -t RLM
+  /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s start -t RLM
+  or to get a status /usr/local/foundry/LicensingTools7.1/FoundryLicenseUtility -s status -t RLM
+
+
+Machine B,C,D,... acting as rlm clients
+1.Install your Foundry Product
+2.Start your Foundry product
+3.You will be prompter to activate, Click on Activate License or Use Server
+  As license server you must enter this : port_of_rlm_server@ip_of_rlmserver Those are the infos from Machine A
+                                          if you didnt specify a port it will look like this : 5053@ip_of_machineA
+  Do not forget to make sure your firewall accepts communication with the clients (disable it to check)
+
+  You can ALSO set env variables (read DOC) 
+
+TIPS:
+Foundry License Utility will help you find infos on hostname, hostid, systemid, mac address, port and problems you may run into if
+you didnt follow our steps .. Diagnostics will help you figure out what mistake you did.
+You can also check a few infos on the web gui : http://127.0.0.1:4102 or http://rlm_ip:4102
+
+

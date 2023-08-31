@@ -252,7 +252,7 @@ hkey
     1. If $0 is a symlink, resolve it to a file
 
     2. Initialize application environment
-        
+
         ` source app_init.sh
 
     3. 调用 hkey-bin
@@ -261,13 +261,13 @@ hkey
 app_init.sh
 
     1. 如果定义了 HFS 变量则。。。
-        
+
         根据查看 HFS 应该是 /opt/hfs19.0 这个目录
 
     2. APP_DIR 应该是 /opt/hfs19.0/houdini 这个目录
 
     3. 调用 houdini_setup
-        
+
         /opt/hfs19.0/houdini_setup 会调用 houdini_setup_csh || houdini_setup_bash
 
             主要是一些环境变量

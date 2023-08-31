@@ -1,4 +1,3 @@
-
 1. may 主程序
 
     rpm -ivh Maya2023_64-2023.3-2072.x86_64.rpm
@@ -6,8 +5,42 @@
     Updating / installing...
        1:Maya2023_64-2023.3-2072          ################################# [100%]
     /var/tmp/rpm-tmp.Ag4htq: line 41: /opt/Autodesk/AdskLicensing/12.1.0.7121/helper/AdskLicensingInstHelper: No such file or directory
+    /var/tmp/rpm-tmp.Nudqii: line 41: /opt/Autodesk/AdskLicensing/12.1.0.7121/helper/AdskLicensingInstHelper: No such file or directory
 
     图标文件: /usr/autodesk/maya2023/desktop/maya.png
+
+    // if we just extract this rpm or install it, it will warning that: error
+    while loading shared libraries: libpng15.so.15: cannot open shared object
+    file: No such file or directory
+
+    yum list | grep libpng15
+    yum install -y libpng15
+
+    yum list | grep libGLU
+    yum install -y libGLU libGLU-devel
+
+    // after the upper two installing, we run ./maya2023, and errors is like this:
+    ```
+    maya: Autodesk MAYA 2023
+
+    A licensing error occurred that Autodesk systems were not able to handle
+    for you. Please contact Autodesk Customer Support for help in resolving
+    this error.
+
+    adlsdkAuthorize returned with error code: ADLSDK_STATUS_ADLS_NOT_FOUND
+
+    The default location for log files to help diagnose the issue is:
+    "/usr/tmp/MayaCLM-23-08-2023.log"
+
+    ```
+
+    if we replace the maya.bin with cracked one, errors is like this:
+
+    ```
+    ./maya2023: line 203: 33418 Segmentation fault      (core dumped) /root/2023/Packages/Maya2023_64-2023.3-2072.x86_64.rpm.unpack/usr/autodesk/maya2023/bin/maya.bin
+    ```
+
+/usr/share/desktop-directories/Autodesk-Maya2023.directory -> /usr/autodesk/maya2023/desktop/Autodesk-Maya.directory
 
 2. bifrost 插件
 
@@ -82,15 +115,59 @@
 
     chmod 777 -R /usr/autodesk
 
+    if we run ./maya2023 right now , the same error as step 1 comes:
+
+    ```
+    ./maya2023
+    maya: Autodesk MAYA 2023
+
+    A licensing error occurred that Autodesk systems were not able to handle for
+    you. Please contact Autodesk Customer Support for help in resolving this error.
+
+    adlsdkAuthorize returned with error code: ADLSDK_STATUS_ADLS_NOT_FOUND
+
+    The default location for log files to help diagnose the issue is: 
+    "/usr/tmp/MayaCLM-23-08-2023.log"
+
+    ```
+
+    "/usr/tmp/MayaCLM-23-08-2023.log":
+
+    ```
+    2023-08-23 21:01:16: ====== BEGIN MAYA CLM LICENSE DIAGNOSTICS (level 2) ======
+    2023-08-23 21:01:16: INFO: MAYA VERSION: Autodesk MAYA 2023.3
+    2023-08-23 21:01:16: INFO: Desktop Licensing Runtime Version: 6.3.1.44
+    2023-08-23 21:01:16: INFO: Desktop Licensing API version in Maya: 6.3.1.44
+    2023-08-23 21:01:16: INFO: initialize: GetInstance (Success)
+    2023-08-23 21:01:27: INFO: Received LicenseUpdateCallback for Maya 2023 (ADLSDK_UPDATE_REASON_LICENSE_UPDATE): NOT Authorized
+    2023-08-23 21:01:27: ERROR: Error Information: Maya 2023 : Retry limit exceeded connecting to the Service
+    2023-08-23 21:01:27: ERROR: adlsdkAuthorize returned with error code: ADLSDK_STATUS_ADLS_NOT_FOUND
+    2023-08-23 21:01:27: ERROR: checkinLicense: unable to release authentication handle
+    2023-08-23 21:01:27: INFO: shutdown: normal exit
+
+    ```
+
+
 6. 和谐
 
     /usr/autodesk/maya2023/bin/maya.bin
 
+6.1
+
+    https://www.autodesk.com/support/technical/article/caas/sfdcarticles/sfdcarticles/Use-Installer-Helper.html
+
+    /root/2023/Packages/adsklicensing12.1.0.7121-0-0.x86_64.rpm.unpack/opt/Autodesk/AdskLicensing/12.1.0.7121/helper/AdskLicensingInstHelper list
+
+    reading configuration file /var/opt/Autodesk/AdskLicensingService/AdskLicensingService.data failed: open /var/opt/Autodesk/AdskLicensingService/AdskLicensingService.data: no such file or directory
+
 7. 去除和 Autodesk 的通讯程序
 
     rm -f /usr/autodesk/maya2023/bin/ADPClientService
-    启动后再去除一个文件的所有权限
+    启动后再去除一个文件的所有权限, 下边是收集的我们计算机的信息
     chomd 000 ~/.autodesk/UI/Autodesk/ADPSDK/JSON
+
+    ~/.autodesk/CER         可以删除
+    ~/.autodesk/Logs        可以删除
 
 8. 启动
 
@@ -117,6 +194,18 @@ root 问题
         去掉 Show Home Screen on startup
 
 启动一次后就启动不了的问题
+
+    https://forums.autodesk.com/t5/maya-forum/maya-2023-3-on-linux-fedora-error-corrupted-size-vs-prev-size/td-p/11663850
+
+    The error is caused by the presence of this line in the userPrefs.mel file:
+
+    -iv "isFirstTimeRunningMaya" 
+
+    If you remove this line, then Maya will start up perfectly fine, of course
+    when you save the preferences it adds the line back to the preferences file
+    and you have to do it all over again next time you want to launch Maya.
+
+
     /home/liujiao/maya/2023/prefs/userPrefs.mel
     删掉 -iv "isFirstTimeRunningMaya" 0
     但是每次重启 maya , 这个文件都会被回复出厂设置，chattr +i , 但是就保存不了新的配置了

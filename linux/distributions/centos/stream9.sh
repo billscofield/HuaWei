@@ -25,9 +25,9 @@ iftop
 
 
 # katana7
-dnf install xcb-util-wm¬
-dnf install xcb-util-image¬
-dnf install xcb-util-keysyms¬
+dnf install xcb-util-wm
+dnf install xcb-util-image
+dnf install xcb-util-keysyms
 dnf install xcb-util-renderutil
 
 #xcb  见 system libraries

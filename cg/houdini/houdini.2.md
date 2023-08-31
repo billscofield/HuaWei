@@ -36,7 +36,7 @@ engin_unreal.tar.gz
 要使用 root 权限
 
 items to be installed:
-    
+
     6. Avahi (Third-party)
     7. SideFX Labs
     8. Houdini Engin for Maya
@@ -65,12 +65,17 @@ houdini indie: 独立版本，文件格式，渲染尺寸有限制
 算号工具
 ./Houdini-Tools
     server name:
-    id:
+    id:                 (就是 MAC 地址,全小写,没有冒号和dash)
 
 输出内容复制到 /usr/lib/sesi/license
     一共是9条许可
 
     如果是手工导入的话，要分两次导入
+
+    systemctl restart sesinetd
+
+    ~/.sesi_licenses.pref 改写为 http://<ip>:1715, 并添加只读权限
+    chattr +i .sesi_licenses.pref
 
 
 卸载
